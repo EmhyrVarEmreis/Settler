@@ -39,7 +39,7 @@
                              references="usr_user(id)"
                              foreignKeyName="FK_mod_transaction_contractor_usr_user"/>
             </column>
-            <column name="login"
+            <column name="value"
                     type="money"
                     defaultValue="0">
                 <constraints nullable="false"/>
@@ -59,6 +59,11 @@
                     type="bigint">
                 <constraints primaryKey="true"
                              primaryKeyName="PK_mod_settlement_id"/>
+            </column>
+            <column name="balance"
+                    type="money"
+                    defaultValue="0">
+                <constraints nullable="false"/>
             </column>
         </createTable>
 
