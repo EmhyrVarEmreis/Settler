@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="1.0-init-tables" author="cru">
+
+        <createTable tableName="usr_user">
+            <column name="id"
+                    type="bigint">
+                <constraints primaryKey="true"
+                             primaryKeyName="PK_usr_user_id"/>
+            </column>
+            <column name="login"
+                    type="nvarchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password"
+                    type="nvarchar(128)"/>
+        </createTable>
+
+        <createTable tableName="mod_transaction">
+            <column name="id"
+                    type="bigint">
+                <constraints primaryKey="true"
+                             primaryKeyName="PK_mod_transaction_id"/>
+            </column>
+            <column name="owner"
+                    type="bigint">
+                <constraints primaryKey="true"
+                             references="usr_user(id)"
+                             foreignKeyName="FK_mod_transaction_owner_usr_user"/>
+            </column>
+            <column name="contractor" type="bigint">
+                <constraints primaryKey="true"
+                             references="usr_user(id)"
+                             foreignKeyName="FK_mod_transaction_contractor_usr_user"/>
+            </column>
+            <column name="login"
+                    type="money"
+                    defaultValue="0">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created"
+                    type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="confirmed"
+                    type="date"/>
+            <column name="evaluated"
+                    type="date"/>
+        </createTable>
+
+        <createTable tableName="mod_settlement">
+            <column name="id"
+                    type="bigint">
+                <constraints primaryKey="true"
+                             primaryKeyName="PK_mod_settlement_id"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="mod_transaction_settlements">
+            <column name="settlement_id"
+                    type="bigint">
+                <constraints primaryKey="true"
+                             references="mod_settlement(id)"
+                             foreignKeyName="FK_mod_transaction_settlements_settlement"/>
+            </column>
+            <column name="transaction_id"
+                    type="bigint">
+                <constraints references="mod_transaction(id)"
+                             foreignKeyName="FK_mod_transaction_settlements_transaction"/>
+            </column>
+        </createTable>
+
+    </changeSet>
+
+
+</databaseChangeLog>
