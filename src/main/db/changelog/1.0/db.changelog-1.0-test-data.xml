@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="1.0-init-test-data" author="cru" context="dev">
+
+        <sql>
+            INSERT INTO utp.usr_user (
+                login,
+                first_name,
+                surname,
+                password,
+                created
+            )
+            VALUES (
+                'admin',
+                'Edward',
+                'Ącki',
+                '5f4dcc3b5aa765d61d8327deb882cf99',
+                '2015-11-11 11:11:11'
+            );
+
+            INSERT INTO utp.usr_user (
+                login,
+                first_name,
+                surname,
+                password,
+                created
+            )
+            VALUES (
+                'user',
+                'Jan',
+                'Kowalski',
+                '5f4dcc3b5aa765d61d8327deb882cf99',
+                '2015-11-11 11:11:11'
+            );
+        </sql>
+
+        <sql>
+            INSERT INTO utp.mod_transaction (
+                owner,
+                contractor,
+                value,
+                created
+            )
+            VALUES (
+                (SELECT id
+                 FROM utp.usr_user
+                 WHERE login = 'admin'),
+                (SELECT id
+                 FROM utp.usr_user
+                 WHERE login = 'user'),
+                12.50,
+                '2015-11-12 12:12:12'
+            );
+        </sql>
+
+        <rollback>
+            <delete tableName="usr_user"/>
+            <delete tableName="mod_transaction"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

@@ -10,20 +10,32 @@
 
         <createTable tableName="usr_user">
             <column name="id"
+                    autoIncrement="true"
                     type="bigint">
                 <constraints primaryKey="true"
                              primaryKeyName="PK_usr_user_id"/>
             </column>
             <column name="login"
-                    type="nvarchar(50)">
+                    type="nvarchar(32)">
                 <constraints nullable="false"/>
             </column>
+            <column name="first_name"
+                    type="nvarchar(32)"/>
+            <column name="surname"
+                    type="nvarchar(32)"/>
             <column name="password"
-                    type="nvarchar(128)"/>
+                    type="nvarchar(128)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created"
+                    type="datetime">
+                <constraints nullable="false"/>
+            </column>
         </createTable>
 
         <createTable tableName="mod_transaction">
             <column name="id"
+                    autoIncrement="true"
                     type="bigint">
                 <constraints primaryKey="true"
                              primaryKeyName="PK_mod_transaction_id"/>
@@ -56,6 +68,7 @@
 
         <createTable tableName="mod_settlement">
             <column name="id"
+                    autoIncrement="true"
                     type="bigint">
                 <constraints primaryKey="true"
                              primaryKeyName="PK_mod_settlement_id"/>
