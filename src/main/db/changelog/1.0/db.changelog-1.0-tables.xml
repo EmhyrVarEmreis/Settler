@@ -52,7 +52,7 @@
             </column>
             <column name="first_name"
                     type="nvarchar(32)"/>
-            <column name="surname"
+            <column name="last_name"
                     type="nvarchar(32)"/>
             <column name="password"
                     type="nvarchar(128)">
