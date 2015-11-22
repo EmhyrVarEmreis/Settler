@@ -122,5 +122,6 @@
             <delete tableName="usr_user"/>
             <delete tableName="mod_transaction"/>
         </rollback>
+
     </changeSet>
 </databaseChangeLog>

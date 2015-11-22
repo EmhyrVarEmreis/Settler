@@ -6,7 +6,8 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
-    <changeSet id="1.0-init-dict-data" author="cru">
+    <changeSet id="1.0-init-dict-data" author="settler">
+
         <insert tableName="mod_settlement_type">
             <column name="code">NOR</column>
             <column name="description">Normal</column>
@@ -29,6 +30,7 @@
             <delete tableName="mod_settlement_type"/>
             <delete tableName="mod_transaction_type"/>
         </rollback>
+
     </changeSet>
 
 
