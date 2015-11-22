@@ -33,6 +33,30 @@
                 'demo@morecraft.pl',
                 '2015-11-11 11:11:11'
             );
+
+            INSERT INTO settler.prv_object () VALUES ();
+            INSERT INTO settler.usr_user (id, login, first_name, last_name, password, email, created)
+            VALUES (
+            LAST_INSERT_ID(),
+            'jan.nowak',
+            'Jan',
+            'Nowak',
+            '5f4dcc3b5aa765d61d8327deb882cf99',
+            'jan.nowak@morecraft.pl',
+            '2015-12-12 12:12:12'
+            );
+
+            INSERT INTO settler.prv_object () VALUES ();
+            INSERT INTO settler.usr_user (id, login, first_name, last_name, password, email, created)
+            VALUES (
+            LAST_INSERT_ID(),
+            'marian.kowalski',
+            'Marian',
+            'Kowalski',
+            '5f4dcc3b5aa765d61d8327deb882cf99',
+            'marian.kowalski@morecraft.pl',
+            '2015-11-17 16:00:00'
+            );
         </sql>
 
         <!-- CREATE TRANSACTIONS -->
