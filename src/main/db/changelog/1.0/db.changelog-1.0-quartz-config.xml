@@ -6,9 +6,9 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
-    <changeSet id="1.0-quartz-config" author="cru">
+    <changeSet id="1.0-quartz-config" author="settler">
 
-        <!--<sqlFile path="src/main/db/sql/quartz-tables.sql" encoding="UTF-8" splitStatements="true" stripComments="true"/>-->
+        <sqlFile path="src/main/db/sql/quartz-tables.sql" encoding="UTF-8" splitStatements="true" stripComments="true"/>
 
     </changeSet>
 
