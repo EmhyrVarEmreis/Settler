@@ -6,14 +6,45 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
-    <changeSet id="1.0-init-tables" author="cru">
+    <changeSet id="1.0-init-tables" author="settler">
+
+        <createTable tableName="prv_object">
+            <column name="id"
+                    type="bigint"
+                    autoIncrement="true">
+                <constraints primaryKey="true"
+                             primaryKeyName="PK_prv_object_id"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="mod_settlement_type">
+            <column name="code"
+                    type="nvarchar(3)">
+                <constraints primaryKey="true"
+                             primaryKeyName="PK_mod_settlement_type_code"/>
+            </column>
+            <column name="description"
+                    type="nvarchar(32)"/>
+        </createTable>
+
+        <createTable tableName="mod_transaction_type">
+            <column name="code"
+                    type="nvarchar(3)">
+                <constraints primaryKey="true"
+                             primaryKeyName="PK_mod_transaction_type_code"/>
+            </column>
+            <column name="description"
+                    type="nvarchar(32)"/>
+        </createTable>
 
         <createTable tableName="usr_user">
+            <!--autoIncrement="true"-->
             <column name="id"
-                    autoIncrement="true"
                     type="bigint">
                 <constraints primaryKey="true"
-                             primaryKeyName="PK_usr_user_id"/>
+                             primaryKeyName="PK_usr_user_id"
+                             references="prv_object(id)"
+                             foreignKeyName="FK_usr_user_id_prv_object_id"/>
             </column>
             <column name="login"
                     type="nvarchar(32)">
@@ -27,6 +58,10 @@
                     type="nvarchar(128)">
                 <constraints nullable="false"/>
             </column>
+            <column name="email"
+                    type="nvarchar(128)">
+                <constraints nullable="false"/>
+            </column>
             <column name="created"
                     type="datetime">
                 <constraints nullable="false"/>
@@ -34,11 +69,24 @@
         </createTable>
 
         <createTable tableName="mod_transaction">
+            <!--autoIncrement="true"-->
             <column name="id"
-                    autoIncrement="true"
                     type="bigint">
                 <constraints primaryKey="true"
-                             primaryKeyName="PK_mod_transaction_id"/>
+                             primaryKeyName="PK_mod_transaction_id"
+                             references="prv_object(id)"
+                             foreignKeyName="FK_mod_transaction_id_prv_object_id"/>
+            </column>
+            <column name="reference" type="varchar(64)">
+                <constraints nullable="false"
+                             unique="true"
+                             uniqueConstraintName="UQ_mod_transaction_reference"/>
+            </column>
+            <column name="type"
+                    type="nvarchar(3)">
+                <constraints primaryKey="true"
+                             references="mod_transaction_type(code)"
+                             foreignKeyName="FK_mod_transaction_type_mod_transaction_type_code"/>
             </column>
             <column name="owner"
                     type="bigint">
@@ -67,30 +115,65 @@
         </createTable>
 
         <createTable tableName="mod_settlement">
+            <!--autoIncrement="true"-->
             <column name="id"
-                    autoIncrement="true"
                     type="bigint">
                 <constraints primaryKey="true"
-                             primaryKeyName="PK_mod_settlement_id"/>
+                             primaryKeyName="PK_mod_settlement_id"
+                             references="prv_object(id)"
+                             foreignKeyName="FK_mod_settlement_id_prv_object_id"/>
+            </column>
+            <column name="reference" type="varchar(64)">
+                <constraints nullable="false"
+                             unique="true"
+                             uniqueConstraintName="UQ_mod_settlement_reference"/>
+            </column>
+            <column name="type"
+                    type="nvarchar(3)">
+                <constraints primaryKey="true"
+                             references="mod_settlement_type(code)"
+                             foreignKeyName="FK_mod_settlement_type_mod_settlement_type_code"/>
+            </column>
+            <column name="owner"
+                    type="bigint">
+                <constraints primaryKey="true"
+                             references="usr_user(id)"
+                             foreignKeyName="FK_mod_settlement_owner_usr_user"/>
+            </column>
+            <column name="contractor" type="bigint">
+                <constraints primaryKey="true"
+                             references="usr_user(id)"
+                             foreignKeyName="FK_mod_settlement_contractor_usr_user"/>
             </column>
             <column name="balance"
                     type="money"
                     defaultValue="0">
                 <constraints nullable="false"/>
             </column>
+            <column name="created"
+                    type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="start_date"
+                    type="date"/>
+            <column name="end_date"
+                    type="date"/>
+            <column name="evaluated"
+                    type="date"/>
         </createTable>
 
-        <createTable tableName="mod_transaction_settlements">
+        <createTable tableName="mod_settlement_transaction">
             <column name="settlement_id"
                     type="bigint">
-                <constraints primaryKey="true"
-                             references="mod_settlement(id)"
-                             foreignKeyName="FK_mod_transaction_settlements_settlement"/>
+                <constraints references="mod_settlement(id)"
+                             foreignKeyName="FK_mod_transaction_settlements_settlement"
+                             deleteCascade="true"/>
             </column>
             <column name="transaction_id"
                     type="bigint">
                 <constraints references="mod_transaction(id)"
-                             foreignKeyName="FK_mod_transaction_settlements_transaction"/>
+                             foreignKeyName="FK_mod_transaction_settlements_transaction"
+                             deleteCascade="true"/>
             </column>
         </createTable>
 
