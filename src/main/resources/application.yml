@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: ${settler.db.url}
+    username: ${settler.db.user}
+    password: ${settler.db.password}
+
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLInnoDBDialect
+    
+multipart:
+  max-file-size: 30Mb
+  max-request-size: 30Mb
+
+quartz:
+  enabled: false
