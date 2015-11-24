@@ -29,7 +29,7 @@ public class DatabaseConfiguration extends AbstractSource {
     }
 
     @Bean(name = "sqlSession-settler")
-    public SqlSessionFactory sqlSessionFactoryCruBean(@Qualifier("dataSource-settler") DataSource dataSource) throws Exception {
+    public SqlSessionFactory sqlSessionFactorySettlerBean(@Qualifier("dataSource-settler") DataSource dataSource) throws Exception {
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
         bean.setDataSource(dataSource);
         return bean.getObject();
