@@ -1,0 +1,65 @@
+<div class="panel-main">
+    <div class="page-header">
+        <h1>Lista użytkowników
+            <button type="button"
+                    class="btn btn-success btn-colPicker pull-right"
+                    popover="Kryteria wyszukiwania"
+                    popover-trigger="mouseenter"
+                    ng-click="toggleUserFilterView()">Filtry
+            </button>
+        </h1>
+    </div>
+
+    <div class="row panel-last-row">
+
+        <user-filter-view ng-show="showUserFilterView" user-filter="userFilter" apply-filters="applyFilters()"
+                          clear-filters="clearFilters()"></user-filter-view>
+
+        <table ng-table='tableParams' class='table table-hover'>
+            <thead>
+            <tr>
+                <th rowspan="3"
+                    ng-show="columns.login.isVisible" class="text-center sortable"
+                    ng-class="{'sort-asc': tableParams.isSortBy('login', 'asc'), 'sort-desc': tableParams.isSortBy('login', 'desc')}"
+                    ng-click="tableParams.sorting({'login' : tableParams.isSortBy('login', 'asc') ? 'desc' : 'asc'})">
+                    <div class="sort-indicator">{{columns.login.name}}</div>
+                </th>
+                <th rowspan="3"
+                    ng-show="columns.firstName.isVisible" class="text-center sortable"
+                    ng-class="{'sort-asc': tableParams.isSortBy('firstName', 'asc'), 'sort-desc': tableParams.isSortBy('firstName', 'desc')}"
+                    ng-click="tableParams.sorting({'firstName' : tableParams.isSortBy('firstName', 'asc') ? 'desc' : 'asc'})">
+                    <div class="sort-indicator">{{columns.firstName.name}}</div>
+                </th>
+                <th rowspan="3"
+                    ng-show="columns.lastName.isVisible" class="text-center sortable"
+                    ng-class="{'sort-asc': tableParams.isSortBy('lastName', 'asc'), 'sort-desc': tableParams.isSortBy('lastName', 'desc')}"
+                    ng-click="tableParams.sorting({'lastName' : tableParams.isSortBy('lastName', 'asc') ? 'desc' : 'asc'})">
+                    <div class="sort-indicator">{{columns.lastName.name}}</div>
+                </th>
+                <th rowspan="3"
+                    ng-show="columns.email.isVisible" class="text-center sortable"
+                    ng-class="{'sort-asc': tableParams.isSortBy('email', 'asc'), 'sort-desc': tableParams.isSortBy('email', 'desc')}"
+                    ng-click="tableParams.sorting({'email' : tableParams.isSortBy('email', 'asc') ? 'desc' : 'asc'})">
+                    <div class="sort-indicator">{{columns.email.name}}</div>
+                </th>
+                <th rowspan="3"
+                    ng-show="columns.created.isVisible" class="text-center sortable"
+                    ng-class="{'sort-asc': tableParams.isSortBy('created', 'asc'), 'sort-desc': tableParams.isSortBy('created', 'desc')}"
+                    ng-click="tableParams.sorting({'created' : tableParams.isSortBy('created', 'asc') ? 'desc' : 'asc'})">
+                    <div class="sort-indicator">{{columns.created.name}}</div>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat='user in $data'>
+                <td ng-show="columns.login.isVisible"><a
+                        href="#/userDetails/{{user.id}}"><strong>{{user.login}}</strong></a></td>
+                <td ng-show="columns.firstName.isVisible">{{user.firstName}}</td>
+                <td ng-show="columns.lastName.isVisible">{{user.lastName}}</td>
+                <td ng-show="columns.email.isVisible">{{user.email}}</td>
+                <td ng-show="columns.created.isVisible">{{user.created}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

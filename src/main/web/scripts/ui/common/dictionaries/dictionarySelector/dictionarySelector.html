@@ -1,0 +1,23 @@
+<label ng-if="label.length > 0">{{label}}</label>
+<div ng-class="{'input-group': clearBtn !== 'false'}">
+    <ui-select theme="bootstrap" name="{{name}}">
+        <ui-select-match placeholder="{{placeholder}}">
+            <small>{{(selectFirst === 'true' && !$select.selected) ? (($select.selected = dictData[selectedIndex+0]) ||
+                true ? $select.selected.description : '') : $select.selected.description}}
+            </small>
+        </ui-select-match>
+        <ui-select-choices repeat="elem.code as elem in dictData | filter: $select.search">
+            <small ng-bind-html="elem.description | highlight: $select.search"></small>
+        </ui-select-choices>
+    </ui-select>
+    
+    <span class="input-group-btn">
+    <button class="btn btn-sm btn-danger"
+            type="button"
+            popover="Wyczyść pole"
+            popover-trigger="mouseenter"
+            ng-show="clearBtn !== 'false'"
+            ng-click="ngModel = undefined">X
+    </button>
+    </span>
+</div>

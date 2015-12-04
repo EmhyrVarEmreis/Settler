@@ -1,0 +1,39 @@
+<form class="form" role="form">
+    <div class="row">
+        <div class="col-sm-4 form-group">
+            <label for="loginField">Login użytkownika</label>
+
+            <div class="input-group" id="loginField">
+                <input type="text" class="input-sm form-control" ng-model="userFilter.login"/>
+                <span class="input-group-btn">
+                <button class="btn btn-sm btn-danger" type="button" ng-click="userFilter.login = undefined">X</button>
+                </span>
+            </div>
+        </div>
+
+        <div class="col-sm-4 form-group">
+            <label for="nameField">Imię i nazwisko użytkownika</label>
+
+            <div class="input-group" id="nameField">
+                <input type="text" class="input-sm form-control" ng-model="userFilter.name"/>
+                <span class="input-group-btn">
+                <button class="btn btn-sm btn-danger" type="button" ng-click="userFilter.name = undefined">X</button>
+                </span>
+            </div>
+        </div>
+
+        <div class="col-sm-4 form-group">
+            <label for="emailField">Email użytkownika</label>
+
+            <div class="input-group" id="emailField">
+                <input type="text" class="input-sm form-control" ng-model="userFilter.email"/>
+                <span class="input-group-btn">
+                <button class="btn btn-sm btn-danger" type="button" ng-click="userFilter.email = undefined">X</button>
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-sm btn-primary" ng-click="applyFilters()">Szukaj</button>
+    <button type="button" class="btn btn-sm btn-default" ng-click="clearFilters()">Wyczyść wszystko</button>
+</form>

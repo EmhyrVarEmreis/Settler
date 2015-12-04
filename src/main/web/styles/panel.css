@@ -1,0 +1,31 @@
+.panel-main {
+    margin: 10px 40px 25px;
+}
+
+.panel-list {
+    margin-bottom: 0px;
+}
+
+.panel-sub-titles {
+    margin-bottom: 0px;
+    margin-top: 25px;
+}
+
+.panel-default {
+    border-color: #F17F0C;
+}
+
+.panel-default > .panel-heading {
+    color: white;
+    background-color: #F17F0C;
+    border-color: #F17F0C;
+}
+
+.list-group-item.active,
+.list-group-item.active:hover,
+.list-group-item.active:focus {
+    z-index: 2;
+    color: #fff;
+    background-color: #F17F0C;
+    border-color: #F17F0C;
+}

@@ -1,0 +1,57 @@
+body {
+
+}
+
+.ng-invalid.ng-touched {
+    background-color: #F17F0C;
+}
+
+.form-control-inline {
+    min-width: 0;
+    width: auto;
+    display: inline;
+    color: #555;
+    background: #fff none;
+    border: 1px solid #ccc;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+
+.form-control-inline:focus {
+    border-color: #66afe9;
+    outline: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
+}
+
+.top-margin {
+    margin-top: 5px;
+}
+
+.app-hr {
+    border: 0;
+    border-top: 1px solid rgba(241, 127, 12, .5);
+}
+
+.page-header {
+    border-bottom: 1px solid rgba(241, 127, 12, .5);
+}
+
+.modal-footer {
+    border-top: 1px solid rgba(241, 127, 12, .5);
+}
+
+.modal-header {
+    border-bottom: 1px solid rgba(241, 127, 12, .5);
+}
+
+.error {
+    background-color: #ffdcdf;
+}
+
+.login-page {
+    margin: 32px 32px 0px;
+}

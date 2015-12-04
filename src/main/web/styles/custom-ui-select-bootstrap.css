@@ -1,0 +1,17 @@
+.ui-select-bootstrap > input.ui-select-search.form-control {
+    height: 30px;
+    padding: 5px 10px;
+    font-size: 14px;
+    line-height: 1.5;
+    border-radius: 3px 0 0 3px;
+}
+
+.ui-select-bootstrap > .ui-select-match > .btn {
+    text-align: left !important;
+    height: 30px;
+    padding: 5px 10px;
+    font-size: 14px;
+    line-height: 1.5;
+    border-radius: 3px 0 0 3px;
+    color: #555;
+}
