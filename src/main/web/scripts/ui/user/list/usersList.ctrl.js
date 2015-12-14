@@ -18,7 +18,7 @@ angular.module('settlerApplication').controller('usersListCtrl', function ($scop
         page:    1,
         count:   25,
         sorting: {
-            lname: 'asc'
+            id: 'asc'
         }
     }, {
         counts:  [],
