@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import pl.morecraft.dev.settler.service.TransactionService;
 import pl.morecraft.dev.settler.web.dto.TransactionDTO;
+import pl.morecraft.dev.settler.web.dto.TransactionListDTO;
 import pl.morecraft.dev.settler.web.misc.ListPage;
 
 import javax.inject.Inject;
@@ -22,10 +23,10 @@ public class TransactionController {
     }
 
     @RequestMapping("/list")
-    public ListPage<TransactionDTO> getTransactions(@RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
-                                                    @RequestParam(value = "limit", required = false, defaultValue = "10") Integer limit,
-                                                    @RequestParam(value = "sortBy", required = false, defaultValue = "-created") String sort,
-                                                    @RequestParam(value = "filters", required = false, defaultValue = "") String filters) {
+    public ListPage<TransactionListDTO> getTransactions(@RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
+                                                        @RequestParam(value = "limit", required = false, defaultValue = "10") Integer limit,
+                                                        @RequestParam(value = "sortBy", required = false, defaultValue = "-reference") String sort,
+                                                        @RequestParam(value = "filters", required = false, defaultValue = "") String filters) {
         return transactionService.getTransactions(page, limit, sort, filters);
     }
 

@@ -1,0 +1,88 @@
+<div class="panel-main">
+    <div class="page-header">
+        <h1>Lista transakcji
+            <button type="button"
+                    class="btn btn-success btn-colPicker pull-right"
+                    popover="Kryteria wyszukiwania"
+                    popover-trigger="mouseenter"
+                    ng-click="toggleTransactionFilterView()">Filtry
+            </button>
+        </h1>
+    </div>
+
+    <div class="row panel-last-row">
+
+        <transaction-filter-view ng-show="showTransactionFilterView" transaction-filter="transactionFilter"
+                                 apply-filters="applyFilters()"
+                                 clear-filters="clearFilters()"></transaction-filter-view>
+
+        <table ng-table='tableParams' class='table table-hover'>
+            <thead>
+            <tr>
+                <th rowspan="3"
+                    ng-show="columns.reference.isVisible" class="text-center sortable"
+                    ng-class="{'sort-asc': tableParams.isSortBy('reference', 'asc'), 'sort-desc': tableParams.isSortBy('reference', 'desc')}"
+                    ng-click="tableParams.sorting({'reference' : tableParams.isSortBy('reference', 'asc') ? 'desc' : 'asc'})">
+                    <div class="sort-indicator">{{columns.reference.name}}</div>
+                </th>
+                <th rowspan="3"
+                    ng-show="columns.type.isVisible" class="text-center sortable"
+                    ng-class="{'sort-asc': tableParams.isSortBy('type', 'asc'), 'sort-desc': tableParams.isSortBy('type', 'desc')}"
+                    ng-click="tableParams.sorting({'type' : tableParams.isSortBy('type', 'asc') ? 'desc' : 'asc'})">
+                    <div class="sort-indicator">{{columns.type.name}}</div>
+                </th>
+                <th rowspan="3"
+                    ng-show="columns.owner.isVisible" class="text-center sortable"
+                    ng-class="{'sort-asc': tableParams.isSortBy('owner', 'asc'), 'sort-desc': tableParams.isSortBy('owner', 'desc')}"
+                    ng-click="tableParams.sorting({'owner' : tableParams.isSortBy('owner', 'asc') ? 'desc' : 'asc'})">
+                    <div class="sort-indicator">{{columns.owner.name}}</div>
+                </th>
+                <th rowspan="3"
+                    ng-show="columns.contractor.isVisible" class="text-center sortable"
+                    ng-class="{'sort-asc': tableParams.isSortBy('contractor', 'asc'), 'sort-desc': tableParams.isSortBy('contractor', 'desc')}"
+                    ng-click="tableParams.sorting({'contractor' : tableParams.isSortBy('contractor', 'asc') ? 'desc' : 'asc'})">
+                    <div class="sort-indicator">{{columns.contractor.name}}</div>
+                </th>
+                <th rowspan="3"
+                    ng-show="columns.value.isVisible" class="text-center sortable"
+                    ng-class="{'sort-asc': tableParams.isSortBy('value', 'asc'), 'sort-desc': tableParams.isSortBy('value', 'desc')}"
+                    ng-click="tableParams.sorting({'value' : tableParams.isSortBy('value', 'asc') ? 'desc' : 'asc'})">
+                    <div class="sort-indicator">{{columns.value.name}}</div>
+                </th>
+                <th rowspan="3"
+                    ng-show="columns.created.isVisible" class="text-center sortable"
+                    ng-class="{'sort-asc': tableParams.isSortBy('created', 'asc'), 'sort-desc': tableParams.isSortBy('created', 'desc')}"
+                    ng-click="tableParams.sorting({'created' : tableParams.isSortBy('created', 'asc') ? 'desc' : 'asc'})">
+                    <div class="sort-indicator">{{columns.created.name}}</div>
+                </th>
+                <th rowspan="3"
+                    ng-show="columns.confirmed.isVisible" class="text-center sortable"
+                    ng-class="{'sort-asc': tableParams.isSortBy('confirmed', 'asc'), 'sort-desc': tableParams.isSortBy('confirmed', 'desc')}"
+                    ng-click="tableParams.sorting({'confirmed' : tableParams.isSortBy('confirmed', 'asc') ? 'desc' : 'asc'})">
+                    <div class="sort-indicator">{{columns.confirmed.name}}</div>
+                </th>
+                <th rowspan="3"
+                    ng-show="columns.evaluated.isVisible" class="text-center sortable"
+                    ng-class="{'sort-asc': tableParams.isSortBy('evaluated', 'asc'), 'sort-desc': tableParams.isSortBy('evaluated', 'desc')}"
+                    ng-click="tableParams.sorting({'evaluated' : tableParams.isSortBy('evaluated', 'asc') ? 'desc' : 'asc'})">
+                    <div class="sort-indicator">{{columns.evaluated.name}}</div>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat='transaction in $data'>
+                <td ng-show="columns.reference.isVisible"><a
+                        href="#/transactionDetails/{{transaction.id}}"><strong>{{transaction.reference}}</strong></a>
+                </td>
+                <td ng-show="columns.type.isVisible">{{transaction.type}}</td>
+                <td ng-show="columns.owner.isVisible">{{transaction.owner}}</td>
+                <td ng-show="columns.contractor.isVisible">{{transaction.contractor}}</td>
+                <td ng-show="columns.value.isVisible">{{transaction.value | setDecimal:2 | myCurrency:'PLN'}}</td>
+                <td ng-show="columns.created.isVisible">{{transaction.created}}</td>
+                <td ng-show="columns.confirmed.isVisible">{{transaction.confirmed}}</td>
+                <td ng-show="columns.evaluated.isVisible">{{transaction.evaluated}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
