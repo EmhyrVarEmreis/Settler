@@ -15,7 +15,7 @@ public class Settlement extends PrivilegeObject {
     private String reference;
 
     @Enumerated(EnumType.STRING)
-    private SettlementType settlementType;
+    private SettlementType type;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "owner")
@@ -48,12 +48,12 @@ public class Settlement extends PrivilegeObject {
         this.reference = reference;
     }
 
-    public SettlementType getSettlementType() {
-        return settlementType;
+    public SettlementType getType() {
+        return type;
     }
 
-    public void setSettlementType(SettlementType settlementType) {
-        this.settlementType = settlementType;
+    public void setType(SettlementType type) {
+        this.type = type;
     }
 
     public User getOwner() {

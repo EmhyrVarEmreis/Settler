@@ -14,7 +14,7 @@ public class Transaction extends PrivilegeObject {
     private String reference;
 
     @Enumerated(EnumType.STRING)
-    private TransactionType transactionType;
+    private TransactionType type;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "owner")
@@ -41,12 +41,12 @@ public class Transaction extends PrivilegeObject {
         this.reference = reference;
     }
 
-    public TransactionType getTransactionType() {
-        return transactionType;
+    public TransactionType getType() {
+        return type;
     }
 
-    public void setTransactionType(TransactionType transactionType) {
-        this.transactionType = transactionType;
+    public void setType(TransactionType type) {
+        this.type = type;
     }
 
     public User getOwner() {
