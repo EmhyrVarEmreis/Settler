@@ -100,7 +100,7 @@
                              foreignKeyName="FK_mod_transaction_contractor_usr_user"/>
             </column>
             <column name="value"
-                    type="money"
+                    type="decimal(9,2)"
                     defaultValue="0">
                 <constraints nullable="false"/>
             </column>
@@ -146,7 +146,7 @@
                              foreignKeyName="FK_mod_settlement_contractor_usr_user"/>
             </column>
             <column name="balance"
-                    type="money"
+                    type="decimal(9,2)"
                     defaultValue="0">
                 <constraints nullable="false"/>
             </column>
