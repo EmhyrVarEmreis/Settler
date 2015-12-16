@@ -1,9 +1,8 @@
-target
-bower_components
-node_modules
-vagrant-db/.vagrant
-vagrant-db/Vagrantfile
-.idea
+target/
+bower_components/
+node_modules/
+vagrant-db/.vagrant/
+.idea/
 *.iml
 *.ipr
 *.ids
