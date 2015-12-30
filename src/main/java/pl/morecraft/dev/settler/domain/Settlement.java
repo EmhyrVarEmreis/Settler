@@ -1,5 +1,6 @@
 package pl.morecraft.dev.settler.domain;
 
+import org.hibernate.envers.NotAudited;
 import pl.morecraft.dev.settler.domain.dictionaries.SettlementType;
 
 import javax.persistence.*;
@@ -32,9 +33,11 @@ public class Settlement extends PrivilegeObject {
     private LocalDate endDate;
     private LocalDate evaluated;
 
-    @ElementCollection
-    @CollectionTable(name = "mod_settlement_transaction", joinColumns = @JoinColumn(name = "transaction_id"))
-    @OrderColumn
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "mod_settlement_transaction",
+            joinColumns = {@JoinColumn(name = "settlement_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "transaction_id", referencedColumnName = "id")})
+    @NotAudited
     private List<Transaction> transactions;
 
     public Settlement() {
