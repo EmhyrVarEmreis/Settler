@@ -92,12 +92,12 @@
                     type="bigint">
                 <constraints primaryKey="true"
                              references="usr_user(id)"
-                             foreignKeyName="FK_mod_transaction_owner_usr_user"/>
+                             foreignKeyName="FK_mod_transaction_owner_usr_user_id"/>
             </column>
             <column name="contractor" type="bigint">
                 <constraints primaryKey="true"
                              references="usr_user(id)"
-                             foreignKeyName="FK_mod_transaction_contractor_usr_user"/>
+                             foreignKeyName="FK_mod_transaction_contractor_usr_user_id"/>
             </column>
             <column name="value"
                     type="decimal(9,2)"
@@ -138,12 +138,12 @@
                     type="bigint">
                 <constraints primaryKey="true"
                              references="usr_user(id)"
-                             foreignKeyName="FK_mod_settlement_owner_usr_user"/>
+                             foreignKeyName="FK_mod_settlement_owner_usr_user_id"/>
             </column>
             <column name="contractor" type="bigint">
                 <constraints primaryKey="true"
                              references="usr_user(id)"
-                             foreignKeyName="FK_mod_settlement_contractor_usr_user"/>
+                             foreignKeyName="FK_mod_settlement_contractor_usr_user_id"/>
             </column>
             <column name="balance"
                     type="decimal(9,2)"
@@ -166,14 +166,50 @@
             <column name="settlement_id"
                     type="bigint">
                 <constraints references="mod_settlement(id)"
-                             foreignKeyName="FK_mod_transaction_settlements_settlement"
+                             foreignKeyName="FK_mod_settlement_transaction_mod_settlement_id"
                              deleteCascade="true"/>
             </column>
             <column name="transaction_id"
                     type="bigint">
                 <constraints references="mod_transaction(id)"
-                             foreignKeyName="FK_mod_transaction_settlements_transaction"
+                             foreignKeyName="FK_mod_settlement_transaction_mod_transaction_id"
                              deleteCascade="true"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="mod_comment">
+            <column name="id"
+                    type="bigint">
+                <constraints primaryKey="true"
+                             primaryKeyName="PK_mod_comment_id"
+                             references="prv_object(id)"
+                             foreignKeyName="FK_mod_comment_id_prv_object_id"/>
+            </column>
+            <column name="prv_object"
+                    type="bigint">
+                <constraints nullable="false"
+                             references="prv_object(id)"
+                             foreignKeyName="FK_mod_comment_prv_object_prv_object_id"/>
+            </column>
+            <column name="usr_user"
+                    type="bigint">
+                <constraints nullable="false"
+                             references="usr_user(id)"
+                             foreignKeyName="FK_mod_comment_usr_user_usr_user_id"/>
+            </column>
+            <column name="parent"
+                    type="bigint">
+                <constraints nullable="true"
+                             references="mod_comment(id)"
+                             foreignKeyName="FK_mod_comment_parent_mod_comment_id"/>
+            </column>
+            <column name="created"
+                    type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="value"
+                    type="nvarchar(512)">
+                <constraints nullable="false"/>
             </column>
         </createTable>
 

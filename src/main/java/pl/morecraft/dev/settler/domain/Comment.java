@@ -1,14 +1,44 @@
 package pl.morecraft.dev.settler.domain;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 
+@Entity
+@Table(name = "mod_comment")
 public class Comment extends PrivilegeObject {
 
-    private User owner;
-    private LocalDate created;
-    private String content;
+    @ManyToOne
+    @JoinColumn(name = "prv_object")
+    private PrivilegeObject object;
 
-    public Comment() {
+    @ManyToOne
+    @JoinColumn(name = "parent")
+    private Comment parentComment;
+
+    @ManyToOne
+    @JoinColumn(name = "usr_user")
+    private User owner;
+
+    @Column(nullable = false)
+    private LocalDate created;
+
+    @Column(nullable = false)
+    private String value;
+
+    public PrivilegeObject getObject() {
+        return object;
+    }
+
+    public void setObject(PrivilegeObject object) {
+        this.object = object;
+    }
+
+    public Comment getParentComment() {
+        return parentComment;
+    }
+
+    public void setParentComment(Comment parentComment) {
+        this.parentComment = parentComment;
     }
 
     public User getOwner() {
@@ -27,12 +57,11 @@ public class Comment extends PrivilegeObject {
         this.created = created;
     }
 
-    public String getContent() {
-        return content;
+    public String getValue() {
+        return value;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setValue(String value) {
+        this.value = value;
     }
-
 }
