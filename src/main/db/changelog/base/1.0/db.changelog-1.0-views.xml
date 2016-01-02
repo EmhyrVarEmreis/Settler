@@ -41,7 +41,6 @@
                 s.reference,
                 s.value,
                 s.created,
-                s.created,
                 s.confirmed,
                 s.evaluated,
                 (SELECT COUNT(*)
