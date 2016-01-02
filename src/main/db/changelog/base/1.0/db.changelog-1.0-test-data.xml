@@ -12,7 +12,7 @@
         <sql>
             INSERT INTO dev_settler.prv_object VALUES ();
             INSERT INTO dev_settler.usr_user (
-            id, login, first_name, last_name, password, email, created
+                id, login, first_name, last_name, password, email, created
             ) VALUES (
                 LAST_INSERT_ID(),
                 'admin',
@@ -25,7 +25,7 @@
 
             INSERT INTO dev_settler.prv_object VALUES ();
             INSERT INTO dev_settler.usr_user (
-            id, login, first_name, last_name, password, email, created
+                id, login, first_name, last_name, password, email, created
             ) VALUES (
                 LAST_INSERT_ID(),
                 'user',
@@ -38,28 +38,28 @@
 
             INSERT INTO dev_settler.prv_object VALUES ();
             INSERT INTO dev_settler.usr_user (
-            id, login, first_name, last_name, password, email, created
+                id, login, first_name, last_name, password, email, created
             ) VALUES (
-            LAST_INSERT_ID(),
-            'jan.nowak',
-            'Jan',
-            'Nowak',
-            '5f4dcc3b5aa765d61d8327deb882cf99',
-            'jan.nowak@morecraft.pl',
-            '2015-12-12 12:12:12'
+                LAST_INSERT_ID(),
+                'jan.nowak',
+                'Jan',
+                'Nowak',
+                '5f4dcc3b5aa765d61d8327deb882cf99',
+                'jan.nowak@morecraft.pl',
+                '2015-12-12 12:12:12'
             );
 
             INSERT INTO dev_settler.prv_object VALUES ();
             INSERT INTO dev_settler.usr_user (
-            id, login, first_name, last_name, password, email, created
+                id, login, first_name, last_name, password, email, created
             ) VALUES (
-            LAST_INSERT_ID(),
-            'marian.kowalski',
-            'Marian',
-            'Kowalski',
-            '5f4dcc3b5aa765d61d8327deb882cf99',
-            'marian.kowalski@morecraft.pl',
-            '2015-11-17 16:00:00'
+                LAST_INSERT_ID(),
+                'marian.kowalski',
+                'Marian',
+                'Kowalski',
+                '5f4dcc3b5aa765d61d8327deb882cf99',
+                'marian.kowalski@morecraft.pl',
+                '2015-11-17 16:00:00'
             );
         </sql>
 
@@ -67,16 +67,16 @@
         <sql>
             INSERT INTO dev_settler.prv_object VALUES ();
             INSERT INTO dev_settler.mod_transaction (
-            id, reference, type, owner, contractor, value, created
+                id, reference, type, owner, contractor, value, created
             ) VALUES (
                 LAST_INSERT_ID(),
                 'TRA151112121212',
                 'NOR',
                 (SELECT id
-            FROM dev_settler.usr_user
+                 FROM dev_settler.usr_user
                  WHERE login = 'admin'),
                 (SELECT id
-            FROM dev_settler.usr_user
+                 FROM dev_settler.usr_user
                  WHERE login = 'user'),
                 12.50,
                 '2015-11-12 12:12:12'
@@ -84,17 +84,17 @@
 
             INSERT INTO dev_settler.prv_object VALUES ();
             INSERT INTO dev_settler.mod_transaction (
-            id, reference, type, owner, contractor, value, created
+                id, reference, type, owner, contractor, value, created
             ) VALUES (
                 LAST_INSERT_ID(),
                 'TRA151113150000',
                 'OTH',
                 (SELECT id
-            FROM dev_settler.usr_user
+                 FROM dev_settler.usr_user
                  WHERE login = 'user'),
-            (SELECT id
-            FROM dev_settler.usr_user
-            WHERE login = 'marian.kowalski'),
+                (SELECT id
+                 FROM dev_settler.usr_user
+                 WHERE login = 'marian.kowalski'),
                 10.50,
                 '2015-11-13 15:00:00'
             );
@@ -104,16 +104,16 @@
         <sql>
             INSERT INTO dev_settler.prv_object VALUES ();
             INSERT INTO dev_settler.mod_settlement (
-            id, reference, type, owner, contractor, balance, created, start_date, end_date, evaluated
+                id, reference, type, owner, contractor, balance, created, start_date, end_date, evaluated
             ) VALUES (
                 LAST_INSERT_ID(),
                 'SET151112121212',
                 'NOR',
                 (SELECT id
-            FROM dev_settler.usr_user
-            WHERE login = 'jan.nowak'),
+                 FROM dev_settler.usr_user
+                 WHERE login = 'jan.nowak'),
                 (SELECT id
-            FROM dev_settler.usr_user
+                 FROM dev_settler.usr_user
                  WHERE login = 'user'),
                 12.50,
                 '2015-11-12 12:12:12',
@@ -126,24 +126,24 @@
         <!-- LINK TRANSACTIONS TO SETTLEMENTS -->
         <sql>
             INSERT INTO prv_object_hierarchy (
-            prv_object_from, prv_object_to
+                prv_object_from, prv_object_to
             ) VALUES (
                 (SELECT id
-            FROM dev_settler.mod_settlement
+                 FROM dev_settler.mod_settlement
                  WHERE reference = 'SET151112121212'),
                 (SELECT id
-            FROM dev_settler.mod_transaction
+                 FROM dev_settler.mod_transaction
                  WHERE reference = 'TRA151112121212')
             );
 
             INSERT INTO prv_object_hierarchy (
-            prv_object_from, prv_object_to
+                prv_object_from, prv_object_to
             ) VALUES (
                 (SELECT id
-            FROM dev_settler.mod_settlement
+                 FROM dev_settler.mod_settlement
                  WHERE reference = 'SET151112121212'),
                 (SELECT id
-            FROM dev_settler.mod_transaction
+                 FROM dev_settler.mod_transaction
                  WHERE reference = 'TRA151113150000')
             );
         </sql>
@@ -152,50 +152,50 @@
         <sql>
             INSERT INTO dev_settler.prv_object VALUES ();
             INSERT INTO dev_settler.mod_comment (
-            id, prv_object, usr_user, parent, created, value
+                id, prv_object, usr_user, parent, created, value
             ) VALUES (
-            LAST_INSERT_ID(),
-            (SELECT id
-            FROM dev_settler.mod_settlement
-            WHERE reference = 'SET151112121212'),
-            (SELECT id
-            FROM dev_settler.usr_user
-            WHERE login = 'jan.nowak'),
-            NULL,
-            '2015-12-20 12:12:10',
-            'Comment by Jan Nowak to SET151112121212'
+                LAST_INSERT_ID(),
+                (SELECT id
+                 FROM dev_settler.mod_settlement
+                 WHERE reference = 'SET151112121212'),
+                (SELECT id
+                 FROM dev_settler.usr_user
+                 WHERE login = 'jan.nowak'),
+                NULL,
+                '2015-12-20 12:12:10',
+                'Comment by Jan Nowak to SET151112121212'
             );
 
             INSERT INTO dev_settler.prv_object VALUES ();
             INSERT INTO dev_settler.mod_comment (
-            id, prv_object, usr_user, parent, created, value
+                id, prv_object, usr_user, parent, created, value
             ) VALUES (
-            LAST_INSERT_ID(),
-            (SELECT id
-            FROM dev_settler.mod_settlement
-            WHERE reference = 'SET151112121212'),
-            (SELECT id
-            FROM dev_settler.usr_user
-            WHERE login = 'user'),
-            LAST_INSERT_ID() - 1,
-            '2015-12-20 15:15:46',
-            'Comment by user to SET151112121212'
+                LAST_INSERT_ID(),
+                (SELECT id
+                 FROM dev_settler.mod_settlement
+                 WHERE reference = 'SET151112121212'),
+                (SELECT id
+                 FROM dev_settler.usr_user
+                 WHERE login = 'user'),
+                LAST_INSERT_ID() - 1,
+                '2015-12-20 15:15:46',
+                'Comment by user to SET151112121212'
             );
 
             INSERT INTO dev_settler.prv_object VALUES ();
             INSERT INTO dev_settler.mod_comment (
-            id, prv_object, usr_user, parent, created, value
+                id, prv_object, usr_user, parent, created, value
             ) VALUES (
-            LAST_INSERT_ID(),
-            (SELECT id
-            FROM dev_settler.mod_transaction
-            WHERE reference = 'TRA151112121212'),
-            (SELECT id
-            FROM dev_settler.usr_user
-            WHERE login = 'user'),
-            NULL,
-            '2015-12-21 14:14:40',
-            'Comment by user to TRA151112121212'
+                LAST_INSERT_ID(),
+                (SELECT id
+                 FROM dev_settler.mod_transaction
+                 WHERE reference = 'TRA151112121212'),
+                (SELECT id
+                 FROM dev_settler.usr_user
+                 WHERE login = 'user'),
+                NULL,
+                '2015-12-21 14:14:40',
+                'Comment by user to TRA151112121212'
             );
         </sql>
 
