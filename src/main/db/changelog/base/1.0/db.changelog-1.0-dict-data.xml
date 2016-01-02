@@ -8,27 +8,44 @@
 
     <changeSet id="1.0-init-dict-data" author="settler">
 
-        <insert tableName="mod_settlement_type">
+        <insert tableName="dct_settlement_type">
             <column name="code">NOR</column>
             <column name="description">Normal</column>
         </insert>
-        <insert tableName="mod_settlement_type">
+        <insert tableName="dct_settlement_type">
             <column name="code">OTH</column>
             <column name="description">Other</column>
         </insert>
 
-        <insert tableName="mod_transaction_type">
+        <insert tableName="dct_transaction_type">
             <column name="code">NOR</column>
             <column name="description">Normal</column>
         </insert>
-        <insert tableName="mod_transaction_type">
+        <insert tableName="dct_transaction_type">
             <column name="code">OTH</column>
             <column name="description">Other</column>
+        </insert>
+
+        <insert tableName="dct_operation_type">
+            <column name="code">ADM</column>
+            <column name="description">Administrative</column>
+        </insert>
+        <insert tableName="dct_operation_type">
+            <column name="code">EDT</column>
+            <column name="description">Editable</column>
+        </insert>
+        <insert tableName="dct_operation_type">
+            <column name="code">RDM</column>
+            <column name="description">Readable</column>
+        </insert>
+        <insert tableName="dct_operation_type">
+            <column name="code">CRT</column>
+            <column name="description">Creatable</column>
         </insert>
 
         <rollback>
-            <delete tableName="mod_settlement_type"/>
-            <delete tableName="mod_transaction_type"/>
+            <delete tableName="dct_settlement_type"/>
+            <delete tableName="dct_transaction_type"/>
         </rollback>
 
     </changeSet>

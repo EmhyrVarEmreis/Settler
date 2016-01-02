@@ -34,9 +34,9 @@ public class Settlement extends PrivilegeObject {
     private LocalDate evaluated;
 
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "mod_settlement_transaction",
-            joinColumns = {@JoinColumn(name = "settlement_id", referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "transaction_id", referencedColumnName = "id")})
+    @JoinTable(name = "prv_object_hierarchy",
+            joinColumns = {@JoinColumn(name = "prv_object_from", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "prv_object_to", referencedColumnName = "id")})
     @NotAudited
     private List<Transaction> transactions;
 

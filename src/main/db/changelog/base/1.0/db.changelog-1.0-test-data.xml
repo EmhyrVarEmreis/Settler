@@ -125,8 +125,8 @@
 
         <!-- LINK TRANSACTIONS TO SETTLEMENTS -->
         <sql>
-            INSERT INTO dev_settler.mod_settlement_transaction (
-            settlement_id, transaction_id
+            INSERT INTO prv_object_hierarchy (
+            prv_object_from, prv_object_to
             ) VALUES (
                 (SELECT id
             FROM dev_settler.mod_settlement
@@ -136,8 +136,8 @@
                  WHERE reference = 'TRA151112121212')
             );
 
-            INSERT INTO dev_settler.mod_settlement_transaction (
-            settlement_id, transaction_id
+            INSERT INTO prv_object_hierarchy (
+            prv_object_from, prv_object_to
             ) VALUES (
                 (SELECT id
             FROM dev_settler.mod_settlement
@@ -199,6 +199,168 @@
             );
         </sql>
 
+        <!-- CREATE ROLES -->
+        <sql>
+            INSERT INTO dev_settler.prv_object VALUES ();
+            INSERT INTO dev_settler.prv_role (
+                id, name
+            ) VALUES (
+                LAST_INSERT_ID(),
+                'Administrator'
+            );
+
+            INSERT INTO dev_settler.prv_object VALUES ();
+            INSERT INTO dev_settler.prv_role (
+                id, name
+            ) VALUES (
+                LAST_INSERT_ID(),
+                'Moderator'
+            );
+
+            INSERT INTO dev_settler.prv_object VALUES ();
+            INSERT INTO dev_settler.prv_role (
+                id, name
+            ) VALUES (
+                LAST_INSERT_ID(),
+                'User'
+            );
+
+            INSERT INTO dev_settler.prv_privilege (
+                prv_object, prv_owner, operation_type
+            ) VALUES (
+                NULL,
+                (SELECT id
+                 FROM prv_role
+                 WHERE name = 'Administrator'),
+                'ADM'
+            );
+            INSERT INTO dev_settler.prv_privilege (
+                prv_object, prv_owner, operation_type
+            ) VALUES (
+                NULL,
+                (SELECT id
+                 FROM prv_role
+                 WHERE name = 'Administrator'),
+                'CRT'
+            );
+            INSERT INTO dev_settler.prv_privilege (
+                prv_object, prv_owner, operation_type
+            ) VALUES (
+                NULL,
+                (SELECT id
+                 FROM prv_role
+                 WHERE name = 'Administrator'),
+                'RDM'
+            );
+            INSERT INTO dev_settler.prv_privilege (
+                prv_object, prv_owner, operation_type
+            ) VALUES (
+                NULL,
+                (SELECT id
+                 FROM prv_role
+                 WHERE name = 'Administrator'),
+                'EDT'
+            );
+
+            INSERT INTO dev_settler.prv_privilege (
+                prv_object, prv_owner, operation_type
+            ) VALUES (
+                NULL,
+                (SELECT id
+                 FROM prv_role
+                 WHERE name = 'Moderator'),
+                'CRT'
+            );
+            INSERT INTO dev_settler.prv_privilege (
+                prv_object, prv_owner, operation_type
+            ) VALUES (
+                NULL,
+                (SELECT id
+                 FROM prv_role
+                 WHERE name = 'Moderator'),
+                'RDM'
+            );
+            INSERT INTO dev_settler.prv_privilege (
+                prv_object, prv_owner, operation_type
+            ) VALUES (
+                NULL,
+                (SELECT id
+                 FROM prv_role
+                 WHERE name = 'Moderator'),
+                'EDT'
+            );
+
+            INSERT INTO dev_settler.prv_privilege (
+                prv_object, prv_owner, operation_type
+            ) VALUES (
+                NULL,
+                (SELECT id
+                 FROM prv_role
+                 WHERE name = 'User'),
+                'RDM'
+            );
+        </sql>
+
+        <!-- ADD USER TO ROLES -->
+        <sql>
+            INSERT INTO prv_user_role (
+                usr_user, prv_role
+            ) VALUES (
+                (SELECT id
+                 FROM usr_user
+                 WHERE login = 'admin'),
+                (SELECT id
+                 FROM prv_role
+                 WHERE name = 'Administrator')
+            );
+            INSERT INTO prv_user_role (
+                usr_user, prv_role
+            ) VALUES (
+                (SELECT id
+                 FROM usr_user
+                 WHERE login = 'jan.nowak'),
+                (SELECT id
+                 FROM prv_role
+                 WHERE name = 'Moderator')
+            );
+
+            INSERT INTO prv_user_role (
+                usr_user, prv_role
+            ) VALUES (
+                (SELECT id
+                 FROM usr_user
+                 WHERE login = 'user'),
+                (SELECT id
+                 FROM prv_role
+                 WHERE name = 'User')
+            );
+        </sql>
+
+        <!-- ADD MISC PRIVILEGES -->
+        <sql>
+            INSERT INTO prv_privilege (
+                prv_object, prv_owner, operation_type
+            ) VALUES (
+                (SELECT id
+                 FROM dev_settler.mod_settlement
+                 WHERE reference = 'SET151112121212'),
+                (SELECT id
+                 FROM usr_user
+                 WHERE login = 'marian.kowalski'),
+                'RDM'
+            );
+            INSERT INTO prv_privilege (
+                prv_object, prv_owner, operation_type
+            ) VALUES (
+                (SELECT id
+                 FROM dev_settler.mod_settlement
+                 WHERE reference = 'SET151112121212'),
+                (SELECT id
+                 FROM prv_role
+                 WHERE name = 'User'),
+                'RDM'
+            );
+        </sql>
 
         <rollback>
             <delete tableName="mod_comment"/>

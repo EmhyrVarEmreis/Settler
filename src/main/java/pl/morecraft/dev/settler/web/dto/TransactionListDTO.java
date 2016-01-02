@@ -15,6 +15,7 @@ public class TransactionListDTO {
     private String owner;
     private String contractor;
     private Double value;
+    private Long commentCount;
 
     @JsonDeserialize(using = JsonDateDeserializer.class)
     @JsonSerialize(using = JsonDateSerializer.class)
@@ -103,4 +104,11 @@ public class TransactionListDTO {
         this.evaluated = evaluated;
     }
 
+    public Long getCommentCount() {
+        return commentCount;
+    }
+
+    public void setCommentCount(Long commentCount) {
+        this.commentCount = commentCount;
+    }
 }
