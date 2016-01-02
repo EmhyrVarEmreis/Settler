@@ -264,6 +264,18 @@
 
     <profiles>
         <profile>
+            <id>settler-dev-loc</id>
+            <properties>
+                <settler.db.url>jdbc:mysql://localhost:3306/dev_settler?useUnicode=true&amp;characterEncoding=utf8</settler.db.url>
+                <settler.db.user>settler_user</settler.db.user>
+                <settler.db.password>Settler2015!</settler.db.password>
+                <settler.db.context>dev</settler.db.context>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
             <id>GULP</id>
             <build>
                 <plugins>

@@ -17,28 +17,37 @@
             </column>
         </createTable>
 
-        <createTable tableName="mod_settlement_type">
+        <createTable tableName="dct_settlement_type">
             <column name="code"
                     type="nvarchar(3)">
                 <constraints primaryKey="true"
-                             primaryKeyName="PK_mod_settlement_type_code"/>
+                             primaryKeyName="PK_dct_settlement_type_code"/>
             </column>
             <column name="description"
                     type="nvarchar(32)"/>
         </createTable>
 
-        <createTable tableName="mod_transaction_type">
+        <createTable tableName="dct_transaction_type">
             <column name="code"
                     type="nvarchar(3)">
                 <constraints primaryKey="true"
-                             primaryKeyName="PK_mod_transaction_type_code"/>
+                             primaryKeyName="PK_dct_transaction_type_code"/>
+            </column>
+            <column name="description"
+                    type="nvarchar(32)"/>
+        </createTable>
+
+        <createTable tableName="dct_operation_type">
+            <column name="code"
+                    type="nvarchar(3)">
+                <constraints primaryKey="true"
+                             primaryKeyName="PK_dct_operation_type_code"/>
             </column>
             <column name="description"
                     type="nvarchar(32)"/>
         </createTable>
 
         <createTable tableName="usr_user">
-            <!--autoIncrement="true"-->
             <column name="id"
                     type="bigint">
                 <constraints primaryKey="true"
@@ -85,19 +94,19 @@
             <column name="type"
                     type="nvarchar(3)">
                 <constraints primaryKey="true"
-                             references="mod_transaction_type(code)"
-                             foreignKeyName="FK_mod_transaction_type_mod_transaction_type_code"/>
+                             references="dct_transaction_type(code)"
+                             foreignKeyName="FK_dct_transaction_type_dct_transaction_type_code"/>
             </column>
             <column name="owner"
                     type="bigint">
                 <constraints primaryKey="true"
                              references="usr_user(id)"
-                             foreignKeyName="FK_mod_transaction_owner_usr_user"/>
+                             foreignKeyName="FK_mod_transaction_owner_usr_user_id"/>
             </column>
             <column name="contractor" type="bigint">
                 <constraints primaryKey="true"
                              references="usr_user(id)"
-                             foreignKeyName="FK_mod_transaction_contractor_usr_user"/>
+                             foreignKeyName="FK_mod_transaction_contractor_usr_user_id"/>
             </column>
             <column name="value"
                     type="decimal(9,2)"
@@ -131,19 +140,19 @@
             <column name="type"
                     type="nvarchar(3)">
                 <constraints primaryKey="true"
-                             references="mod_settlement_type(code)"
-                             foreignKeyName="FK_mod_settlement_type_mod_settlement_type_code"/>
+                             references="dct_settlement_type(code)"
+                             foreignKeyName="FK_dct_settlement_type_dct_settlement_type_code"/>
             </column>
             <column name="owner"
                     type="bigint">
                 <constraints primaryKey="true"
                              references="usr_user(id)"
-                             foreignKeyName="FK_mod_settlement_owner_usr_user"/>
+                             foreignKeyName="FK_mod_settlement_owner_usr_user_id"/>
             </column>
             <column name="contractor" type="bigint">
                 <constraints primaryKey="true"
                              references="usr_user(id)"
-                             foreignKeyName="FK_mod_settlement_contractor_usr_user"/>
+                             foreignKeyName="FK_mod_settlement_contractor_usr_user_id"/>
             </column>
             <column name="balance"
                     type="decimal(9,2)"
@@ -162,17 +171,156 @@
                     type="date"/>
         </createTable>
 
-        <createTable tableName="mod_settlement_transaction">
-            <column name="settlement_id"
+        <!--<createTable tableName="mod_settlement_transaction">-->
+        <!--<column name="settlement_id"-->
+        <!--type="bigint">-->
+        <!--<constraints references="mod_settlement(id)"-->
+        <!--foreignKeyName="FK_mod_settlement_transaction_mod_settlement_id"-->
+        <!--deleteCascade="true"/>-->
+        <!--</column>-->
+        <!--<column name="transaction_id"-->
+        <!--type="bigint">-->
+        <!--<constraints references="mod_transaction(id)"-->
+        <!--foreignKeyName="FK_mod_settlement_transaction_mod_transaction_id"-->
+        <!--deleteCascade="true"/>-->
+        <!--</column>-->
+        <!--</createTable>-->
+
+        <createTable tableName="mod_comment">
+            <column name="id"
                     type="bigint">
-                <constraints references="mod_settlement(id)"
-                             foreignKeyName="FK_mod_transaction_settlements_settlement"
+                <constraints primaryKey="true"
+                             primaryKeyName="PK_mod_comment_id"
+                             references="prv_object(id)"
+                             foreignKeyName="FK_mod_comment_id_prv_object_id"/>
+            </column>
+            <column name="prv_object"
+                    type="bigint">
+                <constraints nullable="false"
+                             references="prv_object(id)"
+                             foreignKeyName="FK_mod_comment_prv_object_prv_object_id"/>
+            </column>
+            <column name="usr_user"
+                    type="bigint">
+                <constraints nullable="false"
+                             references="usr_user(id)"
+                             foreignKeyName="FK_mod_comment_usr_user_usr_user_id"/>
+            </column>
+            <column name="parent"
+                    type="bigint">
+                <constraints nullable="true"
+                             references="mod_comment(id)"
+                             foreignKeyName="FK_mod_comment_parent_mod_comment_id"/>
+            </column>
+            <column name="created"
+                    type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="value"
+                    type="nvarchar(512)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="prv_object_hierarchy">
+            <column name="prv_object_from"
+                    type="bigint">
+                <constraints references="prv_object(id)"
+                             foreignKeyName="FK_prv_object_hierarchy_prv_object_from_prv_object_id"
                              deleteCascade="true"/>
             </column>
-            <column name="transaction_id"
+            <column name="prv_object_to"
                     type="bigint">
-                <constraints references="mod_transaction(id)"
-                             foreignKeyName="FK_mod_transaction_settlements_transaction"
+                <constraints references="prv_object(id)"
+                             foreignKeyName="FK_prv_object_hierarchy_prv_object_to_prv_object_id"
+                             deleteCascade="true"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="prv_role">
+            <column name="id"
+                    type="bigint">
+                <constraints primaryKey="true"
+                             references="prv_object(id)"
+                             foreignKeyName="FK_prv_role_prv_object"/>
+            </column>
+            <column name="name"
+                    type="nvarchar(50)"/>
+        </createTable>
+
+        <createTable tableName="prv_privilege">
+            <column name="id"
+                    type="bigint"
+                    autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="prv_object"
+                    type="bigint">
+                <constraints nullable="true"
+                             references="prv_object(id)"
+                             foreignKeyName="FK_prv_privilege_prv_object_prv_object_id"/>
+            </column>
+            <column name="prv_owner"
+                    type="bigint">
+                <constraints references="prv_object(id)"
+                             foreignKeyName="FK_prv_privilege_prv_owner_prv_object_id"/>
+            </column>
+            <column name="operation_type"
+                    type="nvarchar(3)">
+                <constraints references="dct_operation_type(code)"
+                             foreignKeyName="FK_prv_privilege_operation_type_dct_operation_type_code"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="prv_user_role">
+            <column name="usr_user"
+                    type="bigint">
+                <constraints nullable="false"
+                             references="usr_user(id)"
+                             foreignKeyName="FK_prv_user_role_usr_user_usr_user_id"/>
+            </column>
+            <column name="prv_role"
+                    type="bigint">
+                <constraints nullable="false"
+                             references="prv_role(id)"
+                             foreignKeyName="FK_prv_user_role_prv_role_prv_role_id"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="jtb_object_privilege">
+            <column name="prv_object_from"
+                    type="bigint">
+                <constraints nullable="false"
+                             references="prv_object(id)"
+                             foreignKeyName="FK_jtb_object_privilege_prv_object_from_prv_object_id"/>
+            </column>
+            <column name="prv_object_to"
+                    type="bigint">
+                <constraints nullable="false"
+                             references="prv_object(id)"
+                             foreignKeyName="FK_jtb_object_privilege_prv_object_to_prv_object_id"/>
+            </column>
+            <column name="operation_type"
+                    type="nvarchar(5)">
+                <constraints nullable="true"
+                             references="dct_operation_type(code)"
+                             foreignKeyName="FK_jtb_object_privilege_operation_type_dct_operation_type_code"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="jtb_object_hierarchy">
+            <column name="prv_object_from"
+                    type="bigint">
+                <constraints nullable="true"
+                             references="prv_object(id)"
+                             foreignKeyName="FK_jtb_object_hierarchy_prv_object_from_prv_object_id"
+                             deleteCascade="true"/>
+            </column>
+            <column name="prv_object_to"
+                    type="bigint">
+                <constraints nullable="true"
+                             references="prv_object(id)"
+                             foreignKeyName="FK_jtb_object_hierarchy_prv_object_to_prv_object_id"
                              deleteCascade="true"/>
             </column>
         </createTable>
