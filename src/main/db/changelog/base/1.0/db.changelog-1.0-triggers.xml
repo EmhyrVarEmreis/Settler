@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <databaseChangeLog
-        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
@@ -17,16 +17,16 @@
 
         <createProcedure>
             CREATE PROCEDURE proc_refresh_user_privileges(uid BIGINT)
-            BEGIN
-            DELETE FROM jtb_object_privilege
-            WHERE prv_object_from = uid;
-            INSERT INTO jtb_object_privilege SELECT
-            u.id,
-            u.id,
-            'EDT'
-            FROM usr_user u
-            WHERE u.id = uid;
-            END;
+                BEGIN
+                    DELETE FROM jtb_object_privilege
+                    WHERE prv_object_from = uid;
+                    INSERT INTO jtb_object_privilege SELECT
+                                                         u.id,
+                                                         u.id,
+                                                         'EDT'
+                                                     FROM usr_user u
+                                                     WHERE u.id = uid;
+                END;
         </createProcedure>
 
         <createProcedure>
@@ -42,18 +42,18 @@
             CREATE TRIGGER trg_jtb_object_privilege_delete
             AFTER DELETE ON usr_user
             FOR EACH ROW
-            BEGIN
-            CALL proc_refresh_user_privileges(OLD.id);
-            END;
+                BEGIN
+                    CALL proc_refresh_user_privileges(OLD.id);
+                END;
         </createProcedure>
 
         <createProcedure>
             CREATE TRIGGER trg_jtb_object_privilege_update
             AFTER UPDATE ON usr_user
             FOR EACH ROW
-            BEGIN
-            CALL proc_refresh_user_privileges(OLD.id);
-            END;
+                BEGIN
+                    CALL proc_refresh_user_privileges(OLD.id);
+                END;
         </createProcedure>
 
         <rollback>
