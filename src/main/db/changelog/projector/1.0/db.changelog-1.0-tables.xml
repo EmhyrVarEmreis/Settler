@@ -8,7 +8,174 @@
 
     <changeSet id="1.0-projector-init-tables" author="settler">
 
+        <createTable tableName="mod_project">
+            <column name="id"
+                    type="bigint"
+                    autoIncrement="true">
+                <constraints primaryKey="true"
+                             primaryKeyName="PK_mod_project_id"
+                             references="prv_object(id)"
+                             foreignKeyName="FK_mod_project_id_prv_object_id"/>
+
+            </column>
+
+            <column name="maker"
+                    type="bigint">
+                <constraints references="usr_user(id)"
+                             foreignKeyName="FK_mod_project_maker_usr_user_id"/>
+
+            </column>
+
+            <column name="client"
+                    type="bigint">
+                <constraints references="usr_user(id)"
+                             foreignKeyName="FK_mod_project_client_usr_user_id"/>
+
+            </column>
+
+            <column name="subject"
+                    type="varchar(64)"/>
+        </createTable>
+
+        <createTable tableName="mod_category">
+            <column name="id"
+                    type="bigint"
+                    autoIncrement="true">
+                <constraints primaryKey="true"
+                             primaryKeyName="PK_mod_category_id"
+                             references="prv_object(id)"
+                             foreignKeyName="FK_mod_category_id_prv_object_id"/>
+            </column>
+
+            <column name="description"
+                    type="nvarchar(32)"/>
+        </createTable>
+
+        <createTable tableName="mod_project_category">
+            <column name="project_id"
+                    type="bigint">
+                <constraints primaryKey="true"
+                             primaryKeyName="PK_mod_project_category_project_id"
+                             references="mod_category(id)"
+                             foreignKeyName="FK_mod_project_category_project_id_mod_category_id"/>
+            </column>
+
+            <column name="category_id"
+                    type="bigint">
+                <constraints primaryKey="true"
+                             primaryKeyName="PK_mod_project_category_category_id"
+                             references="mod_category(id)"
+                             foreignKeyName="FK_mod_project_category_category_id_mod_category_id"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="mod_order">
+            <column name="id"
+                    type="bigint"
+                    autoIncrement="true">
+                <constraints primaryKey="true"
+                             primaryKeyName="PK_mod_order_id"
+                             references="prv_object(id)"
+                             foreignKeyName="FK_mod_order_id_prv_object_id"/>
+            </column>
+
+            <column name="project_id"
+                    type="bigint">
+                <constraints references="mod_project(id)"
+                             foreignKeyName="FK_mod_order_project_id_mod_project_id"/>
+            </column>
+
+            <column name="contractor"
+                    type="bigint">
+                <constraints references="mod_project(id)"
+                             foreignKeyName="FK_mod_order_contractor_usr_user_id"/>
+            </column>
+
+            <column name="executor"
+                    type="bigint">
+                <constraints references="mod_project(id)"
+                             foreignKeyName="FK_mod_order_executor_id_usr_user_id"/>
+            </column>
+
+            <column name="start_date"
+                    type="date"/>
+
+            <column name="end_date"
+                    type="date"/>
+
+            <column name="description"
+                    type="nvarchar(64)"/>
+        </createTable>
+
+        <createTable tableName="mod_payment_type">
+            <column name="code"
+                    type="nvarchar(3)">
+                <constraints primaryKey="true"
+                             primaryKeyName="PK_mod_payment_type_code"/>
+            </column>
+
+            <column name="description"
+                    type="nvarchar(32)"/>
+        </createTable>
+
+        <createTable tableName="mod_payment_status_type">
+            <column name="code"
+                    type="nvarchar(3)">
+                <constraints primaryKey="true"
+                             primaryKeyName="PK_mod_payment_status_type_code"/>
+            </column>
+
+            <column name="description"
+                    type="nvarchar(32)"/>
+        </createTable>
+
+        <createTable tableName="mod_payment">
+            <column name="id"
+                    type="bigint"
+                    autoIncrement="true">
+                <constraints primaryKey="true"
+                             primaryKeyName="PK_mod_payment_id"
+                             references="prv_object(id)"
+                             foreignKeyName="FK_mod_payment_id_prv_object_id"/>
+            </column>
+
+            <column name="date"
+                    type="date"/>
+
+            <column name="type"
+                    type="nvarchar(3)">
+                <constraints
+                        references="mod_payment_type(code)"
+                        foreignKeyName="FK_mod_payment_type_mod_payment_type_code"/>
+            </column>
+
+            <column name="code"
+                    type="varchar(64)"/>
+
+            <column name="status"
+                    type="nvarchar(3)">
+                <constraints
+                        references="mod_payment_status_type(code)"
+                        foreignKeyName="FK_mod_payment_status_mod_payment_status_type_code"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="mod_order_payment">
+            <column name="order_id"
+                    type="bigint">
+                <constraints primaryKey="true"
+                             primaryKeyName="PK_mod_order_payment_order_id"
+                             references="mod_order(id)"
+                             foreignKeyName="FK_mod_order_payment_order_id_mod_order_id"/>
+            </column>
+
+            <column name="payment_id"
+                    type="bigint">
+                <constraints primaryKey="true"
+                             primaryKeyName="PK_mod_order_payment_payment_id"
+                             references="mod_payment(id)"
+                             foreignKeyName="FKmod_order_payment_payment_id_mod_payment_id"/>
+            </column>
+        </createTable>
     </changeSet>
-
-
 </databaseChangeLog>
