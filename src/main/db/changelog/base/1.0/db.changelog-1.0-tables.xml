@@ -308,6 +308,23 @@
             </column>
         </createTable>
 
+        <createTable tableName="jtb_object_hierarchy">
+            <column name="prv_object_from"
+                    type="bigint">
+                <constraints nullable="true"
+                             references="prv_object(id)"
+                             foreignKeyName="FK_jtb_object_hierarchy_prv_object_from_prv_object_id"
+                             deleteCascade="true"/>
+            </column>
+            <column name="prv_object_to"
+                    type="bigint">
+                <constraints nullable="true"
+                             references="prv_object(id)"
+                             foreignKeyName="FK_jtb_object_hierarchy_prv_object_to_prv_object_id"
+                             deleteCascade="true"/>
+            </column>
+        </createTable>
+
     </changeSet>
 
 
