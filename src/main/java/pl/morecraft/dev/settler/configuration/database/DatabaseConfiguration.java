@@ -18,7 +18,7 @@ import javax.sql.DataSource;
 @Configuration
 @ConfigurationProperties(prefix = "spring.datasource")
 @EnableTransactionManagement
-@MapperScan("pl.morecraft.dev.settler.dao.mapper")
+@MapperScan(basePackages = "pl.morecraft.dev.settler.dao.mapper", sqlSessionTemplateRef = "sqlSessionTemplate-settler")
 @EnableJpaRepositories("pl.morecraft.dev.settler.dao.repository")
 public class DatabaseConfiguration extends AbstractSource {
 
