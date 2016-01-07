@@ -1,24 +1,33 @@
 package pl.morecraft.dev.settler.service;
 
 
+import com.mysema.query.util.CollectionUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.morecraft.dev.settler.dao.repository.UserRepository;
 import pl.morecraft.dev.settler.domain.QUser;
 import pl.morecraft.dev.settler.domain.User;
 import pl.morecraft.dev.settler.service.prototype.AbstractService;
+import pl.morecraft.dev.settler.service.prototype.AbstractServiceSingleFilter;
+import pl.morecraft.dev.settler.service.singleFilters.CustomStringUserSingleFilter;
+import pl.morecraft.dev.settler.service.singleFilters.DefaultSingleFiltersList;
 import pl.morecraft.dev.settler.web.dto.UserDTO;
 import pl.morecraft.dev.settler.web.dto.UserListDTO;
 import pl.morecraft.dev.settler.web.misc.UserListFilters;
 
 import javax.inject.Inject;
+import java.util.List;
 
 @Service
 @Transactional
 public class UserService extends AbstractService<User, UserDTO, UserListDTO, UserListFilters, QUser, Long, UserRepository> {
 
     @Inject
-    UserRepository repository;
+    private UserRepository repository;
+
+    @Autowired
+    private DefaultSingleFiltersList defaultSingleFiltersList;
 
     @Override
     protected UserRepository getRepository() {
@@ -48,6 +57,13 @@ public class UserService extends AbstractService<User, UserDTO, UserListDTO, Use
     @Override
     protected Class<UserListFilters> getListFilterClass() {
         return UserListFilters.class;
+    }
+
+    protected List<AbstractServiceSingleFilter> getAbstractServiceSingleFilters() {
+        return CollectionUtils.add(
+                defaultSingleFiltersList.getDefaultSingleFiltersList(),
+                new CustomStringUserSingleFilter()
+        );
     }
 
     @Override

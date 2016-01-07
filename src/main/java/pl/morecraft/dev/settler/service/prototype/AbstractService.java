@@ -4,9 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mysema.query.types.OrderSpecifier;
 import com.mysema.query.types.expr.BooleanExpression;
 import com.mysema.query.types.expr.ComparableExpressionBase;
-import com.mysema.query.types.path.DatePath;
 import com.mysema.query.types.path.EntityPathBase;
-import com.mysema.query.types.path.StringPath;
 import org.apache.commons.lang.ArrayUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
@@ -19,7 +17,7 @@ import pl.morecraft.dev.settler.web.misc.ListPageConverter;
 import java.io.IOException;
 import java.io.Serializable;
 import java.lang.reflect.Field;
-import java.time.LocalDate;
+import java.util.List;
 
 /*
 E - Entity
@@ -83,6 +81,8 @@ public abstract class AbstractService<
 
     protected abstract Class<FL> getListFilterClass();
 
+    protected abstract List<AbstractServiceSingleFilter> getAbstractServiceSingleFilters();
+
     protected abstract EQ getEQ();
 
     private OrderSpecifier<?> applySorting(String sortBy, EQ qObject) throws NoSuchFieldException, IllegalAccessException {
@@ -100,7 +100,7 @@ public abstract class AbstractService<
         return qObject.eq(qObject);
     }
 
-    @SuppressWarnings("unchecked")
+
     private BooleanExpression applyFilters(String filtersJson, EQ qObject) throws NoSuchFieldException, IllegalAccessException {
         BooleanExpression predicate = qObject.isNotNull();
         if (filtersJson.length() == 0)
@@ -130,14 +130,10 @@ public abstract class AbstractService<
 
                 Object qObjectFieldValue = qObject.getClass().getDeclaredField(f.getName()).get(qObject);
 
-                if (value instanceof String && qObjectFieldValue instanceof StringPath) {
-                    predicate = predicate.and(((StringPath) qObjectFieldValue).contains((String) value));
-                } else if (value instanceof LocalDate && qObjectFieldValue instanceof DatePath<?>) {
-                    predicate = predicate.and(
-                            ((DatePath<LocalDate>) qObjectFieldValue).after(
-                                    (LocalDate) value).and(
-                                    ((DatePath<LocalDate>) qObjectFieldValue).before(
-                                            ((LocalDate) value).plusDays(1))));
+                for (AbstractServiceSingleFilter singleFilter : getAbstractServiceSingleFilters()) {
+                    if (singleFilter.check(value, qObjectFieldValue)) {
+                        predicate = singleFilter.predicate(predicate, value, qObjectFieldValue);
+                    }
                 }
 
                 f.setAccessible(false);
