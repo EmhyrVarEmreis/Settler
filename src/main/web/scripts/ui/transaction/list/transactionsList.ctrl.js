@@ -26,7 +26,7 @@
                 "field":     'owner',
                 "title":     'Właściciel',
                 "isVisible": true,
-                "filter":    false,
+                "filter":    true,
                 "type":      'default',
                 "isEmpty":   "N/D",
                 "index":     2
