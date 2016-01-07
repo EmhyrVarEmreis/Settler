@@ -1,9 +1,9 @@
-'use strict';
+(function () {
+    'use strict';
 
-angular.module('settlerServices', [
-    'LocalStorageModule',
-    'ngResource'
-]);
+    angular.module('settlerServices', [
+        'LocalStorageModule',
+        'ngResource'
+    ]);
 
-
-
+})();

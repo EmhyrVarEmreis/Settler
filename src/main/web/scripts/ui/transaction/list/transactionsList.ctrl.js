@@ -1,61 +1,84 @@
-'use strict';
+(function () {
+    'use strict';
 
-angular.module('settlerApplication').controller('transactionsListCtrl', function ($scope, ngTableParams, transactionListFactory) {
+    angular.module('settlerApplication').controller('TransactionsListCtrl', function ($scope, NgTableParams, transactionListFactory) {
 
-    $scope.showTransactionFilterView = false;
+        $scope.columns = [
+            {
+                "field":     'reference',
+                "title":     'Numer transakcji',
+                "isVisible": true,
+                "filter":    true,
+                "type":      'default',
+                "isEmpty":   "N/D",
+                "index":     0
+            },
+            {
+                "field":     'type',
+                "title":     'Typ transakcji',
+                "isVisible": true,
+                "filter":    true,
+                "type":      'default',
+                "isEmpty":   "N/D",
+                "index":     1
+            },
+            {
+                "field":     'owner',
+                "title":     'Właściciel',
+                "isVisible": true,
+                "filter":    false,
+                "type":      'default',
+                "isEmpty":   "N/D",
+                "index":     2
+            },
+            {
+                "field":     'contractor',
+                "title":     'Kontraktor',
+                "isVisible": true,
+                "filter":    true,
+                "type":      'default',
+                "isEmpty":   "N/D",
+                "index":     3
+            },
+            {
+                "field":     'value',
+                "title":     'Wartość',
+                "isVisible": true,
+                "filter":    true,
+                "type":      'default',
+                "isEmpty":   "N/D",
+                "index":     4
+            },
+            {
+                "field":     'created',
+                "title":     'Utworzono',
+                "isVisible": true,
+                "filter":    true,
+                "type":      'date',
+                "isEmpty":   "N/D",
+                "index":     5
+            },
+            {
+                "field":     'confirmed',
+                "title":     'Potwierdzono',
+                "isVisible": true,
+                "filter":    true,
+                "type":      'date',
+                "isEmpty":   "N/D",
+                "index":     6
+            },
+            {
+                "field":     'evaluated',
+                "title":     'Ewaluowano',
+                "isVisible": true,
+                "filter":    true,
+                "type":      'date',
+                "isEmpty":   "N/D",
+                "index":     7
+            }
+        ];
 
-    $scope.transactionFilter = {};
+        $scope.transactionListFactory = transactionListFactory;
 
-    $scope.columns = {
-        "reference":  {"name": 'Numer transakcji', "isVisible": true},
-        "type":       {"name": 'Typ transakcji', "isVisible": true},
-        "owner":      {"name": 'Właściciel', "isVisible": true},
-        "contractor": {"name": 'Kontraktor', "isVisible": true},
-        "value":      {"name": 'Wartość', "isVisible": true},
-        "created":    {"name": 'Utworzono', "isVisible": true},
-        "confirmed":  {"name": 'Potwierdzono', "isVisible": true},
-        "evaluated":  {"name": 'Ewaluowano', "isVisible": true}
-    };
-
-    $scope.tableParams = new ngTableParams({
-        page:    1,
-        count:   25,
-        sorting: {
-            id: 'asc'
-        }
-    }, {
-        counts:  [],
-        total:   0,
-        getData: function ($defer, params) {
-            transactionListFactory.get(
-                {
-                    "page":    params.page(),
-                    "limit":   params.count(),
-                    "sortBy":  params.orderBy(),
-                    "filters": $scope.transactionFilter
-                }, function (data) {
-                    params.total(data.total);
-                    $defer.resolve(data.content);
-                });
-        }
     });
-
-    $scope.toggleTransactionFilterView = function () {
-        if (!$scope.showTransactionFilterView) {
-            $scope.showTransactionFilterView = true;
-        } else {
-            $scope.showTransactionFilterView = !$scope.showTransactionFilterView;
-        }
-    };
-
-    $scope.applyFilters = function () {
-        $scope.tableParams.page(1);
-        $scope.tableParams.reload();
-    };
-
-    $scope.clearFilters = function () {
-        $scope.transactionFilter = {};
-        $scope.applyFilters();
-    };
-
-});
+})();

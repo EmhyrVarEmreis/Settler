@@ -1,58 +1,58 @@
-'use strict';
+(function () {
+    'use strict';
 
-angular.module('settlerApplication').controller('usersListCtrl', function ($scope, ngTableParams, userListFactory) {
+    angular.module('settlerApplication').controller('UsersListCtrl', function ($scope, NgTableParams, userListFactory) {
 
-    $scope.showUserFilterView = false;
+        $scope.columns = [
+            {
+                "field":     'login',
+                "title":     'Login',
+                "isVisible": true,
+                "filter":    true,
+                "type":      'default',
+                "isEmpty":   'N/D',
+                "index":     0
+            },
+            {
+                "field":     'firstName',
+                "title":     'Imię',
+                "isVisible": true,
+                "filter":    true,
+                "type":      'default',
+                "isEmpty":   'N/D',
+                "index":     1
+            },
+            {
+                "field":     'lastName',
+                "title":     'Nazwisko',
+                "isVisible": true,
+                "filter":    true,
+                "type":      'default',
+                "isEmpty":   'N/D',
+                "index":     2
+            },
+            {
+                "field":     'email',
+                "title":     'Adres e-mail',
+                "isVisible": true,
+                "filter":    true,
+                "type":      'default',
+                "isEmpty":   'N/D',
+                "index":     3
+            },
+            {
+                "field":       'created',
+                "title":       'Utworzony',
+                "isVisible":   true,
+                "filter":      true,
+                "type":        'date',
+                "isEmpty":     'N/D',
+                "placeholder": 'Data utworzenia',
+                "index":       4
+            }
+        ];
 
-    $scope.userFilter = {};
+        $scope.userListFactory = userListFactory;
 
-    $scope.columns = {
-        "login":     {"name": 'Login', "isVisible": true},
-        "firstName": {"name": 'Imię', "isVisible": true},
-        "lastName":  {"name": 'Nazwisko', "isVisible": true},
-        "email":     {"name": 'Adres e-mail', "isVisible": true},
-        "created":   {"name": 'Utworzony', "isVisible": true}
-    };
-
-    $scope.tableParams = new ngTableParams({
-        page:    1,
-        count:   25,
-        sorting: {
-            id: 'asc'
-        }
-    }, {
-        counts:  [],
-        total:   0,
-        getData: function ($defer, params) {
-            userListFactory.get(
-                {
-                    "page":    params.page(),
-                    "limit":   params.count(),
-                    "sortBy":  params.orderBy(),
-                    "filters": $scope.userFilter
-                }, function (data) {
-                    params.total(data.total);
-                    $defer.resolve(data.content);
-                });
-        }
     });
-
-    $scope.toggleUserFilterView = function () {
-        if (!$scope.showUserFilterView) {
-            $scope.showUserFilterView = true;
-        } else {
-            $scope.showUserFilterView = !$scope.showUserFilterView;
-        }
-    };
-
-    $scope.applyFilters = function () {
-        $scope.tableParams.page(1);
-        $scope.tableParams.reload();
-    };
-
-    $scope.clearFilters = function () {
-        $scope.userFilter = {};
-        $scope.applyFilters();
-    };
-
-});
+})();

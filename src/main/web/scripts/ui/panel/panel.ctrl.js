@@ -1,7 +1,9 @@
-'use strict';
+(function () {
+    'use strict';
 
-angular.module('settlerApplication').controller('PanelCtrl',
-    function ($scope) {
+    angular.module('settlerApplication').controller('PanelCtrl',
+        function ($scope) {
 
 
-    });
+        });
+})();

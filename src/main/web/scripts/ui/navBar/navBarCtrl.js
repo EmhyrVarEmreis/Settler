@@ -1,20 +1,22 @@
-'use strict';
+(function () {
+    'use strict';
 
-angular.module('settlerApplication').controller('NavBarCtrl',
-    function (Principal, Auth, $state) {
-        var ctrl = this;
+    angular.module('settlerApplication').controller('NavBarCtrl',
+        function (Principal, Auth, $state) {
+            var ctrl = this;
 
-        ctrl.permissions = {
-            admin: false
-        };
+            ctrl.permissions = {
+                admin: false
+            };
 
-        Principal.identity().then(function (account) {
-            ctrl.userData = account;
-        });
+            Principal.identity().then(function (account) {
+                ctrl.userData = account;
+            });
 
-        ctrl.logout = function () {
-            Auth.logout();
-            $state.go('login');
-        };
-    }
-);
+            ctrl.logout = function () {
+                Auth.logout();
+                $state.go('login');
+            };
+        }
+    );
+})();

@@ -1,0 +1,17 @@
+<button type="button"
+        class="btn btn-success btn-colPicker"
+        ng-click="applyFilters()">Zastosuj filtry
+</button>
+<button type="button"
+        class="btn btn-colPicker"
+        uib-popover="Pokazuje/ukrywa wiersz z filtrami"
+        popover-trigger="mouseenter"
+        popover-placement="bottom"
+        ng-class="{'btn-warning' : showFilters, 'btn-success' : !showFilters}"
+        ng-click="toggleFilters()">Panel Filtrów
+</button>
+<button type="button"
+        class="btn btn-success btn-colPicker"
+        ng-class="{'btn-warning' : showVisibility, 'btn-success' : !showVisibility}"
+        ng-click="toggleVisibility()">Widoczność kolumn
+</button>

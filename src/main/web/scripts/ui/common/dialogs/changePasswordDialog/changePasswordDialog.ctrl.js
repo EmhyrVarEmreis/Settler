@@ -2,7 +2,7 @@
     'use strict';
 
     angular.module('settlerApplication').controller('changePasswordDialogCtrl', function ($scope, $modalInstance, conf, $http, Auth,
-                                                                                          $state, $modal) {
+                                                                                              $state, $modal) {
 
         $scope.modalTitle = conf.modalTitle;
 
@@ -87,5 +87,4 @@
         };
 
     });
-})
-();
+})();

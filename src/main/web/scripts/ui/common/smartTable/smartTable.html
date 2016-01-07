@@ -1,0 +1,57 @@
+<div class="row panel-body">
+
+    <form class="form" role="form" ng-submit="applyFilters()">
+        <table ng-table="tableParams" class="table">
+            <thead>
+            <tr>
+                <th ng-repeat="column in columns" ng-show="column.isVisible || showVisibility"
+                    class="text-center sortable"
+                    ng-class="{'sort-asc': tableParams.isSortBy(column.field, 'asc'), 'sort-desc': tableParams.isSortBy(column.field, 'desc')}"
+                    ng-click="tableParams.sorting(column.field, tableParams.isSortBy(column.field, 'asc') ? 'desc' : 'asc')">
+                    <div class="sort-indicator">{{column.title}}</div>
+                </th>
+            </tr>
+            <tr class="ng-table-filters" ng-show="showFilters">
+                <th ng-repeat="column in columns" ng-show="column.isVisible || showVisibility">
+                    <input type="text"
+                           ng-if="column.type === 'default'"
+                           ng-disabled="!column.filter"
+                           placeholder="{{column.placeholder ? column.placeholder : column.title}}"
+                           class="input-sm form-control"
+                           ng-model="filters[column.field]"
+                           title="{{column.title}}"/>
+                    <input type="text"
+                           ng-if="column.type === 'date'"
+                           ng-disabled="!column.filter"
+                           placeholder="{{column.placeholder ? column.placeholder : column.title}}"
+                           ng-pattern="/[0-9]{4}\-[0-9]{2}\-[0-9]{2}/"
+                           class="input-sm form-control"
+                           ng-model="filters[column.field]"
+                           title="{{column.title}}"/>
+                </th>
+            </tr>
+            <tr class="ng-table-filters" ng-show="showVisibility">
+                <th ng-repeat="column in columns">
+                    <button type="button"
+                            class="btn btn-colPicker"
+                            ng-class="{'btn-success' : !column.isVisible, 'btn-warning' : column.isVisible}"
+                            ng-click="column.isVisible = !column.isVisible">{{column.isVisible ? 'Ukryj' : 'Pokaż'}}
+                    </button>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="user in $data">
+                <td ng-repeat="column in columns" ng-show="column.isVisible || showVisibility">
+                    {{user[column.field] | isEmpty:column.isEmpty}}
+                </td>
+            </tr>
+            <tr>
+                <td ng-show="$data.length === 0" colspan="{{getVisibleColumnsCount()}}" class="text-center">
+                    {{emptyTableString}}
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <input type="submit" style="position: absolute; left: -9999px"/>
+    </form>
+</div>
