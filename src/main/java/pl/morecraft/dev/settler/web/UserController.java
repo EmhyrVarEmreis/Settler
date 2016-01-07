@@ -27,6 +27,6 @@ public class UserController {
                                           @RequestParam(value = "limit", required = false, defaultValue = "25") Integer limit,
                                           @RequestParam(value = "sortBy", required = false, defaultValue = "-username") String sortBy,
                                           @RequestParam(value = "filters", required = false, defaultValue = "") String filters) {
-        return userService.getUsers(page, limit, sortBy, filters);
+        return userService.get(page, limit, sortBy, filters);
     }
 }

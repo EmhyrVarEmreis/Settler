@@ -1,7 +1,9 @@
 package pl.morecraft.dev.settler.web.dto;
 
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import pl.morecraft.dev.settler.web.utils.JsonDateDeserializer;
 import pl.morecraft.dev.settler.web.utils.JsonDateSerializer;
 
 import java.time.LocalDate;
@@ -15,6 +17,7 @@ public class UserListDTO {
     private String email;
 
     @JsonSerialize(using = JsonDateSerializer.class)
+    @JsonDeserialize(using = JsonDateDeserializer.class)
     private LocalDate created;
 
     public UserListDTO() {

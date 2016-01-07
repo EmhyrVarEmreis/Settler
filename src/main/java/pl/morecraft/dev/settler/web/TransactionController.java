@@ -27,7 +27,7 @@ public class TransactionController {
                                                         @RequestParam(value = "limit", required = false, defaultValue = "10") Integer limit,
                                                         @RequestParam(value = "sortBy", required = false, defaultValue = "-reference") String sort,
                                                         @RequestParam(value = "filters", required = false, defaultValue = "") String filters) {
-        return transactionService.getTransactions(page, limit, sort, filters);
+        return transactionService.get(page, limit, sort, filters);
     }
 
 }
