@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <databaseChangeLog
-        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
@@ -60,6 +60,32 @@
                 '5f4dcc3b5aa765d61d8327deb882cf99',
                 'marian.kowalski@morecraft.pl',
                 '2015-11-17 16:00:00'
+            );
+
+            INSERT INTO dev_settler.prv_object VALUES ();
+            INSERT INTO dev_settler.usr_user (
+                id, login, first_name, last_name, password, email, created
+            ) VALUES (
+                LAST_INSERT_ID(),
+                'jan.kos',
+                'Jan',
+                'Kos',
+                '5f4dcc3b5aa765d61d8327deb882cf99',
+                'jan.kos@morecraft.pl',
+                '2015-11-17 17:45:32'
+            );
+
+            INSERT INTO dev_settler.prv_object VALUES ();
+            INSERT INTO dev_settler.usr_user (
+                id, login, first_name, last_name, password, email, created
+            ) VALUES (
+                LAST_INSERT_ID(),
+                'adam.trocki',
+                'Adam',
+                'Trocki',
+                '5f4dcc3b5aa765d61d8327deb882cf99',
+                'adam.trocki@morecraft.pl',
+                '2015-11-15 16:34:19'
             );
         </sql>
 
@@ -313,6 +339,7 @@
                  FROM prv_role
                  WHERE name = 'Administrator')
             );
+
             INSERT INTO prv_user_role (
                 usr_user, prv_role
             ) VALUES (
@@ -329,7 +356,29 @@
             ) VALUES (
                 (SELECT id
                  FROM usr_user
+                 WHERE login = 'jan.kos'),
+                (SELECT id
+                 FROM prv_role
+                 WHERE name = 'Moderator')
+            );
+
+            INSERT INTO prv_user_role (
+                usr_user, prv_role
+            ) VALUES (
+                (SELECT id
+                 FROM usr_user
                  WHERE login = 'user'),
+                (SELECT id
+                 FROM prv_role
+                 WHERE name = 'User')
+            );
+
+            INSERT INTO prv_user_role (
+                usr_user, prv_role
+            ) VALUES (
+                (SELECT id
+                 FROM usr_user
+                 WHERE login = 'adam.trocki'),
                 (SELECT id
                  FROM prv_role
                  WHERE name = 'User')
