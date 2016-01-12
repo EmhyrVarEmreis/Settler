@@ -1,7 +1,6 @@
 package pl.morecraft.dev.settler.domain.jtb;
 
 import pl.morecraft.dev.settler.domain.PrivilegeObject;
-import pl.morecraft.dev.settler.domain.dictionaries.OperationType;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -12,16 +11,13 @@ public class JTBObjectHierarchy implements Serializable {
 
     @Id
     @ManyToOne
-    @JoinColumn(name = "object_from")
+    @JoinColumn(name = "prv_object_from")
     private PrivilegeObject objectFrom;
 
     @Id
     @ManyToOne
-    @JoinColumn(name = "object_to")
+    @JoinColumn(name = "prv_object_to")
     private PrivilegeObject objectTo;
-
-    @Enumerated(EnumType.STRING)
-    private OperationType operationType;
 
     public PrivilegeObject getObjectFrom() {
         return objectFrom;
@@ -37,14 +33,6 @@ public class JTBObjectHierarchy implements Serializable {
 
     public void setObjectTo(PrivilegeObject objectTo) {
         this.objectTo = objectTo;
-    }
-
-    public OperationType getOperationType() {
-        return operationType;
-    }
-
-    public void setOperationType(OperationType operationType) {
-        this.operationType = operationType;
     }
 
 }

@@ -8,17 +8,17 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "jtb_user_object")
-public class JTBUserObject implements Serializable {
+@Table(name = "jtb_object_privilege")
+public class JTBObjectPrivilege implements Serializable {
 
     @Id
     @ManyToOne
-    @JoinColumn(name = "user_from")
-    private User userFrom;
+    @JoinColumn(name = "prv_object_from")
+    private User objectFrom;
 
     @Id
     @ManyToOne
-    @JoinColumn(name = "object_to")
+    @JoinColumn(name = "prv_object_to")
     private PrivilegeObject objectTo;
 
     @Id
@@ -42,12 +42,12 @@ public class JTBUserObject implements Serializable {
         this.operationType = operationType;
     }
 
-    public User getUserFrom() {
-        return userFrom;
+    public User getObjectFrom() {
+        return objectFrom;
     }
 
-    public void setUserFrom(User userFrom) {
-        this.userFrom = userFrom;
+    public void setObjectFrom(User objectFrom) {
+        this.objectFrom = objectFrom;
     }
 
 }
