@@ -17,6 +17,7 @@ import pl.morecraft.dev.settler.web.misc.ListPageConverter;
 import java.io.IOException;
 import java.io.Serializable;
 import java.lang.reflect.Field;
+import java.util.Collections;
 import java.util.List;
 
 /*
@@ -81,7 +82,13 @@ public abstract class AbstractService<
 
     protected abstract Class<FL> getListFilterClass();
 
-    protected abstract List<AbstractServiceSingleFilter> getAbstractServiceSingleFilters();
+    protected List<AbstractServiceSingleFilter> getAbstractServiceSingleFilters() {
+        return Collections.emptyList();
+    }
+
+    protected List<BooleanExpression> getPreFilters() {
+        return Collections.emptyList();
+    }
 
     protected abstract EQ getEQ();
 
@@ -103,6 +110,11 @@ public abstract class AbstractService<
 
     private BooleanExpression applyFilters(String filtersJson, EQ qObject) throws NoSuchFieldException, IllegalAccessException {
         BooleanExpression predicate = qObject.isNotNull();
+
+        for (BooleanExpression preFilter : getPreFilters()) {
+            predicate.and(preFilter);
+        }
+
         if (filtersJson.length() == 0)
             return predicate;
 
