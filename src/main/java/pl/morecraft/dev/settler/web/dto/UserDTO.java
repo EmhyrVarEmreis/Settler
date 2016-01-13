@@ -1,15 +1,21 @@
 package pl.morecraft.dev.settler.web.dto;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.hibernate.validator.constraints.Email;
+import pl.morecraft.dev.settler.domain.dictionaries.UserStatus;
+import pl.morecraft.dev.settler.web.utils.JsonDateDeserializer;
+import pl.morecraft.dev.settler.web.utils.JsonDateSerializer;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.time.LocalDate;
 import java.util.List;
 
 public class UserDTO {
 
-    @Pattern(regexp = "^[a-z0-9]*$")
+    @Pattern(regexp = "^[a-zA-Z0-9]*$")
     @NotNull
     @Size(min = 1, max = 32)
     private String login;
@@ -18,9 +24,11 @@ public class UserDTO {
     @Size(min = 6, max = 128)
     private String password;
 
+    @Pattern(regexp = "^[a-zA-Z]*$")
     @Size(max = 50)
     private String firstName;
 
+    @Pattern(regexp = "^[a-zA-Z]*$")
     @Size(max = 50)
     private String lastName;
 
@@ -28,21 +36,32 @@ public class UserDTO {
     @Size(min = 6, max = 128)
     private String email;
 
-    private List<String> roles;
+    @JsonSerialize(using = JsonDateSerializer.class)
+    @JsonDeserialize(using = JsonDateDeserializer.class)
+    private LocalDate created;
 
-//    private List<RoleAssignmentDTO> roleAssignments;
+    @JsonSerialize(using = JsonDateSerializer.class)
+    @JsonDeserialize(using = JsonDateDeserializer.class)
+    private LocalDate passwordExpireDate;
+
+    @JsonSerialize(using = JsonDateSerializer.class)
+    @JsonDeserialize(using = JsonDateDeserializer.class)
+    private LocalDate accountExpireDate;
+
+    private UserStatus status;
+
+    private List<RoleAssignmentDTO> roleAssignments;
 
     public UserDTO() {
     }
 
-    public UserDTO(String login, String password, String firstName, String lastName, String email, List<String> roles /*, List<RoleAssignmentDTO> roleAssignments*/) {
+    public UserDTO(String login, String password, String firstName, String lastName, String email, List<RoleAssignmentDTO> roleAssignments) {
         this.login = login;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.roles = roles;
-//        this.roleAssignments = roleAssignments;
+        this.roleAssignments = roleAssignments;
     }
 
     public String getLogin() {
@@ -85,17 +104,45 @@ public class UserDTO {
         this.email = email;
     }
 
-    public List<String> getRoles() {
-        return roles;
+    public LocalDate getCreated() {
+        return created;
     }
 
-    public void setRoles(List<String> roles) {
-        this.roles = roles;
+    public void setCreated(LocalDate created) {
+        this.created = created;
     }
 
-    //    public List<RoleAssignmentDTO> getRoleAssignments() {
-//        return roleAssignments;
-//    }
+    public LocalDate getPasswordExpireDate() {
+        return passwordExpireDate;
+    }
+
+    public void setPasswordExpireDate(LocalDate passwordExpireDate) {
+        this.passwordExpireDate = passwordExpireDate;
+    }
+
+    public LocalDate getAccountExpireDate() {
+        return accountExpireDate;
+    }
+
+    public void setAccountExpireDate(LocalDate accountExpireDate) {
+        this.accountExpireDate = accountExpireDate;
+    }
+
+    public UserStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(UserStatus status) {
+        this.status = status;
+    }
+
+    public List<RoleAssignmentDTO> getRoleAssignments() {
+        return roleAssignments;
+    }
+
+    public void setRoleAssignments(List<RoleAssignmentDTO> roleAssignments) {
+        this.roleAssignments = roleAssignments;
+    }
 
     @Override
     public String toString() {
@@ -105,7 +152,7 @@ public class UserDTO {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
-                ", roles=" + roles +
+                ", roles=" + roleAssignments +
                 '}';
     }
 }

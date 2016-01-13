@@ -16,6 +16,7 @@ public class DefaultSingleFiltersList {
 
         list.add(new DefaultStringStringPathSingleFilter());
         list.add(new DefaultLocalDateDatePathSingleFilter());
+        list.add(new DefaultStringDefaultDictionarySingleFilter());
 
         return list;
     }

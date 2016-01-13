@@ -1,6 +1,7 @@
 package pl.morecraft.dev.settler.web;
 
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import pl.morecraft.dev.settler.service.UserService;
@@ -17,7 +18,7 @@ public class UserController {
     @Inject
     private UserService userService;
 
-    @RequestMapping("/get")
+    @RequestMapping(value = "/details", method = RequestMethod.GET)
     public UserDTO get(@RequestParam(value = "id", required = true) Long userId) {
         return userService.get(userId);
     }
@@ -29,4 +30,5 @@ public class UserController {
                                           @RequestParam(value = "filters", required = false, defaultValue = "") String filters) {
         return userService.get(page, limit, sortBy, filters);
     }
+
 }

@@ -3,6 +3,7 @@ package pl.morecraft.dev.settler.web.dto;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import pl.morecraft.dev.settler.domain.dictionaries.UserStatus;
 import pl.morecraft.dev.settler.web.utils.JsonDateDeserializer;
 import pl.morecraft.dev.settler.web.utils.JsonDateSerializer;
 
@@ -15,6 +16,7 @@ public class UserListDTO {
     private String firstName;
     private String lastName;
     private String email;
+    private UserStatus status;
 
     @JsonSerialize(using = JsonDateSerializer.class)
     @JsonDeserialize(using = JsonDateDeserializer.class)
@@ -61,6 +63,14 @@ public class UserListDTO {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public UserStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(UserStatus status) {
+        this.status = status;
     }
 
     public LocalDate getCreated() {
