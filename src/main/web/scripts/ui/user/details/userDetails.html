@@ -1,0 +1,127 @@
+<script>
+    $('.custom-datepicker').datetimepicker({
+        format: 'YYYY-MM-DD hh:mm:ss',
+        locale: 'pl-PL'
+    }).on('changeDate', function (e) {
+        ngModelCtrl.$setViewValue(e.date);
+        scope.$apply();
+    });
+</script>
+
+<div class="container">
+    <div class="page-header">
+        <h3>Edycja danych użytkownika <strong>{{data.firstName}} {{data.lastName}}</strong>
+            <button type="button"
+                    class="btn btn-primary pull-right"
+                    style="margin-left: 2px; margin-right: 2px;"
+                    ng-click="save()">
+                Zapisz
+            </button>
+        </h3>
+    </div>
+    <form class="form">
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Podstawowe dane
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <label>Imię</label>
+
+                        <input class="form-control input-sm"
+                               type="text"
+                               name="firstName"
+                               ng-maxlength="15"
+                               ng-model="data.firstName">
+                    </div>
+                    <div class="col-sm-6">
+                        <label>Nazwisko</label>
+
+                        <input class="form-control input-sm"
+                               type="text"
+                               name="surname"
+                               ng-maxlength="30"
+                               ng-model="data.lastName">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <label>Login</label>
+
+                        <input class="form-control input-sm"
+                               type="text"
+                               name="login"
+                               ng-maxlength="50"
+                               ng-model="data.login">
+                    </div>
+                    <div class="col-sm-6">
+                        <label>Adres E-Mail</label>
+
+                        <input class="form-control input-sm"
+                               type="email"
+                               name="email"
+                               ng-maxlength="100"
+                               ng-model="data.email">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Status konta
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <dictionary-selector dictionary-key="userStatus"
+                                             ng-model="data.status"
+                                             clear-btn="false"
+                                             label="Status">
+                        </dictionary-selector>
+                    </div>
+                    <div class="col-sm-6" ng-show="data.status.code === 'TMP'">
+                        <label>Data wygasnięcia konta</label>
+
+                        <input class="form-control input-sm custom-datepicker"
+                               type="text"
+                               name="accountExpireDate"
+                               placeholder="Pozostaw puste dla ustawienia czasu nieokreślonego"
+                               ng-model="data.accountExpireDate">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Bezpieczeństwo
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <label>Hasło</label>
+
+                        <input class="form-control input-sm"
+                               type="text"
+                               name="password"
+                               ng-maxlength="15"
+                               placeholder="Pozostaw puste aby nie zmieniać obecnego hasła"
+                               ng-model="data.password">
+                    </div>
+                    <div class="col-sm-6">
+                        <label>Data wygasnięcia hasła</label>
+
+                        <input class="form-control input-sm custom-datepicker"
+                               type="text"
+                               name="passwordExpireDate"
+                               placeholder="Pozostaw puste dla ustawienia czasu nieokreślonego"
+                               ng-model="data.passwordExpireDate">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
