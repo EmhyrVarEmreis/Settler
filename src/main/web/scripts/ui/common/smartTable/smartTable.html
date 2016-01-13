@@ -6,8 +6,8 @@
             <tr>
                 <th ng-repeat="column in columns" ng-show="column.isVisible || showVisibility"
                     class="text-center sortable"
-                    ng-class="{'sort-asc': tableParams.isSortBy(column.field, 'asc'), 'sort-desc': tableParams.isSortBy(column.field, 'desc')}"
-                    ng-click="tableParams.sorting(column.field, tableParams.isSortBy(column.field, 'asc') ? 'desc' : 'asc')">
+                    ng-class="{'sort-asc': tableParams.isSortBy(column.sortField ? column.filterField : column.field, 'asc'), 'sort-desc': tableParams.isSortBy(column.sortField ? column.filterField : column.field, 'desc')}"
+                    ng-click="tableParams.sorting(column.sortField ? column.filterField : column.field, tableParams.isSortBy(column.sortField ? column.filterField : column.field, 'asc') ? 'desc' : 'asc')">
                     <div class="sort-indicator">{{column.title}}</div>
                 </th>
             </tr>
@@ -18,7 +18,7 @@
                            ng-disabled="!column.filter"
                            placeholder="{{column.placeholder ? column.placeholder : column.title}}"
                            class="input-sm form-control"
-                           ng-model="filters[column.field]"
+                           ng-model="filters[column.filterField ? column.filterField : column.field]"
                            title="{{column.title}}"/>
                     <input type="text"
                            ng-if="column.type === 'date'"
@@ -26,7 +26,7 @@
                            placeholder="{{column.placeholder ? column.placeholder : column.title}}"
                            ng-pattern="/[0-9]{4}\-[0-9]{2}\-[0-9]{2}/"
                            class="input-sm form-control"
-                           ng-model="filters[column.field]"
+                           ng-model="filters[column.filterField ? column.filterField : column.field]"
                            title="{{column.title}}"/>
                 </th>
             </tr>
@@ -42,7 +42,12 @@
             <tbody>
             <tr ng-repeat="user in $data">
                 <td ng-repeat="column in columns" ng-show="column.isVisible || showVisibility">
-                    {{user[column.field] | isEmpty:column.isEmpty}}
+                    <a ng-if="column.url" href ng-href="{{column.url || user ? getUrl(column.url,user) : ''}}">
+                        <strong>{{getField(column.field, user) | isEmpty:column.isEmpty}}</strong>
+                    </a>
+                    <span ng-if="!column.url">
+                        {{getField(column.field, user) | isEmpty:column.isEmpty}}
+                    </span>
                 </td>
             </tr>
             <tr>

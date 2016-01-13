@@ -22,7 +22,7 @@
                 transclude:  true,
                 restrict:    'E',
                 templateUrl: 'scripts/ui/common/smartTable/smartTable.html',
-                link:        function (scope, elm) {
+                link:        function (scope) {
 
                     scope.filters = {};
 
@@ -73,7 +73,35 @@
                             }
                         });
                         return i;
-                    }
+                    };
+
+                    scope.getUrl = function (url, model) {
+                        var reg = /(:[a-zA-Z]+)/g;
+                        var matches = [], found;
+                        while (found = reg.exec(url)) {
+                            matches.push(found[0]);
+                            reg.lastIndex -= found[0].split(':')[1].length;
+                        }
+                        matches.forEach(function (match) {
+                            url = url.replace(match, model[match.substring(1)]);
+                        });
+                        return url;
+                    };
+
+                    scope.getField = function (field, model) {
+                        if (field.indexOf('.') === -1) {
+                            return model[field];
+                        } else {
+                            var a = model;
+                            while (field.indexOf('.') !== -1) {
+                                a = a[field.substring(0, field.indexOf('.') !== -1 ? field.indexOf('.') : field.length)];
+                                field = field.substring(field.indexOf('.') + 1);
+                            }
+                            a = a[field];
+                            return a;
+                        }
+
+                    };
 
                 }
             };
