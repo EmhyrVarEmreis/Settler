@@ -10,7 +10,7 @@ public class RoleAssignment {
 
     @Id
     @ManyToOne(optional = false)
-    @JoinColumn(name = "usr_user")
+    @JoinColumn(name = "prv_user")
     private User user;
 
     @Id
@@ -42,6 +42,7 @@ public class RoleAssignment {
         this.role = role;
     }
 
+    @SuppressWarnings("RedundantIfStatement")
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -75,6 +76,7 @@ public class RoleAssignment {
             this.role = role.getId();
         }
 
+        @SuppressWarnings("RedundantIfStatement")
         @Override
         public boolean equals(Object o) {
             if (this == o) return true;

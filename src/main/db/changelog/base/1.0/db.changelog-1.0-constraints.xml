@@ -9,7 +9,7 @@
     <changeSet id="1.0-constraints" author="settler">
 
         <addPrimaryKey tableName="prv_user_role"
-                       columnNames="usr_user, prv_role"
+                       columnNames="prv_user, prv_role"
                        constraintName="PK_PRV_USER_ROLE"/>
 
     </changeSet>

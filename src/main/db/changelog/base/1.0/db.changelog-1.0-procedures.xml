@@ -29,11 +29,11 @@
                                      pp.operation_type
                                  FROM prv_privilege pp
                                  WHERE EXISTS(SELECT *
-                                              FROM usr_user uu
+                                              FROM prv_user uu
                                               WHERE uu.id = owner)
                                  UNION ALL
                                  SELECT
-                                     pur.usr_user,
+                                     pur.prv_user,
                                      pp.prv_object,
                                      pp.operation_type
                                  FROM prv_privilege pp

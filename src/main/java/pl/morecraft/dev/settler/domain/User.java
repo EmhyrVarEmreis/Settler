@@ -1,12 +1,12 @@
 package pl.morecraft.dev.settler.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import pl.morecraft.dev.settler.domain.dictionaries.UserStatus;
+
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "usr_user")
+@Table(name = "prv_user")
 //@Audited
 public class User extends PrivilegeObject {
 
@@ -19,7 +19,13 @@ public class User extends PrivilegeObject {
     private String email;
     private String firstName;
     private String lastName;
+
+    @Enumerated(EnumType.STRING)
+    private UserStatus status;
+
     private LocalDate created;
+    private LocalDate passwordExpireDate;
+    private LocalDate accountExpireDate;
 
     public String getLogin() {
         return login;
@@ -61,12 +67,36 @@ public class User extends PrivilegeObject {
         this.lastName = lastName;
     }
 
+    public UserStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(UserStatus status) {
+        this.status = status;
+    }
+
     public LocalDate getCreated() {
         return created;
     }
 
     public void setCreated(LocalDate created) {
         this.created = created;
+    }
+
+    public LocalDate getPasswordExpireDate() {
+        return passwordExpireDate;
+    }
+
+    public void setPasswordExpireDate(LocalDate passwordExpireDate) {
+        this.passwordExpireDate = passwordExpireDate;
+    }
+
+    public LocalDate getAccountExpireDate() {
+        return accountExpireDate;
+    }
+
+    public void setAccountExpireDate(LocalDate accountExpireDate) {
+        this.accountExpireDate = accountExpireDate;
     }
 
     @Override

@@ -4,15 +4,18 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import pl.morecraft.dev.settler.domain.dictionaries.proto.DefaultDictionary;
 
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
-public enum TransactionType implements DefaultDictionary {
+public enum UserStatus implements DefaultDictionary {
 
-    NOR("NOR", "Normal"),
-    OTH("OTH", "Other");
+    ACT("ACT", "Active"),
+    DSB("DSB", "Disabled"),
+    BLK("BLK", "Blocked"),
+    HNG("HNG", "Hanged"),
+    TMP("TMP", "Temporary");
 
     private String code;
     private String description;
 
-    TransactionType(String code, String description) {
+    UserStatus(String code, String description) {
         this.code = code;
         this.description = description;
     }

@@ -26,8 +26,8 @@
                  FROM mod_comment mc
                  WHERE mc.prv_object = s.id)                     AS comment_count
             FROM dev_settler.mod_settlement s
-                LEFT JOIN usr_user o ON s.owner = o.id
-                LEFT JOIN usr_user c ON s.contractor = c.id;
+                LEFT JOIN prv_user o ON s.owner = o.id
+                LEFT JOIN prv_user c ON s.contractor = c.id;
         </createView>
 
         <createView viewName="view_mod_transaction">
@@ -47,8 +47,8 @@
                  FROM mod_comment mc
                  WHERE mc.prv_object = s.id)                     AS comment_count
             FROM dev_settler.mod_transaction s
-                LEFT JOIN usr_user o ON s.owner = o.id
-                LEFT JOIN usr_user c ON s.contractor = c.id;
+                LEFT JOIN prv_user o ON s.owner = o.id
+                LEFT JOIN prv_user c ON s.contractor = c.id;
         </createView>
 
     </changeSet>

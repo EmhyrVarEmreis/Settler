@@ -37,6 +37,16 @@
                     type="nvarchar(32)"/>
         </createTable>
 
+        <createTable tableName="dct_user_status">
+            <column name="code"
+                    type="nvarchar(3)">
+                <constraints primaryKey="true"
+                             primaryKeyName="PK_dct_user_status_code"/>
+            </column>
+            <column name="description"
+                    type="nvarchar(32)"/>
+        </createTable>
+
         <createTable tableName="dct_operation_type">
             <column name="code"
                     type="nvarchar(3)">
@@ -47,13 +57,13 @@
                     type="nvarchar(32)"/>
         </createTable>
 
-        <createTable tableName="usr_user">
+        <createTable tableName="prv_user">
             <column name="id"
                     type="bigint">
                 <constraints primaryKey="true"
-                             primaryKeyName="PK_usr_user_id"
+                             primaryKeyName="PK_prv_user_id"
                              references="prv_object(id)"
-                             foreignKeyName="FK_usr_user_id_prv_object_id"/>
+                             foreignKeyName="FK_prv_user_id_prv_object_id"/>
             </column>
             <column name="login"
                     type="nvarchar(32)">
@@ -75,6 +85,20 @@
                     type="datetime">
                 <constraints nullable="false"/>
             </column>
+            <column name="status"
+                    type="nvarchar(3)">
+                <constraints primaryKey="true"
+                             references="dct_user_status(code)"
+                             foreignKeyName="FK_prv_user_type_dct_user_status_code"/>
+            </column>
+            <column name="account_expire_date"
+                    type="datetime">
+                <constraints nullable="true"/>
+            </column>
+            <column name="password_expire_date"
+                    type="datetime">
+                <constraints nullable="true"/>
+            </column>
         </createTable>
 
         <createTable tableName="mod_transaction">
@@ -88,6 +112,7 @@
             </column>
             <column name="reference" type="varchar(64)">
                 <constraints nullable="false"
+                             primaryKey="true"
                              unique="true"
                              uniqueConstraintName="UQ_mod_transaction_reference"/>
             </column>
@@ -95,18 +120,18 @@
                     type="nvarchar(3)">
                 <constraints primaryKey="true"
                              references="dct_transaction_type(code)"
-                             foreignKeyName="FK_dct_transaction_type_dct_transaction_type_code"/>
+                             foreignKeyName="FK_mod_transaction_type_dct_transaction_type_code"/>
             </column>
             <column name="owner"
                     type="bigint">
                 <constraints primaryKey="true"
-                             references="usr_user(id)"
-                             foreignKeyName="FK_mod_transaction_owner_usr_user_id"/>
+                             references="prv_user(id)"
+                             foreignKeyName="FK_mod_transaction_owner_prv_user_id"/>
             </column>
             <column name="contractor" type="bigint">
                 <constraints primaryKey="true"
-                             references="usr_user(id)"
-                             foreignKeyName="FK_mod_transaction_contractor_usr_user_id"/>
+                             references="prv_user(id)"
+                             foreignKeyName="FK_mod_transaction_contractor_prv_user_id"/>
             </column>
             <column name="value"
                     type="decimal(9,2)"
@@ -146,13 +171,13 @@
             <column name="owner"
                     type="bigint">
                 <constraints primaryKey="true"
-                             references="usr_user(id)"
-                             foreignKeyName="FK_mod_settlement_owner_usr_user_id"/>
+                             references="prv_user(id)"
+                             foreignKeyName="FK_mod_settlement_owner_prv_user_id"/>
             </column>
             <column name="contractor" type="bigint">
                 <constraints primaryKey="true"
-                             references="usr_user(id)"
-                             foreignKeyName="FK_mod_settlement_contractor_usr_user_id"/>
+                             references="prv_user(id)"
+                             foreignKeyName="FK_mod_settlement_contractor_prv_user_id"/>
             </column>
             <column name="balance"
                     type="decimal(9,2)"
@@ -200,11 +225,11 @@
                              references="prv_object(id)"
                              foreignKeyName="FK_mod_comment_prv_object_prv_object_id"/>
             </column>
-            <column name="usr_user"
+            <column name="prv_user"
                     type="bigint">
                 <constraints nullable="false"
-                             references="usr_user(id)"
-                             foreignKeyName="FK_mod_comment_usr_user_usr_user_id"/>
+                             references="prv_user(id)"
+                             foreignKeyName="FK_mod_comment_prv_user_prv_user_id"/>
             </column>
             <column name="parent"
                     type="bigint">
@@ -273,11 +298,11 @@
         </createTable>
 
         <createTable tableName="prv_user_role">
-            <column name="usr_user"
+            <column name="prv_user"
                     type="bigint">
                 <constraints nullable="false"
-                             references="usr_user(id)"
-                             foreignKeyName="FK_prv_user_role_usr_user_usr_user_id"/>
+                             references="prv_user(id)"
+                             foreignKeyName="FK_prv_user_role_prv_user_prv_user_id"/>
             </column>
             <column name="prv_role"
                     type="bigint">

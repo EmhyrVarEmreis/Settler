@@ -43,9 +43,36 @@
             <column name="description">Creatable</column>
         </insert>
 
+        <insert tableName="dct_user_status">
+            <column name="code">CRT</column>
+            <column name="description">Creatable</column>
+        </insert>
+
+        <insert tableName="dct_user_status">
+            <column name="code">ACT</column>
+            <column name="description">Active</column>
+        </insert>
+        <insert tableName="dct_user_status">
+            <column name="code">DSB</column>
+            <column name="description">Disabled</column>
+        </insert>
+        <insert tableName="dct_user_status">
+            <column name="code">BLK</column>
+            <column name="description">Blocked</column>
+        </insert>
+        <insert tableName="dct_user_status">
+            <column name="code">HNG</column>
+            <column name="description">Hanged</column>
+        </insert>
+        <insert tableName="dct_user_status">
+            <column name="code">TMP</column>
+            <column name="description">Temporary</column>
+        </insert>
+
         <rollback>
             <delete tableName="dct_settlement_type"/>
             <delete tableName="dct_transaction_type"/>
+            <delete tableName="dct_user_status"/>
         </rollback>
 
     </changeSet>
