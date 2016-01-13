@@ -39,4 +39,5 @@ public class DatabaseConfiguration extends AbstractSource {
     public SqlSessionTemplate sqlSessionTemplateBean(@Qualifier("sqlSession-settler") SqlSessionFactory sqlSessionFactory) {
         return new SqlSessionTemplate(sqlSessionFactory, ExecutorType.BATCH);
     }
+
 }
