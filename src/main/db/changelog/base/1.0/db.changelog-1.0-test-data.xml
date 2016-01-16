@@ -93,6 +93,20 @@
                 '2015-11-15 16:34:19',
                 'DSB'
             );
+
+            INSERT INTO dev_settler.prv_object VALUES ();
+            INSERT INTO dev_settler.prv_user (
+                id, login, first_name, last_name, password, email, created, status
+            ) VALUES (
+                LAST_INSERT_ID(),
+                'regular.user',
+                'Edward',
+                'Środoń',
+                '5f4dcc3b5aa765d61d8327deb882cf99',
+                'regular.user@morecraft.pl',
+                '2015-11-09 23:56:48',
+                'DSB'
+            );
         </sql>
 
         <!-- CREATE TRANSACTIONS -->

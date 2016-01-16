@@ -103,16 +103,11 @@ public abstract class AbstractService<
         return isDesc ? comparableExpressionBase.desc() : comparableExpressionBase.asc();
     }
 
-    private BooleanExpression additionalFilters(FL filters, EQ qObject) {
-        return qObject.eq(qObject);
-    }
-
-
     private BooleanExpression applyFilters(String filtersJson, EQ qObject) throws NoSuchFieldException, IllegalAccessException {
         BooleanExpression predicate = qObject.isNotNull();
 
         for (BooleanExpression preFilter : getPreFilters()) {
-            predicate.and(preFilter);
+            predicate = predicate.and(preFilter);
         }
 
         if (filtersJson.length() == 0)
@@ -122,8 +117,6 @@ public abstract class AbstractService<
 
         try {
             filters = new ObjectMapper().readValue(filtersJson, getListFilterClass());
-
-            predicate = additionalFilters(filters, qObject);
 
             Field[] filterFields = filters.getClass().getDeclaredFields();
 
