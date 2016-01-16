@@ -5,7 +5,6 @@ import com.mysema.query.types.OrderSpecifier;
 import com.mysema.query.types.expr.BooleanExpression;
 import com.mysema.query.types.expr.ComparableExpressionBase;
 import com.mysema.query.types.path.EntityPathBase;
-import org.apache.commons.lang.ArrayUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -17,8 +16,10 @@ import pl.morecraft.dev.settler.web.misc.ListPageConverter;
 import java.io.IOException;
 import java.io.Serializable;
 import java.lang.reflect.Field;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Stream;
 
 /*
 E - Entity
@@ -104,50 +105,87 @@ public abstract class AbstractService<
     }
 
     private BooleanExpression applyFilters(String filtersJson, EQ qObject) throws NoSuchFieldException, IllegalAccessException {
-        BooleanExpression predicate = qObject.isNotNull();
+        BooleanExpressionWrapper pWrapper = new BooleanExpressionWrapper();
+        pWrapper.predicate = qObject.isNotNull();
 
         for (BooleanExpression preFilter : getPreFilters()) {
-            predicate = predicate.and(preFilter);
+            pWrapper.predicate = pWrapper.predicate.and(preFilter);
         }
 
         if (filtersJson.length() == 0)
-            return predicate;
+            return pWrapper.predicate;
 
         FL filters;
 
         try {
             filters = new ObjectMapper().readValue(filtersJson, getListFilterClass());
 
-            Field[] filterFields = filters.getClass().getDeclaredFields();
-
-            if (getExtendedFilters()) {
-                filterFields = (Field[]) ArrayUtils.addAll(filterFields, filters.getClass().getSuperclass().getDeclaredFields());
-            }
-
-            for (Field f : filterFields) {
-                f.setAccessible(true);
-
-                Object value = f.get(filters);
-
-                if (value == null) {
-                    continue;
-                }
-
-                Object qObjectFieldValue = qObject.getClass().getDeclaredField(f.getName()).get(qObject);
-
-                for (AbstractServiceSingleFilter singleFilter : getAbstractServiceSingleFilters()) {
-                    if (singleFilter.check(value, qObjectFieldValue)) {
-                        predicate = singleFilter.predicate(predicate, value, qObjectFieldValue);
-                    }
-                }
-
-                f.setAccessible(false);
-            }
+            Stream.concat(
+                    Arrays.stream(filters.getClass().getDeclaredFields()),
+                    getExtendedFields(filters)
+            ).filter(
+                    field -> extractValueFromField(field, filters) != null
+            ).forEach(
+                    f -> getAbstractServiceSingleFilters()
+                            .stream()
+                            .filter(filter -> filter.check(
+                                    extractValueFromField(f, filters),
+                                    extractValueFromField(
+                                            f,
+                                            extractFieldFromObject(
+                                                    qObject,
+                                                    f.getName()
+                                            )
+                                    ))
+                            )
+                            .forEach(filter -> pWrapper.predicate = filter.predicate(
+                                    pWrapper.predicate,
+                                    extractValueFromField(f, filters),
+                                    extractValueFromField(
+                                            f,
+                                            extractFieldFromObject(
+                                                    qObject,
+                                                    f.getName()
+                                            )
+                                    ))
+                            )
+            );
 
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return predicate;
+        return pWrapper.predicate;
     }
+
+    private Stream<Field> getExtendedFields(FL filters) {
+        if (getExtendedFilters()) {
+            return Arrays.stream(filters.getClass().getSuperclass().getDeclaredFields());
+        }
+        return Collections.<Field>emptyList().stream();
+    }
+
+    private Object extractValueFromField(Field field, Object object) {
+        field.setAccessible(true);
+        try {
+            return field.get(object);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private Object extractFieldFromObject(Object clazz, String name) {
+        try {
+            return clazz.getClass().getDeclaredField(name);
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private class BooleanExpressionWrapper {
+        private BooleanExpression predicate;
+    }
+
 }
