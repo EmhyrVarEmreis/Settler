@@ -21,42 +21,41 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
-/*
-E - Entity
-EQ - Entity Q
-I - ID
-R - Repo
-D - DTO
-LD - List DTO
-FL - List Filters
+/**
+ * @param <Entity>           Entity
+ * @param <EntityDTO>        Entity Data Transfer Object (DTO)
+ * @param <ListDTO>          Entity List Data Transfer Object (DTO)
+ * @param <ListFilters>      List filter
+ * @param <QEntity>          Entity Q-Class
+ * @param <EntityID>         Entity ID
+ * @param <EntityRepository> Entity repository
  */
-
 public abstract class AbstractService<
-        E,
-        D,
-        DL,
-        FL,
-        EQ extends EntityPathBase<E>,
-        I extends Serializable,
-        R extends JpaRepository<E, I> & QueryDslPredicateExecutor<E>
+        Entity,
+        EntityDTO,
+        ListDTO,
+        ListFilters,
+        QEntity extends EntityPathBase<Entity>,
+        EntityID extends Serializable,
+        EntityRepository extends JpaRepository<Entity, EntityID> & QueryDslPredicateExecutor<Entity>
         > {
 
-    public D get(I id) {
+    public EntityDTO get(EntityID id) {
         ModelMapper mapper = new ModelMapper();
-        E user = getRepository().findOne(id);
+        Entity user = getRepository().findOne(id);
         return mapper.map(user, getDtoClass());
     }
 
-    public Boolean save(D dto) {
+    public Boolean save(EntityDTO dto) {
         ModelMapper mapper = new ModelMapper();
-        E entity = mapper.map(dto, getEntityClass());
+        Entity entity = mapper.map(dto, getEntityClass());
         getRepository().save(entity);
         return Boolean.TRUE;
     }
 
-    public ListPage<DL> get(Integer page, Integer limit, String sortBy, String filters) {
-        EQ user = getEQ();
-        Page<E> userPage = null;
+    public ListPage<ListDTO> get(Integer page, Integer limit, String sortBy, String filters) {
+        QEntity user = getEQ();
+        Page<Entity> userPage = null;
         try {
             userPage = getRepository().findAll(
                     applyFilters(filters, user),
@@ -68,20 +67,20 @@ public abstract class AbstractService<
         } catch (NoSuchFieldException | IllegalAccessException e) {
             e.printStackTrace();
         }
-        return new ListPageConverter<E, DL>().convert(userPage, getListDtoClass());
+        return new ListPageConverter<Entity, ListDTO>().convert(userPage, getListDtoClass());
     }
 
-    protected abstract R getRepository();
+    protected abstract EntityRepository getRepository();
 
     protected abstract Boolean isFilterClassExtended();
 
-    protected abstract Class<E> getEntityClass();
+    protected abstract Class<Entity> getEntityClass();
 
-    protected abstract Class<D> getDtoClass();
+    protected abstract Class<EntityDTO> getDtoClass();
 
-    protected abstract Class<DL> getListDtoClass();
+    protected abstract Class<ListDTO> getListDtoClass();
 
-    protected abstract Class<FL> getListFilterClass();
+    protected abstract Class<ListFilters> getListFilterClass();
 
     protected List<AbstractServiceSingleFilter> getAbstractServiceSingleFilters() {
         return Collections.emptyList();
@@ -91,9 +90,9 @@ public abstract class AbstractService<
         return Collections.emptyList();
     }
 
-    protected abstract EQ getEQ();
+    protected abstract QEntity getEQ();
 
-    private OrderSpecifier<?> applySorting(String sortBy, EQ qObject) throws NoSuchFieldException, IllegalAccessException {
+    private OrderSpecifier<?> applySorting(String sortBy, QEntity qObject) throws NoSuchFieldException, IllegalAccessException {
         return applySortingSupporter(
                 sortBy.startsWith("-"),
                 ((ComparableExpressionBase<?>) qObject.getClass().getDeclaredField(sortBy.substring(1)).get(qObject))
@@ -104,7 +103,7 @@ public abstract class AbstractService<
         return isDesc ? comparableExpressionBase.desc() : comparableExpressionBase.asc();
     }
 
-    private BooleanExpression applyFilters(String filtersJson, EQ qObject) throws NoSuchFieldException, IllegalAccessException {
+    private BooleanExpression applyFilters(String filtersJson, QEntity qObject) throws NoSuchFieldException, IllegalAccessException {
         BooleanExpressionWrapper pWrapper = new BooleanExpressionWrapper();
         pWrapper.predicate = qObject.isNotNull();
 
@@ -115,7 +114,7 @@ public abstract class AbstractService<
         if (filtersJson.length() == 0)
             return pWrapper.predicate;
 
-        FL filters;
+        ListFilters filters;
 
         try {
             filters = new ObjectMapper().readValue(filtersJson, getListFilterClass());
@@ -158,7 +157,7 @@ public abstract class AbstractService<
         return pWrapper.predicate;
     }
 
-    private Stream<Field> getExtendedFields(FL filters) {
+    private Stream<Field> getExtendedFields(ListFilters filters) {
         if (isFilterClassExtended()) {
             return Arrays.stream(filters.getClass().getSuperclass().getDeclaredFields());
         }
