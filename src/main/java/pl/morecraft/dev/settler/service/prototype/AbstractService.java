@@ -73,7 +73,7 @@ public abstract class AbstractService<
 
     protected abstract R getRepository();
 
-    protected abstract Boolean getExtendedFilters();
+    protected abstract Boolean isFilterClassExtended();
 
     protected abstract Class<E> getEntityClass();
 
@@ -159,7 +159,7 @@ public abstract class AbstractService<
     }
 
     private Stream<Field> getExtendedFields(FL filters) {
-        if (getExtendedFilters()) {
+        if (isFilterClassExtended()) {
             return Arrays.stream(filters.getClass().getSuperclass().getDeclaredFields());
         }
         return Collections.<Field>emptyList().stream();

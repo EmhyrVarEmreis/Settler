@@ -42,7 +42,7 @@ public class TransactionService extends AbstractService<Transaction, Transaction
     }
 
     @Override
-    protected Boolean getExtendedFilters() {
+    protected Boolean isFilterClassExtended() {
         return true;
     }
 

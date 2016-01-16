@@ -43,7 +43,7 @@ public class UserService extends AbstractService<User, UserDTO, UserListDTO, Use
     }
 
     @Override
-    protected Boolean getExtendedFilters() {
+    protected Boolean isFilterClassExtended() {
         return true;
     }
 
