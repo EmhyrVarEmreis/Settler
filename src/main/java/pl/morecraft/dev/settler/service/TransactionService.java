@@ -79,8 +79,8 @@ public class TransactionService extends AbstractService<Transaction, Transaction
         return CollectionUtils.add(
                 new ArrayList<>(),
                 permissionManager.objectFilter(
-                        QTransaction.transaction._super,
                         Security.currentUser(),
+                        QTransaction.transaction._super,
                         OperationType.RDM
                 )
         );

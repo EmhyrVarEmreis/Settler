@@ -79,8 +79,8 @@ public class UserService extends AbstractService<User, UserDTO, UserListDTO, Use
         return CollectionUtils.add(
                 new ArrayList<>(),
                 permissionManager.objectFilter(
-                        QUser.user._super,
                         Security.currentUser(),
+                        QUser.user._super,
                         OperationType.RDM
                 )
         );

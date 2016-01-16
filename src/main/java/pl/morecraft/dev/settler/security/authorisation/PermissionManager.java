@@ -17,6 +17,6 @@ public interface PermissionManager {
     boolean isAuthorized(PrivilegeObject source, PrivilegeObject target, OperationType operationType);
 
 
-    BooleanExpression objectFilter(QPrivilegeObject source, PrivilegeObject target, OperationType operationType);
+    BooleanExpression objectFilter(PrivilegeObject source, QPrivilegeObject target, OperationType operationType);
 
 }

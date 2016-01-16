@@ -8,7 +8,6 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import pl.morecraft.dev.settler.domain.PrivilegeObject;
 import pl.morecraft.dev.settler.domain.QPrivilegeObject;
-import pl.morecraft.dev.settler.domain.User;
 import pl.morecraft.dev.settler.domain.dictionaries.OperationType;
 
 import javax.inject.Inject;
@@ -34,34 +33,50 @@ public class PermissionManagerImplementation implements PermissionManager {
 
     @Override
     public boolean isAuthorized(PrivilegeObject source, PrivilegeObject target, OperationType operationType) {
+        BooleanExpression expression = jTBObjectHierarchy.objectFrom.id.eq(jTBObjectPrivilege.objectTo.id)
+                .and(jTBObjectHierarchy.objectTo.id.eq(target.getId()));
+        expression = expression.or(
+                jTBObjectPrivilege.objectTo.id.eq(target.getId())
+        );
+        expression = expression.or(
+                jTBObjectPrivilege.objectTo.isNull()
+        );
         return new JPAQuery(entityManager).from(jTBObjectPrivilege, jTBObjectHierarchy)
-                .where(jTBObjectPrivilege.objectFrom.id.eq(source.getId()),
-                        jTBObjectPrivilege.operationType.eq(operationType),
-                        jTBObjectHierarchy.objectFrom.eq(jTBObjectPrivilege.objectTo),
-                        jTBObjectHierarchy.objectTo.eq(target)
-                                .or(jTBObjectHierarchy.objectTo.isNull())
-                                .or(jTBObjectPrivilege.objectTo.id.eq(target.getId()))
+                .where(
+                        jTBObjectPrivilege.objectFrom.id.eq(source.getId()),
+                        (jTBObjectPrivilege.operationType.eq(operationType)),
+                        expression
                 )
                 .exists();
     }
 
     @Override
-    public BooleanExpression objectFilter(QPrivilegeObject source, PrivilegeObject target, OperationType operationType) {
-        return source.id.in(
+    public BooleanExpression objectFilter(PrivilegeObject source, QPrivilegeObject target, OperationType operationType) {
+        return target.id.in(
                 new JPASubQuery().from(jTBObjectPrivilege, jTBObjectHierarchy)
-                        .where(jTBObjectPrivilege.objectFrom.id.eq(target.getId()),
+                        .where(
+                                jTBObjectPrivilege.objectFrom.id.eq(source.getId()),
                                 jTBObjectPrivilege.operationType.eq(operationType),
-                                jTBObjectHierarchy.objectFrom.id.eq(jTBObjectPrivilege.objectTo.id).or(
-                                        jTBObjectPrivilege.objectTo.isNull())
+                                jTBObjectHierarchy.objectFrom.id.eq(jTBObjectPrivilege.objectTo.id)
                         )
                         .list(jTBObjectHierarchy.objectTo.id)
         ).or(
-                source.id.in(
+                target.id.in(
                         new JPASubQuery().from(jTBObjectPrivilege)
-                                .where(jTBObjectPrivilege.objectFrom.id.eq(target.getId())
+                                .where(
+                                        jTBObjectPrivilege.objectFrom.id.eq(source.getId()),
+                                        jTBObjectPrivilege.operationType.eq(operationType)
                                 )
                                 .list(jTBObjectPrivilege.objectTo.id)
                 )
+        ).or(
+                new JPASubQuery().from(jTBObjectPrivilege)
+                        .where(
+                                jTBObjectPrivilege.objectFrom.id.eq(source.getId()),
+                                jTBObjectPrivilege.operationType.eq(operationType),
+                                jTBObjectPrivilege.objectTo.isNull()
+                        )
+                        .exists()
         );
     }
 
