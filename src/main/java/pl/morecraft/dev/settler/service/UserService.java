@@ -1,6 +1,5 @@
 package pl.morecraft.dev.settler.service;
 
-
 import com.mysema.query.types.expr.BooleanExpression;
 import com.mysema.query.util.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
