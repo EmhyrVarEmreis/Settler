@@ -99,9 +99,9 @@ public abstract class AbstractService<
 
     public ListPage<ListDTO> get(Integer page, Integer limit, String sortBy, String filters) {
         QEntity user = getEQ();
-        Page<Entity> userPage = null;
+        Page<Entity> entityPage = null;
         try {
-            userPage = getRepository().findAll(
+            entityPage = getRepository().findAll(
                     applyFilters(filters, user),
                     new QPageRequest(page - 1,
                             limit,
@@ -111,7 +111,7 @@ public abstract class AbstractService<
         } catch (NoSuchFieldException | IllegalAccessException e) {
             e.printStackTrace();
         }
-        return new ListPageConverter<Entity, ListDTO>().convert(userPage, getListDtoClass());
+        return new ListPageConverter<Entity, ListDTO>().convert(entityPage, getListDtoClass());
     }
 
     protected abstract EntityRepository getRepository();
