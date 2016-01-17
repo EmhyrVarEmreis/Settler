@@ -26,6 +26,10 @@ import java.util.function.Predicate;
 import java.util.function.UnaryOperator;
 import java.util.stream.Stream;
 
+// [REFLECTION] Tu jest dużo refleksji
+// [STREAM] Wykorzystany jest java.util.Stream
+// [LAMBDA] Są lambdy
+
 /**
  * @param <Entity>           Entity
  * @param <EntityDTO>        Entity Data Transfer Object (DTO)

@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-@Scope("singleton")
+@Scope("singleton") // [SINGLETON]
 public class DefaultSingleFiltersList {
 
     public List<AbstractServiceSingleFilter> getDefaultSingleFiltersList() {

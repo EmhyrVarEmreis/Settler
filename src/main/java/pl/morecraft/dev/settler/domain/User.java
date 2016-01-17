@@ -5,6 +5,13 @@ import pl.morecraft.dev.settler.domain.dictionaries.UserStatus;
 import javax.persistence.*;
 import java.time.LocalDate;
 
+// [MVCS]
+// wszystko w pl.morecraft.dev.settler.domain to Model
+// wszystko w pl.morecraft.dev.settler.service to Service
+// wszystko w pl.morecraft.dev.settler.web to Controller
+// frontend to View
+
+
 @Entity
 @Table(name = "prv_user")
 //@Audited
