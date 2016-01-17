@@ -6,9 +6,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pl.morecraft.dev.settler.dao.repository.TransactionRepository;
-import pl.morecraft.dev.settler.domain.QTransaction;
-import pl.morecraft.dev.settler.domain.Transaction;
+import pl.morecraft.dev.settler.dao.repository.SettlementRepository;
+import pl.morecraft.dev.settler.domain.QSettlement;
+import pl.morecraft.dev.settler.domain.Settlement;
 import pl.morecraft.dev.settler.domain.dictionaries.OperationType;
 import pl.morecraft.dev.settler.security.authorisation.PermissionManager;
 import pl.morecraft.dev.settler.security.util.Security;
@@ -17,9 +17,9 @@ import pl.morecraft.dev.settler.service.prototype.AbstractService;
 import pl.morecraft.dev.settler.service.prototype.AbstractServiceSingleFilter;
 import pl.morecraft.dev.settler.service.singleFilters.CustomStringUserSingleFilter;
 import pl.morecraft.dev.settler.service.singleFilters.DefaultSingleFiltersList;
-import pl.morecraft.dev.settler.web.dto.TransactionDTO;
-import pl.morecraft.dev.settler.web.dto.TransactionListDTO;
-import pl.morecraft.dev.settler.web.misc.TransactionListFilters;
+import pl.morecraft.dev.settler.web.dto.SettlementDTO;
+import pl.morecraft.dev.settler.web.dto.SettlementListDTO;
+import pl.morecraft.dev.settler.web.misc.SettlementListFilters;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
@@ -28,19 +28,19 @@ import java.util.function.Function;
 
 @Service
 @Transactional
-public class TransactionService extends AbstractService<Transaction, TransactionDTO, TransactionListDTO, TransactionListFilters, QTransaction, Long, TransactionRepository> {
+public class SettlementService extends AbstractService<Settlement, SettlementDTO, SettlementListDTO, SettlementListFilters, QSettlement, Long, SettlementRepository> {
 
     @Inject
     private PermissionManager permissionManager;
 
     @Inject
-    private TransactionRepository repository;
+    private SettlementRepository repository;
 
     @Autowired
     private DefaultSingleFiltersList defaultSingleFiltersList;
 
     @Override
-    protected TransactionRepository getRepository() {
+    protected SettlementRepository getRepository() {
         return repository;
     }
 
@@ -50,23 +50,23 @@ public class TransactionService extends AbstractService<Transaction, Transaction
     }
 
     @Override
-    protected Class<Transaction> getEntityClass() {
-        return Transaction.class;
+    protected Class<Settlement> getEntityClass() {
+        return Settlement.class;
     }
 
     @Override
-    protected Class<TransactionDTO> getDtoClass() {
-        return TransactionDTO.class;
+    protected Class<SettlementDTO> getDtoClass() {
+        return SettlementDTO.class;
     }
 
     @Override
-    protected Class<TransactionListDTO> getListDtoClass() {
-        return TransactionListDTO.class;
+    protected Class<SettlementListDTO> getListDtoClass() {
+        return SettlementListDTO.class;
     }
 
     @Override
-    protected Class<TransactionListFilters> getListFilterClass() {
-        return TransactionListFilters.class;
+    protected Class<SettlementListFilters> getListFilterClass() {
+        return SettlementListFilters.class;
     }
 
     @Override
@@ -83,19 +83,19 @@ public class TransactionService extends AbstractService<Transaction, Transaction
                 new ArrayList<>(),
                 permissionManager.objectFilter(
                         Security.currentUser(),
-                        QTransaction.transaction._super,
+                        QSettlement.settlement._super,
                         OperationType.RDM
                 )
         );
     }
 
     @Override
-    protected QTransaction getEQ() {
-        return QTransaction.transaction;
+    protected QSettlement getEQ() {
+        return QSettlement.settlement;
     }
 
     @Override
-    protected Function<Transaction, TransactionDTO> getGetProcessingFunction() {
+    protected Function<Settlement, SettlementDTO> getGetProcessingFunction() {
         return entity -> {
             ModelMapper modelMapper = new ModelMapper();
             modelMapper.addConverter(new ListIntegerConverter());

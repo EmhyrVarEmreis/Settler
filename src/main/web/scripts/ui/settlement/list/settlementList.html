@@ -1,0 +1,33 @@
+<div class="panel-main">
+    <div class="page-header">
+        <h1>Lista rozliczeń
+            <span class="pull-right">
+                <smart-table-buttons show-filters="showFilterView"
+                                     show-visibility="showVisibilityView"
+                                     apply-filters="applyFilters"
+                                     clear-filters="clearFilters"
+                                     toggle-filters="toggleFilters"
+                                     toggle-visibility="toggleVisibility"></smart-table-buttons>
+            </span>
+        </h1>
+    </div>
+
+    <div class="row panel-body">
+
+        <smart-table name="userList"
+                     page="1"
+                     count="25"
+                     sorting="{id:'asc'}"
+                     columns="columns"
+                     show-filters="showFilterView"
+                     show-visibility="showVisibilityView"
+                     factory="settlementListFactory"
+                     apply-filters="applyFilters"
+                     toggle-filters="toggleFilters"
+                     toggle-visibility="toggleVisibility"
+                     clear-filters="clearFilters"
+                     empty-table-string="Brak wyników spełniających podane kryteria"></smart-table>
+
+    </div>
+
+</div>

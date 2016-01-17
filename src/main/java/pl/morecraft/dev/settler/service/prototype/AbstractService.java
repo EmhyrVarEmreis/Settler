@@ -217,27 +217,27 @@ public abstract class AbstractService<
             ).filter(
                     field -> extractValueFromField(field, filters) != null
             ).forEach(
-                    f -> getAbstractServiceSingleFilters()
+                    field -> getAbstractServiceSingleFilters()
                             .stream()
                             .filter(filter -> filter.check(
-                                    extractValueFromField(f, filters),
+                                    extractValueFromField(field, filters),
                                     extractValueFromField(
-                                            f,
                                             extractFieldFromObject(
                                                     qObject,
-                                                    f.getName()
-                                            )
+                                                    field.getName()
+                                            ),
+                                            qObject
                                     ))
                             )
                             .forEach(filter -> pWrapper.predicate = filter.predicate(
                                     pWrapper.predicate,
-                                    extractValueFromField(f, filters),
+                                    extractValueFromField(field, filters),
                                     extractValueFromField(
-                                            f,
                                             extractFieldFromObject(
                                                     qObject,
-                                                    f.getName()
-                                            )
+                                                    field.getName()
+                                            ),
+                                            qObject
                                     ))
                             )
             );
@@ -266,7 +266,7 @@ public abstract class AbstractService<
         return null;
     }
 
-    private Object extractFieldFromObject(Object clazz, String name) {
+    private Field extractFieldFromObject(Object clazz, String name) {
         try {
             return clazz.getClass().getDeclaredField(name);
         } catch (NoSuchFieldException e) {

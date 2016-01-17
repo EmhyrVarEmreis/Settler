@@ -80,4 +80,5 @@ public class UserListDTO {
     public void setCreated(LocalDate created) {
         this.created = created;
     }
+
 }

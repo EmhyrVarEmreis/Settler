@@ -26,7 +26,7 @@ public class UserController {
     }
 
     @RequestMapping(
-            name = "/details",
+            value = "/details",
             method = RequestMethod.PUT,
             produces = MediaType.APPLICATION_JSON_VALUE
     )

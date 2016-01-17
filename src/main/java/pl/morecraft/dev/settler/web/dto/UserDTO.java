@@ -15,6 +15,9 @@ import java.util.List;
 
 public class UserDTO {
 
+    @NotNull
+    private Long id;
+
     @Pattern(regexp = "^[a-zA-Z0-9]*$")
     @NotNull
     @Size(min = 1, max = 32)
@@ -62,6 +65,14 @@ public class UserDTO {
         this.lastName = lastName;
         this.email = email;
         this.roleAssignments = roleAssignments;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getLogin() {
@@ -155,4 +166,5 @@ public class UserDTO {
                 ", roles=" + roleAssignments +
                 '}';
     }
+
 }

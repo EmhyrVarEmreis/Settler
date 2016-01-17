@@ -16,7 +16,7 @@ public class Comment extends PrivilegeObject {
     private Comment parentComment;
 
     @ManyToOne
-    @JoinColumn(name = "usr_user")
+    @JoinColumn(name = "prv_user")
     private User owner;
 
     @Column(nullable = false)

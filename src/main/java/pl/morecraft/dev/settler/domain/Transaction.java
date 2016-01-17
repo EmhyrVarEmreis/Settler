@@ -1,9 +1,11 @@
 package pl.morecraft.dev.settler.domain;
 
+import org.hibernate.envers.NotAudited;
 import pl.morecraft.dev.settler.domain.dictionaries.TransactionType;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "mod_transaction")
@@ -29,6 +31,13 @@ public class Transaction extends PrivilegeObject {
     private LocalDate created;
     private LocalDate confirmed;
     private LocalDate evaluated;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "mod_comment",
+            joinColumns = {@JoinColumn(name = "prv_object", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "id", referencedColumnName = "id")})
+    @NotAudited
+    private List<Comment> comments;
 
     public Transaction() {
     }
@@ -96,5 +105,14 @@ public class Transaction extends PrivilegeObject {
     public void setEvaluated(LocalDate evaluated) {
         this.evaluated = evaluated;
     }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
+
 }
 

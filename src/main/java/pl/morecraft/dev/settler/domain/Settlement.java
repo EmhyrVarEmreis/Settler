@@ -40,6 +40,13 @@ public class Settlement extends PrivilegeObject {
     @NotAudited
     private List<Transaction> transactions;
 
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "mod_comment",
+            joinColumns = {@JoinColumn(name = "prv_object", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "id", referencedColumnName = "id")})
+    @NotAudited
+    private List<Comment> comments;
+
     public Settlement() {
     }
 
@@ -122,4 +129,13 @@ public class Settlement extends PrivilegeObject {
     public void setTransactions(List<Transaction> transactions) {
         this.transactions = transactions;
     }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
+
 }

@@ -1,12 +1,14 @@
 (function () {
     'use strict';
 
-    angular.module('settlerApplication').controller('TransactionListCtrl', function ($scope, NgTableParams, transactionListFactory) {
+    angular.module('settlerApplication').controller('SettlementListCtrl', function ($scope,
+                                                                                    NgTableParams,
+                                                                                    settlementListFactory) {
 
         $scope.columns = [
             {
                 field:     'reference',
-                title:     'Numer transakcji',
+                title:     'Numer rozliczenia',
                 isVisible: true,
                 filter:    true,
                 type:      'default',
@@ -16,7 +18,7 @@
             },
             {
                 field:     'type',
-                title:     'Typ transakcji',
+                title:     'Typ rozliczenia',
                 isVisible: true,
                 filter:    true,
                 type:      'default',
@@ -42,8 +44,8 @@
                 index:     3
             },
             {
-                field:     'value',
-                title:     'Wartość',
+                field:     'balance',
+                title:     'Bilans',
                 isVisible: true,
                 filter:    true,
                 type:      'default',
@@ -51,17 +53,17 @@
                 index:     4
             },
             {
-                field:     'created',
-                title:     'Utworzono',
+                field:     'transactions',
+                title:     'Transakcje',
                 isVisible: true,
                 filter:    true,
-                type:      'date',
-                isEmpty:   "N/D",
+                type:      'default',
+                isEmpty:   "Brak",
                 index:     5
             },
             {
-                field:     'confirmed',
-                title:     'Potwierdzono',
+                field:     'created',
+                title:     'Utworzono',
                 isVisible: true,
                 filter:    true,
                 type:      'date',
@@ -78,17 +80,35 @@
                 index:     7
             },
             {
+                field:     'startDate',
+                title:     'Od',
+                isVisible: true,
+                filter:    true,
+                type:      'date',
+                isEmpty:   "N/D",
+                index:     8
+            },
+            {
+                field:     'endDate',
+                title:     'Do',
+                isVisible: true,
+                filter:    true,
+                type:      'date',
+                isEmpty:   "N/D",
+                index:     9
+            },
+            {
                 field:     'comments',
                 title:     'Komentarze',
                 isVisible: true,
                 filter:    true,
                 type:      'default',
                 isEmpty:   "Brak",
-                index:     8
+                index:     10
             }
         ];
 
-        $scope.transactionListFactory = transactionListFactory;
+        $scope.settlementListFactory = settlementListFactory;
 
     });
 })();

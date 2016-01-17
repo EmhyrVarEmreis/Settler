@@ -4,11 +4,18 @@
     angular.module('settlerApplication').controller('UserDetailsCtrl', function ($scope,
                                                                                  NgTableParams,
                                                                                  userDetailsFactory,
-                                                                                 $stateParams) {
+                                                                                 $stateParams,
+                                                                                 modalService) {
 
         $scope.data = {};
         if ($stateParams.state !== 'new') {
-            $scope.data = userDetailsFactory.get({id: $stateParams.state});
+            userDetailsFactory.get({id: $stateParams.state},
+                function (data) {
+                    $scope.data = data;
+                }, function (err) {
+                    modalService.createErrorDialogFromResponse(err);
+                }
+            );
         }
 
     });
