@@ -1,9 +1,8 @@
 package pl.morecraft.dev.settler.web;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import pl.morecraft.dev.settler.service.TransactionService;
 import pl.morecraft.dev.settler.web.dto.TransactionDTO;
 import pl.morecraft.dev.settler.web.dto.TransactionListDTO;
@@ -18,9 +17,22 @@ public class TransactionController {
     @Inject
     private TransactionService transactionService;
 
-    @RequestMapping(name = "/details", method = RequestMethod.GET)
-    public TransactionDTO get(@RequestParam(value = "id", required = true) Long userId) {
+    @RequestMapping(
+            name = "/details",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public ResponseEntity<TransactionDTO> get(@RequestParam(value = "id", required = true) Long userId) {
         return transactionService.get(userId);
+    }
+
+    @RequestMapping(
+            name = "/details",
+            method = RequestMethod.PUT,
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public ResponseEntity<String> save(@RequestBody TransactionDTO transactionDTO) {
+        return transactionService.save(transactionDTO);
     }
 
     @RequestMapping("/list")

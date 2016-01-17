@@ -1,9 +1,8 @@
 package pl.morecraft.dev.settler.web;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import pl.morecraft.dev.settler.service.UserService;
 import pl.morecraft.dev.settler.web.dto.UserDTO;
 import pl.morecraft.dev.settler.web.dto.UserListDTO;
@@ -18,9 +17,21 @@ public class UserController {
     @Inject
     private UserService userService;
 
-    @RequestMapping(value = "/details", method = RequestMethod.GET)
-    public UserDTO get(@RequestParam(value = "id", required = true) Long userId) {
+    @RequestMapping(
+            value = "/details",
+            method = RequestMethod.GET
+    )
+    public ResponseEntity<UserDTO> get(@RequestParam(value = "id", required = true) Long userId) {
         return userService.get(userId);
+    }
+
+    @RequestMapping(
+            name = "/details",
+            method = RequestMethod.PUT,
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public ResponseEntity<String> save(@RequestBody UserDTO userDTO) {
+        return userService.save(userDTO);
     }
 
     @RequestMapping("/list")

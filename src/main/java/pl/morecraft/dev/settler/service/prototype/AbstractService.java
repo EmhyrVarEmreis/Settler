@@ -10,6 +10,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.querydsl.QPageRequest;
 import org.springframework.data.querydsl.QueryDslPredicateExecutor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import pl.morecraft.dev.settler.web.misc.ListPage;
 import pl.morecraft.dev.settler.web.misc.ListPageConverter;
 
@@ -19,6 +21,9 @@ import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.function.UnaryOperator;
 import java.util.stream.Stream;
 
 /**
@@ -40,17 +45,56 @@ public abstract class AbstractService<
         EntityRepository extends JpaRepository<Entity, EntityID> & QueryDslPredicateExecutor<Entity>
         > {
 
-    public EntityDTO get(EntityID id) {
-        ModelMapper mapper = new ModelMapper();
-        Entity user = getRepository().findOne(id);
-        return mapper.map(user, getDtoClass());
+    public ResponseEntity<EntityDTO> get(EntityID id) {
+        Entity entity = getRepository().findOne(id);
+
+        if (entity == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        if (!getGetAuthorisationPredicate().test(entity)) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        if (!getGetPreValidationPredicate().test(entity)) {
+            return new ResponseEntity<>(HttpStatus.PRECONDITION_FAILED);
+        }
+
+        EntityDTO entityDTO = getGetProcessingFunction().apply(
+                getGetPreProcessingFunction().apply(entity)
+        );
+
+        if (!getGetPostValidationPredicate().test(entityDTO)) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        entityDTO = getGetPostProcessingFunction().apply(entityDTO);
+
+        return new ResponseEntity<>(entityDTO, HttpStatus.OK);
     }
 
-    public Boolean save(EntityDTO dto) {
-        ModelMapper mapper = new ModelMapper();
-        Entity entity = mapper.map(dto, getEntityClass());
-        getRepository().save(entity);
-        return Boolean.TRUE;
+    public ResponseEntity<String> save(EntityDTO entityDTO) {
+        if (!getSaveAuthorisationPredicate().test(entityDTO)) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        if (!getSavePreValidationPredicate().test(entityDTO)) {
+            return new ResponseEntity<>(HttpStatus.PRECONDITION_FAILED);
+        }
+
+        Entity entity = getSaveProcessingFunction().apply(
+                getSavePreProcessingFunction().apply(entityDTO)
+        );
+
+        if (!getSavePostValidationPredicate().test(entity)) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        if (getRepository().save(getSavePostProcessingFunction().apply(entity)) == null) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     public ListPage<ListDTO> get(Integer page, Integer limit, String sortBy, String filters) {
@@ -81,6 +125,54 @@ public abstract class AbstractService<
     protected abstract Class<ListDTO> getListDtoClass();
 
     protected abstract Class<ListFilters> getListFilterClass();
+
+    protected Predicate<EntityDTO> getSavePreValidationPredicate() {
+        return entityDTO -> true;
+    }
+
+    protected Predicate<Entity> getSavePostValidationPredicate() {
+        return entityDTO -> true;
+    }
+
+    protected Predicate<EntityDTO> getSaveAuthorisationPredicate() {
+        return entityDTO -> true;
+    }
+
+    protected UnaryOperator<Entity> getSavePostProcessingFunction() {
+        return entity -> entity;
+    }
+
+    protected Function<EntityDTO, Entity> getSaveProcessingFunction() {
+        return entityDTO -> new ModelMapper().map(entityDTO, getEntityClass());
+    }
+
+    protected UnaryOperator<EntityDTO> getSavePreProcessingFunction() {
+        return entityDTO -> entityDTO;
+    }
+
+    protected Predicate<Entity> getGetPreValidationPredicate() {
+        return entity -> true;
+    }
+
+    protected Predicate<EntityDTO> getGetPostValidationPredicate() {
+        return entityDTO -> true;
+    }
+
+    protected Predicate<Entity> getGetAuthorisationPredicate() {
+        return entity -> true;
+    }
+
+    protected UnaryOperator<EntityDTO> getGetPostProcessingFunction() {
+        return entityDTO -> entityDTO;
+    }
+
+    protected Function<Entity, EntityDTO> getGetProcessingFunction() {
+        return entity -> new ModelMapper().map(entity, getDtoClass());
+    }
+
+    protected UnaryOperator<Entity> getGetPreProcessingFunction() {
+        return entity -> entity;
+    }
 
     protected List<AbstractServiceSingleFilter> getAbstractServiceSingleFilters() {
         return Collections.emptyList();
