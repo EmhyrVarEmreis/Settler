@@ -53,6 +53,7 @@ public class SettlementService extends AbstractService<Settlement, SettlementDTO
     protected Class<Settlement> getEntityClass() {
         return Settlement.class;
     }
+    //nie da się przekazać jako parametr, więc przekazuje się z rozszerzeniem .class
 
     @Override
     protected Class<SettlementDTO> getDtoClass() {

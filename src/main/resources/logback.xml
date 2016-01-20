@@ -1,5 +1,7 @@
 <configuration debug="true">
 
+    <!--//konfiguracja pluginu do LOGowania-->
+
     <property name="PATTERN" value="%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"/>
     <property name="MAX_FILE_SIZE" value="50MB"/>
     <property name="CHARSET" value="UTF-8"/>

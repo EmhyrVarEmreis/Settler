@@ -12,12 +12,12 @@ import javax.inject.Inject;
 
 @RestController
 @RequestMapping("/api/user")
-public class UserController {
+public class UserController { //służy do komunikacji z frontendem
 
     @Inject
     private UserService userService;
 
-    @RequestMapping(
+    @RequestMapping( //1 - to samo - pobiera
             value = "/details",
             method = RequestMethod.GET
     )
@@ -25,7 +25,7 @@ public class UserController {
         return userService.get(userId);
     }
 
-    @RequestMapping(
+    @RequestMapping( // 2 - to samo, ale różnie reaguje na dane rzeczy - wkłada
             value = "/details",
             method = RequestMethod.PUT,
             produces = MediaType.APPLICATION_JSON_VALUE

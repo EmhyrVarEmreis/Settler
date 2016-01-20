@@ -11,7 +11,7 @@ import java.util.List;
 
 public class ListPageConverter<S, T> {
 
-    public ListPage<T> convert(Page<S> page, Class<T> tClass) {
+    public ListPage<T> convert(Page<S> page, Class<T> tClass) { //otrzymuje listę jakiejś klasy i ma zamienić to na listę DTO
 
         if (page == null) {
             throw new InvalidPageException("ListPage is null");
@@ -27,7 +27,7 @@ public class ListPageConverter<S, T> {
         result.setTotal(page.getTotalElements());
 
         for (S s : page.getContent()) {
-            content.add(modelMapper.map(s, tClass));
+            content.add(modelMapper.map(s, tClass)); //mapuje rzecz na klasę
         }
 
         result.setContent(content);

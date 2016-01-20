@@ -13,6 +13,8 @@ import java.util.Map;
 @Service
 public class DictionaryServiceImplementation implements DictionaryService {
 
+//służą do automatycznego zarządzania słownikami(na encjach)
+
     private Map<String, DictionaryProvider> providerMap = new HashMap<>();
 
     @Inject

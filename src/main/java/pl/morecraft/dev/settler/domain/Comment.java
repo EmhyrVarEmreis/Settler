@@ -2,7 +2,7 @@ package pl.morecraft.dev.settler.domain;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-
+//stałe normalne encje
 @Entity
 @Table(name = "mod_comment")
 public class Comment extends PrivilegeObject {

@@ -5,6 +5,8 @@ package pl.morecraft.dev.settler.security.xauth;
  */
 public class TokenDTO {
 
+    //przekazywane do frontendu DataTransferToObject
+
     String token;
     long expires;
 

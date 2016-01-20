@@ -9,10 +9,10 @@ import java.util.Arrays;
 import java.util.List;
 
 @Service
-@DictionaryProviderFor("userStatus")
+@DictionaryProviderFor("userStatus") //dla kogo jest to provider
 public class UserStatusDictionaryProvider implements DictionaryProvider {
     @Override
     public List loadProvider() {
-        return Arrays.asList(UserStatus.values());
+        return Arrays.asList(UserStatus.values()); //bez pobierania z bazy daych tylko ze słowników, czyli czegoś co już mamy
     }
 }

@@ -19,6 +19,8 @@ import static pl.morecraft.dev.settler.domain.jtb.QJTBObjectPrivilege.jTBObjectP
 @Service
 public class PermissionManagerImplementation implements PermissionManager {
 
+    //budowanie zapytań za pomocą encji
+
     @Inject
     private EntityManager entityManager;
 

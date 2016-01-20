@@ -9,7 +9,7 @@ import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 import pl.morecraft.dev.settler.jobs.AutowiringSpringBeanJobFactory;
 
 import javax.sql.DataSource;
-
+//do quartza, definicja beana
 @Configuration
 public class SchedulerConfiguration {
 

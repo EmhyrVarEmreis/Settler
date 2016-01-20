@@ -14,7 +14,7 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
-
+ // zerżnięte z interneru. Zamienianie typów...........
 public class LocalDateTimeUserType implements EnhancedUserType, Serializable {
 
     private static final int[] SQL_TYPES = new int[]{Types.TIMESTAMP};

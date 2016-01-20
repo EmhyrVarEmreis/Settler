@@ -8,7 +8,7 @@ import java.io.Serializable;
 @Entity
 @Table(name = "jtb_object_hierarchy")
 public class JTBObjectHierarchy implements Serializable {
-
+//encje do tabelek złączeniowych. Spłaszczanie struktury, aby zoptymalizować bazę danych.
     @Id
     @ManyToOne
     @JoinColumn(name = "prv_object_from")

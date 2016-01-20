@@ -11,7 +11,12 @@ import pl.morecraft.dev.settler.security.xauth.TokenProvider;
  * Configures x-auth-token security.
  */
 @Configuration
-public class XAuthConfiguration implements EnvironmentAware {
+public class XAuthConfiguration implements EnvironmentAware { //usługi restowe
+
+    //zagadnienie bezpieczeństwa się nazywa: XAuth !!!!!!
+
+    //serwer bezstanowy
+    //każde działanie wymaga autoryzacji
 
     private RelaxedPropertyResolver propertyResolver;
 
@@ -20,6 +25,9 @@ public class XAuthConfiguration implements EnvironmentAware {
         this.propertyResolver = new RelaxedPropertyResolver(environment, "authentication.xauth.");
     }
 
+    //każdy użytkoniwk ma swój token
+
+    //serwer nie przechowuje danych, wszystko jest trzymane w local storage w przeglądarce
     @Bean
     public TokenProvider tokenProvider() {
         String secret = propertyResolver.getProperty("secret", String.class, "mySecretXAuthSecret");

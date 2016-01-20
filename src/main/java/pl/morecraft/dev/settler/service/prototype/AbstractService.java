@@ -215,15 +215,16 @@ public abstract class AbstractService<
         try {
             filters = new ObjectMapper().readValue(filtersJson, getListFilterClass());
 
-            Stream.concat(
+            Stream.concat( //łączymy streamy
                     Arrays.stream(filters.getClass().getDeclaredFields()),
                     getExtendedFields(filters)
-            ).filter(
-                    field -> extractValueFromField(field, filters) != null
-            ).forEach(
-                    field -> getAbstractServiceSingleFilters()
+            ).filter( //przefiltruje
+                    field -> extractValueFromField(field, filters) != null //wyrzuca pola, gdzie wartość jest nullem, bo nie potrzebujemy go
+                    //pobieramy dane z pola i jeśli nie są nule, to nie są brane pod uwagę
+            ).forEach( //dla każdego pola zrób to co niżej
+                    field -> getAbstractServiceSingleFilters() //pobierz metody filtrowania (np.data)
                             .stream()
-                            .filter(filter -> filter.check(
+                            .filter(filter -> filter.check( //sprawdza, czy filtr nadaje się do filtrowania tego pola, który chcemy. *mamy listę odpowiednich filtrów i przepisów co i jak
                                     extractValueFromField(field, filters),
                                     extractValueFromField(
                                             extractFieldFromObject(
@@ -233,7 +234,7 @@ public abstract class AbstractService<
                                             qObject
                                     ))
                             )
-                            .forEach(filter -> pWrapper.predicate = filter.predicate(
+                            .forEach(filter -> pWrapper.predicate = filter.predicate( //dla wszystkich, które się nadają dodają do głównego predykatu, ten predykat z filtra
                                     pWrapper.predicate,
                                     extractValueFromField(field, filters),
                                     extractValueFromField(
@@ -253,14 +254,14 @@ public abstract class AbstractService<
         return pWrapper.predicate;
     }
 
-    private Stream<Field> getExtendedFields(ListFilters filters) {
+    private Stream<Field> getExtendedFields(ListFilters filters) { //TO JEST REFLEKSJA, zaglądanie do wnętrza klasy
         if (isFilterClassExtended()) {
             return Arrays.stream(filters.getClass().getSuperclass().getDeclaredFields());
         }
         return Collections.<Field>emptyList().stream();
     }
 
-    private Object extractValueFromField(Field field, Object object) {
+    private Object extractValueFromField(Field field, Object object) { //TO JEST REFLEKSJA, zaglądanie do wnętrza klasy
         field.setAccessible(true);
         try {
             return field.get(object);
@@ -270,7 +271,7 @@ public abstract class AbstractService<
         return null;
     }
 
-    private Field extractFieldFromObject(Object clazz, String name) {
+    private Field extractFieldFromObject(Object clazz, String name) { //TO JEST REFLEKSJA, zaglądanie do wnętrza klasy
         try {
             return clazz.getClass().getDeclaredField(name);
         } catch (NoSuchFieldException e) {

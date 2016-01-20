@@ -9,6 +9,8 @@ import java.util.List;
 
 public interface TransactionMapper {
 
+    //robią swoje własne zapytania SQLowych
+    // @Select("SELECCT snsbdbs") zamiast pisania w XML, a tam możemy zdefiniować części (makra)
     Long countTransactions(
             @Param("context") QueryContextDTO context,
             @Param("filters") TransactionListFilters filters

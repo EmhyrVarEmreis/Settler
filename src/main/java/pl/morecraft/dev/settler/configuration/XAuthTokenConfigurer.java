@@ -11,7 +11,7 @@ import pl.morecraft.dev.settler.security.xauth.XAuthTokenFilter;
 public class XAuthTokenConfigurer extends SecurityConfigurerAdapter<DefaultSecurityFilterChain, HttpSecurity> {
 
     private TokenProvider tokenProvider;
-
+//konfiguracja tokenu
     private UserDetailsService detailsService;
 
     public XAuthTokenConfigurer(UserDetailsService detailsService, TokenProvider tokenProvider) {

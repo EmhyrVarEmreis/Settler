@@ -15,13 +15,15 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
 
-@Configuration
+//konifguracja podstawowej bazy danych
+
+@Configuration // spring to rozumie, próbuje wczytać sobie z Application.yml (resources)
 @ConfigurationProperties(prefix = "spring.datasource")
 @EnableTransactionManagement
 @MapperScan(basePackages = "pl.morecraft.dev.settler.dao.mapper", sqlSessionTemplateRef = "sqlSessionTemplate-settler")
 @EnableJpaRepositories("pl.morecraft.dev.settler.dao.repository")
 public class DatabaseConfiguration extends AbstractSource {
-
+// poprzez bean wstrzykujemy coś do innej klasy (akurat nie w tym przypadku)
     @Bean(name = "dataSource-settler")
     @Primary
     public DataSource getDataSource() {

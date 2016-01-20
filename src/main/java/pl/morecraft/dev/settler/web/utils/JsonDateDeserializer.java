@@ -11,6 +11,8 @@ import java.util.Objects;
 
 public class JsonDateDeserializer extends JsonDeserializer<LocalDate> {
 
+    //string na datę i odwrotnie
+
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     @Override

@@ -1,4 +1,4 @@
-@TypeDefs({
+@TypeDefs({ //fefinicje
         @TypeDef(name = "localDateType",
                 defaultForType = LocalDate.class,
                 typeClass = LocalDateUserType.class),

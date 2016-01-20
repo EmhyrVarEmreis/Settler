@@ -18,13 +18,14 @@ import pl.morecraft.dev.settler.security.xauth.TokenProvider;
 
 import javax.inject.Inject;
 
+// ustawienia zabezpieczeń
 
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true, jsr250Enabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    @Inject
+    @Inject //wstrzykiwanie beana
     private Http401UnauthorizedEntryPoint authenticationEntryPoint;
 
     @Inject
@@ -38,10 +39,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return new Md5PasswordEncoder();
     }
 
-    @Inject
+    @Inject //tak musi sie nazywać, ale środek sami ustawiamy
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService)
-                .passwordEncoder(passwordEncoder());
+                .passwordEncoder(passwordEncoder()); //ustawiamy hashowanie hasła
     }
 
     @Override
@@ -72,10 +73,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .authorizeRequests()
+                .authorizeRequests() // autoryzuje z :
                 .antMatchers("/api/register").permitAll()
                 .antMatchers("/api/authenticate").permitAll()
-                .antMatchers("/api/**").authenticated()
+                .antMatchers("/api/**").authenticated() // użytkownik musi być zautoryzowany do każdego adresu /api
                 .antMatchers("/protected/**").authenticated()
                 .and()
                 .apply(securityConfigurerAdapter());

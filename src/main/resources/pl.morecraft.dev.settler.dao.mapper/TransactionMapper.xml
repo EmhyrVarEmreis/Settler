@@ -4,6 +4,6 @@
 
 <mapper namespace="pl.morecraft.dev.settler.dao.mapper.TransactionMapper">
 
-
+//tutaj piszemy zapytania, aby później się nie mordować.
 
 </mapper>
