@@ -2,8 +2,8 @@ package pl.morecraft.dev.settler.web.misc;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
-import pl.morecraft.dev.settler.service.converters.ListIntegerConverter;
-import pl.morecraft.dev.settler.service.converters.UserStringConverter;
+import pl.morecraft.dev.settler.service.converters.single.ListIntegerConverter;
+import pl.morecraft.dev.settler.service.converters.single.UserStringConverter;
 import pl.morecraft.dev.settler.service.exception.InvalidPageException;
 
 import java.util.ArrayList;

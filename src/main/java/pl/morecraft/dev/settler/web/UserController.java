@@ -27,7 +27,7 @@ public class UserController {
 
     @RequestMapping(
             value = "/details",
-            method = RequestMethod.PUT,
+            method = {RequestMethod.PUT, RequestMethod.POST},
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     public ResponseEntity<String> save(@RequestBody UserDTO userDTO) {

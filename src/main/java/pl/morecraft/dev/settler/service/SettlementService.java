@@ -12,7 +12,7 @@ import pl.morecraft.dev.settler.domain.Settlement;
 import pl.morecraft.dev.settler.domain.dictionaries.OperationType;
 import pl.morecraft.dev.settler.security.authorisation.PermissionManager;
 import pl.morecraft.dev.settler.security.util.Security;
-import pl.morecraft.dev.settler.service.converters.ListIntegerConverter;
+import pl.morecraft.dev.settler.service.converters.single.ListIntegerConverter;
 import pl.morecraft.dev.settler.service.prototype.AbstractService;
 import pl.morecraft.dev.settler.service.prototype.AbstractServiceSingleFilter;
 import pl.morecraft.dev.settler.service.singleFilters.CustomStringUserSingleFilter;

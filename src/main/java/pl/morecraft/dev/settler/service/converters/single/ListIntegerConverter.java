@@ -1,4 +1,4 @@
-package pl.morecraft.dev.settler.service.converters;
+package pl.morecraft.dev.settler.service.converters.single;
 
 import org.modelmapper.AbstractConverter;
 
