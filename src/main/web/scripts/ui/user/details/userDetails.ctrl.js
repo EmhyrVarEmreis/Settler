@@ -9,7 +9,22 @@
 
         $scope.data = {};
         if ($stateParams.state !== 'new') {
-            userDetailsFactory.get({id: $stateParams.state},
+            userDetailsFactory.get(
+                {
+                    id: $stateParams.state
+                },
+                function (data) {
+                    $scope.data = data;
+                }, function (err) {
+                    modalService.createErrorDialogFromResponse(err);
+                }
+            );
+        }
+
+        $scope.save = function () {
+            console.log($scope.data.status);
+            userDetailsFactory.save(
+                $scope.data,
                 function (data) {
                     $scope.data = data;
                 }, function (err) {
