@@ -18,7 +18,7 @@
                 'admin',
                 'Edward',
                 'Ącki',
-                '5f4dcc3b5aa765d61d8327deb882cf99',
+                MD5('password'),
                 'test@morecraft.pl',
                 '2015-11-11 11:11:11',
                 'ACT'
@@ -32,7 +32,7 @@
                 'user',
                 'Jan',
                 'Kowalski',
-                '5f4dcc3b5aa765d61d8327deb882cf99',
+                MD5('password'),
                 'demo@morecraft.pl',
                 '2015-11-11 11:11:11',
                 'ACT'
@@ -46,7 +46,7 @@
                 'jan.nowak',
                 'Jan',
                 'Nowak',
-                '5f4dcc3b5aa765d61d8327deb882cf99',
+                MD5('password'),
                 'jan.nowak@morecraft.pl',
                 '2015-12-12 12:12:12',
                 'ACT'
@@ -60,7 +60,7 @@
                 'marian.kowalski',
                 'Marian',
                 'Kowalski',
-                '5f4dcc3b5aa765d61d8327deb882cf99',
+                MD5('password'),
                 'marian.kowalski@morecraft.pl',
                 '2015-11-17 16:00:00',
                 'ACT'
@@ -74,7 +74,7 @@
                 'jan.kos',
                 'Jan',
                 'Kos',
-                '5f4dcc3b5aa765d61d8327deb882cf99',
+                MD5('password'),
                 'jan.kos@morecraft.pl',
                 '2015-11-17 17:45:32',
                 'HNG'
@@ -88,7 +88,7 @@
                 'adam.trocki',
                 'Adam',
                 'Trocki',
-                '5f4dcc3b5aa765d61d8327deb882cf99',
+                MD5('password'),
                 'adam.trocki@morecraft.pl',
                 '2015-11-15 16:34:19',
                 'DSB'
@@ -102,7 +102,7 @@
                 'regular.user',
                 'Edward',
                 'Środoń',
-                '5f4dcc3b5aa765d61d8327deb882cf99',
+                MD5('password'),
                 'regular.user@morecraft.pl',
                 '2015-11-09 23:56:48',
                 'DSB'
