@@ -1,6 +1,6 @@
-<div class="login-page">
-    <div class="row">
-        <div class="col-md-4 col-md-offset-4">
+<div class="jumbotron vertical-center">
+    <div class="container text-center">
+        <div class="col-md-4 col-md-offset-4 text-center login-page">
             <h1>Logowanie</h1>
 
             <div class="alert alert-danger" ng-show="authenticationErrore">
@@ -35,7 +35,10 @@
                            ng-model="password">
                 </div>
 
-                <button type="submit" class="btn btn-primary" ng-click="login()">Loguj</button>
+                <button type="submit" class="btn btn-primary" ng-click="login()">
+                    <span class="glyphicon glyphicon-log-in  glph-def-em" aria-hidden="true"></span>
+                    Zaloguj się
+                </button>
             </form>
         </div>
     </div>
