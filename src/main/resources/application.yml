@@ -1,16 +1,19 @@
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: ${settler.db.url}
-    username: ${settler.db.user}
-    password: ${settler.db.password}
+    url: @settler.db.url@
+    username: @settler.db.user@
+    password: @settler.db.password@
+    test-on-borrow: true
+    validation-query: SELECT 1
+    validation-interval: 5000
 
   jpa:
     database-platform: org.hibernate.dialect.MySQLInnoDBDialect
     
 multipart:
-  max-file-size: 30Mb
-  max-request-size: 30Mb
+  max-file-size: 50Mb
+  max-request-size: 50Mb
 
 quartz:
   enabled: false
