@@ -110,3 +110,11 @@ body {
 
 .container {
 }
+
+.table-row-highlight tr:hover {
+    background-color: rgba(33, 33, 33, 0.05);
+}
+
+.table-row-cursor-hand {
+    cursor: pointer;
+}

@@ -2,13 +2,14 @@
     'use strict';
 
     angular.module('settlerApplication')
-        .directive('smartTable', function (NgTableParams) {
+        .directive('smartTable', function (NgTableParams, $location) {
             return {
                 scope:       {
                     name:             "@",
                     factory:          '=',
                     page:             '@',
                     count:            '@',
+                    defaultUrl:       '@',
                     sorting:          '=',
                     columns:          '=',
                     showFilters:      '=',
@@ -101,6 +102,16 @@
                             return a;
                         }
 
+                    };
+
+                    scope.navigateToUrl = function (model) {
+                        if (scope.defaultUrl) {
+                            var url = scope.getUrl(scope.defaultUrl, model);
+                            if (url.substring(0, 2) === '#/') {
+                                url = url.substring(2, url.length);
+                            }
+                            $location.path(url);
+                        }
                     };
 
                 }

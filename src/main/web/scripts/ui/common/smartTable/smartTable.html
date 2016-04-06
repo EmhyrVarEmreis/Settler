@@ -39,14 +39,15 @@
                     </button>
             </tr>
             </thead>
-            <tbody>
-            <tr ng-repeat="user in $data">
+            <tbody class="table-row-highlight">
+            <tr ng-repeat="entry in $data" ng-click="navigateToUrl(entry)"
+                ng-class="{'table-row-cursor-hand' : defaultUrl}">
                 <td ng-repeat="column in columns" ng-show="column.isVisible || showVisibility">
-                    <a ng-if="column.url" href ng-href="{{column.url || user ? getUrl(column.url,user) : ''}}">
-                        <strong>{{getField(column.field, user) | isEmpty:column.isEmpty}}</strong>
+                    <a ng-if="column.url" href ng-href="{{column.url || entry ? getUrl(column.url,entry) : ''}}">
+                        <strong>{{getField(column.field, entry) | isEmpty:column.isEmpty}}</strong>
                     </a>
                     <span ng-if="!column.url">
-                        {{getField(column.field, user) | isEmpty:column.isEmpty}}
+                        {{getField(column.field, entry) | isEmpty:column.isEmpty}}
                     </span>
                 </td>
             </tr>
