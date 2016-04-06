@@ -1,15 +1,19 @@
 <div class="panel-main">
     <div class="page-header">
-        <h1>Lista transakcji
-            <span class="pull-right">
+        <div class="pull-left">
+            <h1>Lista transakcji</h1>
+        </div>
+        <div class="pull-right">
+            <h1 class="text-right">
                 <smart-table-buttons show-filters="showFilterView"
                                      show-visibility="showVisibilityView"
                                      apply-filters="applyFilters"
                                      clear-filters="clearFilters"
                                      toggle-filters="toggleFilters"
                                      toggle-visibility="toggleVisibility"></smart-table-buttons>
-            </span>
-        </h1>
+            </h1>
+        </div>
+        <div class="clearfix"></div>
     </div>
 
     <div class="row panel-body">
@@ -20,15 +24,14 @@
                      sorting="{id:'asc'}"
                      columns="columns"
                      factory="transactionListFactory"
-                     show-filters="showFilterView"
+                     default-url="#/transaction/details/:id"
                      show-visibility="showVisibilityView"
+                     toggle-visibility="toggleVisibility"
+                     show-filters="showFilterView"
                      apply-filters="applyFilters"
                      clear-filters="clearFilters"
                      toggle-filters="toggleFilters"
-                     toggle-visibility="toggleVisibility"
-                     clear-filters="clearFilters"
-                     empty-table-string="Brak wyników spełniających podane kryteria">>
-        </smart-table>
+                     empty-table-string="Brak wyników spełniających podane kryteria"></smart-table>
 
     </div>
 

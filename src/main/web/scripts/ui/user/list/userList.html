@@ -1,15 +1,19 @@
 <div class="panel-main">
     <div class="page-header">
-        <h1>Lista użytkowników
-            <span class="pull-right">
+        <div class="pull-left">
+            <h1>Lista użytkowników</h1>
+        </div>
+        <div class="pull-right">
+            <h1 class="text-right">
                 <smart-table-buttons show-filters="showFilterView"
                                      show-visibility="showVisibilityView"
                                      apply-filters="applyFilters"
                                      clear-filters="clearFilters"
                                      toggle-filters="toggleFilters"
                                      toggle-visibility="toggleVisibility"></smart-table-buttons>
-            </span>
-        </h1>
+            </h1>
+        </div>
+        <div class="clearfix"></div>
     </div>
 
     <div class="row panel-body">
@@ -19,13 +23,14 @@
                      count="25"
                      sorting="{id:'asc'}"
                      columns="columns"
-                     show-filters="showFilterView"
-                     show-visibility="showVisibilityView"
                      factory="userListFactory"
-                     apply-filters="applyFilters"
-                     toggle-filters="toggleFilters"
+                     default-url="#/user/details/:id"
+                     show-visibility="showVisibilityView"
                      toggle-visibility="toggleVisibility"
+                     show-filters="showFilterView"
+                     apply-filters="applyFilters"
                      clear-filters="clearFilters"
+                     toggle-filters="toggleFilters"
                      empty-table-string="Brak wyników spełniających podane kryteria"></smart-table>
 
     </div>
