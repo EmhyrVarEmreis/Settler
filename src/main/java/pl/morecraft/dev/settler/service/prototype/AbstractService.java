@@ -5,16 +5,18 @@ import com.mysema.query.types.OrderSpecifier;
 import com.mysema.query.types.expr.BooleanExpression;
 import com.mysema.query.types.expr.ComparableExpressionBase;
 import com.mysema.query.types.path.EntityPathBase;
-import org.modelmapper.ModelMapper;
+import org.modelmapper.AbstractConverter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.querydsl.QPageRequest;
 import org.springframework.data.querydsl.QueryDslPredicateExecutor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import pl.morecraft.dev.settler.service.converters.ListPageConverter;
+import pl.morecraft.dev.settler.service.converters.prototype.EntityConvertersPack;
 import pl.morecraft.dev.settler.web.misc.ListPage;
-import pl.morecraft.dev.settler.web.misc.ListPageConverter;
 
+import javax.inject.Inject;
 import java.io.IOException;
 import java.io.Serializable;
 import java.lang.reflect.Field;
@@ -44,6 +46,12 @@ public abstract class AbstractService<
         EntityID extends Serializable,
         EntityRepository extends JpaRepository<Entity, EntityID> & QueryDslPredicateExecutor<Entity>
         > {
+
+    @Inject
+    private EntityConvertersPack entityConvertersPack;
+
+    @Inject
+    private ListPageConverter listPageConverter;
 
     public ResponseEntity<EntityDTO> get(EntityID id) {
         Entity entity = getRepository().findOne(id);
@@ -111,7 +119,7 @@ public abstract class AbstractService<
         } catch (NoSuchFieldException | IllegalAccessException e) {
             e.printStackTrace();
         }
-        return new ListPageConverter<Entity, ListDTO>().convert(entityPage, getListDtoClass());
+        return listPageConverter.convert(entityPage, getListDtoClass());
     }
 
     protected abstract EntityRepository getRepository();
@@ -143,7 +151,7 @@ public abstract class AbstractService<
     }
 
     protected Function<EntityDTO, Entity> getSaveProcessingFunction() {
-        return entityDTO -> new ModelMapper().map(entityDTO, getEntityClass());
+        return entityDTO -> entityConvertersPack.getPreparedModelMapper().map(entityDTO, getEntityClass());
     }
 
     protected UnaryOperator<EntityDTO> getSavePreProcessingFunction() {
@@ -167,7 +175,7 @@ public abstract class AbstractService<
     }
 
     protected Function<Entity, EntityDTO> getGetProcessingFunction() {
-        return entity -> new ModelMapper().map(entity, getDtoClass());
+        return entity -> entityConvertersPack.getPreparedModelMapper().map(entity, getDtoClass());
     }
 
     protected UnaryOperator<Entity> getGetPreProcessingFunction() {
@@ -180,6 +188,10 @@ public abstract class AbstractService<
 
     protected List<BooleanExpression> getPreFilters() {
         return Collections.emptyList();
+    }
+
+    protected List<AbstractConverter> getConverters() {
+        return entityConvertersPack.getFullEntityConvertersPack();
     }
 
     protected abstract QEntity getEQ();

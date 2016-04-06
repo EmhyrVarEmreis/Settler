@@ -1,17 +1,23 @@
-package pl.morecraft.dev.settler.web.misc;
+package pl.morecraft.dev.settler.service.converters;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
-import pl.morecraft.dev.settler.service.converters.single.ListIntegerConverter;
-import pl.morecraft.dev.settler.service.converters.single.UserStringConverter;
+import org.springframework.stereotype.Component;
+import pl.morecraft.dev.settler.service.converters.prototype.EntityConvertersPack;
 import pl.morecraft.dev.settler.service.exception.InvalidPageException;
+import pl.morecraft.dev.settler.web.misc.ListPage;
 
+import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListPageConverter<S, T> {
+@Component
+public class ListPageConverter {
 
-    public ListPage<T> convert(Page<S> page, Class<T> tClass) {
+    @Inject
+    private EntityConvertersPack entityConvertersPack;
+
+    public <S, T> ListPage<T> convert(Page<S> page, Class<T> tClass) {
 
         if (page == null) {
             throw new InvalidPageException("ListPage is null");
@@ -19,10 +25,7 @@ public class ListPageConverter<S, T> {
 
         ListPage<T> result = new ListPage<>();
         List<T> content = new ArrayList<>();
-        ModelMapper modelMapper = new ModelMapper();
-
-        modelMapper.addConverter(new UserStringConverter());
-        modelMapper.addConverter(new ListIntegerConverter());
+        ModelMapper modelMapper = entityConvertersPack.getPreparedModelMapper();
 
         result.setTotal(page.getTotalElements());
 

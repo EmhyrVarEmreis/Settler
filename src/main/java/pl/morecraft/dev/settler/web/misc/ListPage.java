@@ -3,6 +3,7 @@ package pl.morecraft.dev.settler.web.misc;
 import java.util.List;
 
 public class ListPage<T> {
+
     private Long total;
     private List<T> content;
 
@@ -29,4 +30,5 @@ public class ListPage<T> {
     public void setContent(List<T> content) {
         this.content = content;
     }
+
 }
