@@ -104,8 +104,15 @@ body {
     justify-content: center;
 }
 
+.login-page-bg {
+    background-color: #F17F0C;
+}
+
 .login-page {
     padding-bottom: 25%;
+    padding-top: 70px;
+    background: url("../images/brand.png") no-repeat center top;
+    background-size: auto 80px;
 }
 
 .container {
