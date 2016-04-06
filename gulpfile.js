@@ -47,7 +47,12 @@ gulp.task('copy', function () {
 
 gulp.task('copy-fonts', function () {
     return gulp.src(config.bootstrapDir + '/fonts/**/*')
-        .pipe(gulp.dest(config.dist + '/styles/styles/fonts'));
+        .pipe(gulp.dest(config.dist + '/fonts'));
+});
+
+gulp.task('copy-images', function () {
+    return gulp.src(config.app + '/images/**/*')
+        .pipe(gulp.dest(config.dist + '/images'));
 });
 
 gulp.task('preprocess', function () {
@@ -106,7 +111,7 @@ gulp.task('templates', function () {
         .pipe(gulp.dest(config.work));
 });
 
-gulp.task('html', ['copy', 'copy-fonts', 'templates', 'preprocess'], function () {
+gulp.task('html', ['copy', 'copy-fonts', 'copy-images', 'templates', 'preprocess'], function () {
     var assets = useref.assets({
         searchPath: [config.work, config.app]
     });
