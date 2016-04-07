@@ -1,10 +1,11 @@
 package pl.morecraft.dev.settler.domain;
 
+import org.hibernate.annotations.Type;
 import org.hibernate.envers.NotAudited;
+import org.joda.time.LocalDateTime;
 import pl.morecraft.dev.settler.domain.dictionaries.SettlementType;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -19,8 +20,8 @@ public class Settlement extends PrivilegeObject {
     private SettlementType type;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "owner")
-    private User owner;
+    @JoinColumn(name = "creator")
+    private User creator;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "contractor")
@@ -28,10 +29,21 @@ public class Settlement extends PrivilegeObject {
 
     private Double balance;
 
-    private LocalDate created;
-    private LocalDate startDate;
-    private LocalDate endDate;
-    private LocalDate evaluated;
+    @SuppressWarnings("SpellCheckingInspection")
+    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
+    private LocalDateTime created;
+
+    @SuppressWarnings("SpellCheckingInspection")
+    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
+    private LocalDateTime startDate;
+
+    @SuppressWarnings("SpellCheckingInspection")
+    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
+    private LocalDateTime endDate;
+
+    @SuppressWarnings("SpellCheckingInspection")
+    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
+    private LocalDateTime evaluated;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "prv_object_hierarchy",
@@ -66,12 +78,12 @@ public class Settlement extends PrivilegeObject {
         this.type = type;
     }
 
-    public User getOwner() {
-        return owner;
+    public User getCreator() {
+        return creator;
     }
 
-    public void setOwner(User owner) {
-        this.owner = owner;
+    public void setCreator(User creator) {
+        this.creator = creator;
     }
 
     public User getContractor() {
@@ -90,35 +102,35 @@ public class Settlement extends PrivilegeObject {
         this.balance = balance;
     }
 
-    public LocalDate getCreated() {
+    public LocalDateTime getCreated() {
         return created;
     }
 
-    public void setCreated(LocalDate created) {
+    public void setCreated(LocalDateTime created) {
         this.created = created;
     }
 
-    public LocalDate getStartDate() {
+    public LocalDateTime getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(LocalDate startDate) {
+    public void setStartDate(LocalDateTime startDate) {
         this.startDate = startDate;
     }
 
-    public LocalDate getEndDate() {
+    public LocalDateTime getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(LocalDate endDate) {
+    public void setEndDate(LocalDateTime endDate) {
         this.endDate = endDate;
     }
 
-    public LocalDate getEvaluated() {
+    public LocalDateTime getEvaluated() {
         return evaluated;
     }
 
-    public void setEvaluated(LocalDate evaluated) {
+    public void setEvaluated(LocalDateTime evaluated) {
         this.evaluated = evaluated;
     }
 

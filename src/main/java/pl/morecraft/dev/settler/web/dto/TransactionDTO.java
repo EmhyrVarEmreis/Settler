@@ -2,13 +2,14 @@ package pl.morecraft.dev.settler.web.dto;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import org.joda.time.LocalDateTime;
 import pl.morecraft.dev.settler.web.utils.JsonDateDeserializer;
 import pl.morecraft.dev.settler.web.utils.JsonDateSerializer;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-import java.time.LocalDate;
+import java.util.List;
 
 public class TransactionDTO {
 
@@ -26,10 +27,13 @@ public class TransactionDTO {
     private String type;
 
     @NotNull
-    private UserTinyDTO owner;
+    private UserTinyDTO creator;
 
     @NotNull
-    private UserTinyDTO contractor;
+    private List<RedistributionPDTO> owners;
+
+    @NotNull
+    private List<RedistributionPDTO> contractors;
 
     @NotNull
     private Double value;
@@ -37,15 +41,15 @@ public class TransactionDTO {
     @NotNull
     @JsonDeserialize(using = JsonDateDeserializer.class)
     @JsonSerialize(using = JsonDateSerializer.class)
-    private LocalDate created;
+    private LocalDateTime created;
 
     @JsonDeserialize(using = JsonDateDeserializer.class)
     @JsonSerialize(using = JsonDateSerializer.class)
-    private LocalDate confirmed;
+    private LocalDateTime confirmed;
 
     @JsonDeserialize(using = JsonDateDeserializer.class)
     @JsonSerialize(using = JsonDateSerializer.class)
-    private LocalDate evaluated;
+    private LocalDateTime evaluated;
 
     @NotNull
     private Integer comments;
@@ -77,20 +81,28 @@ public class TransactionDTO {
         this.type = type;
     }
 
-    public UserTinyDTO getOwner() {
-        return owner;
+    public UserTinyDTO getCreator() {
+        return creator;
     }
 
-    public void setOwner(UserTinyDTO owner) {
-        this.owner = owner;
+    public void setCreator(UserTinyDTO creator) {
+        this.creator = creator;
     }
 
-    public UserTinyDTO getContractor() {
-        return contractor;
+    public List<RedistributionPDTO> getOwners() {
+        return owners;
     }
 
-    public void setContractor(UserTinyDTO contractor) {
-        this.contractor = contractor;
+    public void setOwners(List<RedistributionPDTO> owners) {
+        this.owners = owners;
+    }
+
+    public List<RedistributionPDTO> getContractors() {
+        return contractors;
+    }
+
+    public void setContractors(List<RedistributionPDTO> contractors) {
+        this.contractors = contractors;
     }
 
     public Double getValue() {
@@ -101,27 +113,27 @@ public class TransactionDTO {
         this.value = value;
     }
 
-    public LocalDate getCreated() {
+    public LocalDateTime getCreated() {
         return created;
     }
 
-    public void setCreated(LocalDate created) {
+    public void setCreated(LocalDateTime created) {
         this.created = created;
     }
 
-    public LocalDate getConfirmed() {
+    public LocalDateTime getConfirmed() {
         return confirmed;
     }
 
-    public void setConfirmed(LocalDate confirmed) {
+    public void setConfirmed(LocalDateTime confirmed) {
         this.confirmed = confirmed;
     }
 
-    public LocalDate getEvaluated() {
+    public LocalDateTime getEvaluated() {
         return evaluated;
     }
 
-    public void setEvaluated(LocalDate evaluated) {
+    public void setEvaluated(LocalDateTime evaluated) {
         this.evaluated = evaluated;
     }
 

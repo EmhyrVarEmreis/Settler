@@ -113,7 +113,7 @@
         <sql>
             INSERT INTO dev_settler.prv_object VALUES ();
             INSERT INTO dev_settler.mod_transaction (
-                id, reference, type, owner, contractor, value, created
+            id, reference, type, creator, value, created
             ) VALUES (
                 LAST_INSERT_ID(),
                 'TRA151112121212',
@@ -121,16 +121,13 @@
                 (SELECT id
                  FROM dev_settler.prv_user
                  WHERE login = 'admin'),
-                (SELECT id
-                 FROM dev_settler.prv_user
-                 WHERE login = 'user'),
                 12.50,
                 '2015-11-12 12:12:12'
             );
 
             INSERT INTO dev_settler.prv_object VALUES ();
             INSERT INTO dev_settler.mod_transaction (
-                id, reference, type, owner, contractor, value, created
+            id, reference, type, creator, value, created
             ) VALUES (
                 LAST_INSERT_ID(),
                 'TRA151113150000',
@@ -138,11 +135,110 @@
                 (SELECT id
                  FROM dev_settler.prv_user
                  WHERE login = 'user'),
-                (SELECT id
-                 FROM dev_settler.prv_user
-                 WHERE login = 'marian.kowalski'),
                 10.50,
                 '2015-11-13 15:00:00'
+            );
+        </sql>
+
+        <!-- CREATE REDISTRIBUTIONS -->
+        <sql>
+            INSERT INTO dev_settler.mod_redistribution (
+                type, parent, user, percentage
+            ) VALUES (
+                'O',
+                (SELECT id
+                 FROM dev_settler.mod_transaction
+                 WHERE reference = 'TRA151112121212'),
+                (SELECT id
+                 FROM dev_settler.prv_user
+                 WHERE login = 'admin'),
+                100
+            );
+            INSERT INTO dev_settler.mod_redistribution (
+                type, parent, user, percentage
+            ) VALUES (
+                'C',
+                (SELECT id
+                 FROM dev_settler.mod_transaction
+                 WHERE reference = 'TRA151112121212'),
+                (SELECT id
+                 FROM dev_settler.prv_user
+                 WHERE login = 'adam.trocki'),
+                75
+            );
+            INSERT INTO dev_settler.mod_redistribution (
+                type, parent, user, percentage
+            ) VALUES (
+                'C',
+                (SELECT id
+                 FROM dev_settler.mod_transaction
+                 WHERE reference = 'TRA151112121212'),
+                (SELECT id
+                 FROM dev_settler.prv_user
+                 WHERE login = 'jan.nowak'),
+                25
+            );
+
+
+            INSERT INTO dev_settler.mod_redistribution (
+                type, parent, user, percentage
+            ) VALUES (
+                'O',
+                (SELECT id
+                 FROM dev_settler.mod_transaction
+                 WHERE reference = 'TRA151113150000'),
+                (SELECT id
+                 FROM dev_settler.prv_user
+                 WHERE login = 'user'),
+                40
+            );
+            INSERT INTO dev_settler.mod_redistribution (
+                type, parent, user, percentage
+            ) VALUES (
+                'O',
+                (SELECT id
+                 FROM dev_settler.mod_transaction
+                 WHERE reference = 'TRA151113150000'),
+                (SELECT id
+                 FROM dev_settler.prv_user
+                 WHERE login = 'admin'),
+                60
+            );
+            INSERT INTO dev_settler.mod_redistribution (
+                type, parent, user, percentage
+            ) VALUES (
+                'C',
+                (SELECT id
+                 FROM dev_settler.mod_transaction
+                 WHERE reference = 'TRA151113150000'),
+                (SELECT id
+                 FROM dev_settler.prv_user
+                 WHERE login = 'adam.trocki'),
+                30
+            );
+            INSERT INTO dev_settler.mod_redistribution (
+                type, parent, user, percentage
+            ) VALUES (
+                'C',
+                (SELECT id
+                 FROM dev_settler.mod_transaction
+                 WHERE reference = 'TRA151113150000'),
+                (SELECT id
+                 FROM dev_settler.prv_user
+                 WHERE login = 'jan.nowak'),
+                20
+            );
+            INSERT INTO dev_settler.mod_redistribution (
+                type, parent, user, percentage
+            ) VALUES (
+                'C',
+                (SELECT id
+                 FROM dev_settler.mod_transaction
+                 WHERE reference = 'TRA151113150000'),
+                (SELECT id
+                 FROM dev_settler.prv_user
+                 WHERE login = 'jan.kos'),
+                50
             );
         </sql>
 
@@ -150,7 +246,7 @@
         <sql>
             INSERT INTO dev_settler.prv_object VALUES ();
             INSERT INTO dev_settler.mod_settlement (
-                id, reference, type, owner, contractor, balance, created, start_date, end_date, evaluated
+            id, reference, type, creator, contractor, balance, created, start_date, end_date, evaluated
             ) VALUES (
                 LAST_INSERT_ID(),
                 'SET151112121212',
@@ -163,8 +259,8 @@
                  WHERE login = 'user'),
                 12.50,
                 '2015-11-12 12:12:12',
-                '2015-11-12',
-                '2015-11-13',
+            '2015-11-12 15:25:42',
+            '2015-11-13 09:51:45',
                 NULL
             );
         </sql>

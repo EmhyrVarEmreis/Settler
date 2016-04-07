@@ -26,6 +26,7 @@ public class ListPageConverter {
         ListPage<T> result = new ListPage<>();
         List<T> content = new ArrayList<>();
         ModelMapper modelMapper = entityConvertersPack.getPreparedModelMapper();
+        //ModelMapper modelMapper = new ModelMapper();
 
         result.setTotal(page.getTotalElements());
 

@@ -15,10 +15,10 @@
         </sql>
 
         <createProcedure>
-            CREATE PROCEDURE proc_jtb_object_privilege_refresh_by_owner(owner BIGINT)
+            CREATE PROCEDURE proc_jtb_object_privilege_refresh_by_owner(creator BIGINT)
                 BEGIN
                     DELETE FROM jtb_object_privilege
-                    WHERE prv_object_from = owner;
+            WHERE prv_object_from = creator;
 
                     INSERT INTO jtb_object_privilege (prv_object_from, prv_object_to, operation_type)
                         SELECT DISTINCT *
@@ -30,7 +30,7 @@
                                  FROM prv_privilege pp
                                  WHERE EXISTS(SELECT *
                                               FROM prv_user uu
-                                              WHERE uu.id = owner)
+            WHERE uu.id = creator)
                                  UNION ALL
                                  SELECT
                                      pur.prv_user,
@@ -41,7 +41,7 @@
                                          ON pur.prv_role = pp.prv_owner
                                  WHERE EXISTS(SELECT *
                                               FROM prv_role pr
-                                              WHERE pr.id = owner))
+            WHERE pr.id = creator))
                             AS sub;
                 END;
         </createProcedure>

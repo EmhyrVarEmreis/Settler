@@ -101,8 +101,32 @@
             </column>
         </createTable>
 
+        <createTable tableName="mod_redistribution">
+            <column name="type"
+                    type="nvarchar(1)">
+                <constraints primaryKey="true"
+                             nullable="false"/>
+            </column>
+            <column name="parent"
+                    type="bigint">
+                <constraints primaryKey="true"
+                             references="prv_object(id)"
+                             foreignKeyName="FK_mod_redistribution_parent_prv_object_id"/>
+            </column>
+            <column name="user"
+                    type="bigint">
+                <constraints primaryKey="true"
+                             references="prv_user(id)"
+                             foreignKeyName="FK_mod_redistribution_user_prv_user_id"/>
+            </column>
+            <column name="percentage"
+                    type="decimal(6,3)"
+                    defaultValue="0">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
         <createTable tableName="mod_transaction">
-            <!--autoIncrement="true"-->
             <column name="id"
                     type="bigint">
                 <constraints primaryKey="true"
@@ -122,16 +146,11 @@
                              references="dct_transaction_type(code)"
                              foreignKeyName="FK_mod_transaction_type_dct_transaction_type_code"/>
             </column>
-            <column name="owner"
+            <column name="creator"
                     type="bigint">
                 <constraints primaryKey="true"
                              references="prv_user(id)"
-                             foreignKeyName="FK_mod_transaction_owner_prv_user_id"/>
-            </column>
-            <column name="contractor" type="bigint">
-                <constraints primaryKey="true"
-                             references="prv_user(id)"
-                             foreignKeyName="FK_mod_transaction_contractor_prv_user_id"/>
+                             foreignKeyName="FK_mod_transaction_creator_prv_user_id"/>
             </column>
             <column name="value"
                     type="decimal(9,2)"
@@ -143,13 +162,12 @@
                 <constraints nullable="false"/>
             </column>
             <column name="confirmed"
-                    type="date"/>
+                    type="datetime"/>
             <column name="evaluated"
-                    type="date"/>
+                    type="datetime"/>
         </createTable>
 
         <createTable tableName="mod_settlement">
-            <!--autoIncrement="true"-->
             <column name="id"
                     type="bigint">
                 <constraints primaryKey="true"
@@ -168,11 +186,11 @@
                              references="dct_settlement_type(code)"
                              foreignKeyName="FK_dct_settlement_type_dct_settlement_type_code"/>
             </column>
-            <column name="owner"
+            <column name="creator"
                     type="bigint">
                 <constraints primaryKey="true"
                              references="prv_user(id)"
-                             foreignKeyName="FK_mod_settlement_owner_prv_user_id"/>
+                             foreignKeyName="FK_mod_settlement_creator_prv_user_id"/>
             </column>
             <column name="contractor" type="bigint">
                 <constraints primaryKey="true"
@@ -189,11 +207,11 @@
                 <constraints nullable="false"/>
             </column>
             <column name="start_date"
-                    type="date"/>
+                    type="datetime"/>
             <column name="end_date"
-                    type="date"/>
+                    type="datetime"/>
             <column name="evaluated"
-                    type="date"/>
+                    type="datetime"/>
         </createTable>
 
         <!--<createTable tableName="mod_settlement_transaction">-->

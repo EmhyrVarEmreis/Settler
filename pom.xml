@@ -133,13 +133,26 @@
             <version>2.6</version>
         </dependency>
 
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>2.9.3</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jadira.usertype</groupId>
+            <artifactId>usertype.core</artifactId>
+            <version>5.0.0.GA</version>
+        </dependency>
+
     </dependencies>
 
     <profiles>
         <profile>
             <id>settler-dev-loc</id>
             <properties>
-                <settler.db.url>jdbc:mysql://localhost:3306/dev_settler?useUnicode=true&amp;characterEncoding=utf8</settler.db.url>
+                <settler.db.url>jdbc:mysql://localhost:3306/dev_settler?useUnicode=true&amp;characterEncoding=utf8
+                </settler.db.url>
                 <settler.db.user>settler_user</settler.db.user>
                 <settler.db.password>Settler2015!</settler.db.password>
                 <settler.db.context>dev</settler.db.context>

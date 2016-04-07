@@ -1,10 +1,12 @@
 package pl.morecraft.dev.settler.domain;
 
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.WhereJoinTable;
 import org.hibernate.envers.NotAudited;
+import org.joda.time.LocalDateTime;
 import pl.morecraft.dev.settler.domain.dictionaries.TransactionType;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -19,18 +21,36 @@ public class Transaction extends PrivilegeObject {
     private TransactionType type;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "owner")
-    private User owner;
+    @JoinColumn(name = "creator")
+    private User creator;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "contractor")
-    private User contractor;
+    @OneToMany
+    @NotAudited
+    @JoinTable(name = "mod_redistribution",
+            joinColumns = {@JoinColumn(name = "parent", referencedColumnName = "id")})
+    @WhereJoinTable(clause = "type='O'")
+    private List<Redistribution> owners;
+
+    @OneToMany
+    @NotAudited
+    @JoinTable(name = "mod_redistribution",
+            joinColumns = {@JoinColumn(name = "parent", referencedColumnName = "id")})
+    @WhereJoinTable(clause = "type='C'")
+    private List<Redistribution> contractors;
 
     private Double value;
 
-    private LocalDate created;
-    private LocalDate confirmed;
-    private LocalDate evaluated;
+    @SuppressWarnings("SpellCheckingInspection")
+    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
+    private LocalDateTime created;
+
+    @SuppressWarnings("SpellCheckingInspection")
+    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
+    private LocalDateTime confirmed;
+
+    @SuppressWarnings("SpellCheckingInspection")
+    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
+    private LocalDateTime evaluated;
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "mod_comment",
@@ -40,6 +60,7 @@ public class Transaction extends PrivilegeObject {
     private List<Comment> comments;
 
     public Transaction() {
+
     }
 
     public String getReference() {
@@ -58,20 +79,12 @@ public class Transaction extends PrivilegeObject {
         this.type = type;
     }
 
-    public User getOwner() {
-        return owner;
+    public User getCreator() {
+        return creator;
     }
 
-    public void setOwner(User owner) {
-        this.owner = owner;
-    }
-
-    public User getContractor() {
-        return contractor;
-    }
-
-    public void setContractor(User contractor) {
-        this.contractor = contractor;
+    public void setCreator(User creator) {
+        this.creator = creator;
     }
 
     public Double getValue() {
@@ -82,27 +95,27 @@ public class Transaction extends PrivilegeObject {
         this.value = value;
     }
 
-    public LocalDate getCreated() {
+    public LocalDateTime getCreated() {
         return created;
     }
 
-    public void setCreated(LocalDate created) {
+    public void setCreated(LocalDateTime created) {
         this.created = created;
     }
 
-    public LocalDate getConfirmed() {
+    public LocalDateTime getConfirmed() {
         return confirmed;
     }
 
-    public void setConfirmed(LocalDate confirmed) {
+    public void setConfirmed(LocalDateTime confirmed) {
         this.confirmed = confirmed;
     }
 
-    public LocalDate getEvaluated() {
+    public LocalDateTime getEvaluated() {
         return evaluated;
     }
 
-    public void setEvaluated(LocalDate evaluated) {
+    public void setEvaluated(LocalDateTime evaluated) {
         this.evaluated = evaluated;
     }
 

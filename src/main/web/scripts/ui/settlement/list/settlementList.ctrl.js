@@ -4,7 +4,7 @@
     angular.module('settlerApplication').controller('SettlementListCtrl', function ($scope,
                                                                                     NgTableParams,
                                                                                     settlementListFactory) {
-
+        $scope.columnsCount = 0;
         $scope.columns = [
             {
                 field:     'reference',
@@ -13,7 +13,7 @@
                 filter:    true,
                 type:      'default',
                 isEmpty:   "N/D",
-                index:     0,
+                index:     $scope.columnsCount++,
                 url:       '#/transaction/details/:id'
             },
             {
@@ -23,7 +23,16 @@
                 filter:    true,
                 type:      'default',
                 isEmpty:   "N/D",
-                index:     1
+                index:     $scope.columnsCount++
+            },
+            {
+                field:     'creator',
+                title:     'Twórca',
+                isVisible: true,
+                filter:    true,
+                type:      'default',
+                isEmpty:   "N/D",
+                index:     $scope.columnsCount++
             },
             {
                 field:     'owner',
@@ -32,7 +41,7 @@
                 filter:    true,
                 type:      'default',
                 isEmpty:   "N/D",
-                index:     2
+                index:     $scope.columnsCount++
             },
             {
                 field:     'contractor',
@@ -41,7 +50,7 @@
                 filter:    true,
                 type:      'default',
                 isEmpty:   "N/D",
-                index:     3
+                index:     $scope.columnsCount++
             },
             {
                 field:     'balance',
@@ -50,7 +59,7 @@
                 filter:    true,
                 type:      'default',
                 isEmpty:   "N/D",
-                index:     4
+                index:     $scope.columnsCount++
             },
             {
                 field:     'transactions',
@@ -59,7 +68,7 @@
                 filter:    true,
                 type:      'default',
                 isEmpty:   "Brak",
-                index:     5
+                index:     $scope.columnsCount++
             },
             {
                 field:     'created',
@@ -68,7 +77,7 @@
                 filter:    true,
                 type:      'date',
                 isEmpty:   "N/D",
-                index:     6
+                index:     $scope.columnsCount++
             },
             {
                 field:     'evaluated',
@@ -77,7 +86,7 @@
                 filter:    true,
                 type:      'date',
                 isEmpty:   "N/D",
-                index:     7
+                index:     $scope.columnsCount++
             },
             {
                 field:     'startDate',
@@ -86,7 +95,7 @@
                 filter:    true,
                 type:      'date',
                 isEmpty:   "N/D",
-                index:     8
+                index:     $scope.columnsCount++
             },
             {
                 field:     'endDate',
@@ -95,7 +104,7 @@
                 filter:    true,
                 type:      'date',
                 isEmpty:   "N/D",
-                index:     9
+                index:     $scope.columnsCount++
             },
             {
                 field:     'comments',
@@ -104,7 +113,7 @@
                 filter:    true,
                 type:      'default',
                 isEmpty:   "Brak",
-                index:     10
+                index:     $scope.columnsCount++
             }
         ];
 

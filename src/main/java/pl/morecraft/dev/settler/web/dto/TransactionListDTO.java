@@ -2,31 +2,31 @@ package pl.morecraft.dev.settler.web.dto;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import pl.morecraft.dev.settler.web.utils.JsonDateDeserializer;
-import pl.morecraft.dev.settler.web.utils.JsonDateSerializer;
-
-import java.time.LocalDate;
+import org.joda.time.LocalDateTime;
+import pl.morecraft.dev.settler.web.utils.JsonJodaLocaldateTimeDeserializer;
+import pl.morecraft.dev.settler.web.utils.JsonJodaLocaldateTimeSerializer;
 
 public class TransactionListDTO {
 
     private Long id;
     private String reference;
     private String type;
-    private String owner;
-    private String contractor;
+    private String creator;
+    private String owners;
+    private String contractors;
     private Double value;
 
-    @JsonDeserialize(using = JsonDateDeserializer.class)
-    @JsonSerialize(using = JsonDateSerializer.class)
-    private LocalDate created;
+    @JsonDeserialize(using = JsonJodaLocaldateTimeDeserializer.class)
+    @JsonSerialize(using = JsonJodaLocaldateTimeSerializer.class)
+    private LocalDateTime created;
 
-    @JsonDeserialize(using = JsonDateDeserializer.class)
-    @JsonSerialize(using = JsonDateSerializer.class)
-    private LocalDate confirmed;
+    @JsonDeserialize(using = JsonJodaLocaldateTimeDeserializer.class)
+    @JsonSerialize(using = JsonJodaLocaldateTimeSerializer.class)
+    private LocalDateTime confirmed;
 
-    @JsonDeserialize(using = JsonDateDeserializer.class)
-    @JsonSerialize(using = JsonDateSerializer.class)
-    private LocalDate evaluated;
+    @JsonDeserialize(using = JsonJodaLocaldateTimeDeserializer.class)
+    @JsonSerialize(using = JsonJodaLocaldateTimeSerializer.class)
+    private LocalDateTime evaluated;
 
     private Integer comments;
 
@@ -57,20 +57,28 @@ public class TransactionListDTO {
         this.type = type;
     }
 
-    public String getOwner() {
-        return owner;
+    public String getCreator() {
+        return creator;
     }
 
-    public void setOwner(String owner) {
-        this.owner = owner;
+    public void setCreator(String creator) {
+        this.creator = creator;
     }
 
-    public String getContractor() {
-        return contractor;
+    public String getOwners() {
+        return owners;
     }
 
-    public void setContractor(String contractor) {
-        this.contractor = contractor;
+    public void setOwners(String owners) {
+        this.owners = owners;
+    }
+
+    public String getContractors() {
+        return contractors;
+    }
+
+    public void setContractors(String contractors) {
+        this.contractors = contractors;
     }
 
     public Double getValue() {
@@ -81,27 +89,27 @@ public class TransactionListDTO {
         this.value = value;
     }
 
-    public LocalDate getCreated() {
+    public LocalDateTime getCreated() {
         return created;
     }
 
-    public void setCreated(LocalDate created) {
+    public void setCreated(LocalDateTime created) {
         this.created = created;
     }
 
-    public LocalDate getConfirmed() {
+    public LocalDateTime getConfirmed() {
         return confirmed;
     }
 
-    public void setConfirmed(LocalDate confirmed) {
+    public void setConfirmed(LocalDateTime confirmed) {
         this.confirmed = confirmed;
     }
 
-    public LocalDate getEvaluated() {
+    public LocalDateTime getEvaluated() {
         return evaluated;
     }
 
-    public void setEvaluated(LocalDate evaluated) {
+    public void setEvaluated(LocalDateTime evaluated) {
         this.evaluated = evaluated;
     }
 
