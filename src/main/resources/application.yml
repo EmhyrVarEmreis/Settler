@@ -1,3 +1,7 @@
+server:
+  port: 8080
+  display-name: 'Settler'
+
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver

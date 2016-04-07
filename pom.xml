@@ -18,6 +18,7 @@
         <java.version>1.8</java.version>
         <querydsl.version>3.7.0</querydsl.version>
         <settler.db.context>prod</settler.db.context>
+        <start-class>pl.morecraft.dev.settler.Application</start-class>
     </properties>
 
     <dependencies>
@@ -183,6 +184,19 @@
                         </executions>
                     </plugin>
                 </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>exclude-application-yml</id>
+            <build>
+                <resources>
+                    <resource>
+                        <directory>src/main/resources</directory>
+                        <excludes>
+                            <exclude>application.yml</exclude>
+                        </excludes>
+                    </resource>
+                </resources>
             </build>
         </profile>
     </profiles>
