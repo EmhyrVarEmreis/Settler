@@ -113,7 +113,7 @@
         <sql>
             INSERT INTO dev_settler.prv_object VALUES ();
             INSERT INTO dev_settler.mod_transaction (
-            id, reference, type, creator, value, created
+                id, reference, type, creator, value, created
             ) VALUES (
                 LAST_INSERT_ID(),
                 'TRA151112121212',
@@ -127,7 +127,7 @@
 
             INSERT INTO dev_settler.prv_object VALUES ();
             INSERT INTO dev_settler.mod_transaction (
-            id, reference, type, creator, value, created
+                id, reference, type, creator, value, created
             ) VALUES (
                 LAST_INSERT_ID(),
                 'TRA151113150000',
@@ -246,7 +246,7 @@
         <sql>
             INSERT INTO dev_settler.prv_object VALUES ();
             INSERT INTO dev_settler.mod_settlement (
-            id, reference, type, creator, contractor, balance, created, start_date, end_date, evaluated
+                id, reference, type, creator, contractor, balance, created, start_date, end_date, evaluated
             ) VALUES (
                 LAST_INSERT_ID(),
                 'SET151112121212',
@@ -259,8 +259,8 @@
                  WHERE login = 'user'),
                 12.50,
                 '2015-11-12 12:12:12',
-            '2015-11-12 15:25:42',
-            '2015-11-13 09:51:45',
+                '2015-11-12 15:25:42',
+                '2015-11-13 09:51:45',
                 NULL
             );
         </sql>

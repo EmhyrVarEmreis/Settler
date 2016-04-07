@@ -13,7 +13,7 @@
                 s.id,
                 s.type,
                 CONCAT(IF(ISNULL(o.first_name), '', CONCAT(o.first_name, ' ')),
-            IF(ISNULL(o.last_name), '', o.last_name)) AS creator,
+                       IF(ISNULL(o.last_name), '', o.last_name)) AS creator,
                 CONCAT(IF(ISNULL(c.first_name), '', CONCAT(c.first_name, ' ')),
                        IF(ISNULL(c.last_name), '', c.last_name)) AS contractor,
                 s.reference,
@@ -26,7 +26,7 @@
                  FROM mod_comment mc
                  WHERE mc.prv_object = s.id)                     AS comment_count
             FROM dev_settler.mod_settlement s
-            LEFT JOIN prv_user o ON s.creator = o.id
+                LEFT JOIN prv_user o ON s.creator = o.id
                 LEFT JOIN prv_user c ON s.contractor = c.id;
         </createView>
 
@@ -35,9 +35,9 @@
                 s.id,
                 s.type,
                 CONCAT(IF(ISNULL(c.first_name), '', CONCAT(c.first_name, ' ')),
-            IF(ISNULL(c.last_name), '', c.last_name)) AS creator,
-            GROUP_CONCAT(CONCAT(ow.first_name, ' ', ow.last_name) SEPARATOR ', ') AS owners,
-            GROUP_CONCAT(CONCAT(cn.first_name, ' ', cn.last_name) SEPARATOR ', ') AS contractors,
+                       IF(ISNULL(c.last_name), '', c.last_name))                      AS creator,
+                GROUP_CONCAT(CONCAT(ow.first_name, ' ', ow.last_name) SEPARATOR ', ') AS owners,
+                GROUP_CONCAT(CONCAT(cn.first_name, ' ', cn.last_name) SEPARATOR ', ') AS contractors,
                 s.reference,
                 s.value,
                 s.created,
@@ -45,18 +45,18 @@
                 s.evaluated,
                 (SELECT COUNT(*)
                  FROM mod_comment mc
-            WHERE mc.prv_object = s.id) AS comment_count
+                 WHERE mc.prv_object = s.id)                                          AS comment_count
             FROM dev_settler.mod_transaction s
-            LEFT JOIN prv_user c
-            ON s.creator = c.id
-            LEFT JOIN mod_redistribution r
-            ON s.id = r.parent
-            LEFT JOIN prv_user ow
-            ON r.user = ow.id
-            AND r.type = 'O'
-            LEFT JOIN prv_user cn
-            ON r.user = cn.id
-            AND r.type = 'C'
+                LEFT JOIN prv_user c
+                    ON s.creator = c.id
+                LEFT JOIN mod_redistribution r
+                    ON s.id = r.parent
+                LEFT JOIN prv_user ow
+                    ON r.user = ow.id
+                       AND r.type = 'O'
+                LEFT JOIN prv_user cn
+                    ON r.user = cn.id
+                       AND r.type = 'C'
             GROUP BY s.id;
         </createView>
 
