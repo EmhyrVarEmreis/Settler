@@ -259,6 +259,10 @@
                     type="datetime">
                 <constraints nullable="false"/>
             </column>
+            <column name="edited"
+                    type="datetime">
+                <constraints nullable="true"/>
+            </column>
             <column name="value"
                     type="nvarchar(512)">
                 <constraints nullable="false"/>
