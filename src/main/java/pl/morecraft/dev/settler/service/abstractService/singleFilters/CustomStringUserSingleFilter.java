@@ -1,9 +1,14 @@
-package pl.morecraft.dev.settler.service.singleFilters;
+package pl.morecraft.dev.settler.service.abstractService.singleFilters;
 
 import com.mysema.query.types.expr.BooleanExpression;
+import org.springframework.stereotype.Component;
 import pl.morecraft.dev.settler.domain.QUser;
-import pl.morecraft.dev.settler.service.prototype.AbstractServiceSingleFilter;
+import pl.morecraft.dev.settler.service.abstractService.prototype.AbstractServiceSingleFilter;
+import pl.morecraft.dev.settler.service.abstractService.prototype.BaseSingleFilter;
+import pl.morecraft.dev.settler.service.abstractService.prototype.SingleFilterApplicableTypes;
 
+@Component
+@BaseSingleFilter(types = @SingleFilterApplicableTypes(filterType = String.class, qObjectType = QUser.class))
 public class CustomStringUserSingleFilter extends AbstractServiceSingleFilter {
 
     @Override
@@ -15,11 +20,6 @@ public class CustomStringUserSingleFilter extends AbstractServiceSingleFilter {
                 .concat(((QUser) qObjectValue).login)
                 .concat(")")
                 .contains((String) filterValue);
-    }
-
-    @Override
-    public boolean check(Object filterValue, Object qObjectValue) {
-        return (filterValue instanceof String && qObjectValue instanceof QUser);
     }
 
 }

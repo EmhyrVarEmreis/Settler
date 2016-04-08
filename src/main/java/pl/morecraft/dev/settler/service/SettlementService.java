@@ -3,7 +3,6 @@ package pl.morecraft.dev.settler.service;
 import com.mysema.query.types.expr.BooleanExpression;
 import com.mysema.query.util.CollectionUtils;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.morecraft.dev.settler.dao.repository.SettlementRepository;
@@ -12,11 +11,8 @@ import pl.morecraft.dev.settler.domain.Settlement;
 import pl.morecraft.dev.settler.domain.dictionaries.OperationType;
 import pl.morecraft.dev.settler.security.authorisation.PermissionManager;
 import pl.morecraft.dev.settler.security.util.Security;
+import pl.morecraft.dev.settler.service.abstractService.prototype.AbstractService;
 import pl.morecraft.dev.settler.service.converters.single.ListIntegerConverter;
-import pl.morecraft.dev.settler.service.prototype.AbstractService;
-import pl.morecraft.dev.settler.service.prototype.AbstractServiceSingleFilter;
-import pl.morecraft.dev.settler.service.singleFilters.CustomStringUserSingleFilter;
-import pl.morecraft.dev.settler.service.singleFilters.DefaultSingleFiltersList;
 import pl.morecraft.dev.settler.web.dto.SettlementDTO;
 import pl.morecraft.dev.settler.web.dto.SettlementListDTO;
 import pl.morecraft.dev.settler.web.misc.SettlementListFilters;
@@ -35,9 +31,6 @@ public class SettlementService extends AbstractService<Settlement, SettlementDTO
 
     @Inject
     private SettlementRepository repository;
-
-    @Autowired
-    private DefaultSingleFiltersList defaultSingleFiltersList;
 
     @Override
     protected SettlementRepository getRepository() {
@@ -67,14 +60,6 @@ public class SettlementService extends AbstractService<Settlement, SettlementDTO
     @Override
     protected Class<SettlementListFilters> getListFilterClass() {
         return SettlementListFilters.class;
-    }
-
-    @Override
-    protected List<AbstractServiceSingleFilter> getAbstractServiceSingleFilters() {
-        return CollectionUtils.add(
-                defaultSingleFiltersList.getDefaultSingleFiltersList(),
-                new CustomStringUserSingleFilter()
-        );
     }
 
     @Override

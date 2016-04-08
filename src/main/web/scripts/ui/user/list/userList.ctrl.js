@@ -42,7 +42,7 @@
                 index:     3
             },
             {
-                field:       'status.code',
+                field:       'status',
                 title:       'Status',
                 filterField: 'status',
                 sortField:   'status',

@@ -11,28 +11,20 @@ import org.joda.time.format.DateTimeFormatter;
 import java.io.IOException;
 import java.util.Objects;
 
-public class JsonJodaLocalDateTimeDeserializer extends JsonDeserializer<LocalDateTime> {
+public class JsonJodaLocalDateDeserializer extends JsonDeserializer<LocalDate> {
 
     private static DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd");
     private static DateTimeFormatter formatterWithTime = DateTimeFormat.forPattern("yyyy-MM-dd hh:mm:ss");
 
     @Override
-    public LocalDateTime deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
+    public LocalDate deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
         if (Objects.equals(jp.getText(), "")) {
             return null;
         }
         try {
-            return LocalDateTime.parse(jp.getText(), formatterWithTime);
+            return LocalDate.parse(jp.getText(), formatter);
         } catch (IllegalArgumentException e) {
-            LocalDate localDate = LocalDate.parse(jp.getText(), formatter);
-            return new LocalDateTime(
-                    localDate.getYear(),
-                    localDate.getMonthOfYear(),
-                    localDate.getDayOfMonth(),
-                    0,
-                    0,
-                    0
-            );
+            return new LocalDate(LocalDateTime.parse(jp.getText(), formatterWithTime));
         }
     }
 

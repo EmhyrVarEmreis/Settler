@@ -3,11 +3,9 @@ package pl.morecraft.dev.settler.web.dto;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import pl.morecraft.dev.settler.domain.dictionaries.UserStatus;
-import pl.morecraft.dev.settler.web.utils.JsonDateDeserializer;
-import pl.morecraft.dev.settler.web.utils.JsonDateSerializer;
-
-import java.time.LocalDate;
+import org.joda.time.LocalDate;
+import pl.morecraft.dev.settler.web.utils.JsonJodaLocalDateDeserializer;
+import pl.morecraft.dev.settler.web.utils.JsonJodaLocalDateSerializer;
 
 public class UserListDTO {
 
@@ -16,10 +14,10 @@ public class UserListDTO {
     private String firstName;
     private String lastName;
     private String email;
-    private UserStatus status;
+    private String status;
 
-    @JsonSerialize(using = JsonDateSerializer.class)
-    @JsonDeserialize(using = JsonDateDeserializer.class)
+    @JsonSerialize(using = JsonJodaLocalDateSerializer.class)
+    @JsonDeserialize(using = JsonJodaLocalDateDeserializer.class)
     private LocalDate created;
 
     public UserListDTO() {
@@ -65,11 +63,11 @@ public class UserListDTO {
         this.email = email;
     }
 
-    public UserStatus getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(UserStatus status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 

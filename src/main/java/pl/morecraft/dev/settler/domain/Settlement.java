@@ -1,6 +1,5 @@
 package pl.morecraft.dev.settler.domain;
 
-import org.hibernate.annotations.Type;
 import org.hibernate.envers.NotAudited;
 import org.joda.time.LocalDateTime;
 import pl.morecraft.dev.settler.domain.dictionaries.SettlementType;
@@ -29,20 +28,10 @@ public class Settlement extends PrivilegeObject {
 
     private Double balance;
 
-    @SuppressWarnings("SpellCheckingInspection")
-    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
+    @Column(nullable = false, insertable = true, updatable = false)
     private LocalDateTime created;
-
-    @SuppressWarnings("SpellCheckingInspection")
-    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
     private LocalDateTime startDate;
-
-    @SuppressWarnings("SpellCheckingInspection")
-    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
     private LocalDateTime endDate;
-
-    @SuppressWarnings("SpellCheckingInspection")
-    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
     private LocalDateTime evaluated;
 
     @ManyToMany(fetch = FetchType.LAZY)

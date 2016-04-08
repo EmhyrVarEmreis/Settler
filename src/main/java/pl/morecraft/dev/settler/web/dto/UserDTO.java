@@ -3,14 +3,16 @@ package pl.morecraft.dev.settler.web.dto;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.hibernate.validator.constraints.Email;
-import pl.morecraft.dev.settler.domain.dictionaries.UserStatus;
-import pl.morecraft.dev.settler.web.utils.JsonDateDeserializer;
-import pl.morecraft.dev.settler.web.utils.JsonDateSerializer;
+import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
+import pl.morecraft.dev.settler.web.utils.JsonJodaLocalDateDeserializer;
+import pl.morecraft.dev.settler.web.utils.JsonJodaLocalDateSerializer;
+import pl.morecraft.dev.settler.web.utils.JsonJodaLocalDateTimeDeserializer;
+import pl.morecraft.dev.settler.web.utils.JsonJodaLocalDateTimeSerializer;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-import java.time.LocalDate;
 import java.util.List;
 
 public class UserDTO {
@@ -39,19 +41,19 @@ public class UserDTO {
     @Size(min = 6, max = 128)
     private String email;
 
-    @JsonSerialize(using = JsonDateSerializer.class)
-    @JsonDeserialize(using = JsonDateDeserializer.class)
-    private LocalDate created;
+    @JsonSerialize(using = JsonJodaLocalDateTimeSerializer.class)
+    @JsonDeserialize(using = JsonJodaLocalDateTimeDeserializer.class)
+    private LocalDateTime created;
 
-    @JsonSerialize(using = JsonDateSerializer.class)
-    @JsonDeserialize(using = JsonDateDeserializer.class)
+    @JsonSerialize(using = JsonJodaLocalDateSerializer.class)
+    @JsonDeserialize(using = JsonJodaLocalDateDeserializer.class)
     private LocalDate passwordExpireDate;
 
-    @JsonSerialize(using = JsonDateSerializer.class)
-    @JsonDeserialize(using = JsonDateDeserializer.class)
+    @JsonSerialize(using = JsonJodaLocalDateSerializer.class)
+    @JsonDeserialize(using = JsonJodaLocalDateDeserializer.class)
     private LocalDate accountExpireDate;
 
-    private UserStatus status;
+    private String status;
 
     private List<RoleAssignmentDTO> roleAssignments;
 
@@ -115,11 +117,11 @@ public class UserDTO {
         this.email = email;
     }
 
-    public LocalDate getCreated() {
+    public LocalDateTime getCreated() {
         return created;
     }
 
-    public void setCreated(LocalDate created) {
+    public void setCreated(LocalDateTime created) {
         this.created = created;
     }
 
@@ -139,11 +141,11 @@ public class UserDTO {
         this.accountExpireDate = accountExpireDate;
     }
 
-    public UserStatus getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(UserStatus status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 

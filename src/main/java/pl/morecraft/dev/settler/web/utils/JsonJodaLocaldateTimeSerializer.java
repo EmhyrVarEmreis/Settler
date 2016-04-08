@@ -9,7 +9,7 @@ import org.joda.time.format.DateTimeFormatter;
 
 import java.io.IOException;
 
-public class JsonJodaLocaldateTimeSerializer extends JsonSerializer<LocalDateTime> {
+public class JsonJodaLocalDateTimeSerializer extends JsonSerializer<LocalDateTime> {
 
     private static DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
 

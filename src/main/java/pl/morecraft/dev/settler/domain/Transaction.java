@@ -1,6 +1,5 @@
 package pl.morecraft.dev.settler.domain;
 
-import org.hibernate.annotations.Type;
 import org.hibernate.annotations.WhereJoinTable;
 import org.hibernate.envers.NotAudited;
 import org.joda.time.LocalDateTime;
@@ -40,16 +39,9 @@ public class Transaction extends PrivilegeObject {
 
     private Double value;
 
-    @SuppressWarnings("SpellCheckingInspection")
-    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
+    @Column(nullable = false, insertable = true, updatable = false)
     private LocalDateTime created;
-
-    @SuppressWarnings("SpellCheckingInspection")
-    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
     private LocalDateTime confirmed;
-
-    @SuppressWarnings("SpellCheckingInspection")
-    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
     private LocalDateTime evaluated;
 
     @OneToMany(fetch = FetchType.LAZY)

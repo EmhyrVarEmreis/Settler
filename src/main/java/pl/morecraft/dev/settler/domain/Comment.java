@@ -1,7 +1,8 @@
 package pl.morecraft.dev.settler.domain;
 
+import org.joda.time.LocalDateTime;
+
 import javax.persistence.*;
-import java.time.LocalDate;
 
 @Entity
 @Table(name = "mod_comment")
@@ -19,8 +20,11 @@ public class Comment extends PrivilegeObject {
     @JoinColumn(name = "prv_user")
     private User owner;
 
-    @Column(nullable = false)
-    private LocalDate created;
+    @Column(nullable = false, insertable = true, updatable = false)
+    private LocalDateTime created;
+
+    @Column(nullable = true)
+    private LocalDateTime edited;
 
     @Column(nullable = false)
     private String value;
@@ -49,12 +53,20 @@ public class Comment extends PrivilegeObject {
         this.owner = owner;
     }
 
-    public LocalDate getCreated() {
+    public LocalDateTime getCreated() {
         return created;
     }
 
-    public void setCreated(LocalDate created) {
+    public void setCreated(LocalDateTime created) {
         this.created = created;
+    }
+
+    public LocalDateTime getEdited() {
+        return edited;
+    }
+
+    public void setEdited(LocalDateTime edited) {
+        this.edited = edited;
     }
 
     public String getValue() {

@@ -40,13 +40,22 @@
                                     "page":    params.page(),
                                     "limit":   params.count(),
                                     "sortBy":  params.orderBy(),
-                                    "filters": scope.filters
+                                    "filters": scope.removeEmptyFilters(scope.filters)
                                 }, function (data) {
                                     params.total(data.total);
                                     $defer.resolve(data.content);
                                 });
                         }
                     });
+
+                    scope.removeEmptyFilters = function (filters) {
+                        for (var i in filters) {
+                            if (filters.hasOwnProperty(i) && (filters[i] === null || filters[i] === undefined || filters[i] === '')) {
+                                delete filters[i];
+                            }
+                        }
+                        return filters;
+                    };
 
                     scope.applyFilters = function () {
                         scope.tableParams.page(1);

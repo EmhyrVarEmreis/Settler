@@ -2,9 +2,9 @@ package pl.morecraft.dev.settler.web.dto;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import org.joda.time.LocalDateTime;
-import pl.morecraft.dev.settler.web.utils.JsonJodaLocaldateTimeDeserializer;
-import pl.morecraft.dev.settler.web.utils.JsonJodaLocaldateTimeSerializer;
+import org.joda.time.LocalDate;
+import pl.morecraft.dev.settler.web.utils.JsonJodaLocalDateDeserializer;
+import pl.morecraft.dev.settler.web.utils.JsonJodaLocalDateSerializer;
 
 public class SettlementListDTO {
 
@@ -15,21 +15,21 @@ public class SettlementListDTO {
     private String contractor;
     private Double balance;
 
-    @JsonDeserialize(using = JsonJodaLocaldateTimeDeserializer.class)
-    @JsonSerialize(using = JsonJodaLocaldateTimeSerializer.class)
-    private LocalDateTime created;
+    @JsonSerialize(using = JsonJodaLocalDateSerializer.class)
+    @JsonDeserialize(using = JsonJodaLocalDateDeserializer.class)
+    private LocalDate created;
 
-    @JsonDeserialize(using = JsonJodaLocaldateTimeDeserializer.class)
-    @JsonSerialize(using = JsonJodaLocaldateTimeSerializer.class)
-    private LocalDateTime startDate;
+    @JsonSerialize(using = JsonJodaLocalDateSerializer.class)
+    @JsonDeserialize(using = JsonJodaLocalDateDeserializer.class)
+    private LocalDate startDate;
 
-    @JsonDeserialize(using = JsonJodaLocaldateTimeDeserializer.class)
-    @JsonSerialize(using = JsonJodaLocaldateTimeSerializer.class)
-    private LocalDateTime endDate;
+    @JsonSerialize(using = JsonJodaLocalDateSerializer.class)
+    @JsonDeserialize(using = JsonJodaLocalDateDeserializer.class)
+    private LocalDate endDate;
 
-    @JsonDeserialize(using = JsonJodaLocaldateTimeDeserializer.class)
-    @JsonSerialize(using = JsonJodaLocaldateTimeSerializer.class)
-    private LocalDateTime evaluated;
+    @JsonSerialize(using = JsonJodaLocalDateSerializer.class)
+    @JsonDeserialize(using = JsonJodaLocalDateDeserializer.class)
+    private LocalDate evaluated;
 
     private Integer transactions;
     private Integer comments;
@@ -86,35 +86,35 @@ public class SettlementListDTO {
         this.balance = balance;
     }
 
-    public LocalDateTime getCreated() {
+    public LocalDate getCreated() {
         return created;
     }
 
-    public void setCreated(LocalDateTime created) {
+    public void setCreated(LocalDate created) {
         this.created = created;
     }
 
-    public LocalDateTime getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(LocalDateTime startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
-    public LocalDateTime getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(LocalDateTime endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
 
-    public LocalDateTime getEvaluated() {
+    public LocalDate getEvaluated() {
         return evaluated;
     }
 
-    public void setEvaluated(LocalDateTime evaluated) {
+    public void setEvaluated(LocalDate evaluated) {
         this.evaluated = evaluated;
     }
 

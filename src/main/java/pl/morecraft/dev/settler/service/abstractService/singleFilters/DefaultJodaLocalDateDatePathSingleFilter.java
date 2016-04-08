@@ -1,12 +1,13 @@
-package pl.morecraft.dev.settler.service.singleFilters;
+package pl.morecraft.dev.settler.service.abstractService.singleFilters;
 
 import com.mysema.query.types.expr.BooleanExpression;
 import com.mysema.query.types.path.DatePath;
-import pl.morecraft.dev.settler.service.prototype.AbstractServiceSingleFilter;
+import org.joda.time.LocalDate;
+import pl.morecraft.dev.settler.service.abstractService.prototype.AbstractServiceSingleFilter;
 
-import java.time.LocalDate;
-
-public class DefaultLocalDateDatePathSingleFilter extends AbstractServiceSingleFilter {
+//@Component
+//@BaseSingleFilter(types = @SingleFilterApplicableTypes(filterType = LocalDate.class, qObjectType = DatePath.class))
+public class DefaultJodaLocalDateDatePathSingleFilter extends AbstractServiceSingleFilter {
 
     @SuppressWarnings("unchecked")
     @Override
@@ -15,11 +16,6 @@ public class DefaultLocalDateDatePathSingleFilter extends AbstractServiceSingleF
                 (LocalDate) filterValue).and(
                 ((DatePath<LocalDate>) qObjectValue).before(
                         ((LocalDate) filterValue).plusDays(1)));
-    }
-
-    @Override
-    public boolean check(Object filterValue, Object qObjectValue) {
-        return (filterValue instanceof LocalDate && qObjectValue instanceof DatePath<?>);
     }
 
 }

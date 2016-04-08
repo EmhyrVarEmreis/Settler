@@ -2,9 +2,9 @@ package pl.morecraft.dev.settler.web.dto;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import org.joda.time.LocalDateTime;
-import pl.morecraft.dev.settler.web.utils.JsonJodaLocaldateTimeDeserializer;
-import pl.morecraft.dev.settler.web.utils.JsonJodaLocaldateTimeSerializer;
+import org.joda.time.LocalDate;
+import pl.morecraft.dev.settler.web.utils.JsonJodaLocalDateDeserializer;
+import pl.morecraft.dev.settler.web.utils.JsonJodaLocalDateSerializer;
 
 public class TransactionListDTO {
 
@@ -16,17 +16,17 @@ public class TransactionListDTO {
     private String contractors;
     private Double value;
 
-    @JsonDeserialize(using = JsonJodaLocaldateTimeDeserializer.class)
-    @JsonSerialize(using = JsonJodaLocaldateTimeSerializer.class)
-    private LocalDateTime created;
+    @JsonSerialize(using = JsonJodaLocalDateSerializer.class)
+    @JsonDeserialize(using = JsonJodaLocalDateDeserializer.class)
+    private LocalDate created;
 
-    @JsonDeserialize(using = JsonJodaLocaldateTimeDeserializer.class)
-    @JsonSerialize(using = JsonJodaLocaldateTimeSerializer.class)
-    private LocalDateTime confirmed;
+    @JsonSerialize(using = JsonJodaLocalDateSerializer.class)
+    @JsonDeserialize(using = JsonJodaLocalDateDeserializer.class)
+    private LocalDate confirmed;
 
-    @JsonDeserialize(using = JsonJodaLocaldateTimeDeserializer.class)
-    @JsonSerialize(using = JsonJodaLocaldateTimeSerializer.class)
-    private LocalDateTime evaluated;
+    @JsonSerialize(using = JsonJodaLocalDateSerializer.class)
+    @JsonDeserialize(using = JsonJodaLocalDateDeserializer.class)
+    private LocalDate evaluated;
 
     private Integer comments;
 
@@ -89,27 +89,27 @@ public class TransactionListDTO {
         this.value = value;
     }
 
-    public LocalDateTime getCreated() {
+    public LocalDate getCreated() {
         return created;
     }
 
-    public void setCreated(LocalDateTime created) {
+    public void setCreated(LocalDate created) {
         this.created = created;
     }
 
-    public LocalDateTime getConfirmed() {
+    public LocalDate getConfirmed() {
         return confirmed;
     }
 
-    public void setConfirmed(LocalDateTime confirmed) {
+    public void setConfirmed(LocalDate confirmed) {
         this.confirmed = confirmed;
     }
 
-    public LocalDateTime getEvaluated() {
+    public LocalDate getEvaluated() {
         return evaluated;
     }
 
-    public void setEvaluated(LocalDateTime evaluated) {
+    public void setEvaluated(LocalDate evaluated) {
         this.evaluated = evaluated;
     }
 

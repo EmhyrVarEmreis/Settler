@@ -22,7 +22,6 @@
         }
 
         $scope.save = function () {
-            console.log($scope.data.status);
             userDetailsFactory.save(
                 $scope.data,
                 function (data) {

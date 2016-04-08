@@ -1,6 +1,6 @@
 <script>
     $('.custom-datepicker').datetimepicker({
-        format: 'YYYY-MM-DD hh:mm:ss',
+        format: 'YYYY-MM-DD HH:mm:ss',
         locale: 'pl-PL'
     }).on('changeDate', function (e) {
         ngModelCtrl.$setViewValue(e.date);
@@ -10,15 +10,23 @@
 
 <div class="container">
     <div class="page-header">
-        <h3>Edycja danych użytkownika <strong>{{data.firstName}} {{data.lastName}}</strong>
-            <button type="button"
-                    class="btn btn-primary pull-right"
-                    style="margin-left: 2px; margin-right: 2px;"
-                    ng-click="save()">
-                Zapisz
-            </button>
-        </h3>
+        <div class="pull-left">
+            <h2>Edycja danych użytkownika <strong>{{data.firstName}} {{data.lastName}}</h2>
+        </div>
+        <div class="pull-right">
+            <h1 class="text-right">
+                <button type="button"
+                        class="btn btn-primary pull-right"
+                        style="margin-left: 2px; margin-right: 2px;"
+                        ng-click="save()">
+                    Zapisz
+                </button>
+            </h1>
+        </div>
+        <div class="clearfix"></div>
+        <h4>Utworzony: {{data.created}}</h4>
     </div>
+
     <form class="form">
 
         <div class="panel panel-default">
@@ -82,14 +90,14 @@
                                              label="Status">
                         </dictionary-selector>
                     </div>
-                    <div class="col-sm-6" ng-show="data.status.code === 'TMP'">
+                    <div class="col-sm-6" ng-show="data.status === 'TMP'">
                         <label>Data wygasnięcia konta</label>
 
                         <input class="form-control input-sm custom-datepicker"
                                type="text"
                                name="accountExpireDate"
                                placeholder="Pozostaw puste dla ustawienia czasu nieokreślonego"
-                               ng-model="data.accountExpireDate">
+                               ng-model="data.passwordExpireDate">
                     </div>
                 </div>
             </div>

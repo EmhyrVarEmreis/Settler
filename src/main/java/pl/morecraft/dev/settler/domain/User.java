@@ -1,9 +1,11 @@
 package pl.morecraft.dev.settler.domain;
 
+import org.hibernate.annotations.Type;
+import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
 import pl.morecraft.dev.settler.domain.dictionaries.UserStatus;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 
 @Entity
 @Table(name = "prv_user")
@@ -23,8 +25,16 @@ public class User extends PrivilegeObject {
     @Enumerated(EnumType.STRING)
     private UserStatus status;
 
-    private LocalDate created;
+    @SuppressWarnings("SpellCheckingInspection")
+    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
+    private LocalDateTime created;
+
+    @SuppressWarnings("SpellCheckingInspection")
+    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
     private LocalDate passwordExpireDate;
+
+    @SuppressWarnings("SpellCheckingInspection")
+    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
     private LocalDate accountExpireDate;
 
     public String getLogin() {
@@ -75,11 +85,11 @@ public class User extends PrivilegeObject {
         this.status = status;
     }
 
-    public LocalDate getCreated() {
+    public LocalDateTime getCreated() {
         return created;
     }
 
-    public void setCreated(LocalDate created) {
+    public void setCreated(LocalDateTime created) {
         this.created = created;
     }
 
@@ -106,4 +116,5 @@ public class User extends PrivilegeObject {
                 "login='" + login + '\'' +
                 '}';
     }
+
 }

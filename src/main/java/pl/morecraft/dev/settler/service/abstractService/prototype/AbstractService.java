@@ -1,4 +1,4 @@
-package pl.morecraft.dev.settler.service.prototype;
+package pl.morecraft.dev.settler.service.abstractService.prototype;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mysema.query.types.OrderSpecifier;
@@ -49,6 +49,9 @@ public abstract class AbstractService<
 
     @Inject
     private EntityConvertersPack entityConvertersPack;
+
+    @Inject
+    private SingleFiltersPack singleFiltersPack;
 
     @Inject
     private ListPageConverter listPageConverter;
@@ -183,7 +186,7 @@ public abstract class AbstractService<
     }
 
     protected List<AbstractServiceSingleFilter> getAbstractServiceSingleFilters() {
-        return Collections.emptyList();
+        return singleFiltersPack.getFullEntityAbstractServiceSingleFiltersPack();
     }
 
     protected List<BooleanExpression> getPreFilters() {
@@ -231,7 +234,7 @@ public abstract class AbstractService<
             ).forEach(
                     field -> getAbstractServiceSingleFilters()
                             .stream()
-                            .filter(filter -> filter.check(
+                            .filter(filter -> filter.isApplicable(
                                     extractValueFromField(field, filters),
                                     extractValueFromField(
                                             extractFieldFromObject(

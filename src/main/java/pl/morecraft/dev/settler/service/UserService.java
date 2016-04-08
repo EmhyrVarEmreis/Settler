@@ -2,7 +2,6 @@ package pl.morecraft.dev.settler.service;
 
 import com.mysema.query.types.expr.BooleanExpression;
 import com.mysema.query.util.CollectionUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.BasePasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,12 +11,9 @@ import pl.morecraft.dev.settler.domain.User;
 import pl.morecraft.dev.settler.domain.dictionaries.OperationType;
 import pl.morecraft.dev.settler.security.authorisation.PermissionManager;
 import pl.morecraft.dev.settler.security.util.Security;
+import pl.morecraft.dev.settler.service.abstractService.prototype.AbstractService;
 import pl.morecraft.dev.settler.service.exception.DuplicatedEntityException;
 import pl.morecraft.dev.settler.service.exception.EntityNotFoundException;
-import pl.morecraft.dev.settler.service.prototype.AbstractService;
-import pl.morecraft.dev.settler.service.prototype.AbstractServiceSingleFilter;
-import pl.morecraft.dev.settler.service.singleFilters.CustomStringUserSingleFilter;
-import pl.morecraft.dev.settler.service.singleFilters.DefaultSingleFiltersList;
 import pl.morecraft.dev.settler.web.dto.UserDTO;
 import pl.morecraft.dev.settler.web.dto.UserListDTO;
 import pl.morecraft.dev.settler.web.misc.UserListFilters;
@@ -39,9 +35,6 @@ public class UserService extends AbstractService<User, UserDTO, UserListDTO, Use
 
     @Inject
     private BasePasswordEncoder passwordEncoder;
-
-    @Autowired
-    private DefaultSingleFiltersList defaultSingleFiltersList;
 
     @Override
     protected UserRepository getRepository() {
@@ -71,14 +64,6 @@ public class UserService extends AbstractService<User, UserDTO, UserListDTO, Use
     @Override
     protected Class<UserListFilters> getListFilterClass() {
         return UserListFilters.class;
-    }
-
-    @Override
-    protected List<AbstractServiceSingleFilter> getAbstractServiceSingleFilters() {
-        return CollectionUtils.add(
-                defaultSingleFiltersList.getDefaultSingleFiltersList(),
-                new CustomStringUserSingleFilter()
-        );
     }
 
     @Override
