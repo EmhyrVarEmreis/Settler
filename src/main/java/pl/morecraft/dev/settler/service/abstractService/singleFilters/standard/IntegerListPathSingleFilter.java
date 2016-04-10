@@ -1,4 +1,4 @@
-package pl.morecraft.dev.settler.service.abstractService.singleFilters;
+package pl.morecraft.dev.settler.service.abstractService.singleFilters.standard;
 
 import com.mysema.query.types.expr.BooleanExpression;
 import com.mysema.query.types.path.ListPath;
@@ -9,7 +9,7 @@ import pl.morecraft.dev.settler.service.abstractService.prototype.SingleFilterAp
 
 @Component
 @BaseSingleFilter(types = @SingleFilterApplicableTypes(filterType = Integer.class, qObjectType = ListPath.class))
-public class DefaultIntegerListPathSingleFilter extends AbstractServiceSingleFilter {
+public class IntegerListPathSingleFilter extends AbstractServiceSingleFilter {
 
     @SuppressWarnings("unchecked")
     @Override

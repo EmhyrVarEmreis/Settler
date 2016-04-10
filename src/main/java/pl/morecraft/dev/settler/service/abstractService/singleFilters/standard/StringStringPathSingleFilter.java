@@ -1,4 +1,4 @@
-package pl.morecraft.dev.settler.service.abstractService.singleFilters;
+package pl.morecraft.dev.settler.service.abstractService.singleFilters.standard;
 
 import com.mysema.query.types.expr.BooleanExpression;
 import com.mysema.query.types.path.StringPath;
@@ -9,7 +9,7 @@ import pl.morecraft.dev.settler.service.abstractService.prototype.SingleFilterAp
 
 @Component
 @BaseSingleFilter(types = @SingleFilterApplicableTypes(filterType = String.class, qObjectType = StringPath.class))
-public class DefaultStringStringPathSingleFilter extends AbstractServiceSingleFilter {
+public class StringStringPathSingleFilter extends AbstractServiceSingleFilter {
 
     @Override
     public BooleanExpression predicate(Object filterValue, Object qObjectValue) {

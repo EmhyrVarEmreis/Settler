@@ -1,21 +1,20 @@
-package pl.morecraft.dev.settler.service.abstractService.singleFilters;
+package pl.morecraft.dev.settler.service.abstractService.singleFilters.standard;
 
 import com.mysema.query.types.expr.BooleanExpression;
-import com.mysema.query.types.path.EnumPath;
+import com.mysema.query.types.path.NumberPath;
 import org.springframework.stereotype.Component;
-import pl.morecraft.dev.settler.domain.dictionaries.proto.DefaultDictionary;
 import pl.morecraft.dev.settler.service.abstractService.prototype.AbstractServiceSingleFilter;
 import pl.morecraft.dev.settler.service.abstractService.prototype.BaseSingleFilter;
 import pl.morecraft.dev.settler.service.abstractService.prototype.SingleFilterApplicableTypes;
 
 @Component
-@BaseSingleFilter(types = @SingleFilterApplicableTypes(filterType = DefaultDictionary.class, qObjectType = EnumPath.class))
-public class DefaultStringDefaultDictionarySingleFilter extends AbstractServiceSingleFilter {
+@BaseSingleFilter(types = @SingleFilterApplicableTypes(filterType = Double.class, qObjectType = NumberPath.class))
+public class DoubleNumberPathSingleFilter extends AbstractServiceSingleFilter {
 
     @SuppressWarnings("unchecked")
     @Override
     public BooleanExpression predicate(Object filterValue, Object qObjectValue) {
-        return ((EnumPath) qObjectValue).eq(filterValue);
+        return ((NumberPath<Double>) qObjectValue).eq((Double) filterValue);
     }
 
 }
