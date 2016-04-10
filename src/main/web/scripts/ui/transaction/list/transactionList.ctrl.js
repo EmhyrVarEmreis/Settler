@@ -1,10 +1,21 @@
 (function () {
     'use strict';
 
-    angular.module('settlerApplication').controller('TransactionListCtrl', function ($scope, NgTableParams, transactionListFactory) {
+    angular.module('settlerApplication').controller('TransactionListCtrl', function ($scope,
+                                                                                     NgTableParams,
+                                                                                     transactionListFactory) {
 
         $scope.columnsCount = 0;
         $scope.columns = [
+            {
+                field:     'id',
+                title:     'ID',
+                isVisible: false,
+                filter:    false,
+                type:      'default',
+                isEmpty:   'N/D',
+                index:     $scope.columnsCount++
+            },
             {
                 field:     'reference',
                 title:     'Numer transakcji',
@@ -34,7 +45,7 @@
                 index:     $scope.columnsCount++
             },
             {
-                field:     'owner',
+                field:     'owners',
                 title:     'Właściciel',
                 isVisible: true,
                 filter:    true,
@@ -43,7 +54,7 @@
                 index:     $scope.columnsCount++
             },
             {
-                field:     'contractor',
+                field:     'contractors',
                 title:     'Kontraktor',
                 isVisible: true,
                 filter:    true,
@@ -56,7 +67,7 @@
                 title:     'Wartość',
                 isVisible: true,
                 filter:    true,
-                type:      'default',
+                type:      'money',
                 isEmpty:   "N/D",
                 index:     $scope.columnsCount++
             },

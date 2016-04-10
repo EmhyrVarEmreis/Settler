@@ -26,6 +26,7 @@
                 link:        function (scope) {
 
                     scope.filters = {};
+                    scope.data = {};
 
                     scope.tableParams = new NgTableParams({
                         page:    scope.page,
@@ -43,10 +44,26 @@
                                     "filters": scope.removeEmptyFilters(scope.filters)
                                 }, function (data) {
                                     params.total(data.total);
-                                    $defer.resolve(data.content);
+                                    scope.retrieveData(data.content);
+                                    //$defer.resolve(data.content);
                                 });
                         }
                     });
+
+                    scope.retrieveData = function (data) {
+                        scope.data = {};
+                        for (var entry in data) {
+                            if (data.hasOwnProperty(entry)) {
+                                var v = {};
+                                for (var key in scope.columns) {
+                                    if (scope.columns.hasOwnProperty(key)) {
+                                        v[scope.columns[key].field] = scope.getField(scope.columns[key].field, data[entry]);
+                                    }
+                                }
+                                scope.data[entry] = v;
+                            }
+                        }
+                    };
 
                     scope.removeEmptyFilters = function (filters) {
                         for (var i in filters) {
@@ -113,6 +130,10 @@
 
                     };
 
+                    scope.isArray = function (field) {
+                        return field && !!Array.isArray(field);
+                    };
+
                     scope.navigateToUrl = function (model) {
                         if (scope.defaultUrl) {
                             var url = scope.getUrl(scope.defaultUrl, model);
@@ -126,4 +147,5 @@
                 }
             };
         });
-})();
+})
+();

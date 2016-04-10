@@ -7,6 +7,15 @@
         $scope.columnsCount = 0;
         $scope.columns = [
             {
+                field:     'id',
+                title:     'ID',
+                isVisible: false,
+                filter:    false,
+                type:      'default',
+                isEmpty:   'N/D',
+                index:     $scope.columnsCount++
+            },
+            {
                 field:     'reference',
                 title:     'Numer rozliczenia',
                 isVisible: true,

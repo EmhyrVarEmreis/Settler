@@ -1,5 +1,4 @@
 <div class="row panel-body">
-
     <form class="form" role="form" ng-submit="applyFilters()">
         <table ng-table="tableParams" class="table">
             <thead>
@@ -14,7 +13,7 @@
             <tr class="ng-table-filters" ng-show="showFilters">
                 <th ng-repeat="column in columns" ng-show="column.isVisible || showVisibility">
                     <input type="text"
-                           ng-if="column.type === 'default'"
+                           ng-if="column.type === 'default' || column.type === 'money'"
                            ng-disabled="!column.filter"
                            placeholder="{{column.placeholder ? column.placeholder : column.title}}"
                            class="input-sm form-control"
@@ -40,15 +39,20 @@
             </tr>
             </thead>
             <tbody class="table-row-highlight">
-            <tr ng-repeat="entry in $data" ng-click="navigateToUrl(entry)"
+            <tr ng-repeat="entry in data"
+                ng-click="navigateToUrl(entry)"
                 ng-class="{'table-row-cursor-hand' : defaultUrl}">
                 <td ng-repeat="column in columns" ng-show="column.isVisible || showVisibility">
                     <a ng-if="column.url" href ng-href="{{column.url || entry ? getUrl(column.url,entry) : ''}}">
-                        <strong>{{getField(column.field, entry) | isEmpty:column.isEmpty}}</strong>
+                        <strong>{{entry[column.field] | isEmpty:column.isEmpty}}</strong>
                     </a>
-                    <span ng-if="!column.url">
-                        {{getField(column.field, entry) | isEmpty:column.isEmpty}}
-                    </span>
+                    <div ng-if="!column.url && !isArray(entry[column.field])">
+                        {{entry[column.field] | isEmpty:column.isEmpty}}
+                    </div>
+                    <div ng-if="!column.url && isArray(entry[column.field])"
+                         ng-repeat="value in entry[column.field] track by $index">
+                        {{value}}
+                    </div>
                 </td>
             </tr>
             <tr>

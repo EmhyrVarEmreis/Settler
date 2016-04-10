@@ -8,9 +8,17 @@
 
     <changeSet id="1.0-constraints" author="settler">
 
-        <addPrimaryKey tableName="prv_user_role"
-                       columnNames="prv_user, prv_role"
-                       constraintName="PK_PRV_USER_ROLE"/>
+        <addUniqueConstraint tableName="prv_user_role"
+                             columnNames="prv_user, prv_role"
+                             constraintName="UQ_PRV_USER_ROLE"/>
+
+        <addUniqueConstraint tableName="mod_category_object"
+                             columnNames="category_id, object_id"
+                             constraintName="UQ_MOD_CATEGORY_OBJECT"/>
+
+        <addUniqueConstraint tableName="mod_redistribution"
+                             columnNames="type, parent, user"
+                             constraintName="UQ_MOD_REDISTRIBUTION"/>
 
     </changeSet>
 

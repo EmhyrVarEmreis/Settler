@@ -88,7 +88,7 @@ public class Redistribution {
 
     public static class RedistributionPK implements Serializable {
 
-        private String type;
+        private RedistributionType type;
         private Long parent;
         private Long user;
 
@@ -96,7 +96,7 @@ public class Redistribution {
         }
 
         public RedistributionPK(RedistributionType type, PrivilegeObject parent, User user) {
-            this.type = type.getCode();
+            this.type = type;
             this.parent = parent.getId();
             this.user = user.getId();
         }

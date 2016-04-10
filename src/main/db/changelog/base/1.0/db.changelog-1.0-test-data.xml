@@ -341,6 +341,46 @@
             );
         </sql>
 
+        <!-- CREATE CATEGORIES -->
+        <sql>
+            INSERT INTO dev_settler.mod_category (
+            code, description
+            ) VALUES (
+            'FFD',
+            'Food'
+            );
+            INSERT INTO dev_settler.mod_category (
+            code, description
+            ) VALUES (
+            'FNC',
+            'Finance'
+            );
+            INSERT INTO dev_settler.mod_category (
+            code, description
+            ) VALUES (
+            'TRN',
+            'Transportation'
+            );
+            INSERT INTO dev_settler.mod_category (
+            code, description
+            ) VALUES (
+            'INF',
+            'Infrastructure'
+            );
+            INSERT INTO dev_settler.mod_category (
+            code, description
+            ) VALUES (
+            'BLS',
+            'Bills'
+            );
+            INSERT INTO dev_settler.mod_category (
+            code, description
+            ) VALUES (
+            'THG',
+            'Things'
+            );
+        </sql>
+
         <!-- CREATE ROLES -->
         <sql>
             INSERT INTO dev_settler.prv_object VALUES ();
