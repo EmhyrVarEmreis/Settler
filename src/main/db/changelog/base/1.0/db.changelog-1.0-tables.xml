@@ -57,6 +57,35 @@
                     type="nvarchar(32)"/>
         </createTable>
 
+        <createTable tableName="mod_category">
+            <column name="id"
+                    type="bigint"
+                    autoIncrement="true">
+                <constraints primaryKey="true"
+                             primaryKeyName="PK_mod_category_id"/>
+            </column>
+            <column name="code"
+                    type="nvarchar(3)">
+                <constraints primaryKey="true"
+                             primaryKeyName="PK_mod_category_code"/>
+            </column>
+            <column name="description"
+                    type="nvarchar(128)"/>
+        </createTable>
+
+        <createTable tableName="mod_category_object">
+            <column name="category_id"
+                    type="bigint">
+                <constraints references="mod_category(id)"
+                             foreignKeyName="FK_mod_category_object_object_id_mod_category_id"/>
+            </column>
+            <column name="object_id"
+                    type="bigint">
+                <constraints references="prv_object(id)"
+                             foreignKeyName="FK_mod_category_object_object_id_prv_object_id"/>
+            </column>
+        </createTable>
+
         <createTable tableName="prv_user">
             <column name="id"
                     type="bigint">
@@ -104,18 +133,17 @@
         <createTable tableName="mod_redistribution">
             <column name="type"
                     type="nvarchar(1)">
-                <constraints primaryKey="true"
-                             nullable="false"/>
+                <constraints nullable="false"/>
             </column>
             <column name="parent"
                     type="bigint">
-                <constraints primaryKey="true"
+                <constraints nullable="false"
                              references="prv_object(id)"
                              foreignKeyName="FK_mod_redistribution_parent_prv_object_id"/>
             </column>
             <column name="user"
                     type="bigint">
-                <constraints primaryKey="true"
+                <constraints nullable="false"
                              references="prv_user(id)"
                              foreignKeyName="FK_mod_redistribution_user_prv_user_id"/>
             </column>
@@ -213,21 +241,6 @@
             <column name="evaluated"
                     type="datetime"/>
         </createTable>
-
-        <!--<createTable tableName="mod_settlement_transaction">-->
-        <!--<column name="settlement_id"-->
-        <!--type="bigint">-->
-        <!--<constraints references="mod_settlement(id)"-->
-        <!--foreignKeyName="FK_mod_settlement_transaction_mod_settlement_id"-->
-        <!--deleteCascade="true"/>-->
-        <!--</column>-->
-        <!--<column name="transaction_id"-->
-        <!--type="bigint">-->
-        <!--<constraints references="mod_transaction(id)"-->
-        <!--foreignKeyName="FK_mod_settlement_transaction_mod_transaction_id"-->
-        <!--deleteCascade="true"/>-->
-        <!--</column>-->
-        <!--</createTable>-->
 
         <createTable tableName="mod_comment">
             <column name="id"
