@@ -1,9 +1,21 @@
 (function () {
     'use strict';
 
-    angular.module('settlerApplication').controller('UserListCtrl', function ($scope, NgTableParams, userListFactory) {
+    angular.module('settlerApplication').controller('UserListCtrl', function ($scope,
+                                                                              NgTableParams,
+                                                                              userListFactory) {
 
+        $scope.columnsCount = 0;
         $scope.columns = [
+            {
+                field:     'id',
+                title:     'ID',
+                isVisible: false,
+                filter:    false,
+                type:      'default',
+                isEmpty:   'N/D',
+                index:     $scope.columnsCount++
+            },
             {
                 field:     'login',
                 title:     'Login',
@@ -11,7 +23,7 @@
                 filter:    true,
                 type:      'default',
                 isEmpty:   'N/D',
-                index:     0,
+                index:     $scope.columnsCount++,
                 url:       '#/user/details/:id'
             },
             {
@@ -21,7 +33,7 @@
                 filter:    true,
                 type:      'default',
                 isEmpty:   'N/D',
-                index:     1
+                index:     $scope.columnsCount++
             },
             {
                 field:     'lastName',
@@ -30,7 +42,7 @@
                 filter:    true,
                 type:      'default',
                 isEmpty:   'N/D',
-                index:     2
+                index:     $scope.columnsCount++
             },
             {
                 field:     'email',
@@ -39,7 +51,7 @@
                 filter:    true,
                 type:      'default',
                 isEmpty:   'N/D',
-                index:     3
+                index:     $scope.columnsCount++
             },
             {
                 field:       'status',
@@ -50,7 +62,7 @@
                 filter:      true,
                 type:        'default',
                 isEmpty:     'N/D',
-                index:       4
+                index:       $scope.columnsCount++
             },
             {
                 field:       'created',
@@ -60,7 +72,7 @@
                 type:        'date',
                 isEmpty:     'N/D',
                 placeholder: 'Data utworzenia',
-                index:       5
+                index:       $scope.columnsCount++
             }
         ];
 
