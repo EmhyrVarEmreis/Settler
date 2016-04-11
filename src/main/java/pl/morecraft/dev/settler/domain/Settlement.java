@@ -41,7 +41,7 @@ public class Settlement extends PrivilegeObject {
     @NotAudited
     private List<Transaction> transactions;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "mod_comment",
             joinColumns = {@JoinColumn(name = "prv_object", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "id", referencedColumnName = "id")})
@@ -49,6 +49,7 @@ public class Settlement extends PrivilegeObject {
     private List<Comment> comments;
 
     public Settlement() {
+
     }
 
     public String getReference() {

@@ -1,6 +1,5 @@
 package pl.morecraft.dev.settler.domain;
 
-import org.hibernate.annotations.Type;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import pl.morecraft.dev.settler.domain.dictionaries.UserStatus;
@@ -18,24 +17,20 @@ public class User extends PrivilegeObject {
     @Column(nullable = false)
     private String password;
 
+    @Enumerated(EnumType.STRING)
+    private UserStatus status;
+
     private String email;
     private String firstName;
     private String lastName;
 
-    @Enumerated(EnumType.STRING)
-    private UserStatus status;
-
-    @SuppressWarnings("SpellCheckingInspection")
-    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
     private LocalDateTime created;
-
-    @SuppressWarnings("SpellCheckingInspection")
-    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
     private LocalDate passwordExpireDate;
-
-    @SuppressWarnings("SpellCheckingInspection")
-    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
     private LocalDate accountExpireDate;
+
+    public User() {
+
+    }
 
     public String getLogin() {
         return login;
@@ -51,6 +46,14 @@ public class User extends PrivilegeObject {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public UserStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(UserStatus status) {
+        this.status = status;
     }
 
     public String getEmail() {
@@ -75,14 +78,6 @@ public class User extends PrivilegeObject {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
-    }
-
-    public UserStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(UserStatus status) {
-        this.status = status;
     }
 
     public LocalDateTime getCreated() {

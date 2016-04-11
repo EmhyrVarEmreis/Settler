@@ -45,7 +45,7 @@
                                 }, function (data) {
                                     params.total(data.total);
                                     scope.retrieveData(data.content);
-                                    //$defer.resolve(data.content);
+                                    $defer.resolve(data.content);
                                 });
                         }
                     });

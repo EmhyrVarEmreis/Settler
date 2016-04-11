@@ -1,6 +1,6 @@
 package pl.morecraft.dev.settler.domain;
 
-import org.hibernate.annotations.WhereJoinTable;
+import org.hibernate.annotations.Where;
 import org.hibernate.envers.NotAudited;
 import org.joda.time.LocalDateTime;
 import pl.morecraft.dev.settler.domain.dictionaries.TransactionType;
@@ -23,33 +23,36 @@ public class Transaction extends PrivilegeObject {
     @JoinColumn(name = "creator")
     private User creator;
 
-    @OneToMany
-    @NotAudited
-    @JoinTable(name = "mod_redistribution",
-            joinColumns = {@JoinColumn(name = "parent", referencedColumnName = "id")})
-    @WhereJoinTable(clause = "type='O'")
-    private List<Redistribution> owners;
-
-    @OneToMany
-    @NotAudited
-    @JoinTable(name = "mod_redistribution",
-            joinColumns = {@JoinColumn(name = "parent", referencedColumnName = "id")})
-    @WhereJoinTable(clause = "type='C'")
-    private List<Redistribution> contractors;
-
-    private Double value;
-
     @Column(nullable = false, insertable = true, updatable = false)
     private LocalDateTime created;
     private LocalDateTime confirmed;
     private LocalDateTime evaluated;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    private Double value;
+
+    @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Where(clause = "type='O'")
+    @NotAudited
+    private List<Redistribution> owners;
+
+    @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Where(clause = "type='C'")
+    @NotAudited
+    private List<Redistribution> contractors;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.REMOVE, CascadeType.MERGE}, orphanRemoval = true)
     @JoinTable(name = "mod_comment",
             joinColumns = {@JoinColumn(name = "prv_object", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "id", referencedColumnName = "id")})
     @NotAudited
     private List<Comment> comments;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "mod_category_object",
+            joinColumns = {@JoinColumn(name = "object_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "category_id", referencedColumnName = "id")})
+    @NotAudited
+    private List<Category> categories;
 
     public Transaction() {
 
@@ -79,14 +82,6 @@ public class Transaction extends PrivilegeObject {
         this.creator = creator;
     }
 
-    public Double getValue() {
-        return value;
-    }
-
-    public void setValue(Double value) {
-        this.value = value;
-    }
-
     public LocalDateTime getCreated() {
         return created;
     }
@@ -111,12 +106,44 @@ public class Transaction extends PrivilegeObject {
         this.evaluated = evaluated;
     }
 
+    public Double getValue() {
+        return value;
+    }
+
+    public void setValue(Double value) {
+        this.value = value;
+    }
+
+    public List<Redistribution> getOwners() {
+        return owners;
+    }
+
+    public void setOwners(List<Redistribution> owners) {
+        this.owners = owners;
+    }
+
+    public List<Redistribution> getContractors() {
+        return contractors;
+    }
+
+    public void setContractors(List<Redistribution> contractors) {
+        this.contractors = contractors;
+    }
+
     public List<Comment> getComments() {
         return comments;
     }
 
     public void setComments(List<Comment> comments) {
         this.comments = comments;
+    }
+
+    public List<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<Category> categories) {
+        this.categories = categories;
     }
 
 }

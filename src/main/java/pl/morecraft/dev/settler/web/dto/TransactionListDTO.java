@@ -3,8 +3,12 @@ package pl.morecraft.dev.settler.web.dto;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.joda.time.LocalDate;
+import pl.morecraft.dev.settler.web.utils.JsonDoubleDeserializer;
+import pl.morecraft.dev.settler.web.utils.JsonDoubleSerializer;
 import pl.morecraft.dev.settler.web.utils.JsonJodaLocalDateDeserializer;
 import pl.morecraft.dev.settler.web.utils.JsonJodaLocalDateSerializer;
+
+import java.util.List;
 
 public class TransactionListDTO {
 
@@ -12,8 +16,11 @@ public class TransactionListDTO {
     private String reference;
     private String type;
     private String creator;
-    private String owners;
-    private String contractors;
+    private List<String> owners;
+    private List<String> contractors;
+
+    @JsonSerialize(using = JsonDoubleSerializer.class)
+    @JsonDeserialize(using = JsonDoubleDeserializer.class)
     private Double value;
 
     @JsonSerialize(using = JsonJodaLocalDateSerializer.class)
@@ -65,19 +72,19 @@ public class TransactionListDTO {
         this.creator = creator;
     }
 
-    public String getOwners() {
+    public List<String> getOwners() {
         return owners;
     }
 
-    public void setOwners(String owners) {
+    public void setOwners(List<String> owners) {
         this.owners = owners;
     }
 
-    public String getContractors() {
+    public List<String> getContractors() {
         return contractors;
     }
 
-    public void setContractors(String contractors) {
+    public void setContractors(List<String> contractors) {
         this.contractors = contractors;
     }
 
@@ -120,4 +127,5 @@ public class TransactionListDTO {
     public void setComments(Integer comments) {
         this.comments = comments;
     }
+
 }

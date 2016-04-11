@@ -24,6 +24,42 @@ public class Privilege {
     @Enumerated(EnumType.STRING)
     private OperationType operationType;
 
+    public Privilege() {
+
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public PrivilegeObject getPrvObject() {
+        return prvObject;
+    }
+
+    public void setPrvObject(PrivilegeObject prvObject) {
+        this.prvObject = prvObject;
+    }
+
+    public PrivilegeObject getPrvOwner() {
+        return prvOwner;
+    }
+
+    public void setPrvOwner(PrivilegeObject prvOwner) {
+        this.prvOwner = prvOwner;
+    }
+
+    public OperationType getOperationType() {
+        return operationType;
+    }
+
+    public void setOperationType(OperationType operationType) {
+        this.operationType = operationType;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

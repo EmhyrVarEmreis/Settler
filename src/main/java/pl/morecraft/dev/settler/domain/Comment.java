@@ -29,6 +29,10 @@ public class Comment extends PrivilegeObject {
     @Column(nullable = false)
     private String value;
 
+    public Comment() {
+
+    }
+
     public PrivilegeObject getObject() {
         return object;
     }

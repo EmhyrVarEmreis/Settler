@@ -3,6 +3,8 @@ package pl.morecraft.dev.settler.web.dto;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.joda.time.LocalDate;
+import pl.morecraft.dev.settler.web.utils.JsonDoubleDeserializer;
+import pl.morecraft.dev.settler.web.utils.JsonDoubleSerializer;
 import pl.morecraft.dev.settler.web.utils.JsonJodaLocalDateDeserializer;
 import pl.morecraft.dev.settler.web.utils.JsonJodaLocalDateSerializer;
 
@@ -13,6 +15,9 @@ public class SettlementListDTO {
     private String type;
     private String creator;
     private String contractor;
+
+    @JsonSerialize(using = JsonDoubleSerializer.class)
+    @JsonDeserialize(using = JsonDoubleDeserializer.class)
     private Double balance;
 
     @JsonSerialize(using = JsonJodaLocalDateSerializer.class)

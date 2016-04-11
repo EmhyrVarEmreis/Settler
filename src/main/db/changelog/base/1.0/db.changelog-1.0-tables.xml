@@ -13,6 +13,7 @@
                     type="bigint"
                     autoIncrement="true">
                 <constraints primaryKey="true"
+                             unique="true"
                              primaryKeyName="PK_prv_object_id"/>
             </column>
         </createTable>
@@ -96,7 +97,9 @@
             </column>
             <column name="login"
                     type="nvarchar(32)">
-                <constraints nullable="false"/>
+                <constraints primaryKey="true"
+                             unique="true"
+                             nullable="false"/>
             </column>
             <column name="first_name"
                     type="nvarchar(32)"/>
@@ -108,7 +111,9 @@
             </column>
             <column name="email"
                     type="nvarchar(128)">
-                <constraints nullable="false"/>
+                <constraints primaryKey="true"
+                             unique="true"
+                             nullable="false"/>
             </column>
             <column name="created"
                     type="datetime">
@@ -116,8 +121,7 @@
             </column>
             <column name="status"
                     type="nvarchar(3)">
-                <constraints primaryKey="true"
-                             references="dct_user_status(code)"
+                <constraints references="dct_user_status(code)"
                              foreignKeyName="FK_prv_user_type_dct_user_status_code"/>
             </column>
             <column name="account_expire_date"

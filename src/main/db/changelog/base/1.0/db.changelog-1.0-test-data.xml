@@ -379,6 +379,12 @@
             'THG',
             'Things'
             );
+            INSERT INTO dev_settler.mod_category (
+            code, description
+            ) VALUES (
+            'ENT',
+            'Entertainment'
+            );
         </sql>
 
         <!-- CREATE ROLES -->

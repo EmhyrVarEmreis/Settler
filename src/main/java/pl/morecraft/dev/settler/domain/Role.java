@@ -17,6 +17,10 @@ public class Role extends PrivilegeObject {
     @NotAudited
     private List<RoleAssignment> roleAssignments;
 
+    public Role() {
+
+    }
+
     public String getName() {
         return name;
     }

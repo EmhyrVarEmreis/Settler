@@ -19,6 +19,7 @@ public class RoleAssignment {
     private Role role;
 
     public RoleAssignment() {
+
     }
 
     public RoleAssignment(User user, Role role) {

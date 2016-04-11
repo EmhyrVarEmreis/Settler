@@ -31,6 +31,13 @@ public class Redistribution {
 
     }
 
+    public Redistribution(RedistributionType type, PrivilegeObject parent, User user, Double percentage) {
+        this.type = type;
+        this.parent = parent;
+        this.user = user;
+        this.percentage = percentage;
+    }
+
     public RedistributionType getType() {
         return type;
     }
