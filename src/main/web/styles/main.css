@@ -125,3 +125,11 @@ body {
 .table-row-cursor-hand {
     cursor: pointer;
 }
+
+.text-normal {
+    font-weight: normal;
+}
+
+.text-italic {
+    font-style: italic;
+}

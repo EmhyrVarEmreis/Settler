@@ -32,10 +32,10 @@ public class TransactionDTO {
     private UserTinyDTO creator;
 
     @NotNull
-    private List<RedistributionPDTO> owners;
+    private List<RedistributionDTO> owners;
 
     @NotNull
-    private List<RedistributionPDTO> contractors;
+    private List<RedistributionDTO> contractors;
 
     @NotNull
     @JsonSerialize(using = JsonDoubleSerializer.class)
@@ -93,19 +93,19 @@ public class TransactionDTO {
         this.creator = creator;
     }
 
-    public List<RedistributionPDTO> getOwners() {
+    public List<RedistributionDTO> getOwners() {
         return owners;
     }
 
-    public void setOwners(List<RedistributionPDTO> owners) {
+    public void setOwners(List<RedistributionDTO> owners) {
         this.owners = owners;
     }
 
-    public List<RedistributionPDTO> getContractors() {
+    public List<RedistributionDTO> getContractors() {
         return contractors;
     }
 
-    public void setContractors(List<RedistributionPDTO> contractors) {
+    public void setContractors(List<RedistributionDTO> contractors) {
         this.contractors = contractors;
     }
 

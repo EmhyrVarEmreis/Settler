@@ -9,7 +9,10 @@
 
         $scope.data = {};
         if ($stateParams.state !== 'new') {
-            transactionDetailsFactory.get({id: $stateParams.state},
+            transactionDetailsFactory.get(
+                {
+                    id: $stateParams.state
+                },
                 function (data) {
                     $scope.data = data;
                 }, function (err) {
@@ -17,6 +20,17 @@
                 }
             );
         }
+
+        $scope.save = function () {
+            transactionDetailsFactory.save(
+                $scope.data,
+                function (data) {
+                    $scope.data = data;
+                }, function (err) {
+                    modalService.createErrorDialogFromResponse(err);
+                }
+            );
+        };
 
     });
 

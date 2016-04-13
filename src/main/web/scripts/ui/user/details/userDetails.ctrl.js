@@ -30,7 +30,7 @@
                     modalService.createErrorDialogFromResponse(err);
                 }
             );
-        }
+        };
 
     });
 
