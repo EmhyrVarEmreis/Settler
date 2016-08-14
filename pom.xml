@@ -80,7 +80,6 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>log4j-over-slf4j</artifactId>
-            <version>1.6.1</version>
         </dependency>
 
         <dependency>
@@ -136,7 +135,6 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>5.1.37</version>
         </dependency>
 
         <dependency>
@@ -148,7 +146,6 @@
         <dependency>
             <groupId>joda-time</groupId>
             <artifactId>joda-time</artifactId>
-            <version>2.9.4</version>
         </dependency>
 
         <dependency>
@@ -166,7 +163,6 @@
         <dependency>
             <groupId>org.liquibase</groupId>
             <artifactId>liquibase-core</artifactId>
-            <version>3.5.1</version>
         </dependency>
 
     </dependencies>
