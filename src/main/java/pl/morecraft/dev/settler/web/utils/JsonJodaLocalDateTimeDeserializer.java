@@ -11,8 +11,7 @@ import org.joda.time.format.DateTimeFormatter;
 import java.io.IOException;
 import java.util.Objects;
 
-public class JsonJodaLocalDeserializerFix extends JsonDeserializer<LocalDateTime> {
-    //JsonJodaLocalDateTimeDeserializer
+public class JsonJodaLocalDateTimeDeserializer extends JsonDeserializer<LocalDateTime> {
 
     private static DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd");
     private static DateTimeFormatter formatterWithTime = DateTimeFormat.forPattern("yyyy-MM-dd hh:mm:ss");

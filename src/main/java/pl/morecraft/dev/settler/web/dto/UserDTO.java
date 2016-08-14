@@ -7,8 +7,8 @@ import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import pl.morecraft.dev.settler.web.utils.JsonJodaLocalDateDeserializer;
 import pl.morecraft.dev.settler.web.utils.JsonJodaLocalDateSerializer;
-import pl.morecraft.dev.settler.web.utils.JsonJodaLocalDeserializerFix;
-import pl.morecraft.dev.settler.web.utils.JsonJodaSerializerFix;
+import pl.morecraft.dev.settler.web.utils.JsonJodaLocalDateTimeDeserializer;
+import pl.morecraft.dev.settler.web.utils.JsonJodaLocalDateTimeSerializer;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -41,8 +41,8 @@ public class UserDTO {
     @Size(min = 6, max = 128)
     private String email;
 
-    @JsonSerialize(using = JsonJodaSerializerFix.class)
-    @JsonDeserialize(using = JsonJodaLocalDeserializerFix.class)
+    @JsonSerialize(using = JsonJodaLocalDateTimeSerializer.class)
+    @JsonDeserialize(using = JsonJodaLocalDateTimeDeserializer.class)
     private LocalDateTime created;
 
     @JsonSerialize(using = JsonJodaLocalDateSerializer.class)
