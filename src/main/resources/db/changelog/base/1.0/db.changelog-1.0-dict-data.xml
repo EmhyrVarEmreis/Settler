@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="1.0-init-dict-data" author="settler">
+
+        <insert tableName="dct_settlement_type">
+            <column name="code">NOR</column>
+            <column name="description">Normal</column>
+        </insert>
+        <insert tableName="dct_settlement_type">
+            <column name="code">OTH</column>
+            <column name="description">Other</column>
+        </insert>
+
+        <insert tableName="dct_transaction_type">
+            <column name="code">NOR</column>
+            <column name="description">Normal</column>
+        </insert>
+        <insert tableName="dct_transaction_type">
+            <column name="code">OTH</column>
+            <column name="description">Other</column>
+        </insert>
+
+        <insert tableName="dct_operation_type">
+            <column name="code">ADM</column>
+            <column name="description">Administrative</column>
+        </insert>
+        <insert tableName="dct_operation_type">
+            <column name="code">EDT</column>
+            <column name="description">Editable</column>
+        </insert>
+        <insert tableName="dct_operation_type">
+            <column name="code">RDM</column>
+            <column name="description">Readable</column>
+        </insert>
+        <insert tableName="dct_operation_type">
+            <column name="code">CRT</column>
+            <column name="description">Creatable</column>
+        </insert>
+
+        <insert tableName="dct_user_status">
+            <column name="code">CRT</column>
+            <column name="description">Creatable</column>
+        </insert>
+
+        <insert tableName="dct_user_status">
+            <column name="code">ACT</column>
+            <column name="description">Active</column>
+        </insert>
+        <insert tableName="dct_user_status">
+            <column name="code">DSB</column>
+            <column name="description">Disabled</column>
+        </insert>
+        <insert tableName="dct_user_status">
+            <column name="code">BLK</column>
+            <column name="description">Blocked</column>
+        </insert>
+        <insert tableName="dct_user_status">
+            <column name="code">HNG</column>
+            <column name="description">Hanged</column>
+        </insert>
+        <insert tableName="dct_user_status">
+            <column name="code">TMP</column>
+            <column name="description">Temporary</column>
+        </insert>
+
+        <rollback>
+            <delete tableName="dct_settlement_type"/>
+            <delete tableName="dct_transaction_type"/>
+            <delete tableName="dct_user_status"/>
+        </rollback>
+
+    </changeSet>
+
+
+</databaseChangeLog>

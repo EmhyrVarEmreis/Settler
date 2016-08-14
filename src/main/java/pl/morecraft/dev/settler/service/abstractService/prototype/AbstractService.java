@@ -1,10 +1,10 @@
 package pl.morecraft.dev.settler.service.abstractService.prototype;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mysema.query.types.OrderSpecifier;
-import com.mysema.query.types.expr.BooleanExpression;
-import com.mysema.query.types.expr.ComparableExpressionBase;
-import com.mysema.query.types.path.EntityPathBase;
+import com.querydsl.core.types.OrderSpecifier;
+import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.core.types.dsl.ComparableExpressionBase;
+import com.querydsl.core.types.dsl.EntityPathBase;
 import org.modelmapper.AbstractConverter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;

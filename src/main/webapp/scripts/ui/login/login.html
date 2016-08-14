@@ -1,0 +1,45 @@
+<div class="jumbotron vertical-center login-page-bg">
+    <div class="container text-center">
+        <div class="col-md-4 col-md-offset-4 text-center login-page">
+            <h2>Logowanie</h2>
+
+            <div class="alert alert-danger" ng-show="authenticationErrore">
+                <strong>Podczas logowania wystąpił następujący problem:</strong>
+                <br/>
+
+                <div class="text-center" ng-show="authenticationErrorSuperStatusCode === 401">
+                    Wprowadzony Login oraz Hasło niestety wydają się nie być prawidłowe. Upewnij się, że prawidłowo
+                    uzupełniasz ww. pola. Jeśli mimo tego problem nadal występuje - skontaktuj się z administratorem.
+                </div>
+                <div class="text-center"
+                     ng-show="!authenticationErrorSuperStatusCode || (authenticationErrorSuperStatusCode < 600 && authenticationErrorSuperStatusCode !== 401)">
+                    Serwer nie odpowiada lub wystapił inny błąd krytyczny. Jeśli nie zaplanowano żadnych prac
+                    konserwacyjnych, koniecznie skontaktuj się z administratorem.
+                </div>
+            </div>
+            <form class="form" role="form">
+                <div class="form-group">
+                    <label for="username">Login</label>
+                    <input type="text"
+                           class="form-control"
+                           id="username"
+                           placeholder="Login"
+                           ng-model="username">
+                </div>
+                <div class="form-group">
+                    <label for="password">Hasło</label>
+                    <input type="password"
+                           class="form-control"
+                           id="password"
+                           placeholder="Hasło"
+                           ng-model="password">
+                </div>
+
+                <button type="submit" class="btn btn-primary" ng-click="login()">
+                    <span class="glyphicon glyphicon-log-in  glph-def-em" aria-hidden="true"></span>
+                    Zaloguj się
+                </button>
+            </form>
+        </div>
+    </div>
+</div>

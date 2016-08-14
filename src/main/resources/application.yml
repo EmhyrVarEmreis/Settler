@@ -14,6 +14,7 @@ spring:
 
   jpa:
     database-platform: org.hibernate.dialect.MySQLInnoDBDialect
+
     
 multipart:
   max-file-size: 50Mb
@@ -21,3 +22,7 @@ multipart:
 
 quartz:
   enabled: false
+
+liquibase:
+  change-log: classpath:/db/changelog/db.changelog-master.xml
+  enabled: true

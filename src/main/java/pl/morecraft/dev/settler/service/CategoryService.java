@@ -1,6 +1,5 @@
 package pl.morecraft.dev.settler.service;
 
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.morecraft.dev.settler.dao.repository.CategoryRepository;

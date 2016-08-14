@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <include file="/db/changelog/base/1.0/db.changelog-1.0-tables.xml"/>
+    <include file="/db/changelog/base/1.0/db.changelog-1.0-constraints.xml"/>
+    <include file="/db/changelog/base/1.0/db.changelog-1.0-dict-data.xml"/>
+    <include file="/db/changelog/base/1.0/db.changelog-1.0-views.xml"/>
+    <include file="/db/changelog/base/1.0/db.changelog-1.0-procedures.xml"/>
+    <include file="/db/changelog/base/1.0/db.changelog-1.0-triggers.xml"/>
+    <include file="/db/changelog/base/1.0/db.changelog-1.0-test-data.xml"/>
+    <include file="/db/changelog/base/1.0/db.changelog-1.0-quartz-config.xml"/>
+
+</databaseChangeLog>
+

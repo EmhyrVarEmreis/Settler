@@ -1,9 +1,9 @@
 package pl.morecraft.dev.settler.security.authorisation;
 
-
-import com.mysema.query.jpa.JPASubQuery;
-import com.mysema.query.jpa.impl.JPAQuery;
-import com.mysema.query.types.expr.BooleanExpression;
+import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.core.types.dsl.Expressions;
+import com.querydsl.jpa.JPAExpressions;
+import com.querydsl.jpa.impl.JPAQuery;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import pl.morecraft.dev.settler.domain.PrivilegeObject;
@@ -41,36 +41,39 @@ public class PermissionManagerImplementation implements PermissionManager {
         expression = expression.or(
                 jTBObjectPrivilege.objectTo.isNull()
         );
-        return new JPAQuery(entityManager).from(jTBObjectPrivilege, jTBObjectHierarchy)
+        return new JPAQuery<Void>(entityManager).select(Expressions.ONE).from(jTBObjectPrivilege, jTBObjectHierarchy)
                 .where(
                         jTBObjectPrivilege.objectFrom.id.eq(source.getId()),
                         (jTBObjectPrivilege.operationType.eq(operationType)),
                         expression
-                )
-                .exists();
+                ).fetchFirst() != null;
     }
 
     @Override
     public BooleanExpression objectFilter(PrivilegeObject source, QPrivilegeObject target, OperationType operationType) {
         return target.id.in(
-                new JPASubQuery().from(jTBObjectPrivilege, jTBObjectHierarchy)
+                JPAExpressions.selectFrom(jTBObjectHierarchy)
                         .where(
-                                jTBObjectPrivilege.objectFrom.id.eq(source.getId()),
-                                jTBObjectPrivilege.operationType.eq(operationType),
-                                jTBObjectHierarchy.objectFrom.id.eq(jTBObjectPrivilege.objectTo.id)
-                        )
-                        .list(jTBObjectHierarchy.objectTo.id)
+                                jTBObjectHierarchy.objectFrom.id.in(
+                                        JPAExpressions.selectFrom(jTBObjectPrivilege)
+                                                .from(jTBObjectPrivilege)
+                                                .where(
+                                                        jTBObjectPrivilege.objectFrom.id.eq(source.getId()),
+                                                        jTBObjectPrivilege.operationType.eq(operationType)
+                                                ).select(jTBObjectPrivilege.objectTo.id)
+                                )
+                        ).select(jTBObjectHierarchy.objectTo.id)
         ).or(
                 target.id.in(
-                        new JPASubQuery().from(jTBObjectPrivilege)
+                        JPAExpressions.selectFrom(jTBObjectPrivilege)
                                 .where(
                                         jTBObjectPrivilege.objectFrom.id.eq(source.getId()),
                                         jTBObjectPrivilege.operationType.eq(operationType)
                                 )
-                                .list(jTBObjectPrivilege.objectTo.id)
+                                .select(jTBObjectPrivilege.objectTo.id)
                 )
         ).or(
-                new JPASubQuery().from(jTBObjectPrivilege)
+                JPAExpressions.selectFrom(jTBObjectPrivilege)
                         .where(
                                 jTBObjectPrivilege.objectFrom.id.eq(source.getId()),
                                 jTBObjectPrivilege.operationType.eq(operationType),

@@ -1,6 +1,6 @@
 package pl.morecraft.dev.settler.security.authorisation;
 
-import com.mysema.query.types.expr.BooleanExpression;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import pl.morecraft.dev.settler.domain.PrivilegeObject;
 import pl.morecraft.dev.settler.domain.QPrivilegeObject;
 import pl.morecraft.dev.settler.domain.dictionaries.OperationType;

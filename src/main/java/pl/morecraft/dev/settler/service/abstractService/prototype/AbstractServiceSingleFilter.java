@@ -1,6 +1,6 @@
 package pl.morecraft.dev.settler.service.abstractService.prototype;
 
-import com.mysema.query.types.expr.BooleanExpression;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import pl.morecraft.dev.settler.service.abstractService.AnnotationNotPresentException;
 
 public abstract class AbstractServiceSingleFilter {

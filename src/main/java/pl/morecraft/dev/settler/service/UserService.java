@@ -1,7 +1,7 @@
 package pl.morecraft.dev.settler.service;
 
-import com.mysema.query.types.expr.BooleanExpression;
-import com.mysema.query.util.CollectionUtils;
+import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.core.util.CollectionUtils;
 import org.springframework.security.authentication.encoding.BasePasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

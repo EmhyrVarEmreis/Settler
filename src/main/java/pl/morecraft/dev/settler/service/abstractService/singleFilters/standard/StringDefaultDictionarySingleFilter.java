@@ -1,7 +1,7 @@
 package pl.morecraft.dev.settler.service.abstractService.singleFilters.standard;
 
-import com.mysema.query.types.expr.BooleanExpression;
-import com.mysema.query.types.path.EnumPath;
+import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.core.types.dsl.EnumPath;
 import org.springframework.stereotype.Component;
 import pl.morecraft.dev.settler.domain.dictionaries.proto.DefaultDictionary;
 import pl.morecraft.dev.settler.service.abstractService.prototype.AbstractServiceSingleFilter;

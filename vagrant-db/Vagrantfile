@@ -1,17 +1,17 @@
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  config.vm.box = "hashicorp/precise64"
+  config.vm.box = "ubuntu/trusty64"
   config.vm.network :forwarded_port, guest: 3306, host: 3306
   config.vm.provision :shell, :path => "init.sh"
   config.vm.synced_folder ".", "/vagrant", :mount_options => ["dmode=777", "fmode=666"]
-  config.vm.network "private_network", ip: "33.33.33.33"
+  config.vm.network "private_network", ip: "192.168.10.10"
 
   config.vm.boot_timeout = 450
 
   config.vm.provider "virtualbox" do |v|
     v.gui = false
-    v.memory = 512
+    v.memory = 1024
     v.cpus = 2
   end
 

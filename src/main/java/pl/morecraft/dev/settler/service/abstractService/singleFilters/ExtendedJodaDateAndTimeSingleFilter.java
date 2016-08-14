@@ -1,8 +1,8 @@
 package pl.morecraft.dev.settler.service.abstractService.singleFilters;
 
-import com.mysema.query.types.expr.BooleanExpression;
-import com.mysema.query.types.path.DatePath;
-import com.mysema.query.types.path.DateTimePath;
+import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.core.types.dsl.DatePath;
+import com.querydsl.core.types.dsl.DateTimePath;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.springframework.stereotype.Component;

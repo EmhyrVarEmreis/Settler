@@ -1,6 +1,6 @@
 package pl.morecraft.dev.settler.service.abstractService.singleFilters;
 
-import com.mysema.query.types.expr.BooleanExpression;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import org.springframework.stereotype.Component;
 import pl.morecraft.dev.settler.domain.QUser;
 import pl.morecraft.dev.settler.service.abstractService.prototype.AbstractServiceSingleFilter;
