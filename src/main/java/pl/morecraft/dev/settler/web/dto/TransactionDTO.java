@@ -5,8 +5,8 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.joda.time.LocalDateTime;
 import pl.morecraft.dev.settler.web.utils.JsonDoubleDeserializer;
 import pl.morecraft.dev.settler.web.utils.JsonDoubleSerializer;
-import pl.morecraft.dev.settler.web.utils.JsonJodaLocalDateTimeDeserializer;
-import pl.morecraft.dev.settler.web.utils.JsonJodaLocalDateTimeSerializer;
+import pl.morecraft.dev.settler.web.utils.JsonJodaLocalDeserializerFix;
+import pl.morecraft.dev.settler.web.utils.JsonJodaSerializerFix;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -43,16 +43,16 @@ public class TransactionDTO {
     private Double value;
 
     @NotNull
-    @JsonSerialize(using = JsonJodaLocalDateTimeSerializer.class)
-    @JsonDeserialize(using = JsonJodaLocalDateTimeDeserializer.class)
+    @JsonSerialize(using = JsonJodaSerializerFix.class)
+    @JsonDeserialize(using = JsonJodaLocalDeserializerFix.class)
     private LocalDateTime created;
 
-    @JsonSerialize(using = JsonJodaLocalDateTimeSerializer.class)
-    @JsonDeserialize(using = JsonJodaLocalDateTimeDeserializer.class)
+    @JsonSerialize(using = JsonJodaSerializerFix.class)
+    @JsonDeserialize(using = JsonJodaLocalDeserializerFix.class)
     private LocalDateTime confirmed;
 
-    @JsonSerialize(using = JsonJodaLocalDateTimeSerializer.class)
-    @JsonDeserialize(using = JsonJodaLocalDateTimeDeserializer.class)
+    @JsonSerialize(using = JsonJodaSerializerFix.class)
+    @JsonDeserialize(using = JsonJodaLocalDeserializerFix.class)
     private LocalDateTime evaluated;
 
     @NotNull
