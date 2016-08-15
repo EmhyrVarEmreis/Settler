@@ -418,16 +418,16 @@
                 </configuration>
             </plugin>
 
-            <plugin>
-                <groupId>org.apache.tomcat.maven</groupId>
-                <artifactId>tomcat7-maven-plugin</artifactId>
-                <version>2.2</version>
-                <configuration>
-                    <url>http://morecraft.pl:8080/manager/text</url>
-                    <server>TomcatServer</server>
-                    <path>/yourappcontextpath</path>
-                </configuration>
-            </plugin>
+            <!--<plugin>-->
+            <!--<groupId>org.apache.tomcat.maven</groupId>-->
+            <!--<artifactId>tomcat7-maven-plugin</artifactId>-->
+            <!--<version>2.2</version>-->
+            <!--<configuration>-->
+            <!--<url>http://morecraft.pl:8080/manager/text</url>-->
+            <!--<server>MoreCraftTomcat</server>-->
+            <!--<path>/settler</path>-->
+            <!--</configuration>-->
+            <!--</plugin>-->
 
         </plugins>
     </build>
