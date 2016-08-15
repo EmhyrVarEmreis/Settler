@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <configuration debug="true">
 
     <property name="PATTERN" value="%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"/>
@@ -29,8 +30,18 @@
     <!--<logger name="org.hibernate.SQL" level="TRACE" />-->
     <!--<logger name="org.hibernate.type" level="TRACE" />-->
 
-    <root level="INFO">
-        <appender-ref ref="STDOUT"/>
-        <appender-ref ref="dailyRollingFileAppender"/>
-    </root>
+    <if condition='isDefined("logging.path")'>
+        <then>
+            <root level="INFO">
+                <appender-ref ref="STDOUT"/>
+                <appender-ref ref="dailyRollingFileAppender"/>
+            </root>
+        </then>
+        <else>
+            <root level="INFO">
+                <appender-ref ref="dailyRollingFileAppender"/>
+            </root>
+        </else>
+    </if>
+
 </configuration>
