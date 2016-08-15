@@ -170,6 +170,9 @@
     <profiles>
         <profile>
             <id>settler-dev-loc</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
             <properties>
                 <settler.db.url>jdbc:mysql://localhost:3306/dev_settler?useUnicode=true&amp;characterEncoding=utf8
                 </settler.db.url>
@@ -177,10 +180,8 @@
                 <settler.db.password>Settler2015!</settler.db.password>
                 <settler.db.context>dev</settler.db.context>
             </properties>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
         </profile>
+
         <profile>
             <id>prod</id>
             <build>
@@ -251,17 +252,41 @@
                             </execution>
                         </executions>
                     </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <id>war</id>
+            <build>
+                <plugins>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-war-plugin</artifactId>
                         <configuration>
                             <warSourceDirectory>target/classes/static/</warSourceDirectory>
-                            <packagingExcludes>WEB-INF/lib/tomcat-*.jar</packagingExcludes>
+                            <packagingExcludes>WEB-INF/lib/tomcat**</packagingExcludes>
                         </configuration>
                     </plugin>
                 </plugins>
             </build>
         </profile>
+
+        <profile>
+            <id>single</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.springframework.boot</groupId>
+                        <artifactId>spring-boot-maven-plugin</artifactId>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
         <profile>
             <id>exclude-application-yml</id>
             <build>
@@ -279,15 +304,11 @@
 
     <build>
         <plugins>
+
             <plugin>
                 <groupId>com.github.eirslett</groupId>
                 <artifactId>frontend-maven-plugin</artifactId>
                 <version>1.0</version>
-            </plugin>
-
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
 
             <plugin>
@@ -385,11 +406,6 @@
                         <include>**/*Spec.java</include>
                     </includes>
                 </configuration>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
             </plugin>
         </plugins>
     </build>
