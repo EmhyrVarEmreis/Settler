@@ -33,12 +33,12 @@
     <if condition='isDefined("logging.path")'>
         <then>
             <root level="INFO">
-                <appender-ref ref="STDOUT"/>
                 <appender-ref ref="dailyRollingFileAppender"/>
             </root>
         </then>
         <else>
             <root level="INFO">
+                <appender-ref ref="STDOUT"/>
                 <appender-ref ref="dailyRollingFileAppender"/>
             </root>
         </else>
