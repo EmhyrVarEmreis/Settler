@@ -1,0 +1,37 @@
+<div class="panel-main" ng-controller="ImportCtrl">
+    <div class="page-header">
+        <h1>Importuj
+            <small>Settler</small>
+        </h1>
+    </div>
+    <div class="row panel-last-row">
+        <div class="col-sm-12" ng-show="file">
+            <div class="progress" ng-click="file = false" role="button">
+                <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
+                     ng-style="{'width': file.progress + '%'}">
+                    {{file.progress}}%
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <input type="button" class="btn btn-primary btn-lg" style="width:100%; margin-bottom: 16px"
+                   ngf-select="import('transactions', $file)"
+                   ngf-max-size="16MB"
+                   value="Transakcje (CSV)"/>
+        </div>
+        <div class="col-sm-4">
+            <input type="button" class="btn btn-primary btn-lg" style="width:100%; margin-bottom: 16px"
+                   ngf-select="import('settlements', $file)"
+                   ngf-max-size="16MB"
+                   value="Rozliczenia (CSV)"
+                   disabled="disabled"/>
+        </div>
+        <div class="col-sm-4">
+            <input type="button" class="btn btn-primary btn-lg" style="width:100%; margin-bottom: 16px"
+                   ngf-select="import('users', $file)"
+                   ngf-max-size="16MB"
+                   value="Użytkowników (CSV)"
+                   disabled="disabled"/>
+        </div>
+    </div>
+</div>

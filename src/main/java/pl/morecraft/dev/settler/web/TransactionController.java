@@ -19,7 +19,8 @@ public class TransactionController {
 
     @RequestMapping(
             value = "/details",
-            method = RequestMethod.GET
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE
     )
     public ResponseEntity<TransactionDTO> get(@RequestParam(value = "id", required = true) Long userId) {
         return transactionService.get(userId);
@@ -34,7 +35,11 @@ public class TransactionController {
         return transactionService.save(transactionDTO);
     }
 
-    @RequestMapping("/list")
+    @RequestMapping(
+            value = "/list",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
     public ListPage<TransactionListDTO> getTransactions(@RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
                                                         @RequestParam(value = "limit", required = false, defaultValue = "10") Integer limit,
                                                         @RequestParam(value = "sortBy", required = false, defaultValue = "-reference") String sort,
