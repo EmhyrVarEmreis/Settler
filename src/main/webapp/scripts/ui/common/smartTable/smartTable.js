@@ -29,31 +29,27 @@
                     scope.data = {};
 
                     scope.tableParams = new NgTableParams({
+                        sorting: scope.sorting,
                         page:    scope.page,
-                        count:   scope.count,
-                        sorting: scope.sorting
+                        count:   scope.count
                     }, {
-                        counts:  [],
-                        total:   0,
                         getData: function(params) {
                             if (!scope.factory) {
                                 params.total(0);
-                                return [];
+                                return null;
                             }
-                            scope.factory.get(
-                                {
-                                    "page":    params.page(),
-                                    "limit":   params.count(),
-                                    "sortBy":  params.orderBy(),
-                                    "filters": scope.removeEmptyFilters(scope.filters)
-                                }, function(data) {
-                                    params.total(data.total);
-                                    scope.retrieveData(data.content);
-                                    return data.content;
-                                });
+                            return scope.factory.get({
+                                page:    params.page(),
+                                limit:   params.count(),
+                                sortBy:  params.orderBy(),
+                                filters: scope.removeEmptyFilters(scope.filters)
+                            }).$promise.then(function(data) {
+                                params.total(data.total);
+                                scope.retrieveData(data.content);
+                                return data.content;
+                            });
                         }
                     });
-
                     scope.retrieveData = function(data) {
                         scope.data = {};
                         for (var entry in data) {

@@ -26,4 +26,5 @@ public class XAuthConfiguration implements EnvironmentAware {
         int validityInSeconds = propertyResolver.getProperty("tokenValidityInSeconds", Integer.class, 3600);
         return new TokenProvider(secret, validityInSeconds);
     }
+
 }

@@ -148,19 +148,5 @@ public class Transaction extends PrivilegeObject {
         this.categories = categories;
     }
 
-    @Override
-    public String toString() {
-        return "Transaction{" +
-                "reference='" + reference + '\'' +
-                ", type=" + type +
-                ", creator=" + creator +
-                ", created=" + created +
-                ", evaluated=" + evaluated +
-                ", value=" + value +
-                ", owners=" + owners +
-                ", contractors=" + contractors +
-                '}';
-    }
-
 }
 

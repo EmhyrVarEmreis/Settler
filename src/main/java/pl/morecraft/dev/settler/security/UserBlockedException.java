@@ -12,4 +12,5 @@ public class UserBlockedException extends AuthenticationException {
     public UserBlockedException(String message, Throwable t) {
         super(message, t);
     }
+
 }

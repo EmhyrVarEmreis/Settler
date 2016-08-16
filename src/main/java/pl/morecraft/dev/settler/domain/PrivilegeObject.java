@@ -41,4 +41,5 @@ public class PrivilegeObject implements Serializable {
     public int hashCode() {
         return id.hashCode();
     }
+
 }

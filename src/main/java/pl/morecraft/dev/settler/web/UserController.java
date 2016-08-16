@@ -37,7 +37,7 @@ public class UserController {
     @RequestMapping("/list")
     public ListPage<UserListDTO> getUsers(@RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
                                           @RequestParam(value = "limit", required = false, defaultValue = "25") Integer limit,
-                                          @RequestParam(value = "sortBy", required = false, defaultValue = "-username") String sortBy,
+                                          @RequestParam(value = "sortBy", required = false, defaultValue = "-login") String sortBy,
                                           @RequestParam(value = "filters", required = false, defaultValue = "") String filters) {
         return userService.get(page, limit, sortBy, filters);
     }

@@ -24,4 +24,5 @@ public class XAuthTokenConfigurer extends SecurityConfigurerAdapter<DefaultSecur
         XAuthTokenFilter customFilter = new XAuthTokenFilter(detailsService, tokenProvider);
         http.addFilterBefore(customFilter, UsernamePasswordAuthenticationFilter.class);
     }
+
 }

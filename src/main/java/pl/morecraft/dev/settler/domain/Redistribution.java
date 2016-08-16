@@ -73,14 +73,24 @@ public class Redistribution {
     @SuppressWarnings("RedundantIfStatement")
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         Redistribution that = (Redistribution) o;
 
-        if (!type.equals(that.type)) return false;
-        if (!parent.equals(that.parent)) return false;
-        if (!user.equals(that.user)) return false;
+        if (!type.equals(that.type)) {
+            return false;
+        }
+        if (!parent.equals(that.parent)) {
+            return false;
+        }
+        if (!user.equals(that.user)) {
+            return false;
+        }
 
         return true;
     }
@@ -111,14 +121,24 @@ public class Redistribution {
         @SuppressWarnings("RedundantIfStatement")
         @Override
         public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
+            if (this == o) {
+                return true;
+            }
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
 
             RedistributionPK that = (RedistributionPK) o;
 
-            if (!type.equals(that.type)) return false;
-            if (!parent.equals(that.parent)) return false;
-            if (!user.equals(that.user)) return false;
+            if (!type.equals(that.type)) {
+                return false;
+            }
+            if (!parent.equals(that.parent)) {
+                return false;
+            }
+            if (!user.equals(that.user)) {
+                return false;
+            }
 
             return true;
         }

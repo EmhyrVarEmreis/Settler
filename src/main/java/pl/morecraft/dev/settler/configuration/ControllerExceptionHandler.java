@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
 public class ControllerExceptionHandler {
+
     private static Logger log = LoggerFactory.getLogger(ControllerExceptionHandler.class);
 
     @ExceptionHandler(Exception.class)
@@ -14,4 +15,5 @@ public class ControllerExceptionHandler {
         log.error("Unhandled exception", e);
         throw e;
     }
+
 }
