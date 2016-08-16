@@ -7,7 +7,7 @@
             url:     "/recoverPassword/:userId/:token",
             views:   {
                 'content@': {
-                    templateUrl: 'scripts/ui/recoverPassword/recoverPassword.html',
+                    templateUrl: 'scripts/ui/content/recoverPassword/recoverPassword.html',
                     controller:  'RecoverPasswordCtrl'
                 }
             },

@@ -7,7 +7,7 @@
             url:     "/import",
             views:   {
                 'content@': {
-                    templateUrl: 'scripts/ui/import/import.html'
+                    templateUrl: 'scripts/ui/content/import/import.html'
                 }
             },
             resolve: {}

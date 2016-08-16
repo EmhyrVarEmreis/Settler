@@ -7,7 +7,7 @@
             url:    '/error',
             views:  {
                 'content@': {
-                    templateUrl: 'scripts/ui/error/error.html'
+                    templateUrl: 'scripts/ui/common/error/error.html'
                 }
             }
         }).state('accessdenied', {
@@ -15,7 +15,7 @@
             url:    '/accessdenied',
             views:  {
                 'content@': {
-                    templateUrl: 'scripts/ui/error/accessdenied.html'
+                    templateUrl: 'scripts/ui/common/error/accessDenied.html'
                 }
             }
         });

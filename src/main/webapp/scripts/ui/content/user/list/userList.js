@@ -2,18 +2,18 @@
     'use strict';
 
     angular.module('settlerApplication').config(function($stateProvider) {
-        $stateProvider.state("transactionList", {
+        $stateProvider.state("userList", {
             parent:  'restrictedSite',
-            url:     "/transaction/list",
+            url:     "/user/list",
             views:   {
                 'content@': {
-                    templateUrl: 'scripts/ui/list-entity/list-entity.html',
+                    templateUrl: 'scripts/ui/common/entityList/entityList.html',
                     controller:  'entityGenericListCtrl'
                 }
             },
             resolve: {},
             data:    {
-                entity: 'transaction'
+                entity: 'user'
             }
         });
     });

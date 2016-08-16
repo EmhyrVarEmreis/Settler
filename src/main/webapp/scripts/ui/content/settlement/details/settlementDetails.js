@@ -2,12 +2,13 @@
     'use strict';
 
     angular.module('settlerApplication').config(function ($stateProvider) {
-        $stateProvider.state("panel", {
+        $stateProvider.state("settlementDetails", {
             parent:  'restrictedSite',
-            url:     "/panel",
+            url:     "/settlement/details/:state",
             views:   {
                 'content@': {
-                    templateUrl: 'scripts/ui/panel/panel.html'
+                    templateUrl: 'scripts/ui/content/settlement/details/settlementDetails.html',
+                    controller:  'SettlementDetailsCtrl'
                 }
             },
             resolve: {}

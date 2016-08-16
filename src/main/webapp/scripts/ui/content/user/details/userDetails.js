@@ -7,7 +7,7 @@
             url:     "/user/details/:state",
             views:   {
                 'content@': {
-                    templateUrl: 'scripts/ui/user/details/userDetails.html',
+                    templateUrl: 'scripts/ui/content/user/details/userDetails.html',
                     controller:  'UserDetailsCtrl'
                 }
             },

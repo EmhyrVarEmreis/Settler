@@ -111,7 +111,7 @@ body {
 .login-page {
     padding-bottom: 25%;
     padding-top: 70px;
-    background: url("/images/brand.png") no-repeat center top;
+    background: url("images/brand.png") no-repeat center top;
     background-size: auto 60px;
 }
 

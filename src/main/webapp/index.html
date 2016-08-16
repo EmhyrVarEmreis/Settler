@@ -9,6 +9,9 @@
     <meta http-equiv="pragma" content="no-cache"/>
 
     <title>Settler</title>
+
+    <link href="/images/favicon.ico" rel="icon" type="image/x-icon"/>
+
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
     <!-- build:css styles/vendor.css -->
@@ -25,10 +28,8 @@
 </head>
 <body ng-app="settlerApplication">
 
-<!--<div class="container">-->
-<div ui-view="navbar"></div>
+<div ui-view="navBar"></div>
 <div ui-view="content"></div>
-<!--</div>-->
 
 <!-- build:js scripts/vendor.js -->
 <!-- bower:js -->
@@ -42,5 +43,6 @@
 <!-- inject:templates -->
 <!-- endinject -->
 <!-- endbuild -->
+
 </body>
 </html>
