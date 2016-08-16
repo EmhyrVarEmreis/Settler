@@ -2,22 +2,22 @@
         class="btn btn-success btn-colPicker"
         ng-click="applyFilters()">
     <span class="glyphicon glyphicon-search glph-def-em" aria-hidden="true"></span>
-    Zastosuj filtry
+    <span class="hidden-xs hidden-sm">Zastosuj filtry</span>
 </button>
 <button type="button"
         class="btn btn-colPicker"
         uib-popover="Pokazuje/ukrywa wiersz z filtrami"
-        popover-trigger="mouseenter"
+        popover-trigger="'mouseenter'"
         popover-placement="bottom"
         ng-class="{'btn-warning' : showFilters, 'btn-success' : !showFilters}"
         ng-click="toggleFilters()">
     <span class="glyphicon glyphicon-filter glph-def-em" aria-hidden="true"></span>
-    Panel filtrów
+    <span class="hidden-xs hidden-sm">Panel filtrów</span>
 </button>
 <button type="button"
         class="btn btn-success btn-colPicker"
         ng-class="{'btn-warning' : showVisibility, 'btn-success' : !showVisibility}"
         ng-click="toggleVisibility()">
     <span class="glyphicon glyphicon-eye-open glph-def-em" aria-hidden="true"></span>
-    Widoczność kolumn
+    <span class="hidden-xs hidden-sm">Widoczność kolumn</span>
 </button>

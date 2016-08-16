@@ -2,7 +2,7 @@
     $('.custom-datepicker').datetimepicker({
         format: 'YYYY-MM-DD HH:mm:ss',
         locale: 'pl-PL'
-    }).on('changeDate', function (e) {
+    }).on('changeDate', function(e) {
         ngModelCtrl.$setViewValue(e.date);
         scope.$apply();
     });
@@ -19,7 +19,8 @@
                         class="btn btn-primary pull-right"
                         style="margin-left: 2px; margin-right: 2px;"
                         ng-click="save()">
-                    Zapisz
+                    <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
+                    <span class="hidden-xs hidden-sm">Zapisz</span>
                 </button>
             </h1>
         </div>
@@ -95,6 +96,29 @@
                     </div>
                 </div>
             </div>
+        </div>
+
+
+        <div class="panel panel-default">
+
+            <div class="panel-heading">
+                Dodatkowe informacje
+            </div>
+
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <label>Opis</label>
+
+                        <input class="form-control input-sm"
+                               type="text"
+                               name="description"
+                               ng-maxlength="128"
+                               ng-model="data.description">
+                    </div>
+                </div>
+            </div>
+
         </div>
 
         <div class="panel panel-default">

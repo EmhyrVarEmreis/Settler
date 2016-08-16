@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="1.0-path-001" author="settler">
+
+        <preConditions>
+            <tableExists tableName="mod_transaction"/>
+        </preConditions>
+
+        <addColumn tableName="mod_transaction">
+            <column name="description" type="nvarchar(128)"/>
+        </addColumn>
+
+        <dropColumn tableName="mod_transaction" columnName="confirmed"/>
+
+        <rollback>
+            <dropColumn tableName="mod_transaction" columnName="description"/>
+        </rollback>
+
+    </changeSet>
+
+
+</databaseChangeLog>

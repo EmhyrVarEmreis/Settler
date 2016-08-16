@@ -1,17 +1,21 @@
-(function () {
+(function() {
     'use strict';
 
-    angular.module('settlerApplication').config(function ($stateProvider) {
+    angular.module('settlerApplication').config(function($stateProvider) {
         $stateProvider.state("settlementList", {
             parent:  'restrictedSite',
             url:     "/settlement/list",
             views:   {
                 'content@': {
-                    templateUrl: 'scripts/ui/settlement/list/settlementList.html',
-                    controller:  'SettlementListCtrl'
+                    templateUrl: 'scripts/ui/list-entity/list-entity.html',
+                    controller:  'entityGenericListCtrl'
                 }
             },
-            resolve: {}
+            resolve: {},
+            data:    {
+                entity: 'settlement'
+            }
         });
     });
+
 })();

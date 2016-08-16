@@ -21,6 +21,7 @@
         <settler.db.context>prod</settler.db.context>
         <start-class>pl.morecraft.dev.settler.Application</start-class>
         <spring.version>4.3.2.RELEASE</spring.version>
+        <settler.db.contexts>dev</settler.db.contexts>
     </properties>
 
     <dependencies>
@@ -194,6 +195,9 @@
 
         <profile>
             <id>prod</id>
+            <properties>
+                <settler.db.contexts>prod</settler.db.contexts>
+            </properties>
             <build>
                 <plugins>
                     <plugin>

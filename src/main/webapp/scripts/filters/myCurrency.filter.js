@@ -6,4 +6,5 @@
             return input + " " + currency;
         };
     });
+
 })();

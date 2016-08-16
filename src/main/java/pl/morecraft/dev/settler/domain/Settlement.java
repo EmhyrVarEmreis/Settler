@@ -23,6 +23,10 @@ public class Settlement extends PrivilegeObject {
     private User creator;
 
     @ManyToOne(optional = false)
+    @JoinColumn(name = "owner")
+    private User owner;
+
+    @ManyToOne(optional = false)
     @JoinColumn(name = "contractor")
     private User contractor;
 
@@ -74,6 +78,14 @@ public class Settlement extends PrivilegeObject {
 
     public void setCreator(User creator) {
         this.creator = creator;
+    }
+
+    public User getOwner() {
+        return owner;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
     }
 
     public User getContractor() {

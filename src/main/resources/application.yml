@@ -26,3 +26,4 @@ quartz:
 liquibase:
   change-log: classpath:/db/changelog/db.changelog-master.xml
   enabled: true
+  contexts: @settler.db.contexts@

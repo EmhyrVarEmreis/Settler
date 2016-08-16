@@ -25,10 +25,12 @@ public class Transaction extends PrivilegeObject {
 
     @Column(nullable = false, insertable = true, updatable = false)
     private LocalDateTime created;
-    private LocalDateTime confirmed;
     private LocalDateTime evaluated;
 
     private Double value;
+
+    @Column(length = 128)
+    private String description;
 
     @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, orphanRemoval = true)
     @Where(clause = "type='O'")
@@ -90,14 +92,6 @@ public class Transaction extends PrivilegeObject {
         this.created = created;
     }
 
-    public LocalDateTime getConfirmed() {
-        return confirmed;
-    }
-
-    public void setConfirmed(LocalDateTime confirmed) {
-        this.confirmed = confirmed;
-    }
-
     public LocalDateTime getEvaluated() {
         return evaluated;
     }
@@ -122,6 +116,14 @@ public class Transaction extends PrivilegeObject {
         this.owners = owners;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public List<Redistribution> getContractors() {
         return contractors;
     }
@@ -144,6 +146,20 @@ public class Transaction extends PrivilegeObject {
 
     public void setCategories(List<Category> categories) {
         this.categories = categories;
+    }
+
+    @Override
+    public String toString() {
+        return "Transaction{" +
+                "reference='" + reference + '\'' +
+                ", type=" + type +
+                ", creator=" + creator +
+                ", created=" + created +
+                ", evaluated=" + evaluated +
+                ", value=" + value +
+                ", owners=" + owners +
+                ", contractors=" + contractors +
+                '}';
     }
 
 }

@@ -224,6 +224,12 @@
                              references="prv_user(id)"
                              foreignKeyName="FK_mod_settlement_creator_prv_user_id"/>
             </column>
+            <column name="owner"
+                    type="bigint">
+                <constraints primaryKey="true"
+                             references="prv_user(id)"
+                             foreignKeyName="FK_mod_settlement_owner_prv_user_id"/>
+            </column>
             <column name="contractor" type="bigint">
                 <constraints primaryKey="true"
                              references="prv_user(id)"

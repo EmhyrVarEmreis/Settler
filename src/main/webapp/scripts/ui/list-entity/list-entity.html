@@ -1,7 +1,9 @@
 <div class="panel-main">
     <div class="page-header">
         <div class="pull-left">
-            <h1>Lista transakcji</h1>
+            <h1>{{title}}
+                <small>Settler</small>
+            </h1>
         </div>
         <div class="pull-right">
             <h1 class="text-right">
@@ -19,19 +21,19 @@
     <div class="row panel-body">
 
         <smart-table name="transactionList"
-                     page="1"
-                     count="25"
-                     sorting="{id:'asc'}"
+                     page="page"
+                     count="count"
+                     sorting="defaultSorting"
                      columns="columns"
-                     factory="transactionListFactory"
-                     default-url="#/transaction/details/:id"
+                     factory="listFactory"
+                     default-url="defaultUrl"
                      show-visibility="showVisibilityView"
                      toggle-visibility="toggleVisibility"
                      show-filters="showFilterView"
                      apply-filters="applyFilters"
                      clear-filters="clearFilters"
                      toggle-filters="toggleFilters"
-                     empty-table-string="Brak wyników spełniających podane kryteria"></smart-table>
+                     empty-table-string="emptyString"></smart-table>
 
     </div>
 

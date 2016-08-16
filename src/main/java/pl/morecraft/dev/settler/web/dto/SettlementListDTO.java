@@ -14,6 +14,7 @@ public class SettlementListDTO {
     private String reference;
     private String type;
     private String creator;
+    private String owner;
     private String contractor;
 
     @JsonSerialize(using = JsonDoubleSerializer.class)
@@ -32,9 +33,7 @@ public class SettlementListDTO {
     @JsonDeserialize(using = JsonJodaLocalDateDeserializer.class)
     private LocalDate endDate;
 
-    @JsonSerialize(using = JsonJodaLocalDateSerializer.class)
-    @JsonDeserialize(using = JsonJodaLocalDateDeserializer.class)
-    private LocalDate evaluated;
+    private Boolean evaluated;
 
     private Integer transactions;
     private Integer comments;
@@ -73,6 +72,14 @@ public class SettlementListDTO {
 
     public void setCreator(String creator) {
         this.creator = creator;
+    }
+
+    public String getOwner() {
+        return owner;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
     }
 
     public String getContractor() {
@@ -115,11 +122,11 @@ public class SettlementListDTO {
         this.endDate = endDate;
     }
 
-    public LocalDate getEvaluated() {
+    public Boolean getEvaluated() {
         return evaluated;
     }
 
-    public void setEvaluated(LocalDate evaluated) {
+    public void setEvaluated(Boolean evaluated) {
         this.evaluated = evaluated;
     }
 

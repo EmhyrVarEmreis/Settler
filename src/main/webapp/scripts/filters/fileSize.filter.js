@@ -10,4 +10,5 @@
             return (bytes / Math.pow(1024, Math.floor(number))).toFixed(precision) + ' ' + units[number];
         };
     });
+
 })();

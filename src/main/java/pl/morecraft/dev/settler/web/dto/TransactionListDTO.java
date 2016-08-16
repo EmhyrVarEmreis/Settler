@@ -23,17 +23,13 @@ public class TransactionListDTO {
     @JsonDeserialize(using = JsonDoubleDeserializer.class)
     private Double value;
 
+    private String description;
+
     @JsonSerialize(using = JsonJodaLocalDateSerializer.class)
     @JsonDeserialize(using = JsonJodaLocalDateDeserializer.class)
     private LocalDate created;
 
-    @JsonSerialize(using = JsonJodaLocalDateSerializer.class)
-    @JsonDeserialize(using = JsonJodaLocalDateDeserializer.class)
-    private LocalDate confirmed;
-
-    @JsonSerialize(using = JsonJodaLocalDateSerializer.class)
-    @JsonDeserialize(using = JsonJodaLocalDateDeserializer.class)
-    private LocalDate evaluated;
+    private Boolean evaluated;
 
     private Integer comments;
 
@@ -96,6 +92,14 @@ public class TransactionListDTO {
         this.value = value;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public LocalDate getCreated() {
         return created;
     }
@@ -104,19 +108,11 @@ public class TransactionListDTO {
         this.created = created;
     }
 
-    public LocalDate getConfirmed() {
-        return confirmed;
-    }
-
-    public void setConfirmed(LocalDate confirmed) {
-        this.confirmed = confirmed;
-    }
-
-    public LocalDate getEvaluated() {
+    public Boolean getEvaluated() {
         return evaluated;
     }
 
-    public void setEvaluated(LocalDate evaluated) {
+    public void setEvaluated(Boolean evaluated) {
         this.evaluated = evaluated;
     }
 
