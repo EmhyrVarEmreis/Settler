@@ -38,7 +38,7 @@
                                      INNER JOIN prv_role pr
                                          ON pr.id = pur.prv_role
                                      INNER JOIN prv_privilege pp
-                                         ON pur.prv_role = pr.id
+                                         ON pp.prv_owner = pur.prv_role
                                  WHERE pur.prv_user = owner)
                             AS sub;
                 END;
