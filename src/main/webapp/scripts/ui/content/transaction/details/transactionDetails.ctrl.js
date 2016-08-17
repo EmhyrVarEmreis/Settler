@@ -1,11 +1,11 @@
-(function () {
+(function() {
     'use strict';
 
-    angular.module('settlerApplication').controller('TransactionDetailsCtrl', function ($scope,
-                                                                                        NgTableParams,
-                                                                                        transactionDetailsFactory,
-                                                                                        $stateParams,
-                                                                                        modalService) {
+    angular.module('settlerApplication').controller('TransactionDetailsCtrl', function($scope,
+                                                                                       NgTableParams,
+                                                                                       transactionDetailsFactory,
+                                                                                       $stateParams,
+                                                                                       modalService) {
 
         $scope.data = {};
         if ($stateParams.state !== 'new') {
@@ -13,23 +13,27 @@
                 {
                     id: $stateParams.state
                 },
-                function (data) {
+                function(data) {
                     $scope.data = data;
-                }, function (err) {
+                }, function(err) {
                     modalService.createErrorDialogFromResponse(err);
                 }
             );
         }
 
-        $scope.save = function () {
+        $scope.save = function() {
             transactionDetailsFactory.save(
                 $scope.data,
-                function (data) {
+                function(data) {
                     $scope.data = data;
-                }, function (err) {
+                }, function(err) {
                     modalService.createErrorDialogFromResponse(err);
                 }
             );
+        };
+
+        $scope.getValueString = function(t, r) {
+            return (parseFloat(r.value) / parseFloat(t.value) * 100).toFixed(2);
         };
 
     });

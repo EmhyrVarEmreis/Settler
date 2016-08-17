@@ -143,7 +143,7 @@
         <!-- CREATE REDISTRIBUTIONS -->
         <sql>
             INSERT INTO dev_settler.mod_redistribution (
-                type, parent, user, percentage
+            type, parent, user, value
             ) VALUES (
                 'O',
                 (SELECT id
@@ -152,10 +152,10 @@
                 (SELECT id
                  FROM dev_settler.prv_user
                  WHERE login = 'admin'),
-                100
+            12.5
             );
             INSERT INTO dev_settler.mod_redistribution (
-                type, parent, user, percentage
+            type, parent, user, value
             ) VALUES (
                 'C',
                 (SELECT id
@@ -164,10 +164,10 @@
                 (SELECT id
                  FROM dev_settler.prv_user
                  WHERE login = 'adam.trocki'),
-                75
+            2.5
             );
             INSERT INTO dev_settler.mod_redistribution (
-                type, parent, user, percentage
+            type, parent, user, value
             ) VALUES (
                 'C',
                 (SELECT id
@@ -176,12 +176,12 @@
                 (SELECT id
                  FROM dev_settler.prv_user
                  WHERE login = 'jan.nowak'),
-                25
+            10
             );
 
 
             INSERT INTO dev_settler.mod_redistribution (
-                type, parent, user, percentage
+            type, parent, user, value
             ) VALUES (
                 'O',
                 (SELECT id
@@ -190,10 +190,10 @@
                 (SELECT id
                  FROM dev_settler.prv_user
                  WHERE login = 'user'),
-                40
+            5
             );
             INSERT INTO dev_settler.mod_redistribution (
-                type, parent, user, percentage
+            type, parent, user, value
             ) VALUES (
                 'O',
                 (SELECT id
@@ -202,10 +202,10 @@
                 (SELECT id
                  FROM dev_settler.prv_user
                  WHERE login = 'admin'),
-                60
+            5.5
             );
             INSERT INTO dev_settler.mod_redistribution (
-                type, parent, user, percentage
+            type, parent, user, value
             ) VALUES (
                 'C',
                 (SELECT id
@@ -214,10 +214,10 @@
                 (SELECT id
                  FROM dev_settler.prv_user
                  WHERE login = 'adam.trocki'),
-                30
+            3
             );
             INSERT INTO dev_settler.mod_redistribution (
-                type, parent, user, percentage
+            type, parent, user, value
             ) VALUES (
                 'C',
                 (SELECT id
@@ -226,10 +226,10 @@
                 (SELECT id
                  FROM dev_settler.prv_user
                  WHERE login = 'jan.nowak'),
-                20
+            3
             );
             INSERT INTO dev_settler.mod_redistribution (
-                type, parent, user, percentage
+            type, parent, user, value
             ) VALUES (
                 'C',
                 (SELECT id
@@ -238,7 +238,7 @@
                 (SELECT id
                  FROM dev_settler.prv_user
                  WHERE login = 'jan.kos'),
-                50
+            4.5
             );
         </sql>
 

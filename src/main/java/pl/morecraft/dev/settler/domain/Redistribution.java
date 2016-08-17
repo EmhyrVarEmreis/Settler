@@ -25,17 +25,17 @@ public class Redistribution {
     @JoinColumn(name = "user")
     private User user;
 
-    private Double percentage;
+    private Double value;
 
     public Redistribution() {
 
     }
 
-    public Redistribution(RedistributionType type, PrivilegeObject parent, User user, Double percentage) {
+    public Redistribution(RedistributionType type, PrivilegeObject parent, User user, Double value) {
         this.type = type;
         this.parent = parent;
         this.user = user;
-        this.percentage = percentage;
+        this.value = value;
     }
 
     public RedistributionType getType() {
@@ -62,12 +62,12 @@ public class Redistribution {
         this.user = user;
     }
 
-    public Double getPercentage() {
-        return percentage;
+    public Double getValue() {
+        return value;
     }
 
-    public void setPercentage(Double percentage) {
-        this.percentage = percentage;
+    public void setValue(Double value) {
+        this.value = value;
     }
 
     @SuppressWarnings("RedundantIfStatement")

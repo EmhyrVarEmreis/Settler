@@ -151,8 +151,8 @@
                              references="prv_user(id)"
                              foreignKeyName="FK_mod_redistribution_user_prv_user_id"/>
             </column>
-            <column name="percentage"
-                    type="decimal(6,3)"
+            <column name="value"
+                    type="decimal(6,2)"
                     defaultValue="0">
                 <constraints nullable="false"/>
             </column>

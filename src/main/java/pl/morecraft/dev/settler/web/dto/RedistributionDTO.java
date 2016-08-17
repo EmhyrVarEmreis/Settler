@@ -18,7 +18,7 @@ public class RedistributionDTO {
 
     @JsonSerialize(using = JsonDoubleSerializer.class)
     @JsonDeserialize(using = JsonDoubleDeserializer.class)
-    private Double percentage;
+    private Double value;
 
     public RedistributionDTO() {
 
@@ -40,12 +40,12 @@ public class RedistributionDTO {
         this.user = user;
     }
 
-    public Double getPercentage() {
-        return percentage;
+    public Double getValue() {
+        return value;
     }
 
-    public void setPercentage(Double percentage) {
-        this.percentage = percentage;
+    public void setValue(Double value) {
+        this.value = value;
     }
 
 }

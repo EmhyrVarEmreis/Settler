@@ -11,6 +11,6 @@ public class RedistributionPDTO {
 
     @JsonSerialize(using = JsonDoubleSerializer.class)
     @JsonDeserialize(using = JsonDoubleDeserializer.class)
-    private Double percentage;
+    private Double value;
 
 }

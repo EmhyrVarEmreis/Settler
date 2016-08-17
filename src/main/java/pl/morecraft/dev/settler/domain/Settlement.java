@@ -33,7 +33,7 @@ public class Settlement extends PrivilegeObject {
     private Double balance;
 
     @Column(nullable = false, insertable = true, updatable = false)
-    private LocalDateTime created;
+    private LocalDateTime created = new LocalDateTime();
     private LocalDateTime startDate;
     private LocalDateTime endDate;
     private LocalDateTime evaluated;

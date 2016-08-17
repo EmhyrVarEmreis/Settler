@@ -24,7 +24,7 @@ public class Transaction extends PrivilegeObject {
     private User creator;
 
     @Column(nullable = false, insertable = true, updatable = false)
-    private LocalDateTime created;
+    private LocalDateTime created = new LocalDateTime();
     private LocalDateTime evaluated;
 
     private Double value;
