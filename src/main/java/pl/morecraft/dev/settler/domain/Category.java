@@ -19,6 +19,7 @@ public class Category implements DefaultDictionary {
     @NotNull
     @Size(min = 3, max = 3)
     @Pattern(regexp = "^[A-Z]*$")
+    @Column(unique = true, nullable = false)
     private String code;
 
     @NotNull
