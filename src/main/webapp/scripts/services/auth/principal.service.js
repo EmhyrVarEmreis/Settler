@@ -1,27 +1,27 @@
-(function () {
+(function() {
     'use strict';
 
     angular.module('settlerServices')
-        .factory('Principal', function ($q, AccountCli) {
+        .factory('Principal', function($q, AccountCli) {
             var _identity,
                 _promise,
                 _authenticated = false;
 
             return {
-                isIdentityResolved: function () {
+                isIdentityResolved: function() {
                     return angular.isDefined(_identity);
                 },
-                isAuthenticated:    function () {
+                isAuthenticated:    function() {
                     return _authenticated;
                 },
-                isInRole:           function (role) {
+                isInRole:           function(role) {
                     if (!_authenticated || !_identity.roles) {
                         return false;
                     }
 
                     return _identity.roles.indexOf(role) !== -1;
                 },
-                isInAnyRole:        function (roles) {
+                isInAnyRole:        function(roles) {
                     if (!_authenticated || !_identity.roles) {
                         return false;
                     }
@@ -34,11 +34,11 @@
 
                     return false;
                 },
-                authenticate:       function (identity) {
+                authenticate:       function(identity) {
                     _identity = identity;
                     _authenticated = identity !== null;
                 },
-                identity:           function (force) {
+                identity:           function(force) {
 
                     if (force === true) {
                         _identity = undefined;
@@ -51,14 +51,14 @@
                     _promise = deferred.promise;
 
                     AccountCli.get().$promise
-                        .then(function (account) {
+                        .then(function(account) {
                             _identity = account.data;
                             if (_identity.roles === null || _identity.roles === undefined) _identity.roles = [];
                             _identity.roles.push('authenticated');
                             _authenticated = true;
                             deferred.resolve(_identity);
                         })
-                        .catch(function () {
+                        .catch(function() {
                             _identity = null;
                             _authenticated = false;
                             deferred.resolve(_identity);
@@ -67,4 +67,5 @@
                 }
             };
         });
+
 })();

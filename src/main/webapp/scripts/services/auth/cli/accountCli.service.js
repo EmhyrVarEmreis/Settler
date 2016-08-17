@@ -1,12 +1,12 @@
-(function () {
+(function() {
     'use strict';
 
-    angular.module('settlerServices').factory('AccountCli', function ($resource) {
+    angular.module('settlerServices').factory('AccountCli', function($resource) {
         return $resource('api/account', {}, {
             'get': {
                 method:      'GET', params: {}, isArray: false,
                 interceptor: {
-                    response: function (response) {
+                    response: function(response) {
                         // expose response
                         return response;
                     }
@@ -14,4 +14,5 @@
             }
         });
     });
+
 })();

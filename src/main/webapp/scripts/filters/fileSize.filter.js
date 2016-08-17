@@ -1,8 +1,8 @@
-(function () {
+(function() {
     'use strict';
 
-    angular.module('settlerApplication').filter('fileSizeFilter', function () {
-        return function (bytes, precision) {
+    angular.module('settlerApplication').filter('fileSizeFilter', function() {
+        return function(bytes, precision) {
             if (isNaN(parseFloat(bytes)) || !isFinite(bytes)) return '-';
             if (typeof precision === 'undefined') precision = 1;
             var units = ['B', 'kB', 'MB', 'GB', 'TB', 'PB'],

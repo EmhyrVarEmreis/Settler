@@ -1,16 +1,16 @@
-(function () {
+(function() {
     'use strict';
 
-    angular.module('settlerApplication').controller('RecoverPasswordCtrl', function ($rootScope, $scope, $state, $timeout, Auth, modalService,
-                                                                                         $http, $stateParams) {
+    angular.module('settlerApplication').controller('RecoverPasswordCtrl', function($rootScope, $scope, $state, $timeout, Auth, modalService,
+                                                                                    $http, $stateParams) {
 
         $scope.error = false;
 
-        $scope.goLogin = function () {
+        $scope.goLogin = function() {
             $state.go('login');
         };
 
-        $scope.validateToken = function () {
+        $scope.validateToken = function() {
             $http({
                 method:  'POST',
                 url:     '/api/user/password/token/verify',
@@ -21,15 +21,15 @@
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
-            }).then(function (result, status) {
+            }).then(function(result, status) {
                 $scope.isTokenValid = (result.data.isValid === 'true' || result.data.isValid === true);
                 $scope.login = result.data.login;
-            }, function (error) {
+            }, function(error) {
                 $scope.error = true;
             });
         };
 
-        $scope.setPassword = function () {
+        $scope.setPassword = function() {
             if ($scope.newPassword && ($scope.isTokenValid === true || $scope.isTokenValid == "true")) {
                 $http({
                     method:  'POST',
@@ -42,7 +42,7 @@
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded'
                     }
-                }).then(function (result) {
+                }).then(function(result) {
                     if (result.data === 'true' || result.data === true) {
                         modalService.createSuccessDialog('<strong>Hasło zmienione! Zaloguj się ponownie</strong>');
                         $state.go('login');
@@ -53,7 +53,7 @@
                         modalService.createErrorDialog('<strong>Serwer nie odpowiada lub nastapił krytyczny błąd ' +
                             'wewnętrzny. Skontaktuj się z administratorem.</strong>');
                     }
-                }, function (error) {
+                }, function(error) {
                     modalService.createErrorDialog('<strong>Serwer nie odpowiada lub nastapił krytyczny błąd ' +
                         'wewnętrzny. Skontaktuj się z administratorem.</strong>');
                     $scope.recoverMode = false;
@@ -65,4 +65,5 @@
         $scope.validateToken();
 
     });
+
 })();

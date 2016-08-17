@@ -1,8 +1,8 @@
-(function () {
+(function() {
     'use strict';
 
-    angular.module('settlerApplication').filter('myCurrency', function () {
-        return function (input, currency) {
+    angular.module('settlerApplication').filter('myCurrency', function() {
+        return function(input, currency) {
             return input + " " + currency;
         };
     });

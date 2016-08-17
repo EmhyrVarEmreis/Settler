@@ -1,4 +1,4 @@
-(function () {
+(function() {
     'use strict';
 
     angular.module('settlerApplication').controller('statusDialogCtrl', function($scope, $uibModalInstance, conf) {
@@ -7,8 +7,9 @@
         $scope.modalBody = conf.modalBody;
         $scope.isOK = conf.isOK;
 
-        $scope.ok = function () {
+        $scope.ok = function() {
             $uibModalInstance.close();
         };
     });
+
 })();

@@ -1,4 +1,4 @@
-(function () {
+(function() {
     'use strict';
 
     angular.module('settlerApplication').controller('changePasswordDialogCtrl', function($scope,
@@ -21,7 +21,7 @@
         $scope.newPasswordError = '';
         $scope.newPasswordRepeatError = '';
 
-        $scope.ok = function () {
+        $scope.ok = function() {
             if ($scope.verify() === true) {
                 $http({
                     method:  'POST',
@@ -34,13 +34,13 @@
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded'
                     }
-                }).then(function (result, status) {
+                }).then(function(result, status) {
                     if (result.data === 'true' || result.data === true) {
                         $uibModal.open({
                             templateUrl: 'scripts/ui/common/dialogs/statusDialog/statusDialog.html',
                             controller:  'statusDialogCtrl',
                             resolve:     {
-                                conf: function () {
+                                conf: function() {
                                     return {
                                         modalTitle: 'Informacja',
                                         modalBody:  'Hasło zmienione.<br/>Proszę zalogować się ponownie.',
@@ -57,21 +57,21 @@
                     } else {
                         $scope.errorFunction('Błąd serwera!');
                     }
-                }, function (error) {
+                }, function(error) {
                     // err
                 });
             }
         };
 
-        $scope.errorFunction = function (errorMsg) {
+        $scope.errorFunction = function(errorMsg) {
             $scope.error = errorMsg;
         };
 
-        $scope.cancel = function () {
+        $scope.cancel = function() {
             $uibModalInstance.dismiss(false);
         };
 
-        $scope.verify = function () {
+        $scope.verify = function() {
             if ($scope.oldPassword.length === 0) {
                 $scope.oldPasswordError = 'Wprowadź stare hasło!';
                 $scope.newPasswordError = '';
@@ -92,4 +92,5 @@
         };
 
     });
+
 })();

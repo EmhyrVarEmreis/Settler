@@ -1,10 +1,10 @@
-(function () {
+(function() {
     'use strict';
 
     angular.module('settlerApplication')
-        .directive('dictionarySelector', function (dictionaryService) {
+        .directive('dictionarySelector', function(dictionaryService) {
             return {
-                scope: {
+                scope:       {
                     dictionary:    '=',
                     dictionaryKey: '@',
                     label:         '@',
@@ -17,7 +17,7 @@
                 transclude:  true,
                 restrict:    'E',
                 templateUrl: 'scripts/ui/common/dictionaries/dictionarySelector/dictionarySelector.html',
-                link:        function (scope, elm) {
+                link:        function(scope, elm) {
                     var transcluded = elm.contents().text();
                     scope.withLabel = transcluded.length > 0; // true or false
 
@@ -28,4 +28,5 @@
                 }
             };
         });
+
 })();

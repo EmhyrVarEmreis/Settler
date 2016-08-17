@@ -2,7 +2,7 @@
     $('.custom-datepicker').datetimepicker({
         format: 'YYYY-MM-DD HH:mm:ss',
         locale: 'pl-PL'
-    }).on('changeDate', function (e) {
+    }).on('changeDate', function(e) {
         ngModelCtrl.$setViewValue(e.date);
         scope.$apply();
     });

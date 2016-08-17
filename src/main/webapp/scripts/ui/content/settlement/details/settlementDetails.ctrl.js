@@ -1,18 +1,18 @@
-(function () {
+(function() {
     'use strict';
 
-    angular.module('settlerApplication').controller('SettlementDetailsCtrl', function ($scope,
-                                                                                       NgTableParams,
-                                                                                       settlementDetailsFactory,
-                                                                                       $stateParams,
-                                                                                       modalService) {
+    angular.module('settlerApplication').controller('SettlementDetailsCtrl', function($scope,
+                                                                                      NgTableParams,
+                                                                                      settlementDetailsFactory,
+                                                                                      $stateParams,
+                                                                                      modalService) {
 
         $scope.data = {};
         if ($stateParams.state !== 'new') {
             settlementDetailsFactory.get({id: $stateParams.state},
-                function (data) {
+                function(data) {
                     $scope.data = data;
-                }, function (err) {
+                }, function(err) {
                     modalService.createErrorDialogFromResponse(err);
                 }
             );

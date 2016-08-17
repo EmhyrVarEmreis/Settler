@@ -1,16 +1,18 @@
-(function () {
+(function() {
     'use strict';
 
     angular.module('settlerApplication').service('modalService', function($uibModal) {
-        this.createErrorDialogFromResponse = function (response) {
+
+        this.createErrorDialogFromResponse = function(response) {
             console.log(response);
         };
-        this.createSuccessDialog = function (body) {
+
+        this.createSuccessDialog = function(body) {
             $uibModal.open({
                 templateUrl: 'scripts/ui/common/dialogs/statusDialog/statusDialog.html',
                 controller:  'statusDialogCtrl',
                 resolve:     {
-                    conf: function () {
+                    conf: function() {
                         return {
                             modalTitle: 'Potwierdzenie',
                             modalBody:  body,
@@ -20,12 +22,13 @@
                 }
             });
         };
-        this.createErrorDialog = function (body) {
+
+        this.createErrorDialog = function(body) {
             $uibModal.open({
                 templateUrl: 'scripts/ui/common/dialogs/statusDialog/statusDialog.html',
                 controller:  'statusDialogCtrl',
                 resolve:     {
-                    conf: function () {
+                    conf: function() {
                         return {
                             modalTitle: 'Błąd',
                             modalBody:  body,
@@ -35,5 +38,7 @@
                 }
             });
         };
+
     });
+
 })();

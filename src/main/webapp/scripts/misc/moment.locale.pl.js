@@ -1,9 +1,9 @@
-;(function (global, factory) {
+;(function(global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined'
     && typeof require === 'function' ? factory(require('../moment')) :
         typeof define === 'function' && define.amd ? define(['moment'], factory) :
             factory(global.moment)
-}(this, function (moment) {
+}(this, function(moment) {
     'use strict';
 
 
@@ -33,7 +33,7 @@
     }
 
     var pl = moment.defineLocale('pl', {
-        months:         function (momentToFormat, format) {
+        months:         function(momentToFormat, format) {
             if (format === '') {
                 // Hack: if format empty we know this is used to generate
                 // RegExp by moment. Give then back both valid forms of months
@@ -62,7 +62,7 @@
             nextDay:  '[Jutro o] LT',
             nextWeek: '[W] dddd [o] LT',
             lastDay:  '[Wczoraj o] LT',
-            lastWeek: function () {
+            lastWeek: function() {
                 switch (this.day()) {
                     case 0:
                         return '[W zeszłą niedzielę o] LT';

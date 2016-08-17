@@ -50,6 +50,7 @@
                             });
                         }
                     });
+
                     scope.retrieveData = function(data) {
                         scope.data = {};
                         for (var entry in data) {
@@ -173,5 +174,5 @@
                 }
             };
         });
-})
-();
+
+})();

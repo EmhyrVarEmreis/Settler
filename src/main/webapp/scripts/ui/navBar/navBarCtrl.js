@@ -1,22 +1,23 @@
-(function () {
+(function() {
     'use strict';
 
     angular.module('settlerApplication').controller('NavBarCtrl',
-        function (Principal, Auth, $state) {
+        function(Principal, Auth, $state) {
             var ctrl = this;
 
             ctrl.permissions = {
                 admin: false
             };
 
-            Principal.identity().then(function (account) {
+            Principal.identity().then(function(account) {
                 ctrl.userData = account;
             });
 
-            ctrl.logout = function () {
+            ctrl.logout = function() {
                 Auth.logout();
                 $state.go('login');
             };
         }
     );
+
 })();

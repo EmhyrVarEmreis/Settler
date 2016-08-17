@@ -1,8 +1,8 @@
-(function () {
+(function() {
     'use strict';
 
     angular.module('settlerApplication')
-        .directive('smartTableButtons', function () {
+        .directive('smartTableButtons', function() {
             return {
                 scope:       {
                     showFilters:      '=',
@@ -15,11 +15,11 @@
                 transclude:  true,
                 restrict:    'E',
                 templateUrl: 'scripts/ui/common/smartTable/buttons/smartTableButtons.html',
-                link:        function (scope, elm) {
-
+                link:        function(scope, elm) {
 
 
                 }
             };
         });
+    
 })();

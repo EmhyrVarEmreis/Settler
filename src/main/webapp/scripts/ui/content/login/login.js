@@ -1,7 +1,7 @@
-(function () {
+(function() {
     'use strict';
 
-    angular.module('settlerApplication').config(function ($stateProvider) {
+    angular.module('settlerApplication').config(function($stateProvider) {
         $stateProvider.state("login", {
             parent:  'publicSite',
             url:     "/login",
@@ -14,4 +14,5 @@
             resolve: {}
         });
     });
+
 })();

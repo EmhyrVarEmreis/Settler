@@ -1,11 +1,11 @@
-(function () {
+(function() {
     'use strict';
 
-    angular.module('settlerApplication').controller('UserDetailsCtrl', function ($scope,
-                                                                                 NgTableParams,
-                                                                                 userDetailsFactory,
-                                                                                 $stateParams,
-                                                                                 modalService) {
+    angular.module('settlerApplication').controller('UserDetailsCtrl', function($scope,
+                                                                                NgTableParams,
+                                                                                userDetailsFactory,
+                                                                                $stateParams,
+                                                                                modalService) {
 
         $scope.data = {};
         if ($stateParams.state !== 'new') {
@@ -13,20 +13,20 @@
                 {
                     id: $stateParams.state
                 },
-                function (data) {
+                function(data) {
                     $scope.data = data;
-                }, function (err) {
+                }, function(err) {
                     modalService.createErrorDialogFromResponse(err);
                 }
             );
         }
 
-        $scope.save = function () {
+        $scope.save = function() {
             userDetailsFactory.save(
                 $scope.data,
-                function (data) {
+                function(data) {
                     $scope.data = data;
-                }, function (err) {
+                }, function(err) {
                     modalService.createErrorDialogFromResponse(err);
                 }
             );
