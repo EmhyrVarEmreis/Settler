@@ -9,16 +9,19 @@
     <changeSet id="1.0-triggers" author="settler">
 
         <sql>
-            DROP TRIGGER IF EXISTS trg_prv_object_hierarchy_insert;
-            DROP TRIGGER IF EXISTS trg_prv_object_hierarchy_delete;
-            DROP TRIGGER IF EXISTS trg_prv_object_hierarchy_update;
-            DROP TRIGGER IF EXISTS trg_prv_privilege_insert;
-            DROP TRIGGER IF EXISTS trg_prv_privilege_delete;
-            DROP TRIGGER IF EXISTS trg_prv_privilege_update;
+            DROP TRIGGER IF EXISTS dev_settler.trg_prv_object_hierarchy_insert;
+            DROP TRIGGER IF EXISTS dev_settler.trg_prv_object_hierarchy_delete;
+            DROP TRIGGER IF EXISTS dev_settler.trg_prv_object_hierarchy_update;
+            DROP TRIGGER IF EXISTS dev_settler.trg_prv_privilege_insert;
+            DROP TRIGGER IF EXISTS dev_settler.trg_prv_privilege_delete;
+            DROP TRIGGER IF EXISTS dev_settler.trg_prv_privilege_update;
+            DROP TRIGGER IF EXISTS dev_settler.trg_prv_user_role_insert;
+            DROP TRIGGER IF EXISTS dev_settler.trg_prv_user_role_delete;
+            DROP TRIGGER IF EXISTS dev_settler.trg_prv_user_role_update;
         </sql>
 
         <createProcedure>
-            CREATE TRIGGER trg_prv_object_hierarchy_insert
+            CREATE TRIGGER dev_settler.trg_prv_object_hierarchy_insert
             AFTER INSERT ON prv_object_hierarchy
             FOR EACH ROW
                 BEGIN
@@ -27,7 +30,7 @@
         </createProcedure>
 
         <createProcedure>
-            CREATE TRIGGER trg_prv_object_hierarchy_delete
+            CREATE TRIGGER dev_settler.trg_prv_object_hierarchy_delete
             AFTER DELETE ON prv_object_hierarchy
             FOR EACH ROW
                 BEGIN
@@ -36,7 +39,7 @@
         </createProcedure>
 
         <createProcedure>
-            CREATE TRIGGER trg_prv_object_hierarchy_update
+            CREATE TRIGGER dev_settler.trg_prv_object_hierarchy_update
             AFTER UPDATE ON prv_object_hierarchy
             FOR EACH ROW
                 BEGIN
@@ -46,7 +49,7 @@
         </createProcedure>
 
         <createProcedure>
-            CREATE TRIGGER trg_prv_privilege_insert
+            CREATE TRIGGER dev_settler.trg_prv_privilege_insert
             AFTER INSERT ON prv_privilege
             FOR EACH ROW
                 BEGIN
@@ -55,7 +58,7 @@
         </createProcedure>
 
         <createProcedure>
-            CREATE TRIGGER trg_prv_privilege_delete
+            CREATE TRIGGER dev_settler.trg_prv_privilege_delete
             AFTER DELETE ON prv_privilege
             FOR EACH ROW
                 BEGIN
@@ -64,7 +67,7 @@
         </createProcedure>
 
         <createProcedure>
-            CREATE TRIGGER trg_prv_privilege_update
+            CREATE TRIGGER dev_settler.trg_prv_privilege_update
             AFTER UPDATE ON prv_privilege
             FOR EACH ROW
                 BEGIN
@@ -73,13 +76,41 @@
                 END;
         </createProcedure>
 
+        <createProcedure>
+            CREATE TRIGGER dev_settler.trg_prv_user_role_insert
+            AFTER INSERT ON prv_user_role
+            FOR EACH ROW
+                BEGIN
+                    CALL proc_jtb_object_privilege_refresh_by_owner(NEW.prv_user);
+                END;
+        </createProcedure>
+
+        <createProcedure>
+            CREATE TRIGGER dev_settler.trg_prv_user_role_delete
+            AFTER DELETE ON prv_user_role
+            FOR EACH ROW
+                BEGIN
+                    CALL proc_jtb_object_privilege_refresh_by_owner(OLD.prv_user);
+                END;
+        </createProcedure>
+
+        <createProcedure>
+            CREATE TRIGGER dev_settler.trg_prv_user_role_update
+            AFTER UPDATE ON prv_user_role
+            FOR EACH ROW
+                BEGIN
+                    CALL proc_jtb_object_privilege_refresh_by_owner(OLD.prv_user);
+                    CALL proc_jtb_object_privilege_refresh_by_owner(NEW.prv_user);
+                END;
+        </createProcedure>
+
         <rollback>
-            DROP TRIGGER IF EXISTS trg_prv_object_hierarchy_insert;
-            DROP TRIGGER IF EXISTS trg_prv_object_hierarchy_delete;
-            DROP TRIGGER IF EXISTS trg_prv_object_hierarchy_update;
-            DROP TRIGGER IF EXISTS trg_prv_privilege_insert;
-            DROP TRIGGER IF EXISTS trg_prv_privilege_delete;
-            DROP TRIGGER IF EXISTS trg_prv_privilege_update;
+            DROP TRIGGER IF EXISTS dev_settler.trg_prv_object_hierarchy_insert;
+            DROP TRIGGER IF EXISTS dev_settler.trg_prv_object_hierarchy_delete;
+            DROP TRIGGER IF EXISTS dev_settler.trg_prv_object_hierarchy_update;
+            DROP TRIGGER IF EXISTS dev_settler.trg_prv_privilege_insert;
+            DROP TRIGGER IF EXISTS dev_settler.trg_prv_privilege_delete;
+            DROP TRIGGER IF EXISTS dev_settler.trg_prv_privilege_update;
         </rollback>
 
     </changeSet>

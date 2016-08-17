@@ -9,13 +9,13 @@
     <changeSet id="1.0-procedures" author="settler">
 
         <sql>
-            DROP PROCEDURE IF EXISTS proc_jtb_object_privilege_refresh_by_owner;
-            DROP PROCEDURE IF EXISTS proc_jtb_object_hierarchy_insert;
-            DROP PROCEDURE IF EXISTS proc_jtb_object_hierarchy_delete;
+            DROP PROCEDURE IF EXISTS dev_settler.proc_jtb_object_privilege_refresh_by_owner;
+            DROP PROCEDURE IF EXISTS dev_settler.proc_jtb_object_hierarchy_insert;
+            DROP PROCEDURE IF EXISTS dev_settler.proc_jtb_object_hierarchy_delete;
         </sql>
 
         <createProcedure>
-            CREATE PROCEDURE proc_jtb_object_privilege_refresh_by_owner(owner BIGINT)
+            CREATE PROCEDURE dev_settler.proc_jtb_object_privilege_refresh_by_owner(owner BIGINT)
                 BEGIN
                     DELETE FROM jtb_object_privilege
                     WHERE prv_object_from = owner;
@@ -28,26 +28,24 @@
                                      pp.prv_object,
                                      pp.operation_type
                                  FROM prv_privilege pp
-                                 WHERE EXISTS(SELECT *
-                                              FROM prv_user uu
-                                              WHERE uu.id = owner)
+                                 WHERE pp.prv_owner = owner
                                  UNION ALL
-                                 SELECT
+                                 SELECT DISTINCT
                                      pur.prv_user,
                                      pp.prv_object,
                                      pp.operation_type
-                                 FROM prv_privilege pp
-                                     INNER JOIN prv_user_role pur
-                                         ON pur.prv_role = pp.prv_owner
-                                 WHERE EXISTS(SELECT *
-                                              FROM prv_role pr
-                                              WHERE pr.id = owner))
+                                 FROM prv_user_role pur
+                                     INNER JOIN prv_role pr
+                                         ON pr.id = pur.prv_role
+                                     INNER JOIN prv_privilege pp
+                                         ON pur.prv_role = pr.id
+                                 WHERE pur.prv_user = owner)
                             AS sub;
                 END;
         </createProcedure>
 
         <createProcedure>
-            CREATE PROCEDURE proc_jtb_object_hierarchy_insert(parent BIGINT, child BIGINT)
+            CREATE PROCEDURE dev_settler.proc_jtb_object_hierarchy_insert(parent BIGINT, child BIGINT)
                 BEGIN
                     INSERT INTO jtb_object_hierarchy (
                         prv_object_from,
@@ -78,7 +76,7 @@
         </createProcedure>
 
         <createProcedure>
-            CREATE PROCEDURE proc_jtb_object_hierarchy_delete(parent BIGINT, child BIGINT)
+            CREATE PROCEDURE dev_settler.proc_jtb_object_hierarchy_delete(parent BIGINT, child BIGINT)
                 BEGIN
                     DELETE FROM jtb_object_hierarchy
                     WHERE prv_object_to IN (SELECT id
@@ -97,9 +95,9 @@
         </createProcedure>
 
         <rollback>
-            DROP PROCEDURE IF EXISTS proc_jtb_object_privilege_refresh_by_owner;
-            DROP PROCEDURE IF EXISTS proc_jtb_object_hierarchy_insert;
-            DROP PROCEDURE IF EXISTS proc_jtb_object_hierarchy_delete;
+            DROP PROCEDURE IF EXISTS dev_settler.proc_jtb_object_privilege_refresh_by_owner;
+            DROP PROCEDURE IF EXISTS dev_settler.proc_jtb_object_hierarchy_insert;
+            DROP PROCEDURE IF EXISTS dev_settler.proc_jtb_object_hierarchy_delete;
         </rollback>
 
     </changeSet>
