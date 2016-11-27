@@ -61,87 +61,90 @@ public class ImportService {
 
         User o = userRepository.findOneByLogin(splitLine(lines[0])[26]);
         User c = userRepository.findOneByLogin(splitLine(lines[0])[27]);
-        User one, two;
 
         int transactionCounter = 0;
+        int ln = 0;
 
         for (String line : lines) {
-            String[] cells = splitLine(line);
-            String name = cells[0];
-            String mark = cells[4].trim();
-
-            Double value;
-            Double sharedAValue;
-            Double sharedBValue;
-            Integer sharedA;
-            Integer sharedB;
-            LocalDateTime date;
-            Boolean normal;
-
-            Transaction transaction = new Transaction();
-            List<Redistribution> owners = new ArrayList<>();
-            List<Redistribution> contractors = new ArrayList<>();
-
+            ln++;
+            if (ln < 3) {
+                continue;
+            }
             try {
+                String[] cells = splitLine(line);
+                String name = cells[0];
+                String mark = cells[4].trim();
+
+                Double value;
+                Double sharedAValue;
+                Double sharedBValue;
+                Integer sharedA;
+                Integer sharedB;
+                LocalDateTime date;
+                Boolean normal;
+
+                Transaction transaction = new Transaction();
+                List<Redistribution> owners = new ArrayList<>();
+                List<Redistribution> contractors = new ArrayList<>();
                 value = Double.valueOf(cells[2].replaceAll("[^0-9^,-]+", "").replace(",", "."));
                 date = dateTimeFormatter.parseLocalDateTime(cells[1]);
                 sharedA = cells.length < 7 || cells[5].trim().isEmpty() ? -1 : Integer.valueOf(cells[5].trim());
                 sharedB = cells.length < 7 || cells[6].trim().isEmpty() ? -1 : Integer.valueOf(cells[6].trim());
-            } catch (Exception e) {
-                log.warn("Unable to convert: " + line, e);
-                continue;
-            }
 
-            normal = value > 0;
+                normal = value > 0;
 
-            value = Math.abs(value);
+                value = Math.abs(value);
 
-            if (mark.equalsIgnoreCase("x")) {
-                if (sharedA < 0 || sharedB < 0) {
+                if (mark.equalsIgnoreCase("x")) {
+                    if (sharedA < 0 || sharedB < 0) {
+                        sharedA = 1;
+                        sharedB = 2;
+                    }
+                } else if (mark.equalsIgnoreCase("b") || mark.equalsIgnoreCase("z")) {
                     sharedA = 1;
-                    sharedB = 2;
+                    sharedB = 1;
+                } else {
+                    continue;
                 }
-            } else if (mark.equalsIgnoreCase("b") || mark.equalsIgnoreCase("z")) {
-                sharedA = 1;
-                sharedB = 1;
-            } else {
-                continue;
+
+                sharedAValue = value;
+                value = (value / (sharedA)) * sharedB;
+                value = (double) Math.round(value * 100) / 100;
+                sharedBValue = value - sharedAValue;
+                sharedBValue = (double) Math.round(sharedBValue * 100) / 100;
+
+                if (normal) {
+                    owners.add(new Redistribution(RedistributionType.O, transaction, o, value));
+                    if (sharedBValue > 0) {
+                        contractors.add(new Redistribution(RedistributionType.C, transaction, o, sharedBValue));
+                    }
+                    contractors.add(new Redistribution(RedistributionType.C, transaction, c, sharedAValue));
+                } else {
+                    owners.add(new Redistribution(RedistributionType.O, transaction, c, value));
+                    contractors.add(new Redistribution(RedistributionType.C, transaction, o, sharedAValue));
+                    if (sharedBValue > 0) {
+                        contractors.add(new Redistribution(RedistributionType.C, transaction, c, sharedBValue));
+                    }
+                }
+
+                transaction.setOwners(owners);
+                transaction.setContractors(contractors);
+
+                date = date.withHourOfDay(12).withMinuteOfHour(0).withSecondOfMinute(0);
+
+                transaction.setCreator(Security.currentUser());
+                transaction.setType(TransactionType.NOR);
+                transaction.setDescription(name);
+                transaction.setValue(value);
+                //transaction.setCreated(new LocalDateTime());
+                transaction.setEvaluated(date);
+                transaction.setReference("T" + date.toString(dateTimeFormatterReverse) + String.format("%06d", transactionCounter));
+                transactionList.add(transaction);
+                transactionCounter++;
+            } catch (Exception e) {
+                log.warn("Unable to convert line No{}: {}", ln, line, e);
+                break;
             }
-
-            sharedAValue = value;
-            value = (value / (sharedA)) * sharedB;
-            value = (double) Math.round(value * 100) / 100;
-            sharedBValue = value - sharedAValue;
-            sharedBValue = (double) Math.round(sharedBValue * 100) / 100;
-
-            if (normal) {
-                owners.add(new Redistribution(RedistributionType.O, transaction, o, value));
-                if (sharedBValue > 0) {
-                    contractors.add(new Redistribution(RedistributionType.C, transaction, o, sharedBValue));
-                }
-                contractors.add(new Redistribution(RedistributionType.C, transaction, c, sharedAValue));
-            } else {
-                owners.add(new Redistribution(RedistributionType.O, transaction, c, value));
-                contractors.add(new Redistribution(RedistributionType.C, transaction, o, sharedAValue));
-                if (sharedBValue > 0) {
-                    contractors.add(new Redistribution(RedistributionType.C, transaction, c, sharedBValue));
-                }
-            }
-
-            transaction.setOwners(owners);
-            transaction.setContractors(contractors);
-
-            date = date.withHourOfDay(12).withMinuteOfHour(0).withSecondOfMinute(0);
-
-            transaction.setCreator(Security.currentUser());
-            transaction.setType(TransactionType.NOR);
-            transaction.setDescription(name);
-            transaction.setValue(value);
-            //transaction.setCreated(new LocalDateTime());
-            transaction.setEvaluated(date);
-            transaction.setReference("T" + date.toString(dateTimeFormatterReverse) + String.format("%06d", transactionCounter));
-            transactionList.add(transaction);
-            transactionCounter++;
         }
 
         transactionList.sort(
