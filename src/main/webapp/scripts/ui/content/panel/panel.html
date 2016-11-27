@@ -68,10 +68,10 @@
                         </div>
                         <div class="row" ng-repeat="row in charges.from">
                             <div class="col-sm-9">
-                                {{row.id}}
+                                {{row.userFrom}}
                             </div>
                             <div class="col-sm-3">
-
+                                {{row.charge | myCurrency:'PLN'}}
                             </div>
                         </div>
                     </div>
