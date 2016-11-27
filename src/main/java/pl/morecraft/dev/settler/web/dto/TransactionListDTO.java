@@ -27,9 +27,7 @@ public class TransactionListDTO {
 
     @JsonSerialize(using = JsonJodaLocalDateSerializer.class)
     @JsonDeserialize(using = JsonJodaLocalDateDeserializer.class)
-    private LocalDate created;
-
-    private Boolean evaluated;
+    private LocalDate evaluated;
 
     private Integer comments;
 
@@ -100,19 +98,11 @@ public class TransactionListDTO {
         this.description = description;
     }
 
-    public LocalDate getCreated() {
-        return created;
-    }
-
-    public void setCreated(LocalDate created) {
-        this.created = created;
-    }
-
-    public Boolean getEvaluated() {
+    public LocalDate getEvaluated() {
         return evaluated;
     }
 
-    public void setEvaluated(Boolean evaluated) {
+    public void setEvaluated(LocalDate evaluated) {
         this.evaluated = evaluated;
     }
 

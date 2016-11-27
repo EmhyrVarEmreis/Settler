@@ -103,24 +103,13 @@
                 index:      object.columnsCount++
             },
             {
-                field:      'created',
+                field: 'evaluated',
                 title:      '<span class="glyphicon glyphicon-time" aria-hidden="true"></span>',
                 isVisible:  true,
                 filterable: true,
                 sortable:   true,
                 hideOn:     {},
                 type:       'date',
-                isEmpty:    "N/D",
-                index:      object.columnsCount++
-            },
-            {
-                field:      'evaluated',
-                title:      '<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>',
-                isVisible:  true,
-                filterable: true,
-                sortable:   false,
-                hideOn:     {xs: true},
-                type:       'boolean',
                 isEmpty:    "N/D",
                 index:      object.columnsCount++
             },
