@@ -19,8 +19,12 @@ import static pl.morecraft.dev.settler.domain.jtb.QJTBObjectPrivilege.jTBObjectP
 @Service
 public class PermissionManagerImplementation implements PermissionManager {
 
+    private final EntityManager entityManager;
+
     @Inject
-    private EntityManager entityManager;
+    public PermissionManagerImplementation(EntityManager entityManager) {
+        this.entityManager = entityManager;
+    }
 
     @Override
     public void authorize(PrivilegeObject source, PrivilegeObject target, OperationType operationType) {

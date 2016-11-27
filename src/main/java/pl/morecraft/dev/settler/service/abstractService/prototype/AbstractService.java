@@ -47,12 +47,15 @@ public abstract class AbstractService<
         EntityRepository extends JpaRepository<Entity, EntityID> & QueryDslPredicateExecutor<Entity>
         > {
 
+    @SuppressWarnings("SpringAutowiredFieldsWarningInspection")
     @Inject
     private EntityConvertersPack entityConvertersPack;
 
+    @SuppressWarnings("SpringAutowiredFieldsWarningInspection")
     @Inject
     private SingleFiltersPack singleFiltersPack;
 
+    @SuppressWarnings("SpringAutowiredFieldsWarningInspection")
     @Inject
     private ListPageConverter listPageConverter;
 
@@ -122,6 +125,7 @@ public abstract class AbstractService<
         } catch (NoSuchFieldException | IllegalAccessException e) {
             e.printStackTrace();
         }
+        System.out.println(entityPage);
         return listPageConverter.convert(entityPage, getListDtoClass());
     }
 
@@ -197,6 +201,18 @@ public abstract class AbstractService<
         return entityConvertersPack.getFullEntityConvertersPack();
     }
 
+    protected EntityConvertersPack getEntityConvertersPack() {
+        return entityConvertersPack;
+    }
+
+    protected SingleFiltersPack getSingleFiltersPack() {
+        return singleFiltersPack;
+    }
+
+    protected ListPageConverter getListPageConverter() {
+        return listPageConverter;
+    }
+
     protected abstract QEntity getEQ();
 
     private OrderSpecifier<?> applySorting(String sortBy, QEntity qObject) throws NoSuchFieldException, IllegalAccessException {
@@ -268,7 +284,7 @@ public abstract class AbstractService<
         if (isFilterClassExtended()) {
             return Arrays.stream(filters.getClass().getSuperclass().getDeclaredFields());
         }
-        return Collections.<Field>emptyList().stream();
+        return Stream.empty();
     }
 
     private Object extractValueFromField(Field field, Object object) {

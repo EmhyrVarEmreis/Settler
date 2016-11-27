@@ -8,6 +8,7 @@ public class UserTinyDTO {
     private String lastName;
 
     public UserTinyDTO() {
+
     }
 
     public Long getId() {

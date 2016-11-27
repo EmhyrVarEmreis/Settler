@@ -18,13 +18,23 @@ public class RoleAssignment {
     @JoinColumn(name = "prv_role")
     private Role role;
 
+    @Id
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "target")
+    private PrivilegeObject target;
+
     public RoleAssignment() {
 
     }
 
     public RoleAssignment(User user, Role role) {
+        this(user, role, null);
+    }
+
+    public RoleAssignment(User user, Role role, PrivilegeObject target) {
         this.user = user;
         this.role = role;
+        this.target = target;
     }
 
     public User getUser() {
@@ -43,7 +53,7 @@ public class RoleAssignment {
         this.role = role;
     }
 
-    @SuppressWarnings("RedundantIfStatement")
+    @SuppressWarnings("SimplifiableIfStatement")
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -53,14 +63,14 @@ public class RoleAssignment {
 
         if (!user.equals(that.user)) return false;
         if (!role.equals(that.role)) return false;
-
-        return true;
+        return target != null ? target.equals(that.target) : that.target == null;
     }
 
     @Override
     public int hashCode() {
         int result = user.hashCode();
-        result = 41 * result + role.hashCode();
+        result = 31 * result + role.hashCode();
+        result = 31 * result + (target != null ? target.hashCode() : 0);
         return result;
     }
 
@@ -68,16 +78,19 @@ public class RoleAssignment {
 
         private Long user;
         private Long role;
+        private Long target;
 
         public RoleAssignmentPK() {
+
         }
 
-        public RoleAssignmentPK(User user, Role role) {
-            this.user = user.getId();
-            this.role = role.getId();
+        public RoleAssignmentPK(Long user, Long role, Long target) {
+            this.user = user;
+            this.role = role;
+            this.target = target;
         }
 
-        @SuppressWarnings("RedundantIfStatement")
+        @SuppressWarnings("SimplifiableIfStatement")
         @Override
         public boolean equals(Object o) {
             if (this == o) return true;
@@ -87,16 +100,17 @@ public class RoleAssignment {
 
             if (!user.equals(that.user)) return false;
             if (!role.equals(that.role)) return false;
-
-            return true;
+            return target != null ? target.equals(that.target) : that.target == null;
         }
 
         @Override
         public int hashCode() {
             int result = user.hashCode();
-            result = 41 * result + role.hashCode();
+            result = 31 * result + role.hashCode();
+            result = 31 * result + (target != null ? target.hashCode() : 0);
             return result;
         }
+
     }
 
 }

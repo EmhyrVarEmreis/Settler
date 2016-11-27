@@ -8,7 +8,7 @@
 
     <changeSet id="1.0-quartz-config" author="settler">
 
-        <sqlFile path="/db/sql/quartz-tables.sql" encoding="UTF-8" splitStatements="true" stripComments="true"/>
+        <sqlFile path="db/sql/quartz-tables.sql" encoding="UTF-8" splitStatements="true" stripComments="true"/>
 
     </changeSet>
 

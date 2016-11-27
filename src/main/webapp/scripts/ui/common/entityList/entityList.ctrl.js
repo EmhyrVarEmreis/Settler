@@ -5,8 +5,7 @@
                                                                                       $stateParams,
                                                                                       NgTableParams,
                                                                                       userEntityListFactory,
-                                                                                      transactionEntityListFactory,
-                                                                                      settlementEntityListFactory) {
+                                                                                      transactionEntityListFactory) {
 
         $scope.getListFactory = function() {
             switch ($scope.$resolve.$$state.data.entity) {
@@ -14,8 +13,6 @@
                     return userEntityListFactory;
                 case 'transaction':
                     return transactionEntityListFactory;
-                case 'settlement':
-                    return settlementEntityListFactory;
                 default:
                     return {};
             }

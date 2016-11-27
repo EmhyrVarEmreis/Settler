@@ -14,8 +14,12 @@ import javax.inject.Inject;
 @RequestMapping("/api/transaction")
 public class TransactionController {
 
+    private final TransactionService transactionService;
+
     @Inject
-    private TransactionService transactionService;
+    public TransactionController(TransactionService transactionService) {
+        this.transactionService = transactionService;
+    }
 
     @RequestMapping(
             value = "/details",

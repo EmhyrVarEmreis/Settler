@@ -26,11 +26,14 @@ import java.util.function.Function;
 @Transactional
 public class TransactionService extends AbstractService<Transaction, TransactionDTO, TransactionListDTO, TransactionListFilters, QTransaction, Long, TransactionRepository> {
 
-    @Inject
-    private PermissionManager permissionManager;
+    private final PermissionManager permissionManager;
+    private final TransactionRepository repository;
 
     @Inject
-    private TransactionRepository repository;
+    public TransactionService(PermissionManager permissionManager, TransactionRepository repository) {
+        this.permissionManager = permissionManager;
+        this.repository = repository;
+    }
 
     @Override
     protected TransactionRepository getRepository() {

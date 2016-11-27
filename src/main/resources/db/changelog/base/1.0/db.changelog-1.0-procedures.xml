@@ -39,6 +39,19 @@
                                          ON pr.id = pur.prv_role
                                      INNER JOIN prv_privilege pp
                                          ON pp.prv_owner = pur.prv_role
+            WHERE pur.prv_user = owner
+            AND
+            pp.prv_object IS NOT NULL
+            UNION ALL
+            SELECT DISTINCT
+            pur.prv_user,
+            pur.target,
+            pp.operation_type
+            FROM prv_user_role pur
+            INNER JOIN prv_role pr
+            ON pr.id = pur.prv_role
+            INNER JOIN prv_privilege pp
+            ON pp.prv_owner = pur.prv_role
                                  WHERE pur.prv_user = owner)
                             AS sub;
                 END;

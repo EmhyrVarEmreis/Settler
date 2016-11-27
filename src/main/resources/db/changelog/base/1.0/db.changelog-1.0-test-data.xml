@@ -242,91 +242,8 @@
             );
         </sql>
 
-        <!-- CREATE SETTLEMENTS -->
-        <sql>
-            INSERT INTO dev_settler.prv_object VALUES ();
-            INSERT INTO dev_settler.mod_settlement (
-            id, reference, type, creator, owner, contractor, balance, created, start_date, end_date, evaluated
-            ) VALUES (
-                LAST_INSERT_ID(),
-                'SET151112121212',
-                'NOR',
-                (SELECT id
-            FROM dev_settler.prv_user
-            WHERE login = 'jan.nowak'),
-            (SELECT id
-            FROM dev_settler.prv_user
-            WHERE login = 'jan.nowak'),
-                (SELECT id
-                 FROM dev_settler.prv_user
-                 WHERE login = 'user'),
-                12.50,
-                '2015-11-12 12:12:12',
-                '2015-11-12 15:25:42',
-                '2015-11-13 09:51:45',
-                NULL
-            );
-        </sql>
-
-        <!-- LINK TRANSACTIONS TO SETTLEMENTS -->
-        <sql>
-            INSERT INTO prv_object_hierarchy (
-                prv_object_from, prv_object_to
-            ) VALUES (
-                (SELECT id
-                 FROM dev_settler.mod_settlement
-                 WHERE reference = 'SET151112121212'),
-                (SELECT id
-                 FROM dev_settler.mod_transaction
-                 WHERE reference = 'TRA151112121212')
-            );
-
-            INSERT INTO prv_object_hierarchy (
-                prv_object_from, prv_object_to
-            ) VALUES (
-                (SELECT id
-                 FROM dev_settler.mod_settlement
-                 WHERE reference = 'SET151112121212'),
-                (SELECT id
-                 FROM dev_settler.mod_transaction
-                 WHERE reference = 'TRA151113150000')
-            );
-        </sql>
-
         <!-- CREATE COMMENTS -->
         <sql>
-            INSERT INTO dev_settler.prv_object VALUES ();
-            INSERT INTO dev_settler.mod_comment (
-                id, prv_object, prv_user, parent, created, value
-            ) VALUES (
-                LAST_INSERT_ID(),
-                (SELECT id
-                 FROM dev_settler.mod_settlement
-                 WHERE reference = 'SET151112121212'),
-                (SELECT id
-                 FROM dev_settler.prv_user
-                 WHERE login = 'jan.nowak'),
-                NULL,
-                '2015-12-20 12:12:10',
-                'Comment by Jan Nowak to SET151112121212'
-            );
-
-            INSERT INTO dev_settler.prv_object VALUES ();
-            INSERT INTO dev_settler.mod_comment (
-                id, prv_object, prv_user, parent, created, value
-            ) VALUES (
-                LAST_INSERT_ID(),
-                (SELECT id
-                 FROM dev_settler.mod_settlement
-                 WHERE reference = 'SET151112121212'),
-                (SELECT id
-                 FROM dev_settler.prv_user
-                 WHERE login = 'user'),
-                LAST_INSERT_ID() - 1,
-                '2015-12-20 15:15:46',
-                'Comment by user to SET151112121212'
-            );
-
             INSERT INTO dev_settler.prv_object VALUES ();
             INSERT INTO dev_settler.mod_comment (
                 id, prv_object, prv_user, parent, created, value
@@ -550,37 +467,9 @@
             );
         </sql>
 
-        <!-- ADD MISC PRIVILEGES -->
-        <sql>
-            INSERT INTO prv_privilege (
-                prv_object, prv_owner, operation_type
-            ) VALUES (
-                (SELECT id
-                 FROM dev_settler.mod_settlement
-                 WHERE reference = 'SET151112121212'),
-                (SELECT id
-                 FROM prv_user
-                 WHERE login = 'marian.kowalski'),
-                'RDM'
-            );
-            INSERT INTO prv_privilege (
-                prv_object, prv_owner, operation_type
-            ) VALUES (
-                (SELECT id
-                 FROM dev_settler.mod_settlement
-                 WHERE reference = 'SET151112121212'),
-                (SELECT id
-                 FROM prv_role
-                 WHERE name = 'User'),
-                'RDM'
-            );
-        </sql>
-
         <rollback>
             <delete tableName="mod_comment"/>
-            <delete tableName="mod_settlement_transaction"/>
             <delete tableName="mod_transaction"/>
-            <delete tableName="mod_settlement"/>
             <delete tableName="prv_user"/>
         </rollback>
 

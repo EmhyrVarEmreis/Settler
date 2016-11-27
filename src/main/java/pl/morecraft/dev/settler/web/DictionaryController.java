@@ -12,8 +12,13 @@ import java.util.List;
 @RequestMapping("/api")
 public class DictionaryController {
 
-    @Inject
+    final
     DictionaryService dictionaryService;
+
+    @Inject
+    public DictionaryController(DictionaryService dictionaryService) {
+        this.dictionaryService = dictionaryService;
+    }
 
     @RequestMapping("/dictionary")
     public List<?> getDict(@RequestParam("name") String name) {

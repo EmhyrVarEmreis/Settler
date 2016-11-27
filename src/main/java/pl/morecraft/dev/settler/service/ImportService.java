@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-import pl.morecraft.dev.settler.dao.repository.SettlementRepository;
 import pl.morecraft.dev.settler.dao.repository.TransactionRepository;
 import pl.morecraft.dev.settler.dao.repository.UserRepository;
 import pl.morecraft.dev.settler.domain.Redistribution;
@@ -35,7 +34,6 @@ public class ImportService {
     private static Logger log = LoggerFactory.getLogger(ImportService.class);
 
     private final UserRepository userRepository;
-    private final SettlementRepository settlementRepository;
     private final TransactionRepository transactionRepository;
     private final Gson gson;
 
@@ -43,12 +41,10 @@ public class ImportService {
     public ImportService(
             @Qualifier("prettyGson") Gson gson,
             TransactionRepository transactionRepository,
-            UserRepository userRepository,
-            SettlementRepository settlementRepository) {
+            UserRepository userRepository) {
         this.gson = gson;
         this.transactionRepository = transactionRepository;
         this.userRepository = userRepository;
-        this.settlementRepository = settlementRepository;
     }
 
     public void importTransactions(MultipartFile file) throws IOException {

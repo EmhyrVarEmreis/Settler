@@ -8,15 +8,6 @@
 
     <changeSet id="1.0-init-dict-data" author="settler">
 
-        <insert tableName="dct_settlement_type">
-            <column name="code">NOR</column>
-            <column name="description">Normal</column>
-        </insert>
-        <insert tableName="dct_settlement_type">
-            <column name="code">OTH</column>
-            <column name="description">Other</column>
-        </insert>
-
         <insert tableName="dct_transaction_type">
             <column name="code">NOR</column>
             <column name="description">Normal</column>

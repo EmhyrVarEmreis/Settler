@@ -17,8 +17,12 @@ import java.io.IOException;
 @RequestMapping("/api/import")
 public class ImportController {
 
+    private final ImportService importService;
+
     @Inject
-    private ImportService importService;
+    public ImportController(ImportService importService) {
+        this.importService = importService;
+    }
 
     @RequestMapping(
             value = "/transactions",
@@ -30,15 +34,6 @@ public class ImportController {
         importService.importTransactions(file);
 
         return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @RequestMapping(
-            value = "/settlements",
-            method = RequestMethod.POST,
-            produces = MediaType.APPLICATION_JSON_VALUE
-    )
-    public ResponseEntity<?> importSettlements(@RequestParam("file") MultipartFile file) throws IOException {
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
     }
 
     @RequestMapping(

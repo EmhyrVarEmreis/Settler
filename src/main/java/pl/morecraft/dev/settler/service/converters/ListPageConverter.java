@@ -14,8 +14,12 @@ import java.util.List;
 @Component
 public class ListPageConverter {
 
+    private final EntityConvertersPack entityConvertersPack;
+
     @Inject
-    private EntityConvertersPack entityConvertersPack;
+    public ListPageConverter(EntityConvertersPack entityConvertersPack) {
+        this.entityConvertersPack = entityConvertersPack;
+    }
 
     public <S, T> ListPage<T> convert(Page<S> page, Class<T> tClass) {
 
@@ -24,19 +28,26 @@ public class ListPageConverter {
         }
 
         ListPage<T> result = new ListPage<>();
-        List<T> content = new ArrayList<>();
-        ModelMapper modelMapper = entityConvertersPack.getPreparedModelMapper();
-        //ModelMapper modelMapper = new ModelMapper();
+        List<T> content = convert(page.getContent(), tClass);
 
         result.setTotal(page.getTotalElements());
-
-        for (S s : page.getContent()) {
-            content.add(modelMapper.map(s, tClass));
-        }
 
         result.setContent(content);
 
         return result;
+    }
+
+    public <S, T> List<T> convert(List<S> source, Class<T> tClass) {
+
+        List<T> content = new ArrayList<>();
+
+        ModelMapper modelMapper = entityConvertersPack.getPreparedModelMapper();
+
+        for (S s : source) {
+            content.add(modelMapper.map(s, tClass));
+        }
+
+        return content;
     }
 
 }

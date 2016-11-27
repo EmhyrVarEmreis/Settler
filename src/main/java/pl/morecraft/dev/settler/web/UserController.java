@@ -14,8 +14,12 @@ import javax.inject.Inject;
 @RequestMapping("/api/user")
 public class UserController {
 
+    private final UserService userService;
+
     @Inject
-    private UserService userService;
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @RequestMapping(
             value = "/details",

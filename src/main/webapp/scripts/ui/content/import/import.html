@@ -13,21 +13,14 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-4">
+        <div class="col-sm-6">
             <input type="button" class="btn btn-primary btn-lg" style="width:100%; margin-bottom: 16px"
                    ngf-select="import('transactions', $file)"
                    ng-click="file = false"
                    ngf-max-size="16MB"
                    value="Transakcje (CSV)"/>
         </div>
-        <div class="col-sm-4">
-            <input type="button" class="btn btn-primary btn-lg" style="width:100%; margin-bottom: 16px"
-                   ngf-select="import('settlements', $file)"
-                   ngf-max-size="16MB"
-                   value="Rozliczenia (CSV)"
-                   disabled="disabled"/>
-        </div>
-        <div class="col-sm-4">
+        <div class="col-sm-6">
             <input type="button" class="btn btn-primary btn-lg" style="width:100%; margin-bottom: 16px"
                    ngf-select="import('users', $file)"
                    ngf-max-size="16MB"

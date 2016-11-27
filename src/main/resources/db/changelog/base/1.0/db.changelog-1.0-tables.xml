@@ -18,16 +18,6 @@
             </column>
         </createTable>
 
-        <createTable tableName="dct_settlement_type">
-            <column name="code"
-                    type="nvarchar(3)">
-                <constraints primaryKey="true"
-                             primaryKeyName="PK_dct_settlement_type_code"/>
-            </column>
-            <column name="description"
-                    type="nvarchar(32)"/>
-        </createTable>
-
         <createTable tableName="dct_transaction_type">
             <column name="code"
                     type="nvarchar(3)">
@@ -199,59 +189,6 @@
                     type="datetime"/>
         </createTable>
 
-        <createTable tableName="mod_settlement">
-            <column name="id"
-                    type="bigint">
-                <constraints primaryKey="true"
-                             primaryKeyName="PK_mod_settlement_id"
-                             references="prv_object(id)"
-                             foreignKeyName="FK_mod_settlement_id_prv_object_id"/>
-            </column>
-            <column name="reference" type="varchar(64)">
-                <constraints nullable="false"
-                             unique="true"
-                             uniqueConstraintName="UQ_mod_settlement_reference"/>
-            </column>
-            <column name="type"
-                    type="nvarchar(3)">
-                <constraints primaryKey="true"
-                             references="dct_settlement_type(code)"
-                             foreignKeyName="FK_dct_settlement_type_dct_settlement_type_code"/>
-            </column>
-            <column name="creator"
-                    type="bigint">
-                <constraints primaryKey="true"
-                             references="prv_user(id)"
-                             foreignKeyName="FK_mod_settlement_creator_prv_user_id"/>
-            </column>
-            <column name="owner"
-                    type="bigint">
-                <constraints primaryKey="true"
-                             references="prv_user(id)"
-                             foreignKeyName="FK_mod_settlement_owner_prv_user_id"/>
-            </column>
-            <column name="contractor" type="bigint">
-                <constraints primaryKey="true"
-                             references="prv_user(id)"
-                             foreignKeyName="FK_mod_settlement_contractor_prv_user_id"/>
-            </column>
-            <column name="balance"
-                    type="decimal(9,2)"
-                    defaultValue="0">
-                <constraints nullable="false"/>
-            </column>
-            <column name="created"
-                    type="datetime">
-                <constraints nullable="false"/>
-            </column>
-            <column name="start_date"
-                    type="datetime"/>
-            <column name="end_date"
-                    type="datetime"/>
-            <column name="evaluated"
-                    type="datetime"/>
-        </createTable>
-
         <createTable tableName="mod_comment">
             <column name="id"
                     type="bigint">
@@ -354,6 +291,12 @@
                 <constraints nullable="false"
                              references="prv_role(id)"
                              foreignKeyName="FK_prv_user_role_prv_role_prv_role_id"/>
+            </column>
+            <column name="target"
+                    type="bigint">
+                <constraints references="prv_object(id)"
+                             nullable="true"
+                             foreignKeyName="FK_prv_user_role_target_id_prv_object_id"/>
             </column>
         </createTable>
 

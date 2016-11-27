@@ -33,14 +33,16 @@ public class AccountResource {
 
     private final Logger log = LoggerFactory.getLogger(AccountResource.class);
 
-    @Inject
-    private AuthenticationManager authenticationManager;
+    private final AuthenticationManager authenticationManager;
+    private final UserDetailsService userDetailsService;
+    private final TokenProvider tokenProvider;
 
     @Inject
-    private UserDetailsService userDetailsService;
-
-    @Inject
-    private TokenProvider tokenProvider;
+    public AccountResource(AuthenticationManager authenticationManager, UserDetailsService userDetailsService, TokenProvider tokenProvider) {
+        this.authenticationManager = authenticationManager;
+        this.userDetailsService = userDetailsService;
+        this.tokenProvider = tokenProvider;
+    }
 
 
 //    @Inject

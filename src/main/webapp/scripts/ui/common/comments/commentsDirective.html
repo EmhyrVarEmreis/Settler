@@ -1,0 +1,29 @@
+<div class="panel panel-default">
+
+    <div class="panel-heading" style="cursor: pointer;" ng-click="loadComments()">
+        Komentarze (kliknij tutaj, aby {{comments ? 'odświeżyć' : ' wczytać'}})
+    </div>
+
+    <div class="panel-body" ng-show="comments">
+        <div class="row" ng-show="comments && comments.length == 0">
+            <div class="col-sm-12">
+                <em>Brak komentarzy</em>
+            </div>
+        </div>
+        <div class="row" ng-repeat="comment in comments">
+            <div class="col-sm-12">
+                <div class="row">
+                    <div class="col-sm-12">
+                        {{comment.value}}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 small" style="margin-left: 32px;">
+                        <em>by</em> <strong>{{comment.owner.login}}</strong> <em>on</em> {{comment.created}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
