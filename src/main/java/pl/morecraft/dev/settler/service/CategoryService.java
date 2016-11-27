@@ -1,27 +1,26 @@
 package pl.morecraft.dev.settler.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.morecraft.dev.settler.dao.repository.CategoryRepository;
 import pl.morecraft.dev.settler.domain.Category;
 import pl.morecraft.dev.settler.domain.QCategory;
-import pl.morecraft.dev.settler.security.authorisation.PermissionManager;
 import pl.morecraft.dev.settler.service.abstractService.prototype.AbstractService;
 import pl.morecraft.dev.settler.web.dto.CategoryDTO;
 import pl.morecraft.dev.settler.web.dto.CategoryListDTO;
 import pl.morecraft.dev.settler.web.misc.CategoryListFilters;
 
-import javax.inject.Inject;
-
 @Service
 @Transactional
 public class CategoryService extends AbstractService<Category, CategoryDTO, CategoryListDTO, CategoryListFilters, QCategory, Long, CategoryRepository> {
 
-    @Inject
-    private PermissionManager permissionManager;
+    private final CategoryRepository repository;
 
-    @Inject
-    private CategoryRepository repository;
+    @Autowired
+    public CategoryService(CategoryRepository repository) {
+        this.repository = repository;
+    }
 
     @Override
     protected CategoryRepository getRepository() {
