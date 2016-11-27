@@ -6,7 +6,7 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
-    <changeSet id="1.0-path-004" author="settler">
+    <changeSet id="1.0-path-005" author="settler">
 
         <preConditions>
             <tableExists tableName="mod_transaction"/>
@@ -30,6 +30,7 @@
                     ON puc.id = mrc.user
                 LEFT JOIN prv_user puo
                     ON puo.id = mro.user
+            WHERE mrc.user != mro.user
             GROUP BY user_from_id, user_to_id, id, user_from, user_to;
         </createView>
 
