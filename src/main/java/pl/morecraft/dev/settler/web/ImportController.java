@@ -1,5 +1,6 @@
 package pl.morecraft.dev.settler.web;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -10,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import pl.morecraft.dev.settler.service.ImportService;
 
-import javax.inject.Inject;
 import java.io.IOException;
 
 @RestController
@@ -19,7 +19,7 @@ public class ImportController {
 
     private final ImportService importService;
 
-    @Inject
+    @Autowired
     public ImportController(ImportService importService) {
         this.importService = importService;
     }

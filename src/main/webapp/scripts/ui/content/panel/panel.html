@@ -5,8 +5,79 @@
         </h1>
     </div>
     <div class="row panel-last-row">
-        <div class="col-sm-4">
-            <strong>Nothing to do here...</strong>
+        <div class="col-sm-12">
+            <div class="row text-center">
+                <div class="col-sm-12">
+                    <h2>Należności</h2>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="row">
+                    <div class="row text-center">
+                        <div class="col-sm-12">
+                            <h3>Od innych</h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="row text-center" ng-show="charges.to && charges.to.length === 0">
+                                <div class="col-sm-12">
+                                    <em>Niestety brak</em>
+                                </div>
+                            </div>
+                            <div class="row" ng-show="charges.to && charges.to.length > 0">
+                                <div class="col-sm-9">
+                                    <strong>Użytkownik</strong>
+                                </div>
+                                <div class="col-sm-3">
+                                    <strong>Wartość</strong>
+                                </div>
+                            </div>
+                            <div class="row" ng-repeat="row in charges.to">
+                                <div class="col-sm-9">
+                                    {{row.userFrom}}
+                                </div>
+                                <div class="col-sm-3">
+                                    {{row.charge | myCurrency:'PLN'}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="row">
+                    <div class="row text-center">
+                        <div class="col-sm-12">
+                            <h3>Od Ciebie</h3>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="row text-center" ng-show="charges.from && charges.from.length === 0">
+                            <div class="col-sm-12">
+                                <em>Na szczęście brak</em>
+                            </div>
+                        </div>
+                        <div class="row" ng-show="charges.from && charges.from.length > 0">
+                            <div class="col-sm-9">
+                                <strong>Użytkownik</strong>
+                            </div>
+                            <div class="col-sm-3">
+                                <strong>Wartość</strong>
+                            </div>
+                        </div>
+                        <div class="row" ng-repeat="row in charges.from">
+                            <div class="col-sm-9">
+                                {{row.id}}
+                            </div>
+                            <div class="col-sm-3">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+</div>
 </div>

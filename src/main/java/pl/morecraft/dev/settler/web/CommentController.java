@@ -1,5 +1,6 @@
 package pl.morecraft.dev.settler.web;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -8,7 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 import pl.morecraft.dev.settler.service.CommentService;
 import pl.morecraft.dev.settler.web.dto.CommentDTO;
 
-import javax.inject.Inject;
 import java.util.List;
 
 @RestController
@@ -17,7 +17,7 @@ public class CommentController {
 
     private final CommentService commentService;
 
-    @Inject
+    @Autowired
     public CommentController(CommentService commentService) {
         this.commentService = commentService;
     }

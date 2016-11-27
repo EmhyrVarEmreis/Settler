@@ -1,5 +1,6 @@
 package pl.morecraft.dev.settler.web;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -8,15 +9,13 @@ import pl.morecraft.dev.settler.web.dto.UserDTO;
 import pl.morecraft.dev.settler.web.dto.UserListDTO;
 import pl.morecraft.dev.settler.web.misc.ListPage;
 
-import javax.inject.Inject;
-
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
 
     private final UserService userService;
 
-    @Inject
+    @Autowired
     public UserController(UserService userService) {
         this.userService = userService;
     }

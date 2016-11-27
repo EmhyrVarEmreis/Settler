@@ -125,8 +125,12 @@ public abstract class AbstractService<
         } catch (NoSuchFieldException | IllegalAccessException e) {
             e.printStackTrace();
         }
-        System.out.println(entityPage);
         return listPageConverter.convert(entityPage, getListDtoClass());
+    }
+
+    public List<EntityDTO> findAll() {
+        List<Entity> entityDTOList = getRepository().findAll();
+        return listPageConverter.convert(entityDTOList, getDtoClass());
     }
 
     protected abstract EntityRepository getRepository();

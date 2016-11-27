@@ -1,21 +1,20 @@
 package pl.morecraft.dev.settler.web;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import pl.morecraft.dev.settler.service.dictionary.DictionaryService;
 
-import javax.inject.Inject;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api")
 public class DictionaryController {
 
-    final
-    DictionaryService dictionaryService;
+    private final DictionaryService dictionaryService;
 
-    @Inject
+    @Autowired
     public DictionaryController(DictionaryService dictionaryService) {
         this.dictionaryService = dictionaryService;
     }

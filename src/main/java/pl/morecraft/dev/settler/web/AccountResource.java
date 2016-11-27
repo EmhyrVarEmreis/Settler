@@ -2,6 +2,7 @@ package pl.morecraft.dev.settler.web;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -21,7 +22,6 @@ import pl.morecraft.dev.settler.web.dto.LoginDTO;
 import pl.morecraft.dev.settler.web.dto.RoleAssignmentDTO;
 import pl.morecraft.dev.settler.web.dto.UserDTO;
 
-import javax.inject.Inject;
 import java.util.Collections;
 
 /**
@@ -37,7 +37,7 @@ public class AccountResource {
     private final UserDetailsService userDetailsService;
     private final TokenProvider tokenProvider;
 
-    @Inject
+    @Autowired
     public AccountResource(AuthenticationManager authenticationManager, UserDetailsService userDetailsService, TokenProvider tokenProvider) {
         this.authenticationManager = authenticationManager;
         this.userDetailsService = userDetailsService;

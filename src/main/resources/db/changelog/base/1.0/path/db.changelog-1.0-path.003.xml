@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="1.0-path-003" author="settler">
+
+        <preConditions>
+            <tableExists tableName="mod_transaction"/>
+            <tableExists tableName="mod_redistribution"/>
+        </preConditions>
+
+        <createView viewName="view_total_charge">
+            SELECT
+                mrc.user + 167 * mro.user                                        AS id,
+                CONCAT(puc.first_name, ' ', puc.last_name, ' (', puc.login, ')') AS user_from,
+                mrc.user                                                         AS user_from_id,
+                CONCAT(puo.first_name, ' ', puo.last_name, ' (', puo.login, ')') AS user_to,
+                mro.user                                                         AS user_to_id,
+                SUM(ROUND(mrc.value * mro.value / mt.value, 2))                  AS charge
+            FROM mod_transaction mt
+                LEFT JOIN mod_redistribution mrc
+                    ON mrc.parent = mt.id AND mrc.type = 'C'
+                LEFT JOIN mod_redistribution mro
+                    ON mro.parent = mrc.parent AND mro.type = 'O'
+                LEFT JOIN prv_user puc
+                    ON puc.id = mrc.user
+                LEFT JOIN prv_user puo
+                    ON puo.id = mro.user
+            GROUP BY user_from_id, user_to_id;
+        </createView>
+
+        <rollback>
+            <dropView viewName="view_total_charge"/>
+        </rollback>
+
+    </changeSet>
+
+
+</databaseChangeLog>
