@@ -7,6 +7,7 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,7 +21,6 @@ import pl.morecraft.dev.settler.domain.dictionaries.RedistributionType;
 import pl.morecraft.dev.settler.domain.dictionaries.TransactionType;
 import pl.morecraft.dev.settler.security.util.Security;
 
-import javax.inject.Inject;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -37,7 +37,7 @@ public class ImportService {
     private final TransactionRepository transactionRepository;
     private final Gson gson;
 
-    @Inject
+    @Autowired
     public ImportService(
             @Qualifier("prettyGson") Gson gson,
             TransactionRepository transactionRepository,
@@ -143,7 +143,6 @@ public class ImportService {
                 transactionCounter++;
             } catch (Exception e) {
                 log.warn("Unable to convert line No{}: {}", ln, line, e);
-                break;
             }
         }
 
