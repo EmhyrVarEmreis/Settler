@@ -24,13 +24,13 @@ public class TransactionController {
             value = "/details",
             method = RequestMethod.GET
     )
-    public ResponseEntity<TransactionDTO> get(@RequestParam(value = "id", required = true) Long userId) {
+    public ResponseEntity<TransactionDTO> get(@RequestParam(value = "id") Long userId) {
         return transactionService.get(userId);
     }
 
     @RequestMapping(
             value = "/details",
-            method = RequestMethod.PUT,
+            method = {RequestMethod.PUT, RequestMethod.POST},
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     public ResponseEntity<String> save(@RequestBody TransactionDTO transactionDTO) {
