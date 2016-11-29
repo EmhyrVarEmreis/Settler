@@ -3,7 +3,7 @@
 
     angular.module('settlerApplication')
         .directive('dateTimePicker', function () {
-            var format = 'YYYY-DD-MM HH:mm:ss';
+            var format = 'YYYY-MM-DD HH:mm:ss';
             var locale = 'pl';
 
             return {

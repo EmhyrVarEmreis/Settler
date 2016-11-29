@@ -14,7 +14,7 @@ import java.util.Objects;
 public class JsonJodaLocalDateDeserializer extends JsonDeserializer<LocalDate> {
 
     private static DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd");
-    private static DateTimeFormatter formatterWithTime = DateTimeFormat.forPattern("yyyy-MM-dd hh:mm:ss");
+    private static DateTimeFormatter formatterWithTime = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
 
     @Override
     public LocalDate deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
