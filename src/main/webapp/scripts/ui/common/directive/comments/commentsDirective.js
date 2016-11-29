@@ -4,13 +4,12 @@
     angular.module('settlerApplication')
         .directive('commentsDirective', function (commentByObjectIdFactory) {
             return {
-                scope: {
+                scope:       {
                     id: "="
                 },
-                transclude: true,
-                restrict: 'E',
-                templateUrl: 'scripts/ui/common/comments/commentsDirective.html',
-                link: function ($scope) {
+                restrict:    'E',
+                templateUrl: 'scripts/ui/common/directive/comments/commentsDirective.html',
+                link:        function ($scope) {
 
                     $scope.comments = null;
 

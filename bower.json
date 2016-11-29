@@ -10,7 +10,6 @@
     "angular-sanitize": "1.5.5",
     "bootstrap": "3.3.4",
     "ng-table": "1.0.0",
-    "bootstrap-datepicker": "1.6.4",
     "angular-loading-bar": "0.9.0",
     "angular-bootstrap": "2.0.1",
     "angular-ui-select": "0.19.1",
@@ -18,6 +17,8 @@
     "angular-local-storage": "0.3.0",
     "ng-file-upload": "12.0.4",
     "angular-ui-validate": "1.2.2",
-    "eonasdan-bootstrap-datetimepicker": "4.17.37"
+    "eonasdan-bootstrap-datetimepicker": "4.17.42",
+    "moment": "2.17.0",
+    "angular-moment": "^1.0.0"
   }
 }

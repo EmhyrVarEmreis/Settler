@@ -14,7 +14,8 @@
             'ui.router',
             'ngSanitize',
             'ngFileUpload',
-            'ui.bootstrap'
+            'ui.bootstrap',
+            'angularMoment'
         ])
 
         .factory('authInterceptor', function($rootScope, $q, $location, localStorageService, $injector) {

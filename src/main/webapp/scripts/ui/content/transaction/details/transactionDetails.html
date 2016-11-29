@@ -1,13 +1,3 @@
-<script>
-    $('.custom-datepicker').datetimepicker({
-        format: 'YYYY-MM-DD HH:mm:ss',
-        locale: 'pl-PL'
-    }).on('changeDate', function (e) {
-        ngModelCtrl.$setViewValue(e.date);
-        scope.$apply();
-    });
-</script>
-
 <div class="container">
     <div class="page-header">
         <div class="pull-left">
@@ -65,34 +55,25 @@
                                ng-model="data.value">
                     </div>
                     <div class="col-sm-6">
-                        <label>Utworzona</label>
-
-                        <input class="form-control input-sm custom-datepicker"
-                               type="text"
-                               name="passwordExpireDate"
-                               placeholder="Pozostaw puste dla ustawienia czasu nieokreślonego"
-                               ng-model="data.created">
+                        <date-time-picker-component
+                                name="createdDate"
+                                label="Utworzona"
+                                ng-model="data.created"></date-time-picker-component>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-sm-6">
-                        <label>Potwierdzona</label>
-
-                        <input class="form-control input-sm custom-datepicker"
-                               type="text"
-                               name="passwordExpireDate"
-                               placeholder="Pozostaw puste dla ustawienia czasu nieokreślonego"
-                               ng-model="data.confirmed">
+                        <date-time-picker-component
+                                name="confirmedDate"
+                                label="Potwierdzona"
+                                ng-model="data.confirmed"></date-time-picker-component>
                     </div>
                     <div class="col-sm-6">
-                        <label>Ewaluowana</label>
-
-                        <input class="form-control input-sm custom-datepicker"
-                               type="text"
-                               name="passwordExpireDate"
-                               placeholder="Pozostaw puste dla ustawienia czasu nieokreślonego"
-                               ng-model="data.evaluated">
+                        <date-time-picker-component
+                                name="evaluatedDate"
+                                label="Ewaluowana"
+                                ng-model="data.evaluated"></date-time-picker-component>
                     </div>
                 </div>
             </div>
@@ -197,7 +178,7 @@
 
         </div>
 
-        <comments-directive id="data.id"></comments-directive>
+        <comments-directive id="data.id" ng-show="data.id"></comments-directive>
 
     </form>
 </div>
