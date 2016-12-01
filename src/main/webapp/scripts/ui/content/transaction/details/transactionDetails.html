@@ -129,26 +129,46 @@
                             </div>
                         </div>
                         <div class="row" ng-hide="!data.owners || data.owners.length < 1">
-                            <div class="col-sm-9">
-                                <strong>Użytkownik</strong>
-                            </div>
-                            <div class="col-sm-3">
-                                <strong>Wartość</strong>
+                            <div class="col-sm-12">
+                                <table width="100%">
+                                    <thead>
+                                    <tr>
+                                        <td width="60%">
+                                            <strong>Użytkownik</strong>
+                                        </td>
+                                        <td width="30%">
+                                            <strong>Wartość</strong>
+                                        </td>
+                                        <td width="10%">
+                                            <strong>Akcja</strong>
+                                        </td>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="redistribution in data.owners track by $index">
+                                        <td>
+                                            {{redistribution.user.firstName}} {{redistribution.user.lastName}}
+                                            ({{redistribution.user.login}})
+                                        </td>
+                                        <td>
+                                            {{redistribution.value}} ({{getValueString(data, redistribution)}})%
+                                        </td>
+                                        <td>
+                                            <button type="button"
+                                                    class="btn btn-default btn-sm"
+                                                    ng-click="data.owners = data.owners.splice($index-1, 1)">
+                                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                         <div class="row text-normal text-center text-italic"
                              ng-show="!data.owners || data.owners.length < 1">
                             <div class="col-sm-12">
                                 <strong>Brak</strong>
-                            </div>
-                        </div>
-                        <div class="row text-normal" ng-repeat="redistribution in data.owners">
-                            <div class="col-sm-9">
-                                {{redistribution.user.firstName}} {{redistribution.user.lastName}}
-                                ({{redistribution.user.login}})
-                            </div>
-                            <div class="col-sm-3">
-                                {{redistribution.value}} ({{getValueString(data, redistribution)}})%
                             </div>
                         </div>
                     </div>
@@ -160,26 +180,46 @@
                             </div>
                         </div>
                         <div class="row" ng-hide="!data.contractors || data.contractors.length < 1">
-                            <div class="col-sm-9">
-                                <strong>Użytkownik</strong>
-                            </div>
-                            <div class="col-sm-3">
-                                <strong>Wartość</strong>
+                            <div class="col-sm-12">
+                                <table width="100%">
+                                    <thead>
+                                    <tr>
+                                        <td width="60%">
+                                            <strong>Użytkownik</strong>
+                                        </td>
+                                        <td width="30%">
+                                            <strong>Wartość</strong>
+                                        </td>
+                                        <td width="10%">
+                                            <strong>Akcja</strong>
+                                        </td>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="redistribution in data.contractors track by $index">
+                                        <td>
+                                            {{redistribution.user.firstName}} {{redistribution.user.lastName}}
+                                            ({{redistribution.user.login}})
+                                        </td>
+                                        <td>
+                                            {{redistribution.value}} ({{getValueString(data, redistribution)}})%
+                                        </td>
+                                        <td>
+                                            <button type="button"
+                                                    class="btn btn-default btn-sm"
+                                                    ng-click="data.contractors = data.contractors.splice($index-1, 1)">
+                                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                         <div class="row text-normal text-center text-italic"
                              ng-show="!data.contractors || data.contractors.length < 1">
                             <div class="col-sm-12">
                                 <strong>Brak</strong>
-                            </div>
-                        </div>
-                        <div class="row text-normal" ng-repeat="redistribution in data.contractors">
-                            <div class="col-sm-9">
-                                {{redistribution.user.firstName}} {{redistribution.user.lastName}}
-                                ({{redistribution.user.login}})
-                            </div>
-                            <div class="col-sm-3">
-                                {{redistribution.value}} ({{getValueString(data, redistribution)}})%
                             </div>
                         </div>
                     </div>
