@@ -52,8 +52,18 @@
         </dependency>
 
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>javax.inject</groupId>
             <artifactId>javax.inject</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.sun.mail</groupId>
+            <artifactId>javax.mail</artifactId>
         </dependency>
 
         <dependency>
@@ -183,7 +193,8 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <properties>
-                <settler.db.url>jdbc:mysql://localhost:3306/dev_settler?useUnicode=true&amp;characterEncoding=utf8
+                <settler.db.url>
+                    jdbc:mysql://localhost:3306/dev_settler?useUnicode=true&amp;characterEncoding=utf8
                 </settler.db.url>
                 <settler.db.user>settler_user</settler.db.user>
                 <settler.db.password>Settler2015!</settler.db.password>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="1.0-path-006" author="settler">
+
+        <createTable tableName="dct_language">
+            <column name="code"
+                    type="nvarchar(5)">
+                <constraints primaryKey="true"
+                             primaryKeyName="PK_dct_language_code"/>
+            </column>
+            <column name="description"
+                    type="nvarchar(32)"/>
+        </createTable>
+
+        <createTable tableName="dct_email_template_type">
+            <column name="code"
+                    type="nvarchar(32)">
+                <constraints primaryKey="true"
+                             primaryKeyName="PK_dct_language_code"/>
+            </column>
+            <column name="description"
+                    type="nvarchar(32)"/>
+        </createTable>
+
+        <createTable tableName="mod_email_template">
+            <column name="id"
+                    type="bigint"
+                    autoIncrement="true">
+                <constraints primaryKey="true"
+                             primaryKeyName="PK_mod_email_template"/>
+            </column>
+            <column name="type"
+                    type="nvarchar(32)">
+                <constraints references="dct_email_template_type(code)"
+                             foreignKeyName="FK_mod_email_template_language_dct_email_template_type_code"/>
+            </column>
+            <column name="language"
+                    type="nvarchar(5)">
+                <constraints references="dct_language(code)"
+                             foreignKeyName="FK_mod_email_template_language_dct_language_code"/>
+            </column>
+            <column name="subject"
+                    type="nvarchar(128)"/>
+            <column name="content"
+                    type="nvarchar(4096)"/>
+        </createTable>
+
+        <insert tableName="dct_language">
+            <column name="code">PL_PL</column>
+            <column name="description">Polish</column>
+        </insert>
+        <insert tableName="dct_language">
+            <column name="code">EN_GB</column>
+            <column name="description">English (Great Britain)</column>
+        </insert>
+
+        <insert tableName="dct_email_template_type">
+            <column name="code">NEW_TRANSACTION</column>
+            <column name="description">New transaction notification</column>
+        </insert>
+
+        <insert tableName="mod_email_template">
+            <column name="language">EN_GB</column>
+            <column name="type">NEW_TRANSACTION</column>
+            <column name="subject">New transaction from $user</column>
+            <column name="content">
+                <![CDATA[<body style="background-color: #F17F0C;"><strong>Hi $user,</strong><br/><br/>User $creator has added transaction $transactionId with value $value of $total.<br/><br/><img src="http://localhost:3000/images/brand.png" height="50" alt="SettlerLogo"/></body>]]>
+            </column>
+        </insert>
+
+        <rollback>
+            <dropTable tableName="dct_language"/>
+            <dropTable tableName="dct_email_template_type"/>
+            <dropTable tableName="mod_email_template"/>
+        </rollback>
+
+    </changeSet>
+
+
+</databaseChangeLog>

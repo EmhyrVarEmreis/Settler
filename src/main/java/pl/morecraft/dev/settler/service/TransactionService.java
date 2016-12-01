@@ -21,6 +21,7 @@ import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
+import java.util.function.UnaryOperator;
 
 @Service
 @Transactional
@@ -28,11 +29,13 @@ public class TransactionService extends AbstractService<Transaction, Transaction
 
     private final PermissionManager permissionManager;
     private final TransactionRepository repository;
+    private final EmailService emailService;
 
     @Inject
-    public TransactionService(PermissionManager permissionManager, TransactionRepository repository) {
+    public TransactionService(PermissionManager permissionManager, TransactionRepository repository, EmailService emailService) {
         this.permissionManager = permissionManager;
         this.repository = repository;
+        this.emailService = emailService;
     }
 
     @Override
@@ -88,6 +91,14 @@ public class TransactionService extends AbstractService<Transaction, Transaction
             ModelMapper modelMapper = new ModelMapper();
             modelMapper.addConverter(new ListIntegerConverter());
             return modelMapper.map(entity, getDtoClass());
+        };
+    }
+
+    @Override
+    protected UnaryOperator<Transaction> getSavePostProcessingFunction() {
+        return transaction -> {
+            emailService.sendNotificationEmailNewTransaction(transaction);
+            return super.getSavePostProcessingFunction().apply(transaction);
         };
     }
 

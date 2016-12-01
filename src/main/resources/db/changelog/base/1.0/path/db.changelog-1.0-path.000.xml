@@ -11,6 +11,7 @@
     <include file="db/changelog/base/1.0/path/db.changelog-1.0-path.003.xml"/>
     <include file="db/changelog/base/1.0/path/db.changelog-1.0-path.004.xml"/>
     <include file="db/changelog/base/1.0/path/db.changelog-1.0-path.005.xml"/>
+    <include file="db/changelog/base/1.0/path/db.changelog-1.0-path.006.xml"/>
 
 </databaseChangeLog>
 
