@@ -1,4 +1,5 @@
 # Settler
+[![Build Status](http://ci.dev.morecraft.pl/buildStatus/icon?job=Settler)](http://ci.dev.morecraft.pl/job/Settler/)
 ## What is it?
 Small transactions & settlements manager.
 
