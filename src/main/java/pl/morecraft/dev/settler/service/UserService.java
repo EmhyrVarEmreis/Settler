@@ -2,6 +2,8 @@ package pl.morecraft.dev.settler.service;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.util.CollectionUtils;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.encoding.BasePasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +18,7 @@ import pl.morecraft.dev.settler.service.exception.DuplicatedEntityException;
 import pl.morecraft.dev.settler.service.exception.EntityNotFoundException;
 import pl.morecraft.dev.settler.web.dto.UserDTO;
 import pl.morecraft.dev.settler.web.dto.UserListDTO;
+import pl.morecraft.dev.settler.web.misc.ListPage;
 import pl.morecraft.dev.settler.web.misc.UserListFilters;
 
 import javax.inject.Inject;
@@ -115,6 +118,31 @@ public class UserService extends AbstractService<User, UserDTO, UserListDTO, Use
             }
             return user;
         };
+    }
+
+    public ResponseEntity<List<UserListDTO>> searchSimple(Integer limit, String string) {
+        String firstName;
+        String lastName;
+        String login;
+        String[] tab = string.split("\\s+");
+        if (tab.length == 1) {
+            firstName = lastName = login = tab[0].trim();
+        } else if (tab.length == 2) {
+            firstName = tab[0];
+            lastName = tab[1];
+            login = "";
+        } else {
+            firstName = tab[0];
+            lastName = tab[1];
+            login = tab[2];
+        }
+        ListPage<UserListDTO> listPage = get(
+                1,
+                limit,
+                "-login",
+                "{\"firstName\":\"" + firstName + "\",\"lastName\":\"" + lastName + "\",\"login\":\"" + login + "\"}"
+        );
+        return new ResponseEntity<>(listPage.getContent(), HttpStatus.OK);
     }
 
 }

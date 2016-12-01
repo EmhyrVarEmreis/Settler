@@ -9,6 +9,8 @@ import pl.morecraft.dev.settler.web.dto.UserDTO;
 import pl.morecraft.dev.settler.web.dto.UserListDTO;
 import pl.morecraft.dev.settler.web.misc.ListPage;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
@@ -43,6 +45,12 @@ public class UserController {
                                           @RequestParam(value = "sortBy", required = false, defaultValue = "-login") String sortBy,
                                           @RequestParam(value = "filters", required = false, defaultValue = "") String filters) {
         return userService.get(page, limit, sortBy, filters);
+    }
+
+    @RequestMapping("/search/simple")
+    public ResponseEntity<List<UserListDTO>> getUsers(@RequestParam(value = "limit", required = false, defaultValue = "25") Integer limit,
+                                                      @RequestParam(value = "string", required = false, defaultValue = "") String string) {
+        return userService.searchSimple(limit, string);
     }
 
 }
