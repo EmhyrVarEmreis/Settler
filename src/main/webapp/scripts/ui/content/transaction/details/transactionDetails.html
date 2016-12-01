@@ -65,15 +65,26 @@
                 <div class="row">
                     <div class="col-sm-6">
                         <date-time-picker-component
-                                name="confirmedDate"
-                                label="Potwierdzona"
-                                ng-model="data.confirmed"></date-time-picker-component>
-                    </div>
-                    <div class="col-sm-6">
-                        <date-time-picker-component
                                 name="evaluatedDate"
                                 label="Ewaluowana"
                                 ng-model="data.evaluated"></date-time-picker-component>
+                    </div>
+                    <div class="col-sm-6">
+                        <label>Twórca</label>
+                        <ui-select ng-model="data.creator"
+                                   theme="bootstrap"
+                                   reset-search-input="false"
+                                   title="Wybierz użytkownika">
+                            <ui-select-match placeholder="Podaj użytkownika">
+                                {{$select.selected.firstName + ' ' + $select.selected.lastName + ' (' +
+                                $select.selected.login + ')'}}
+                            </ui-select-match>
+                            <ui-select-choices repeat="user in creatorList track by user.id"
+                                               refresh="refreshCreatorList($select.search)"
+                                               refresh-delay="0">
+                                <div ng-bind-html="user.firstName + ' ' + user.lastName + ' (' + user.login + ')' | highlight: $select.search"></div>
+                            </ui-select-choices>
+                        </ui-select>
                     </div>
                 </div>
             </div>

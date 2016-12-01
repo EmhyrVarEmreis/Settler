@@ -9,4 +9,8 @@
         return $resource('api/user/details');
     });
 
+    angular.module('settlerApplication').factory('userSearchSimpleFactory', function($resource) {
+        return $resource('api/user/search/simple');
+    });
+
 })();

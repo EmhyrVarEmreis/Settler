@@ -44,8 +44,8 @@ public class EmailService {
         );
         if (emailTemplate != null) {
             Stream.concat(
-                    transaction.getContractors().stream(),
-                    transaction.getOwners().stream()
+                    transaction.getContractors() == null ? Stream.empty() : transaction.getContractors().stream(),
+                    transaction.getOwners() == null ? Stream.empty() : transaction.getOwners().stream()
             ).filter(
                     redistribution -> !redistribution.getUser().getId().equals(transaction.getCreator().getId())
             ).forEach(

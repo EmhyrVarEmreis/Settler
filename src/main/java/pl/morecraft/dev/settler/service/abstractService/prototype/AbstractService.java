@@ -112,11 +112,15 @@ public abstract class AbstractService<
     }
 
     public ListPage<ListDTO> get(Integer page, Integer limit, String sortBy, String filters) {
+        return get(page, limit, sortBy, filters, true);
+    }
+
+    public ListPage<ListDTO> get(Integer page, Integer limit, String sortBy, String filters, boolean isAnd) {
         QEntity user = getEQ();
         Page<Entity> entityPage = null;
         try {
             entityPage = getRepository().findAll(
-                    applyFilters(filters, user),
+                    applyFilters(filters, user, isAnd),
                     new QPageRequest(page - 1,
                             limit,
                             applySorting(sortBy, user)
@@ -230,7 +234,7 @@ public abstract class AbstractService<
         return isDesc ? comparableExpressionBase.desc() : comparableExpressionBase.asc();
     }
 
-    private BooleanExpression applyFilters(String filtersJson, QEntity qObject) throws NoSuchFieldException, IllegalAccessException {
+    private BooleanExpression applyFilters(String filtersJson, QEntity qObject, boolean isAnd) throws NoSuchFieldException, IllegalAccessException {
         BooleanExpressionWrapper pWrapper = new BooleanExpressionWrapper();
         pWrapper.predicate = qObject.isNotNull();
 
@@ -238,8 +242,9 @@ public abstract class AbstractService<
             pWrapper.predicate = pWrapper.predicate.and(preFilter);
         }
 
-        if (filtersJson.length() == 0)
+        if (filtersJson.length() == 0) {
             return pWrapper.predicate;
+        }
 
         ListFilters filters;
 
@@ -273,7 +278,9 @@ public abstract class AbstractService<
                                                     field.getName()
                                             ),
                                             qObject
-                                    ))
+                                    ),
+                                    isAnd ? BooleanExpression::and : BooleanExpression::or
+                                    )
                             )
             );
 

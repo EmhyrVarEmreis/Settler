@@ -3,12 +3,22 @@ package pl.morecraft.dev.settler.service.abstractService.prototype;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import pl.morecraft.dev.settler.service.abstractService.AnnotationNotPresentException;
 
+import java.util.function.BiFunction;
+
 public abstract class AbstractServiceSingleFilter {
 
     public abstract BooleanExpression predicate(Object filterValue, Object qObjectValue);
 
-    public BooleanExpression predicate(BooleanExpression predicate, Object filterValue, Object qObjectValue) {
-        return predicate.and(predicate(filterValue, qObjectValue));
+    public BooleanExpression predicateAnd(BooleanExpression predicate, Object filterValue, Object qObjectValue) {
+        return predicate(predicate, filterValue, qObjectValue, BooleanExpression::and);
+    }
+
+    public BooleanExpression predicateOr(BooleanExpression predicate, Object filterValue, Object qObjectValue) {
+        return predicate(predicate, filterValue, qObjectValue, BooleanExpression::or);
+    }
+
+    public BooleanExpression predicate(BooleanExpression predicate, Object filterValue, Object qObjectValue, BiFunction<BooleanExpression, BooleanExpression, BooleanExpression> op) {
+        return op.apply(predicate, predicate(filterValue, qObjectValue));
     }
 
     public boolean isApplicable(Object filterValue, Object qObjectValue) {

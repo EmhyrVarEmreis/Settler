@@ -121,26 +121,25 @@ public class UserService extends AbstractService<User, UserDTO, UserListDTO, Use
     }
 
     public ResponseEntity<List<UserListDTO>> searchSimple(Integer limit, String string) {
-        String firstName;
-        String lastName;
-        String login;
+        String filters;
+        boolean isAnd;
         String[] tab = string.split("\\s+");
         if (tab.length == 1) {
-            firstName = lastName = login = tab[0].trim();
+            filters = "{\"firstName\":\"" + tab[0] + "\",\"lastName\":\"" + tab[0] + "\",\"login\":\"" + tab[0] + "\"}";
+            isAnd = false;
         } else if (tab.length == 2) {
-            firstName = tab[0];
-            lastName = tab[1];
-            login = "";
+            filters = "{\"firstName\":\"" + tab[0] + "\",\"lastName\":\"" + tab[1] + "\"}";
+            isAnd = true;
         } else {
-            firstName = tab[0];
-            lastName = tab[1];
-            login = tab[2];
+            filters = "{\"firstName\":\"" + tab[0] + "\",\"lastName\":\"" + tab[1] + "\",\"login\":\"" + tab[2] + "\"}";
+            isAnd = true;
         }
         ListPage<UserListDTO> listPage = get(
                 1,
                 limit,
                 "-login",
-                "{\"firstName\":\"" + firstName + "\",\"lastName\":\"" + lastName + "\",\"login\":\"" + login + "\"}"
+                filters,
+                isAnd
         );
         return new ResponseEntity<>(listPage.getContent(), HttpStatus.OK);
     }
