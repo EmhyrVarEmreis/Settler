@@ -47,16 +47,16 @@ public class EmailService {
                     transaction.getContractors() == null ? Stream.empty() : transaction.getContractors().stream(),
                     transaction.getOwners() == null ? Stream.empty() : transaction.getOwners().stream()
             ).filter(
-                    redistribution -> !redistribution.getUser().getId().equals(transaction.getCreator().getId())
+                    redistribution -> !redistribution.getId().getUser().getId().equals(transaction.getCreator().getId())
             ).forEach(
                     redistribution -> {
                         Map<String, String> options = new HashMap<>();
                         options.put("creator", transaction.getCreator().getLogin());
-                        options.put("user", redistribution.getUser().getLogin());
+                        options.put("user", redistribution.getId().getUser().getLogin());
                         options.put("transactionId", transaction.getReference());
                         options.put("value", String.format("%.2f", redistribution.getValue()));
                         options.put("total", String.format("%.2f", transaction.getValue()));
-                        sendEmail(Collections.singletonList(redistribution.getUser().getEmail()), emailTemplate, options);
+                        sendEmail(Collections.singletonList(redistribution.getId().getUser().getEmail()), emailTemplate, options);
                     }
             );
         }

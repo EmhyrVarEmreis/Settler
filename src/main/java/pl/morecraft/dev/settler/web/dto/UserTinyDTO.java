@@ -6,9 +6,18 @@ public class UserTinyDTO {
     private String login;
     private String firstName;
     private String lastName;
+    private String email;
 
     public UserTinyDTO() {
 
+    }
+
+    public UserTinyDTO(Long id, String login, String firstName, String lastName, String email) {
+        this.id = id;
+        this.login = login;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
     }
 
     public Long getId() {
@@ -41,6 +50,14 @@ public class UserTinyDTO {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
 }

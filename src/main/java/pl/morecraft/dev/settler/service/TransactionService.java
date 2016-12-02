@@ -2,9 +2,10 @@ package pl.morecraft.dev.settler.service;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.util.CollectionUtils;
-import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import pl.morecraft.dev.settler.dao.repository.RedistributionRepository;
 import pl.morecraft.dev.settler.dao.repository.TransactionRepository;
 import pl.morecraft.dev.settler.domain.QTransaction;
 import pl.morecraft.dev.settler.domain.Transaction;
@@ -12,15 +13,12 @@ import pl.morecraft.dev.settler.domain.dictionaries.OperationType;
 import pl.morecraft.dev.settler.security.authorisation.PermissionManager;
 import pl.morecraft.dev.settler.security.util.Security;
 import pl.morecraft.dev.settler.service.abstractService.prototype.AbstractService;
-import pl.morecraft.dev.settler.service.converters.single.ListIntegerConverter;
 import pl.morecraft.dev.settler.web.dto.TransactionDTO;
 import pl.morecraft.dev.settler.web.dto.TransactionListDTO;
 import pl.morecraft.dev.settler.web.misc.TransactionListFilters;
 
-import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Function;
 import java.util.function.UnaryOperator;
 
 @Service
@@ -28,19 +26,21 @@ import java.util.function.UnaryOperator;
 public class TransactionService extends AbstractService<Transaction, TransactionDTO, TransactionListDTO, TransactionListFilters, QTransaction, Long, TransactionRepository> {
 
     private final PermissionManager permissionManager;
-    private final TransactionRepository repository;
+    private final TransactionRepository transactionRepository;
+    private final RedistributionRepository redistributionRepository;
     private final EmailService emailService;
 
-    @Inject
-    public TransactionService(PermissionManager permissionManager, TransactionRepository repository, EmailService emailService) {
+    @Autowired
+    public TransactionService(PermissionManager permissionManager, TransactionRepository transactionRepository, RedistributionRepository redistributionRepository, EmailService emailService) {
         this.permissionManager = permissionManager;
-        this.repository = repository;
+        this.transactionRepository = transactionRepository;
+        this.redistributionRepository = redistributionRepository;
         this.emailService = emailService;
     }
 
     @Override
     protected TransactionRepository getRepository() {
-        return repository;
+        return transactionRepository;
     }
 
     @Override
@@ -86,19 +86,28 @@ public class TransactionService extends AbstractService<Transaction, Transaction
     }
 
     @Override
-    protected Function<Transaction, TransactionDTO> getGetProcessingFunction() {
-        return entity -> {
-            ModelMapper modelMapper = new ModelMapper();
-            modelMapper.addConverter(new ListIntegerConverter());
-            return modelMapper.map(entity, getDtoClass());
+    protected UnaryOperator<Transaction> getSaveSavePreProcessingFunction() {
+        return transaction -> {
+//            getRepository().save(transaction);
+//            if (transaction.getOwners() != null) {
+//                for (Redistribution redistribution : transaction.getOwners()) {
+//                    redistribution.getId().setParent(transaction);
+//                }
+//            }
+//            if (transaction.getContractors() != null) {
+//                for (Redistribution redistribution : transaction.getContractors()) {
+//                    redistribution.getId().setParent(transaction);
+//                }
+//            }
+            return super.getSaveSavePreProcessingFunction().apply(transaction);
         };
     }
 
     @Override
-    protected UnaryOperator<Transaction> getSavePostProcessingFunction() {
+    protected UnaryOperator<Transaction> getSaveSavePostProcessingFunction() {
         return transaction -> {
             emailService.sendNotificationEmailNewTransaction(transaction);
-            return super.getSavePostProcessingFunction().apply(transaction);
+            return super.getSaveSavePostProcessingFunction().apply(transaction);
         };
     }
 

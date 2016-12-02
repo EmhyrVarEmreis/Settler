@@ -1,3 +1,10 @@
+<a ng-if="newEntityButton"
+   href ng-href="{{newEntityButtonUrl}}"
+   type="button"
+   class="btn btn-success btn-colPicker">
+    <span class="glyphicon glyphicon-plus glph-def-em" aria-hidden="true"></span>
+    <span class="hidden-xs hidden-sm">{{newEntityButton}}</span>
+</a>
 <button type="button"
         class="btn btn-success btn-colPicker"
         ng-click="applyFilters()">

@@ -1,7 +1,6 @@
 package pl.morecraft.dev.settler.domain;
 
 import org.hibernate.annotations.Where;
-import org.hibernate.envers.NotAudited;
 import org.joda.time.LocalDateTime;
 import pl.morecraft.dev.settler.domain.dictionaries.TransactionType;
 
@@ -10,7 +9,6 @@ import java.util.List;
 
 @Entity
 @Table(name = "mod_transaction")
-//@Audited
 public class Transaction extends PrivilegeObject {
 
     @Column(unique = true, nullable = false)
@@ -23,7 +21,7 @@ public class Transaction extends PrivilegeObject {
     @JoinColumn(name = "creator")
     private User creator;
 
-    @Column(nullable = false, insertable = true, updatable = false)
+    @Column(nullable = false, updatable = false)
     private LocalDateTime created = new LocalDateTime();
     private LocalDateTime evaluated;
 
@@ -32,28 +30,24 @@ public class Transaction extends PrivilegeObject {
     @Column(length = 128)
     private String description;
 
-    @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "id.parent", cascade = CascadeType.ALL)
     @Where(clause = "type='O'")
-    @NotAudited
     private List<Redistribution> owners;
 
-    @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "id.parent", cascade = CascadeType.ALL)
     @Where(clause = "type='C'")
-    @NotAudited
     private List<Redistribution> contractors;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.REMOVE, CascadeType.MERGE}, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "mod_comment",
             joinColumns = {@JoinColumn(name = "prv_object", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "id", referencedColumnName = "id")})
-    @NotAudited
     private List<Comment> comments;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "mod_category_object",
             joinColumns = {@JoinColumn(name = "object_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "category_id", referencedColumnName = "id")})
-    @NotAudited
     private List<Category> categories;
 
     public Transaction() {
@@ -148,5 +142,22 @@ public class Transaction extends PrivilegeObject {
         this.categories = categories;
     }
 
+    @Override
+    public String toString() {
+        return "Transaction{" +
+                "id='" + id + '\'' +
+                ", reference='" + reference + '\'' +
+                ", type=" + type +
+                ", creator=" + creator +
+                ", created=" + created +
+                ", evaluated=" + evaluated +
+                ", value=" + value +
+                ", description='" + description + '\'' +
+                ", owners=" + owners +
+                ", contractors=" + contractors +
+                ", comments=" + comments +
+                ", categories=" + categories +
+                '}';
+    }
 }
 

@@ -9,8 +9,10 @@ import java.util.List;
 @Component
 @EntityConverter
 public class ListIntegerConverter extends AbstractConverter<List<?>, Integer> {
+
     @Override
     protected Integer convert(List<?> list) {
         return list == null ? 0 : list.size();
     }
+
 }

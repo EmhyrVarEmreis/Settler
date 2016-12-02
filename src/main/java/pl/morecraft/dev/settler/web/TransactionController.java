@@ -33,7 +33,7 @@ public class TransactionController {
             method = {RequestMethod.PUT, RequestMethod.POST},
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<String> save(@RequestBody TransactionDTO transactionDTO) {
+    public ResponseEntity<TransactionDTO> save(@RequestBody TransactionDTO transactionDTO) {
         return transactionService.save(transactionDTO);
     }
 
@@ -41,10 +41,10 @@ public class TransactionController {
             value = "/list",
             method = RequestMethod.GET
     )
-    public ListPage<TransactionListDTO> getTransactions(@RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
-                                                        @RequestParam(value = "limit", required = false, defaultValue = "10") Integer limit,
-                                                        @RequestParam(value = "sortBy", required = false, defaultValue = "-reference") String sort,
-                                                        @RequestParam(value = "filters", required = false, defaultValue = "") String filters) {
+    public ListPage<TransactionListDTO> getPaged(@RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
+                                                 @RequestParam(value = "limit", required = false, defaultValue = "10") Integer limit,
+                                                 @RequestParam(value = "sortBy", required = false, defaultValue = "-reference") String sort,
+                                                 @RequestParam(value = "filters", required = false, defaultValue = "") String filters) {
         return transactionService.get(page, limit, sort, filters);
     }
 

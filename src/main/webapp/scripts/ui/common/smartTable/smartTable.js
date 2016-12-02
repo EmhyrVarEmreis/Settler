@@ -1,8 +1,8 @@
-(function() {
+(function () {
     'use strict';
 
     angular.module('settlerApplication')
-        .directive('smartTable', function(NgTableParams, $location) {
+        .directive('smartTable', function (NgTableParams, $location) {
             return {
                 scope:       {
                     name:             "=",
@@ -23,7 +23,7 @@
                 transclude:  true,
                 restrict:    'E',
                 templateUrl: 'scripts/ui/common/smartTable/smartTable.html',
-                link:        function(scope) {
+                link:        function (scope) {
 
                     scope.filters = {};
                     scope.data = {};
@@ -33,7 +33,7 @@
                         page:    scope.page,
                         count:   scope.count
                     }, {
-                        getData: function(params) {
+                        getData: function (params) {
                             if (!scope.factory) {
                                 params.total(0);
                                 return null;
@@ -43,7 +43,7 @@
                                 limit:   params.count(),
                                 sortBy:  params.orderBy(),
                                 filters: scope.removeEmptyFilters(scope.filters)
-                            }).$promise.then(function(data) {
+                            }).$promise.then(function (data) {
                                 params.total(data.total);
                                 scope.retrieveData(data.content);
                                 return data.content;
@@ -51,7 +51,7 @@
                         }
                     });
 
-                    scope.retrieveData = function(data) {
+                    scope.retrieveData = function (data) {
                         scope.data = {};
                         for (var entry in data) {
                             if (data.hasOwnProperty(entry)) {
@@ -66,7 +66,7 @@
                         }
                     };
 
-                    scope.removeEmptyFilters = function(filters) {
+                    scope.removeEmptyFilters = function (filters) {
                         for (var i in filters) {
                             if (filters.hasOwnProperty(i) && (filters[i] === null || filters[i] === undefined || filters[i] === '')) {
                                 delete filters[i];
@@ -75,27 +75,27 @@
                         return filters;
                     };
 
-                    scope.applyFilters = function() {
+                    scope.applyFilters = function () {
                         scope.tableParams.page(1);
                         scope.tableParams.reload();
                     };
 
-                    scope.clearFilters = function() {
+                    scope.clearFilters = function () {
                         scope.transactionFilter = {};
                         scope.applyFilters();
                     };
 
-                    scope.toggleFilters = function() {
+                    scope.toggleFilters = function () {
                         scope.showFilters = !scope.showFilters;
                     };
 
-                    scope.toggleVisibility = function() {
+                    scope.toggleVisibility = function () {
                         scope.showVisibility = !scope.showVisibility;
                     };
 
-                    scope.getVisibleColumnsCount = function() {
+                    scope.getVisibleColumnsCount = function () {
                         var i = 0;
-                        scope.columns.forEach(function(column) {
+                        scope.columns.forEach(function (column) {
                             if (column.isVisible) {
                                 i++;
                             }
@@ -103,20 +103,20 @@
                         return i;
                     };
 
-                    scope.getUrl = function(url, model) {
+                    scope.getUrl = function (url, model) {
                         var reg = /(:[a-zA-Z]+)/g;
                         var matches = [], found;
                         while (found = reg.exec(url)) {
                             matches.push(found[0]);
                             reg.lastIndex -= found[0].split(':')[1].length;
                         }
-                        matches.forEach(function(match) {
+                        matches.forEach(function (match) {
                             url = url.replace(match, model[match.substring(1)]);
                         });
                         return url;
                     };
 
-                    scope.getField = function(field, model) {
+                    scope.getField = function (field, model) {
                         if (field.indexOf('.') === -1) {
                             return model[field];
                         } else {
@@ -131,11 +131,11 @@
 
                     };
 
-                    scope.isArray = function(field) {
-                        return field && !!Array.isArray(field);
+                    scope.isArray = function (field) {
+                        return field && Array.isArray(field);
                     };
 
-                    scope.navigateToUrl = function(model) {
+                    scope.navigateToUrl = function (model) {
                         if (scope.defaultUrl) {
                             var url = scope.getUrl(scope.defaultUrl, model);
                             if (url.substring(0, 2) === '#/') {
@@ -145,30 +145,38 @@
                         }
                     };
 
-                    scope.getCssClasses = function(column, tableParams) {
+                    scope.getCssClasses = function (column, tableParams) {
                         return angular.extend({}, scope.getCssClassesTableHeaders(column, tableParams), scope.getCssClassesHide(column));
                     };
 
-                    scope.getCssClassesTableHeaders = function(column, tableParams) {
+                    scope.getCssClassesTableHeaders = function (column, tableParams) {
                         return {
                             'sort-asc':  tableParams.isSortBy(column.sortField ? column.filterField : column.field, 'asc'),
                             'sort-desc': tableParams.isSortBy(column.sortField ? column.filterField : column.field, 'desc')
                         };
                     };
 
-                    scope.getCssClassesHide = function(column) {
+                    scope.getCssClassesHide = function (column) {
                         return {
                             'hidden-xs': scope.getHideOn(column).xs,
                             'hidden-sm': scope.getHideOn(column).sm
                         };
                     };
 
-                    scope.isFilterable = function(column) {
+                    scope.isFilterable = function (column) {
                         return !!(column.filter || column.filterable);
                     };
 
-                    scope.getHideOn = function(column) {
+                    scope.getHideOn = function (column) {
                         return column.hideOn ? column.hideOn : {};
+                    };
+
+                    scope.getTransformedEntry = function (value, column, entry) {
+                        if (column.transform) {
+                            return column.transform(value, entry);
+                        } else {
+                            return value;
+                        }
                     };
 
                 }

@@ -6,6 +6,7 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.ComparableExpressionBase;
 import com.querydsl.core.types.dsl.EntityPathBase;
 import org.modelmapper.AbstractConverter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.querydsl.QPageRequest;
@@ -16,7 +17,6 @@ import pl.morecraft.dev.settler.service.converters.ListPageConverter;
 import pl.morecraft.dev.settler.service.converters.prototype.EntityConvertersPack;
 import pl.morecraft.dev.settler.web.misc.ListPage;
 
-import javax.inject.Inject;
 import java.io.IOException;
 import java.io.Serializable;
 import java.lang.reflect.Field;
@@ -48,15 +48,15 @@ public abstract class AbstractService<
         > {
 
     @SuppressWarnings("SpringAutowiredFieldsWarningInspection")
-    @Inject
+    @Autowired
     private EntityConvertersPack entityConvertersPack;
 
     @SuppressWarnings("SpringAutowiredFieldsWarningInspection")
-    @Inject
+    @Autowired
     private SingleFiltersPack singleFiltersPack;
 
     @SuppressWarnings("SpringAutowiredFieldsWarningInspection")
-    @Inject
+    @Autowired
     private ListPageConverter listPageConverter;
 
     public ResponseEntity<EntityDTO> get(EntityID id) {
@@ -87,7 +87,7 @@ public abstract class AbstractService<
         return new ResponseEntity<>(entityDTO, HttpStatus.OK);
     }
 
-    public ResponseEntity<String> save(EntityDTO entityDTO) {
+    public ResponseEntity<EntityDTO> save(EntityDTO entityDTO) {
         if (!getSaveAuthorisationPredicate().test(entityDTO)) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
@@ -96,19 +96,23 @@ public abstract class AbstractService<
             return new ResponseEntity<>(HttpStatus.PRECONDITION_FAILED);
         }
 
-        Entity entity = getSaveProcessingFunction().apply(
-                getSavePreProcessingFunction().apply(entityDTO)
+        Entity entity = getSavePostProcessingFunction().apply(
+                getSaveConvertingFunction().apply(
+                        getSavePreProcessingFunction().apply(entityDTO)
+                )
         );
 
         if (!getSavePostValidationPredicate().test(entity)) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-        if (getRepository().save(getSavePostProcessingFunction().apply(entity)) == null) {
+        if (getSaveSaveFunction().apply(getSaveSavePreProcessingFunction().apply(entity)) == null) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        getSaveSavePostProcessingFunction().apply(entity);
+
+        return new ResponseEntity<>(getGetProcessingFunction().apply(entity), HttpStatus.OK);
     }
 
     public ListPage<ListDTO> get(Integer page, Integer limit, String sortBy, String filters) {
@@ -165,7 +169,7 @@ public abstract class AbstractService<
         return entity -> entity;
     }
 
-    protected Function<EntityDTO, Entity> getSaveProcessingFunction() {
+    protected Function<EntityDTO, Entity> getSaveConvertingFunction() {
         return entityDTO -> entityConvertersPack.getPreparedModelMapper().map(entityDTO, getEntityClass());
     }
 
@@ -195,6 +199,18 @@ public abstract class AbstractService<
 
     protected UnaryOperator<Entity> getGetPreProcessingFunction() {
         return entity -> entity;
+    }
+
+    protected UnaryOperator<Entity> getSaveSavePreProcessingFunction() {
+        return entity -> entity;
+    }
+
+    protected UnaryOperator<Entity> getSaveSavePostProcessingFunction() {
+        return entity -> entity;
+    }
+
+    protected UnaryOperator<Entity> getSaveSaveFunction() {
+        return entity -> getRepository().save(entity);
     }
 
     protected List<AbstractServiceSingleFilter> getAbstractServiceSingleFilters() {

@@ -35,12 +35,12 @@ public class UserController {
             method = {RequestMethod.PUT, RequestMethod.POST},
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<String> save(@RequestBody UserDTO userDTO) {
+    public ResponseEntity<UserDTO> save(@RequestBody UserDTO userDTO) {
         return userService.save(userDTO);
     }
 
     @RequestMapping("/list")
-    public ListPage<UserListDTO> getUsers(@RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
+    public ListPage<UserListDTO> getPaged(@RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
                                           @RequestParam(value = "limit", required = false, defaultValue = "25") Integer limit,
                                           @RequestParam(value = "sortBy", required = false, defaultValue = "-login") String sortBy,
                                           @RequestParam(value = "filters", required = false, defaultValue = "") String filters) {
@@ -48,7 +48,7 @@ public class UserController {
     }
 
     @RequestMapping("/search/simple")
-    public ResponseEntity<List<UserListDTO>> getUsers(@RequestParam(value = "limit", required = false, defaultValue = "25") Integer limit,
+    public ResponseEntity<List<UserListDTO>> getPaged(@RequestParam(value = "limit", required = false, defaultValue = "25") Integer limit,
                                                       @RequestParam(value = "string", required = false, defaultValue = "") String string) {
         return userService.searchSimple(limit, string);
     }

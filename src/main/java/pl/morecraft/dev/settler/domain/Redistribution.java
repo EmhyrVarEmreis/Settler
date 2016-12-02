@@ -1,6 +1,5 @@
 package pl.morecraft.dev.settler.domain;
 
-
 import pl.morecraft.dev.settler.domain.dictionaries.RedistributionType;
 
 import javax.persistence.*;
@@ -8,22 +7,10 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "mod_redistribution")
-@IdClass(Redistribution.RedistributionPK.class)
 public class Redistribution {
 
-    @Id
-    @Enumerated(EnumType.STRING)
-    private RedistributionType type;
-
-    @Id
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "parent")
-    private PrivilegeObject parent;
-
-    @Id
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "user")
-    private User user;
+    @EmbeddedId
+    private RedistributionId id;
 
     private Double value;
 
@@ -31,35 +18,26 @@ public class Redistribution {
 
     }
 
-    public Redistribution(RedistributionType type, PrivilegeObject parent, User user, Double value) {
-        this.type = type;
-        this.parent = parent;
-        this.user = user;
+    public Redistribution(RedistributionId id, Double value) {
+        this.id = id;
         this.value = value;
     }
 
-    public RedistributionType getType() {
-        return type;
+    public Redistribution(RedistributionType type, PrivilegeObject parent, User user, Double value) {
+        this(type, parent.getId(), user, value);
     }
 
-    public void setType(RedistributionType type) {
-        this.type = type;
+    public Redistribution(RedistributionType type, Long parent, User user, Double value) {
+        this.id = new RedistributionId(type, parent, user);
+        this.value = value;
     }
 
-    public PrivilegeObject getParent() {
-        return parent;
+    public RedistributionId getId() {
+        return id;
     }
 
-    public void setParent(PrivilegeObject parent) {
-        this.parent = parent;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
+    public void setId(RedistributionId id) {
+        this.id = id;
     }
 
     public Double getValue() {
@@ -70,86 +48,88 @@ public class Redistribution {
         this.value = value;
     }
 
-    @SuppressWarnings("RedundantIfStatement")
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
         Redistribution that = (Redistribution) o;
 
-        if (!type.equals(that.type)) {
-            return false;
-        }
-        if (!parent.equals(that.parent)) {
-            return false;
-        }
-        if (!user.equals(that.user)) {
-            return false;
-        }
-
-        return true;
+        return id != null ? id.equals(that.id) : that.id == null;
     }
 
     @Override
     public int hashCode() {
-        int result = type.hashCode();
-        result = 41 * result + parent.hashCode();
-        result = 41 * result + user.hashCode();
-        return result;
+        return id != null ? id.hashCode() : 0;
     }
 
-    public static class RedistributionPK implements Serializable {
+    @Embeddable
+    public static class RedistributionId implements Serializable {
 
+        @Enumerated(EnumType.STRING)
         private RedistributionType type;
+
         private Long parent;
-        private Long user;
 
-        public RedistributionPK() {
+        @ManyToOne(optional = false)
+        @JoinColumn(name = "user")
+        private User user;
+
+        public RedistributionId() {
+
         }
 
-        public RedistributionPK(RedistributionType type, PrivilegeObject parent, User user) {
+        public RedistributionId(RedistributionType type, Long parent, User user) {
             this.type = type;
-            this.parent = parent.getId();
-            this.user = user.getId();
+            this.parent = parent;
+            this.user = user;
         }
 
-        @SuppressWarnings("RedundantIfStatement")
+        public RedistributionType getType() {
+            return type;
+        }
+
+        public void setType(RedistributionType type) {
+            this.type = type;
+        }
+
+        public Long getParent() {
+            return parent;
+        }
+
+        public void setParent(Long parent) {
+            this.parent = parent;
+        }
+
+        public User getUser() {
+            return user;
+        }
+
+        public void setUser(User user) {
+            this.user = user;
+        }
+
+        @SuppressWarnings("SimplifiableIfStatement")
         @Override
         public boolean equals(Object o) {
-            if (this == o) {
-                return true;
-            }
-            if (o == null || getClass() != o.getClass()) {
-                return false;
-            }
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
 
-            RedistributionPK that = (RedistributionPK) o;
+            RedistributionId that = (RedistributionId) o;
 
-            if (!type.equals(that.type)) {
-                return false;
-            }
-            if (!parent.equals(that.parent)) {
-                return false;
-            }
-            if (!user.equals(that.user)) {
-                return false;
-            }
-
-            return true;
+            if (type != null ? !type.equals(that.type) : that.type != null) return false;
+            if (parent != null ? !parent.equals(that.parent) : that.parent != null) return false;
+            return user != null ? user.equals(that.user) : that.user == null;
         }
 
         @Override
         public int hashCode() {
-            int result = type.hashCode();
-            result = 41 * result + parent.hashCode();
-            result = 41 * result + user.hashCode();
+            int result = type != null ? type.hashCode() : 0;
+            result = 31 * result + (parent != null ? parent.hashCode() : 0);
+            result = 31 * result + (user != null ? user.hashCode() : 0);
             return result;
         }
+
     }
 
 }

@@ -53,14 +53,15 @@
                 <td ng-repeat="column in columns" ng-show="column.isVisible || showVisibility"
                     ng-class="getCssClassesHide(column)">
                     <a ng-if="column.url" href ng-href="{{column.url || entry ? getUrl(column.url,entry) : ''}}">
-                        <strong>{{entry[column.field] | isEmpty:column.isEmpty}}</strong>
+                        <strong>{{getTransformedEntry(entry[column.field], column, entry) |
+                            isEmpty:column.isEmpty}}</strong>
                     </a>
                     <div ng-if="!column.url && !isArray(entry[column.field]) && column.type !== 'boolean'">
-                        {{entry[column.field] | isEmpty:column.isEmpty}}
+                        {{getTransformedEntry(entry[column.field], column, entry) | isEmpty:column.isEmpty}}
                     </div>
                     <div ng-if="!column.url && isArray(entry[column.field])"
                          ng-repeat="value in entry[column.field] track by $index">
-                        {{value}}
+                        {{getTransformedEntry(value, column, entry)}}
                     </div>
                     <div ng-if="!column.url && column.type === 'boolean'">
                         <span ng-if="entry[column.field]" class="glyphicon glyphicon-ok" aria-hidden="true"></span>

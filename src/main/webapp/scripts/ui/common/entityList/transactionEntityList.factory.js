@@ -1,7 +1,7 @@
-(function() {
+(function () {
     'use strict';
 
-    angular.module('settlerApplication').factory('transactionEntityListFactory', function(transactionListFactory) {
+    angular.module('settlerApplication').factory('transactionEntityListFactory', function (transactionListFactory) {
         var object = {};
 
         object.columnsCount = 0;
@@ -11,6 +11,8 @@
         object.page = 1;
         object.emptyString = 'Brak wyników spełniających podane kryteria';
         object.title = 'Lista transakcji';
+        object.newEntityButton = 'Nowa transakcja';
+        object.newEntityButtonUrl = '#/transaction/details/new';
 
         object.columns = [
             {
@@ -78,6 +80,9 @@
                 hideOn:     {xs: true},
                 type:       'default',
                 isEmpty:    "N/D",
+                transform:  function (data, entry) {
+                    return data.user + ' (' + (data.value / entry.value.replace(/,/, '.') * 100).toFixed(0) + '%)';
+                },
                 index:      object.columnsCount++
             },
             {
@@ -89,6 +94,9 @@
                 hideOn:     {xs: true},
                 type:       'default',
                 isEmpty:    "N/D",
+                transform:  function (data, entry) {
+                    return data.user + ' (' + (data.value / entry.value.replace(/,/, '.') * 100).toFixed(0) + '%)';
+                },
                 index:      object.columnsCount++
             },
             {
@@ -103,7 +111,7 @@
                 index:      object.columnsCount++
             },
             {
-                field: 'evaluated',
+                field:      'evaluated',
                 title:      '<span class="glyphicon glyphicon-time" aria-hidden="true"></span>',
                 isVisible:  true,
                 filterable: true,

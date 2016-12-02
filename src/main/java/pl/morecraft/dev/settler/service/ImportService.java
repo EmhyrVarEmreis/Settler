@@ -156,8 +156,8 @@ public class ImportService {
                     log.info(t.getEvaluated()
                             + " " + t.getReference()
                             + " " + t.getValue()
-                            + " [" + t.getOwners().stream().map(r -> r.getUser().getLogin() + "/" + r.getValue()).collect(Collectors.joining(", ")) + "]"
-                            + " [" + t.getContractors().stream().map(r -> r.getUser().getLogin() + "/" + r.getValue()).collect(Collectors.joining(", ")) + "]"
+                            + " [" + t.getOwners().stream().map(r -> r.getId().getUser().getLogin() + "/" + r.getValue()).collect(Collectors.joining(", ")) + "]"
+                            + " [" + t.getContractors().stream().map(r -> r.getId().getUser().getLogin() + "/" + r.getValue()).collect(Collectors.joining(", ")) + "]"
                     );
                     transactionRepository.save(t);
                 }

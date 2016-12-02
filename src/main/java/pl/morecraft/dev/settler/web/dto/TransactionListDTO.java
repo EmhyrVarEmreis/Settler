@@ -16,8 +16,8 @@ public class TransactionListDTO {
     private String reference;
     private String type;
     private String creator;
-    private List<String> owners;
-    private List<String> contractors;
+    private List<RedistributionTinyDTO> owners;
+    private List<RedistributionTinyDTO> contractors;
 
     @JsonSerialize(using = JsonDoubleSerializer.class)
     @JsonDeserialize(using = JsonDoubleDeserializer.class)
@@ -66,19 +66,19 @@ public class TransactionListDTO {
         this.creator = creator;
     }
 
-    public List<String> getOwners() {
+    public List<RedistributionTinyDTO> getOwners() {
         return owners;
     }
 
-    public void setOwners(List<String> owners) {
+    public void setOwners(List<RedistributionTinyDTO> owners) {
         this.owners = owners;
     }
 
-    public List<String> getContractors() {
+    public List<RedistributionTinyDTO> getContractors() {
         return contractors;
     }
 
-    public void setContractors(List<String> contractors) {
+    public void setContractors(List<RedistributionTinyDTO> contractors) {
         this.contractors = contractors;
     }
 

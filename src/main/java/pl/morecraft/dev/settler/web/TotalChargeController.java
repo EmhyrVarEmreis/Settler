@@ -34,10 +34,10 @@ public class TotalChargeController {
     }
 
     @RequestMapping("/list")
-    public ListPage<TotalChargeListDTO> getTotalCharges(@RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
-                                                        @RequestParam(value = "limit", required = false, defaultValue = "25") Integer limit,
-                                                        @RequestParam(value = "sortBy", required = false, defaultValue = "-id") String sortBy,
-                                                        @RequestParam(value = "filters", required = false, defaultValue = "") String filters) {
+    public ListPage<TotalChargeListDTO> getPaged(@RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
+                                                 @RequestParam(value = "limit", required = false, defaultValue = "25") Integer limit,
+                                                 @RequestParam(value = "sortBy", required = false, defaultValue = "-id") String sortBy,
+                                                 @RequestParam(value = "filters", required = false, defaultValue = "") String filters) {
         return totalChargeService.get(page, limit, sortBy, filters);
     }
 

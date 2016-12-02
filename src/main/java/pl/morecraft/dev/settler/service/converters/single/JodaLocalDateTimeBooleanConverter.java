@@ -8,8 +8,10 @@ import pl.morecraft.dev.settler.service.converters.prototype.EntityConverter;
 @Component
 @EntityConverter
 public class JodaLocalDateTimeBooleanConverter extends AbstractConverter<LocalDateTime, Boolean> {
+
     @Override
     protected Boolean convert(LocalDateTime localDate) {
         return localDate != null;
     }
+
 }

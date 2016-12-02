@@ -33,7 +33,7 @@ public class CategoryController {
             method = {RequestMethod.PUT, RequestMethod.POST},
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<String> save(@RequestBody CategoryDTO dto) {
+    public ResponseEntity<CategoryDTO> save(@RequestBody CategoryDTO dto) {
         return categoryService.save(dto);
     }
 

@@ -12,7 +12,7 @@ public class PrivilegeObject implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, nullable = false)
-    private Long id;
+    protected Long id;
 
     public Long getId() {
         return id;
@@ -40,6 +40,12 @@ public class PrivilegeObject implements Serializable {
     @Override
     public int hashCode() {
         return id.hashCode();
+    }
+
+    public static PrivilegeObject from(Long id) {
+        PrivilegeObject privilegeObject = new PrivilegeObject();
+        privilegeObject.setId(id);
+        return privilegeObject;
     }
 
 }
