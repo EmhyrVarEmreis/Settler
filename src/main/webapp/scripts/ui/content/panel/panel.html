@@ -26,19 +26,29 @@
                                 </div>
                             </div>
                             <div class="row" ng-show="charges.to && charges.to.length > 0">
-                                <div class="col-sm-9">
-                                    <strong>Użytkownik</strong>
-                                </div>
-                                <div class="col-sm-3">
-                                    <strong>Wartość</strong>
-                                </div>
-                            </div>
-                            <div class="row" ng-repeat="row in charges.to">
-                                <div class="col-sm-9">
-                                    {{row.userFrom}}
-                                </div>
-                                <div class="col-sm-3">
-                                    {{row.charge | myCurrency:'PLN'}}
+                                <div class="col-sm-12">
+                                    <table width="100%">
+                                        <thead>
+                                        <tr>
+                                            <td width="80%">
+                                                <strong>Użytkownik</strong>
+                                            </td>
+                                            <td width="20%">
+                                                <strong>Wartość</strong>
+                                            </td>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr ng-repeat="row in charges.to track by $index">
+                                            <td>
+                                                {{row.userFrom}}
+                                            </td>
+                                            <td>
+                                                {{row.charge | myCurrency:'PLN'}}
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
@@ -59,19 +69,29 @@
                             </div>
                         </div>
                         <div class="row" ng-show="charges.from && charges.from.length > 0">
-                            <div class="col-sm-9">
-                                <strong>Użytkownik</strong>
-                            </div>
-                            <div class="col-sm-3">
-                                <strong>Wartość</strong>
-                            </div>
-                        </div>
-                        <div class="row" ng-repeat="row in charges.from">
-                            <div class="col-sm-9">
-                                {{row.userFrom}}
-                            </div>
-                            <div class="col-sm-3">
-                                {{row.charge | myCurrency:'PLN'}}
+                            <div class="col-sm-12">
+                                <table width="100%">
+                                    <thead>
+                                    <tr>
+                                        <td width="80%">
+                                            <strong>Użytkownik</strong>
+                                        </td>
+                                        <td width="20%">
+                                            <strong>Wartość</strong>
+                                        </td>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="row in charges.from track by $index">
+                                        <td>
+                                            {{row.userFrom}}
+                                        </td>
+                                        <td>
+                                            {{row.charge | myCurrency:'PLN'}}
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
