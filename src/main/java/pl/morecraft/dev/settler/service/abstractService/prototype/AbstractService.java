@@ -252,7 +252,12 @@ public abstract class AbstractService<
 
     private BooleanExpression applyFilters(String filtersJson, QEntity qObject, boolean isAnd) throws NoSuchFieldException, IllegalAccessException {
         BooleanExpressionWrapper pWrapper = new BooleanExpressionWrapper();
-        pWrapper.predicate = qObject.isNotNull();
+
+        if (isAnd) {
+            pWrapper.predicate = qObject.isNotNull();
+        } else {
+            pWrapper.predicate = qObject.ne(qObject);
+        }
 
         for (BooleanExpression preFilter : getPreFilters()) {
             pWrapper.predicate = pWrapper.predicate.and(preFilter);
@@ -299,7 +304,6 @@ public abstract class AbstractService<
                                     )
                             )
             );
-
         } catch (IOException e) {
             e.printStackTrace();
         }
