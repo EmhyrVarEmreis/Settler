@@ -77,8 +77,11 @@ public class EmailService {
             message.setSubject(emailTemplateTmp.subject);
             message.setText(emailTemplateTmp.content, true);
         };
-
-        mailSender.send(preparator);
+        try {
+            mailSender.send(preparator);
+        } catch (Exception e) {
+            log.error("Error occurred during sendEmail", e);
+        }
     }
 
     private final static class EmailTemplateTmp {
