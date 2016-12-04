@@ -2,17 +2,18 @@
     'use strict';
 
     angular.module('settlerApplication')
-        .directive('dateTimePickerComponent', function () {
+        .directive('dateTimePicker', function () {
             var format = 'YYYY-MM-DD HH:mm:ss';
             var locale = 'pl';
             return {
                 scope:       {
-                    ngModel: "=",
-                    label:   "@",
-                    name:    "@"
+                    ngModel:    "=",
+                    ngDisabled: "=",
+                    label:      "@",
+                    name:       "@"
                 },
                 restrict:    'E',
-                templateUrl: 'scripts/ui/common/directive/dateTimePickerComponent/dateTimePickerComponent.html',
+                templateUrl: 'scripts/ui/common/directive/dateTimePicker/dateTimePickerDirective.html',
                 link:        function ($scope, element) {
 
                     var elementDiv = element.find('div');

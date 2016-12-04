@@ -1,8 +1,13 @@
 package pl.morecraft.dev.settler.web.dto;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import pl.morecraft.dev.settler.web.utils.JsonDoubleDeserializer;
+
 public class RedistributionTinyDTO {
 
     private String user;
+
+    @JsonDeserialize(using = JsonDoubleDeserializer.class)
     private Double value;
 
     public RedistributionTinyDTO() {

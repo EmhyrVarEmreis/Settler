@@ -1,9 +1,7 @@
 package pl.morecraft.dev.settler.web.dto;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import pl.morecraft.dev.settler.web.utils.JsonDoubleDeserializer;
-import pl.morecraft.dev.settler.web.utils.JsonDoubleSerializer;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -17,7 +15,6 @@ public class RedistributionDTO {
 
     private UserTinyDTO user;
 
-    @JsonSerialize(using = JsonDoubleSerializer.class)
     @JsonDeserialize(using = JsonDoubleDeserializer.class)
     private Double value;
 

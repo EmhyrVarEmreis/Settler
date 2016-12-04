@@ -8,8 +8,10 @@ import org.springframework.transaction.annotation.Transactional;
 import pl.morecraft.dev.settler.dao.repository.RedistributionRepository;
 import pl.morecraft.dev.settler.dao.repository.TransactionRepository;
 import pl.morecraft.dev.settler.domain.QTransaction;
+import pl.morecraft.dev.settler.domain.Redistribution;
 import pl.morecraft.dev.settler.domain.Transaction;
 import pl.morecraft.dev.settler.domain.dictionaries.OperationType;
+import pl.morecraft.dev.settler.domain.dictionaries.RedistributionType;
 import pl.morecraft.dev.settler.security.authorisation.PermissionManager;
 import pl.morecraft.dev.settler.security.util.Security;
 import pl.morecraft.dev.settler.service.abstractService.prototype.AbstractService;
@@ -89,16 +91,18 @@ public class TransactionService extends AbstractService<Transaction, Transaction
     protected UnaryOperator<Transaction> getSaveSavePreProcessingFunction() {
         return transaction -> {
 //            getRepository().save(transaction);
-//            if (transaction.getOwners() != null) {
-//                for (Redistribution redistribution : transaction.getOwners()) {
-//                    redistribution.getId().setParent(transaction);
-//                }
-//            }
-//            if (transaction.getContractors() != null) {
-//                for (Redistribution redistribution : transaction.getContractors()) {
-//                    redistribution.getId().setParent(transaction);
-//                }
-//            }
+            if (transaction.getOwners() != null) {
+                for (Redistribution redistribution : transaction.getOwners()) {
+                    redistribution.getId().setParent(transaction.getId());
+                    redistribution.getId().setType(RedistributionType.O);
+                }
+            }
+            if (transaction.getContractors() != null) {
+                for (Redistribution redistribution : transaction.getContractors()) {
+                    redistribution.getId().setParent(transaction.getId());
+                    redistribution.getId().setType(RedistributionType.C);
+                }
+            }
             return super.getSaveSavePreProcessingFunction().apply(transaction);
         };
     }

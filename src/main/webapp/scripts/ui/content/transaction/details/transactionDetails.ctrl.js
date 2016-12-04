@@ -1,52 +1,78 @@
-(function() {
+(function () {
     'use strict';
 
-    angular.module('settlerApplication').controller('TransactionDetailsCtrl', function($scope,
-                                                                                       NgTableParams,
-                                                                                       transactionDetailsFactory,
-                                                                                       userSearchSimpleFactory,
-                                                                                       $stateParams,
-                                                                                       modalService) {
+    angular.module('settlerApplication').controller('TransactionDetailsCtrl', function ($scope,
+                                                                                        NgTableParams,
+                                                                                        transactionDetailsFactory,
+                                                                                        $stateParams,
+                                                                                        modalService,
+                                                                                        $uibModal) {
 
-        $scope.data = {};
-        if ($stateParams.state !== 'new') {
+        $scope.data = {
+            owners:      [],
+            contractors: []
+        };
+
+        $scope.isNew = $stateParams.state === 'new';
+
+        if (!$scope.isNew) {
             transactionDetailsFactory.get(
                 {
                     id: $stateParams.state
                 },
-                function(data) {
+                function (data) {
                     $scope.data = data;
-                }, function(err) {
+                }, function (err) {
                     modalService.createErrorDialogFromResponse(err);
                 }
             );
         }
 
-        $scope.save = function() {
+        $scope.save = function () {
             transactionDetailsFactory.save(
                 $scope.data,
-                function(data) {
+                function (data) {
                     $scope.data = data;
-                }, function(err) {
+                }, function (err) {
                     modalService.createErrorDialogFromResponse(err);
                 }
             );
         };
 
-        $scope.getValueString = function(t, r) {
-            return (parseFloat(r.value) / parseFloat(t.value) * 100).toFixed(2);
+        $scope.getPercentString = function (t, r) {
+            return (parseFloat(r.value.toString().replace(/,/, '.')) / parseFloat(t.value.toString().replace(/,/, '.')) * 100).toFixed(2);
         };
 
-        $scope.refreshCreatorList = function(input) {
-            if (input == null || input.length < 3) {
-                return [];
-            }
-            $scope.creatorList = userSearchSimpleFactory.query({
-                limit:  10,
-                string: input
+        $scope.getValueString = function (t) {
+            return parseFloat(t.value.toString().replace(/,/, '.')).toFixed(2);
+        };
+
+        $scope.openAddRedistributionModal = function (redistributionList) {
+            var modalInstance = $uibModal.open({
+                animation:    true,
+                templateUrl:  'scripts/ui/content/transaction/details/addRedistribution/addRedistribution.html',
+                controller:   'AddRedistributionCtrl',
+                controllerAs: '$ctrl',
+                resolve:      {
+                    redistributionList: function () {
+                        return redistributionList;
+                    },
+                    totalValue:         function () {
+                        return $scope.data.value;
+                    }
+                }
             });
-            return $scope.creatorList;
-        }
+
+            modalInstance.result.then(function (selectedItem) {
+                redistributionList.push(
+                    {
+                        value: selectedItem.value,
+                        user:  selectedItem.user
+                    }
+                );
+            }, function () {
+            });
+        };
 
     });
 

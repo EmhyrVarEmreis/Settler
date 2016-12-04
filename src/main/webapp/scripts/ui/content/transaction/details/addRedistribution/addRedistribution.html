@@ -1,0 +1,51 @@
+<div class="modal-header">
+    <h3 class="modal-title" id="modal-title">Dodaj redystrybucję</h3>
+</div>
+<div class="modal-body" id="modal-body">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="row">
+                <div class="col-sm-12">
+                    <label>Użytkownik</label>
+                    <user-picker ng-model="$ctrl.selected.user"></user-picker>
+                </div>
+            </div>
+            <div class="row text-center" style="margin-top: 16px;">
+                <div class="col-sm-12">
+                    <div class="btn-group" role="group">
+                        <button type="button"
+                                class="btn"
+                                ng-class="{'btn-success' : $ctrl.isPercent === false, 'btn-default' : $ctrl.isPercent === true || $ctrl.isPercent === null}"
+                                ng-click="$ctrl.setPercentage(false)">
+                            $
+                        </button>
+                        <button type="button"
+                                class="btn btn-default"
+                                ng-class="{'btn-success' : $ctrl.isPercent === true, 'btn-default' : $ctrl.isPercent === false}"
+                                ng-click="$ctrl.setPercentage(true)">
+                            %
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="row" ng-if="$ctrl.isPercent !== null">
+                <div class="col-sm-12">
+                    <label>{{$ctrl.isPercent ? 'Procent' : 'Wartość'}}</label>
+                    <rzslider rz-slider-model="$ctrl.selected.value"
+                              rz-slider-options="$ctrl.slider.options"></rzslider>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary"
+            type="button"
+            ng-disabled="!$ctrl.selected.user || $ctrl.selected.value === 0"
+            ng-click="$ctrl.ok()">OK
+    </button>
+    <button class="btn btn-warning"
+            type="button"
+            ng-click="$ctrl.cancel()">Cancel
+    </button>
+</div>

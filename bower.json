@@ -19,6 +19,7 @@
     "angular-ui-validate": "1.2.2",
     "eonasdan-bootstrap-datetimepicker": "4.17.42",
     "moment": "2.17.0",
-    "angular-moment": "^1.0.0"
+    "angular-moment": "1.0.0",
+    "angularjs-slider": "5.8.7"
   }
 }

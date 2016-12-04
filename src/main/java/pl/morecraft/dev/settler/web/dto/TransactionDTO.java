@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.joda.time.LocalDateTime;
 import pl.morecraft.dev.settler.web.utils.JsonDoubleDeserializer;
-import pl.morecraft.dev.settler.web.utils.JsonDoubleSerializer;
 import pl.morecraft.dev.settler.web.utils.JsonJodaLocalDateTimeDeserializer;
 import pl.morecraft.dev.settler.web.utils.JsonJodaLocalDateTimeSerializer;
 
@@ -38,7 +37,6 @@ public class TransactionDTO {
     private List<RedistributionDTO> contractors;
 
     @NotNull
-    @JsonSerialize(using = JsonDoubleSerializer.class)
     @JsonDeserialize(using = JsonDoubleDeserializer.class)
     private Double value;
 

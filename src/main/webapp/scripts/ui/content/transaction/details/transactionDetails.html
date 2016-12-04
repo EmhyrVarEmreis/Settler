@@ -32,6 +32,7 @@
                         <input class="form-control input-sm"
                                type="text"
                                name="firstName"
+                               ng-disabled="!isNew"
                                ng-maxlength="15"
                                ng-model="data.reference">
                     </div>
@@ -55,36 +56,24 @@
                                ng-model="data.value">
                     </div>
                     <div class="col-sm-6">
-                        <date-time-picker-component
+                        <date-time-picker
                                 name="createdDate"
                                 label="Utworzona"
-                                ng-model="data.created"></date-time-picker-component>
+                                ng-disabled="!isNew"
+                                ng-model="data.created"></date-time-picker>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-sm-6">
-                        <date-time-picker-component
+                        <date-time-picker
                                 name="evaluatedDate"
                                 label="Ewaluowana"
-                                ng-model="data.evaluated"></date-time-picker-component>
+                                ng-model="data.evaluated"></date-time-picker>
                     </div>
                     <div class="col-sm-6">
                         <label>Twórca</label>
-                        <ui-select ng-model="data.creator"
-                                   theme="bootstrap"
-                                   reset-search-input="false"
-                                   title="Wybierz użytkownika">
-                            <ui-select-match placeholder="Podaj użytkownika">
-                                {{$select.selected.firstName + ' ' + $select.selected.lastName + ' (' +
-                                $select.selected.login + ')'}}
-                            </ui-select-match>
-                            <ui-select-choices repeat="user in creatorList track by user.id"
-                                               refresh="refreshCreatorList($select.search)"
-                                               refresh-delay="0">
-                                <div ng-bind-html="user.firstName + ' ' + user.lastName + ' (' + user.login + ')' | highlight: $select.search"></div>
-                            </ui-select-choices>
-                        </ui-select>
+                        <user-picker ng-model="data.creator"></user-picker>
                     </div>
                 </div>
             </div>
@@ -128,6 +117,18 @@
                                 <h4>Właściciele</h4>
                             </div>
                         </div>
+                        <div class="row text-center">
+                            <div class="col-sm-12">
+                                <button type="button"
+                                        style="margin-bottom: 8px;"
+                                        ng-click="openAddRedistributionModal(data.owners)"
+                                        class="btn btn-default btn-sm">
+                                    <span class="glyphicon glyphicon-plus"
+                                          style="margin-left: 2px;"
+                                          aria-hidden="true"></span>
+                                </button>
+                            </div>
+                        </div>
                         <div class="row" ng-hide="!data.owners || data.owners.length < 1">
                             <div class="col-sm-12">
                                 <table width="100%">
@@ -151,12 +152,13 @@
                                             ({{redistribution.user.login}})
                                         </td>
                                         <td>
-                                            {{redistribution.value}} ({{getValueString(data, redistribution)}})%
+                                            {{getValueString(redistribution)}}
+                                            ({{getPercentString(data, redistribution)}})%
                                         </td>
                                         <td>
                                             <button type="button"
                                                     class="btn btn-default btn-sm"
-                                                    ng-click="data.owners.splice($index-1, 1)">
+                                                    ng-click="data.owners.splice($index, 1)">
                                                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                                             </button>
                                         </td>
@@ -177,6 +179,18 @@
                         <div class="row">
                             <div class="col-sm-12 text-center">
                                 <h4>Kontraktorzy</h4>
+                            </div>
+                        </div>
+                        <div class="row text-center">
+                            <div class="col-sm-12">
+                                <button type="button"
+                                        style="margin-bottom: 8px;"
+                                        ng-click="openAddRedistributionModal(data.contractors)"
+                                        class="btn btn-default btn-sm">
+                                    <span class="glyphicon glyphicon-plus"
+                                          style="margin-left: 2px;"
+                                          aria-hidden="true"></span>
+                                </button>
                             </div>
                         </div>
                         <div class="row" ng-hide="!data.contractors || data.contractors.length < 1">
@@ -202,12 +216,13 @@
                                             ({{redistribution.user.login}})
                                         </td>
                                         <td>
-                                            {{redistribution.value}} ({{getValueString(data, redistribution)}})%
+                                            {{getValueString(redistribution)}}
+                                            ({{getPercentString(data, redistribution)}})%
                                         </td>
                                         <td>
                                             <button type="button"
                                                     class="btn btn-default btn-sm"
-                                                    ng-click="data.contractors.splice($index-1, 1)">
+                                                    ng-click="data.contractors.splice($index, 1)">
                                                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                                             </button>
                                         </td>
