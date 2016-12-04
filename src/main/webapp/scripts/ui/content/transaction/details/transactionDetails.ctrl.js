@@ -63,23 +63,37 @@
                 }
             });
 
-            modalInstance.result.then(function (selectedItem) {
+            modalInstance.result.then(function (item) {
                 redistributionList.push(
                     {
-                        value: selectedItem.value,
-                        user:  selectedItem.user
+                        value: item.value,
+                        user:  item.user
                     }
                 );
             }, function () {
             });
         };
 
-        $scope.addNewCategory = function () {
-            if (!$scope.data.categories) {
-                $scope.data.categories = [];
-            }
-            $scope.data.categories.push($scope.newCategory);
-            $scope.newCategory = null;
+        $scope.openAddCategoryModal = function () {
+            var modalInstance = $uibModal.open({
+                animation:    true,
+                templateUrl:  'scripts/ui/content/transaction/details/addCategory/addCategory.html',
+                controller:   'AddCategoryCtrl',
+                controllerAs: '$ctrl'
+            });
+
+            modalInstance.result.then(function (item) {
+                if (!$scope.data.categories) {
+                    $scope.data.categories = [];
+                }
+                for (var i = 0; i < $scope.data.categories.length; i++) {
+                    if ($scope.data.categories[i].code === item.code) {
+                        return;
+                    }
+                }
+                $scope.data.categories.push(item);
+            }, function () {
+            });
         };
 
     });

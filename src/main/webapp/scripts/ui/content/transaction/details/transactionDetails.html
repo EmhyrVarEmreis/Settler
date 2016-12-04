@@ -16,6 +16,25 @@
         </div>
         <div class="clearfix"></div>
         <h4>Utworzona: {{data.created}}</h4>
+        <h5>Kategorie:
+            <span class="label label-info"
+                  style="margin-right: 8px;"
+                  ng-repeat="category in data.categories">
+                {{category.code+' - ' + category.description}}
+                <span class="glyphicon glyphicon-remove"
+                      aria-hidden="true"
+                      style="cursor: pointer; margin-left: 6px;"
+                      ng-click="data.categories.splice($index, 1)"></span>
+            </span>
+            <span class="label label-success"
+                  style="margin-right: 8px; cursor: pointer;">
+                <span class="glyphicon glyphicon-plus"
+                      aria-hidden="true"
+                      style="margin-left: 1px;"
+                      ng-click="openAddCategoryModal()"></span>
+
+            </span>
+        </h5>
     </div>
 
     <form class="form">
@@ -26,7 +45,7 @@
             </div>
             <div class="panel-body">
                 <div class="row">
-                    <div class="col-sm-6">
+                    <div class="col-sm-6 form-group">
                         <label>Numer</label>
 
                         <input class="form-control input-sm"
@@ -36,7 +55,7 @@
                                ng-maxlength="15"
                                ng-model="data.reference">
                     </div>
-                    <div class="col-sm-6">
+                    <div class="col-sm-6 form-group">
                         <dictionary-selector dictionary-key="transactionType"
                                              ng-model="data.type"
                                              clear-btn="false"
@@ -46,7 +65,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-sm-6">
+                    <div class="col-sm-6 form-group">
                         <label>Wartość</label>
 
                         <input class="form-control input-sm"
@@ -55,7 +74,7 @@
                                ng-maxlength="50"
                                ng-model="data.value">
                     </div>
-                    <div class="col-sm-6">
+                    <div class="col-sm-6 form-group">
                         <date-time-picker
                                 name="createdDate"
                                 label="Utworzona"
@@ -65,14 +84,15 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-sm-6">
+                    <div class="col-sm-6 form-group">
                         <date-time-picker
                                 name="evaluatedDate"
                                 label="Ewaluowana"
                                 ng-model="data.evaluated"></date-time-picker>
                     </div>
-                    <div class="col-sm-6">
+                    <div class="col-sm-6 form-group">
                         <label>Twórca</label>
+
                         <user-picker ng-model="data.creator"></user-picker>
                     </div>
                 </div>
@@ -104,75 +124,7 @@
         <div class="panel panel-default">
 
             <div class="panel-heading">
-                Kategorie
-            </div>
-
-            <div class="panel-body">
-                <div class="row" ng-hide="!data.categories || data.categories.length < 1">
-                    <div class="col-sm-12">
-                        <table width="100%">
-                            <thead>
-                            <tr>
-                                <td width="20%">
-                                    <strong>Kod</strong>
-                                </td>
-                                <td width="70%">
-                                    <strong>Opis</strong>
-                                </td>
-                                <td width="10%">
-                                    <strong>Akcja</strong>
-                                </td>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr ng-repeat="category in data.categories track by $index">
-                                <td>
-                                    {{category.code}}
-                                </td>
-                                <td>
-                                    {{category.description}}
-                                </td>
-                                <td>
-                                    <button type="button"
-                                            class="btn btn-default btn-sm"
-                                            ng-click="data.categories.splice($index, 1)">
-                                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                                    </button>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="row text-normal text-center text-italic"
-                     ng-show="!data.categories || data.categories.length < 1">
-                    <div class="col-sm-12">
-                        <strong>Brak</strong>
-                    </div>
-                </div>
-                <div class="row" style="margin-top: 16px;">
-                    <div class="col-sm-12">
-                        <div class="input-group">
-                            <category-picker ng-model="newCategory"></category-picker>
-                            <span class="input-group-btn">
-                            <button type="button"
-                                    ng-click="addNewCategory()"
-                                    class="btn btn-default btn-sm">
-                                    <span class="glyphicon glyphicon-plus"
-                                          aria-hidden="true"></span>
-                            </button>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-        <div class="panel panel-default">
-
-            <div class="panel-heading">
-                Dystrybucja
+                Redystrybucja
             </div>
 
             <div class="panel-body">
@@ -189,7 +141,7 @@
                                 <button type="button"
                                         style="margin-bottom: 8px;"
                                         ng-click="openAddRedistributionModal(data.owners)"
-                                        class="btn btn-default btn-sm">
+                                        class="btn btn-success btn-sm">
                                     <span class="glyphicon glyphicon-plus"
                                           style="margin-left: 2px;"
                                           aria-hidden="true"></span>
@@ -224,7 +176,7 @@
                                         </td>
                                         <td>
                                             <button type="button"
-                                                    class="btn btn-default btn-sm"
+                                                    class="btn btn-danger btn-sm"
                                                     ng-click="data.owners.splice($index, 1)">
                                                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                                             </button>
@@ -253,7 +205,7 @@
                                 <button type="button"
                                         style="margin-bottom: 8px;"
                                         ng-click="openAddRedistributionModal(data.contractors)"
-                                        class="btn btn-default btn-sm">
+                                        class="btn btn-success btn-sm">
                                     <span class="glyphicon glyphicon-plus"
                                           style="margin-left: 2px;"
                                           aria-hidden="true"></span>
@@ -288,7 +240,8 @@
                                         </td>
                                         <td>
                                             <button type="button"
-                                                    class="btn btn-default btn-sm"
+                                                    style="margin-top: 4px;"
+                                                    class="btn btn-danger btn-sm"
                                                     ng-click="data.contractors.splice($index, 1)">
                                                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                                             </button>

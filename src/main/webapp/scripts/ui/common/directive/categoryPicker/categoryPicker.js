@@ -14,8 +14,8 @@
                     $scope.categoryList = [];
 
                     $scope.refreshCategoryList = function (input) {
-                        if (input == null || input.length < 3) {
-                            return [];
+                        if (input == null) {
+                            input = '';
                         }
                         categorySearchSimpleFactory.query({
                             limit:  10,

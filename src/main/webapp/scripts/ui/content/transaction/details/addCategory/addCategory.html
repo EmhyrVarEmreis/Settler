@@ -1,0 +1,35 @@
+<div class="modal-header">
+    <h3 class="modal-title" id="modal-title">Dodaj kategorię</h3>
+</div>
+<div class="modal-body" id="modal-body">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="row">
+                <div class="col-sm-12">
+                    <label>Wybierz kategorię</label>
+                    <div class="input-group">
+                        <category-picker ng-model="$ctrl.selected"></category-picker>
+                        <span class="input-group-btn">
+                            <button type="button"
+                                    ng-click="$ctrl.selected = null"
+                                    class="btn btn-danger btn-sm">
+                                    X
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary"
+            type="button"
+            ng-disabled="!$ctrl.selected"
+            ng-click="$ctrl.ok()">Dodaj
+    </button>
+    <button class="btn btn-warning"
+            type="button"
+            ng-click="$ctrl.cancel()">Anuluj
+    </button>
+</div>
