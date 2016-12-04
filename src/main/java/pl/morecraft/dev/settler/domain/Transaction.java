@@ -30,11 +30,11 @@ public class Transaction extends PrivilegeObject {
     @Column(length = 128)
     private String description;
 
-    @OneToMany(mappedBy = "id.parent", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "id.parent", cascade = CascadeType.ALL, orphanRemoval = true)
     @Where(clause = "type='O'")
     private List<Redistribution> owners;
 
-    @OneToMany(mappedBy = "id.parent", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "id.parent", cascade = CascadeType.ALL, orphanRemoval = true)
     @Where(clause = "type='C'")
     private List<Redistribution> contractors;
 
