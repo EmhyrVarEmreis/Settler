@@ -74,6 +74,14 @@
             });
         };
 
+        $scope.addNewCategory = function () {
+            if (!$scope.data.categories) {
+                $scope.data.categories = [];
+            }
+            $scope.data.categories.push($scope.newCategory);
+            $scope.newCategory = null;
+        };
+
     });
 
 })();

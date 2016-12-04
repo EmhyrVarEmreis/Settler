@@ -79,7 +79,6 @@
             </div>
         </div>
 
-
         <div class="panel panel-default">
 
             <div class="panel-heading">
@@ -96,6 +95,74 @@
                                name="description"
                                ng-maxlength="128"
                                ng-model="data.description">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="panel panel-default">
+
+            <div class="panel-heading">
+                Kategorie
+            </div>
+
+            <div class="panel-body">
+                <div class="row" ng-hide="!data.categories || data.categories.length < 1">
+                    <div class="col-sm-12">
+                        <table width="100%">
+                            <thead>
+                            <tr>
+                                <td width="20%">
+                                    <strong>Kod</strong>
+                                </td>
+                                <td width="70%">
+                                    <strong>Opis</strong>
+                                </td>
+                                <td width="10%">
+                                    <strong>Akcja</strong>
+                                </td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="category in data.categories track by $index">
+                                <td>
+                                    {{category.code}}
+                                </td>
+                                <td>
+                                    {{category.description}}
+                                </td>
+                                <td>
+                                    <button type="button"
+                                            class="btn btn-default btn-sm"
+                                            ng-click="data.categories.splice($index, 1)">
+                                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                    </button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row text-normal text-center text-italic"
+                     ng-show="!data.categories || data.categories.length < 1">
+                    <div class="col-sm-12">
+                        <strong>Brak</strong>
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 16px;">
+                    <div class="col-sm-12">
+                        <div class="input-group">
+                            <category-picker ng-model="newCategory"></category-picker>
+                            <span class="input-group-btn">
+                            <button type="button"
+                                    ng-click="addNewCategory()"
+                                    class="btn btn-default btn-sm">
+                                    <span class="glyphicon glyphicon-plus"
+                                          aria-hidden="true"></span>
+                            </button>
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -1,0 +1,12 @@
+<ui-select theme="bootstrap"
+           reset-search-input="false"
+           title="Wybierz kategorię">
+    <ui-select-match placeholder="Wybierz kategorię">
+        {{$select.selected.code + ' - ' + $select.selected.description}}
+    </ui-select-match>
+    <ui-select-choices repeat="category in categoryList track by category.id"
+                       refresh="refreshCategoryList($select.search)"
+                       refresh-delay="0">
+        <div ng-bind-html="category.code + ' - ' + category.description | highlight: $select.search"></div>
+    </ui-select-choices>
+</ui-select>

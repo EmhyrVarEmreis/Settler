@@ -9,6 +9,8 @@ import pl.morecraft.dev.settler.web.dto.CategoryDTO;
 import pl.morecraft.dev.settler.web.dto.CategoryListDTO;
 import pl.morecraft.dev.settler.web.misc.ListPage;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/category")
 public class CategoryController {
@@ -43,6 +45,12 @@ public class CategoryController {
                                               @RequestParam(value = "sortBy", required = false, defaultValue = "-id") String sortBy,
                                               @RequestParam(value = "filters", required = false, defaultValue = "") String filters) {
         return categoryService.get(page, limit, sortBy, filters);
+    }
+
+    @RequestMapping("/search/simple")
+    public ResponseEntity<List<CategoryListDTO>> getPaged(@RequestParam(value = "limit", required = false, defaultValue = "25") Integer limit,
+                                                          @RequestParam(value = "string", required = false, defaultValue = "") String string) {
+        return categoryService.searchSimple(limit, string);
     }
 
 }

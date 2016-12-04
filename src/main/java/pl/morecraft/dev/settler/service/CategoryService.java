@@ -1,6 +1,8 @@
 package pl.morecraft.dev.settler.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.morecraft.dev.settler.dao.repository.CategoryRepository;
@@ -10,6 +12,9 @@ import pl.morecraft.dev.settler.service.abstractService.prototype.AbstractServic
 import pl.morecraft.dev.settler.web.dto.CategoryDTO;
 import pl.morecraft.dev.settler.web.dto.CategoryListDTO;
 import pl.morecraft.dev.settler.web.misc.CategoryListFilters;
+import pl.morecraft.dev.settler.web.misc.ListPage;
+
+import java.util.List;
 
 @Service
 @Transactional
@@ -55,6 +60,18 @@ public class CategoryService extends AbstractService<Category, CategoryDTO, Cate
     @Override
     protected QCategory getEQ() {
         return QCategory.category;
+    }
+
+    public ResponseEntity<List<CategoryListDTO>> searchSimple(Integer limit, String string) {
+        String[] tab = string.split("\\s+");
+        ListPage<CategoryListDTO> listPage = get(
+                1,
+                limit,
+                "-code",
+                "{\"code\":\"" + tab[0] + "\",\"description\":\"" + (tab.length == 1 ? tab[0] : tab[1]) + "\"}",
+                tab.length != 1
+        );
+        return new ResponseEntity<>(listPage.getContent(), HttpStatus.OK);
     }
 
 }

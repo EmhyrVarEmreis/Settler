@@ -52,9 +52,13 @@ public class TransactionDTO {
     private LocalDateTime evaluated;
 
     @NotNull
+    private List<CategoryDTO> categories;
+
+    @NotNull
     private Integer comments;
 
     public TransactionDTO() {
+
     }
 
     public Long getId() {
@@ -139,6 +143,14 @@ public class TransactionDTO {
 
     public Integer getComments() {
         return comments;
+    }
+
+    public List<CategoryDTO> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<CategoryDTO> categories) {
+        this.categories = categories;
     }
 
     public void setComments(Integer comments) {
