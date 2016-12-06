@@ -15,7 +15,7 @@ public class RedistributionRedistributionDTOConverter extends AbstractConverter<
     protected RedistributionDTO convert(Redistribution redistribution) {
         return new RedistributionDTO(
                 redistribution.getId().getType().getCode(),
-                redistribution.getId().getParent(),
+                redistribution.getId().getParent().getId(),
                 new UserTinyDTO(
                         redistribution.getId().getUser().getId(),
                         redistribution.getId().getUser().getLogin(),

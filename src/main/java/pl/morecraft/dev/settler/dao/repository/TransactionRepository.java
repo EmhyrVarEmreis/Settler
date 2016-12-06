@@ -6,4 +6,6 @@ import pl.morecraft.dev.settler.domain.Transaction;
 
 public interface TransactionRepository extends JpaRepository<Transaction, Long>, QueryDslPredicateExecutor<Transaction> {
 
+    Transaction findOneByReference(String reference);
+
 }

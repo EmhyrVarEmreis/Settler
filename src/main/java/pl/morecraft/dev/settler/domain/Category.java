@@ -56,4 +56,9 @@ public class Category implements DefaultDictionary {
         this.description = description;
     }
 
+    @Override
+    public String toString() {
+        return code;
+    }
+
 }

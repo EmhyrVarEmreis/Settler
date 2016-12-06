@@ -5,5 +5,4 @@
 <mapper namespace="pl.morecraft.dev.settler.dao.mapper.TransactionMapper">
 
 
-
 </mapper>

@@ -24,10 +24,6 @@ public class Redistribution {
     }
 
     public Redistribution(RedistributionType type, PrivilegeObject parent, User user, Double value) {
-        this(type, parent.getId(), user, value);
-    }
-
-    public Redistribution(RedistributionType type, Long parent, User user, Double value) {
         this.id = new RedistributionId(type, parent, user);
         this.value = value;
     }
@@ -69,7 +65,9 @@ public class Redistribution {
         @Enumerated(EnumType.STRING)
         private RedistributionType type;
 
-        private Long parent;
+        @ManyToOne(optional = false, fetch = FetchType.LAZY)
+        @JoinColumn(name = "parent")
+        private PrivilegeObject parent;
 
         @ManyToOne(optional = false)
         @JoinColumn(name = "user")
@@ -79,7 +77,7 @@ public class Redistribution {
 
         }
 
-        public RedistributionId(RedistributionType type, Long parent, User user) {
+        public RedistributionId(RedistributionType type, PrivilegeObject parent, User user) {
             this.type = type;
             this.parent = parent;
             this.user = user;
@@ -93,11 +91,11 @@ public class Redistribution {
             this.type = type;
         }
 
-        public Long getParent() {
+        public PrivilegeObject getParent() {
             return parent;
         }
 
-        public void setParent(Long parent) {
+        public void setParent(PrivilegeObject parent) {
             this.parent = parent;
         }
 

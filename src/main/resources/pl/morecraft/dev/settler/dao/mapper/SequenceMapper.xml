@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="pl.morecraft.dev.settler.dao.mapper.SequenceMapper">
+
+    <insert id="initSequence">
+        INSERT INTO sys_sequence (
+            sequence_name,
+            sequence_number
+        ) VALUES (
+            #{sequenceName},
+            #{initialValue}
+        )
+    </insert>
+
+    <update id="incrementSequence">
+        UPDATE sys_sequence
+        SET sequence_number = (sequence_number + #{incrementValue})
+        WHERE sequence_name = #{sequenceName};
+    </update>
+
+    <select id="getSequenceByName" resultType="long">
+        SELECT sequence_number
+        FROM sys_sequence
+        WHERE sequence_name = #{sequenceName}
+    </select>
+
+</mapper>

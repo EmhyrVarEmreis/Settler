@@ -6,8 +6,8 @@
 
         object.columnsCount = 0;
         object.defaultUrl = '#/transaction/details/:id';
-        object.defaultSorting = {id: 'asc'};
-        object.count = 25;
+        object.defaultSorting = {evaluated: 'desc'};
+        object.count = 10;
         object.page = 1;
         object.emptyString = 'Brak wyników spełniających podane kryteria';
         object.title = 'Lista transakcji';
@@ -39,7 +39,7 @@
                 url:        '#/transaction/details/:id'
             },
             {
-                field:      'type',
+                field:      'categories',
                 title:      '<span class="glyphicon glyphicon-tags" aria-hidden="true"></span>',
                 isVisible:  true,
                 filterable: true,

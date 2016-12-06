@@ -13,9 +13,11 @@
             contractors: []
         };
 
-        $scope.isNew = $stateParams.state === 'new';
+        $scope.isNew = function () {
+            return $stateParams.state === 'new';
+        };
 
-        if (!$scope.isNew) {
+        if (!$scope.isNew()) {
             transactionDetailsFactory.get(
                 {
                     id: $stateParams.state
@@ -33,6 +35,7 @@
                 $scope.data,
                 function (data) {
                     $scope.data = data;
+                    $stateParams.state = $scope.data.id;
                 }, function (err) {
                     modalService.createErrorDialogFromResponse(err);
                 }

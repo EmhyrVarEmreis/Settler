@@ -12,8 +12,10 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import pl.morecraft.dev.settler.dao.repository.CategoryRepository;
 import pl.morecraft.dev.settler.dao.repository.TransactionRepository;
 import pl.morecraft.dev.settler.dao.repository.UserRepository;
+import pl.morecraft.dev.settler.domain.Category;
 import pl.morecraft.dev.settler.domain.Redistribution;
 import pl.morecraft.dev.settler.domain.Transaction;
 import pl.morecraft.dev.settler.domain.User;
@@ -23,8 +25,7 @@ import pl.morecraft.dev.settler.security.util.Security;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -34,20 +35,35 @@ public class ImportService {
     private static Logger log = LoggerFactory.getLogger(ImportService.class);
 
     private final UserRepository userRepository;
+    private final SequenceManager sequenceManager;
+    private final CategoryRepository categoryRepository;
     private final TransactionRepository transactionRepository;
     private final Gson gson;
 
     @Autowired
     public ImportService(
             @Qualifier("prettyGson") Gson gson,
-            TransactionRepository transactionRepository,
-            UserRepository userRepository) {
+            UserRepository userRepository,
+            SequenceManager sequenceManager,
+            CategoryRepository categoryRepository,
+            TransactionRepository transactionRepository
+    ) {
         this.gson = gson;
-        this.transactionRepository = transactionRepository;
         this.userRepository = userRepository;
+        this.sequenceManager = sequenceManager;
+        this.categoryRepository = categoryRepository;
+        this.transactionRepository = transactionRepository;
     }
 
     public void importTransactions(MultipartFile file) throws IOException {
+
+        List<Category> categoryList = categoryRepository.findAll();
+        Map<String, Category> categoryMap = categoryList == null ? new HashMap<>() : categoryList.stream().collect(
+                Collectors.toMap(
+                        Category::getCode,
+                        category -> category
+                )
+        );
 
         List<Transaction> transactionList = new ArrayList<>();
 
@@ -57,12 +73,10 @@ public class ImportService {
         String[] lines = content.split("\\r?\\n");
 
         DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern("dd.MM.yyyy");
-        DateTimeFormatter dateTimeFormatterReverse = DateTimeFormat.forPattern("yyyyMMdd");
 
         User o = userRepository.findOneByLogin(splitLine(lines[0])[26]);
         User c = userRepository.findOneByLogin(splitLine(lines[0])[27]);
 
-        int transactionCounter = 0;
         int ln = 0;
 
         for (String line : lines) {
@@ -136,11 +150,21 @@ public class ImportService {
                 transaction.setType(TransactionType.NOR);
                 transaction.setDescription(name);
                 transaction.setValue(value);
-                //transaction.setCreated(new LocalDateTime());
                 transaction.setEvaluated(date);
-                transaction.setReference("T" + date.toString(dateTimeFormatterReverse) + String.format("%06d", transactionCounter));
+
+                List<Category> cl = checkCategories(transaction.getDescription()).stream().map(
+                        categoryMap::get
+                ).filter(
+                        Objects::nonNull
+                ).collect(Collectors.toList());
+
+                transaction.setCategories(
+                        cl.isEmpty() ? null : cl
+                );
+
+                transaction.setReference(sequenceManager.getNextReferenceForTransaction(transaction));
+
                 transactionList.add(transaction);
-                transactionCounter++;
             } catch (Exception e) {
                 log.warn("Unable to convert line No{}: {}", ln, line, e);
             }
@@ -156,13 +180,112 @@ public class ImportService {
                     log.info(t.getEvaluated()
                             + " " + t.getReference()
                             + " " + t.getValue()
+                            + " [" + t.getDescription() + "]"
                             + " [" + t.getOwners().stream().map(r -> r.getId().getUser().getLogin() + "/" + r.getValue()).collect(Collectors.joining(", ")) + "]"
                             + " [" + t.getContractors().stream().map(r -> r.getId().getUser().getLogin() + "/" + r.getValue()).collect(Collectors.joining(", ")) + "]"
+                            + " [" + (t.getCategories() == null ? "" : t.getCategories().stream().map(Category::getCode).collect(Collectors.joining(", "))) + "]"
                     );
                     transactionRepository.save(t);
                 }
         );
 
+    }
+
+    private List<String> checkCategories(String description) {
+        List<String> categories = new ArrayList<>();
+        description = description.toLowerCase();
+        if (description.contains("internet")
+                || description.contains("serwer")
+                || description.contains("server")) {
+            categories.add("INF");
+        }
+        if (description.contains("rofist")
+                || description.contains("piwa")
+                || description.contains("binh")
+                || description.contains("pizza")
+                || description.contains("kfc")
+                || description.contains("na dowóz")
+                || description.contains("chińczyk")
+                || description.contains("bierhalle")
+                || description.contains("piwer")
+                || description.contains("wołowina")
+                || description.contains("cielęcina")
+                || description.contains("dzong")
+                || description.contains("parnik")
+                || description.contains("sapaya")
+                || description.contains("pho")
+                || description.contains("domin")
+                || description.contains("burger")
+                || description.contains("wód")
+                || description.contains("restauracja")
+                || description.contains("tortilla")
+                || description.contains("kebab")
+                || description.contains("kebeb")
+                || description.contains("mi-ha")
+                || description.contains("choya")
+                || description.contains("cydr")
+                || description.contains("piwo")
+                || description.contains("szwejk")
+                || description.contains("locome")
+                || description.contains("barkle")
+                || description.contains("chiny")
+                || description.contains("micha")
+                || description.contains("pałaszowanie")
+                || description.contains("poker")
+                || description.contains("saigon")
+                || description.contains("frytki")
+                || description.contains("batumi")
+                || description.contains("huong")
+                || description.contains("sajgonka")
+                || description.contains("mekong")
+                || description.contains("lemonka")
+                || description.contains("loco")
+                || description.contains("bydło")
+                || description.contains("olej")
+                || description.contains("american food")
+                || description.contains("green cafe")
+                || description.contains("open air")
+                || description.contains("lua wang")
+                || description.contains("ketchup")
+                || description.contains("chleb")) {
+            categories.add("FFD");
+        }
+        if (description.contains("pożyczka")
+                || description.contains("kaszanka")
+                || description.contains("zwrot")) {
+            categories.add("FNC");
+        }
+        if (description.contains("starwars")
+                || description.contains("spotkanie")
+                || description.contains("ogame")
+                || description.contains("cygar")
+                || description.contains("rofist")
+                || description.contains("netflix")
+                || description.contains("kino")
+                || description.contains("restauracja")) {
+            categories.add("ENT");
+        }
+        if (description.contains("bilet")
+                || description.contains("taxi")
+                || description.contains("pkp")) {
+            categories.add("TRN");
+        }
+        if (description.contains("zalman")
+                || description.contains("domofon")
+                || description.contains("pływak")
+                || description.contains("filtry")
+                || description.contains("worki")
+                || description.contains("klucz")
+                || description.contains("silentium")) {
+            categories.add("THG");
+        }
+        if (description.contains("rwe")
+                || description.contains("pgnig")
+                || description.contains("woda")
+                || description.contains("opłaty")) {
+            categories.add("BLS");
+        }
+        return categories;
     }
 
     private String[] splitLine(String line) {

@@ -7,7 +7,7 @@
         object.columnsCount = 0;
         object.defaultUrl = '#/user/details/:id';
         object.defaultSorting = {id: 'asc'};
-        object.count = 25;
+        object.count = 10;
         object.page = 1;
         object.emptyString = 'Brak wyników spełniających podane kryteria';
         object.title = 'Lista użytkowników';

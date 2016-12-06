@@ -5,13 +5,16 @@
         .directive('userPicker', function (userSearchSimpleFactory) {
             return {
                 scope:       {
-                    ngModel: "="
+                    ngModel:     "=",
+                    placeholder: "@"
                 },
                 restrict:    'E',
                 templateUrl: 'scripts/ui/common/directive/userPicker/userPicker.html',
                 link:        function ($scope) {
 
                     $scope.userList = [];
+
+                    console.log($scope.placeholder);
 
                     $scope.refreshUserList = function (input) {
                         if (input == null || input.length < 3) {

@@ -106,7 +106,7 @@ public abstract class AbstractService<
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-        if (getSaveSaveFunction().apply(getSaveSavePreProcessingFunction().apply(entity)) == null) {
+        if ((entity = getSaveSaveFunction().apply(getSaveSavePreProcessingFunction().apply(entity))) == null) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 

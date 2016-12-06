@@ -14,7 +14,6 @@ public class TransactionListDTO {
 
     private Long id;
     private String reference;
-    private String type;
     private String creator;
     private List<RedistributionTinyDTO> owners;
     private List<RedistributionTinyDTO> contractors;
@@ -30,6 +29,8 @@ public class TransactionListDTO {
     private LocalDate evaluated;
 
     private Integer comments;
+
+    private String categories;
 
     public TransactionListDTO() {
     }
@@ -48,14 +49,6 @@ public class TransactionListDTO {
 
     public void setReference(String reference) {
         this.reference = reference;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 
     public String getCreator() {
@@ -112,6 +105,14 @@ public class TransactionListDTO {
 
     public void setComments(Integer comments) {
         this.comments = comments;
+    }
+
+    public String getCategories() {
+        return categories;
+    }
+
+    public void setCategories(String categories) {
+        this.categories = categories;
     }
 
 }

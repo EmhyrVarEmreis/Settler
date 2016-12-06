@@ -1,7 +1,7 @@
 <div class="container">
     <div class="page-header">
         <div class="pull-left">
-            <h2>Transakcja <strong>{{data.reference}}</strong></h2>
+            <h2>{{isNew() ? 'Nowa ' : ''}}Transakcja <strong>{{data.reference}}</strong></h2>
         </div>
         <div class="pull-right">
             <h1 class="text-right">
@@ -15,7 +15,7 @@
             </h1>
         </div>
         <div class="clearfix"></div>
-        <h4>Utworzona: {{data.created}}</h4>
+        <h4>Utworzona: {{isNew() ? '---' : data.created}}</h4>
         <h5>Kategorie:
             <span class="label label-info"
                   style="margin-right: 8px;"
@@ -44,57 +44,36 @@
                 Podstawowe dane
             </div>
             <div class="panel-body">
-                <div class="row">
-                    <div class="col-sm-6 form-group">
-                        <label>Numer</label>
-
-                        <input class="form-control input-sm"
-                               type="text"
-                               name="firstName"
-                               ng-disabled="!isNew"
-                               ng-maxlength="15"
-                               ng-model="data.reference">
-                    </div>
-                    <div class="col-sm-6 form-group">
-                        <dictionary-selector dictionary-key="transactionType"
-                                             ng-model="data.type"
-                                             clear-btn="false"
-                                             label="Typ">
-                        </dictionary-selector>
-                    </div>
-                </div>
 
                 <div class="row">
-                    <div class="col-sm-6 form-group">
+
+                    <div class="col-sm-2 form-group">
                         <label>Wartość</label>
 
                         <input class="form-control input-sm"
                                type="text"
                                name="login"
+                               placeholder="Podaj wartość"
+                               ng-required="true"
                                ng-maxlength="50"
                                ng-model="data.value">
                     </div>
-                    <div class="col-sm-6 form-group">
-                        <date-time-picker
-                                name="createdDate"
-                                label="Utworzona"
-                                ng-disabled="!isNew"
-                                ng-model="data.created"></date-time-picker>
-                    </div>
-                </div>
 
-                <div class="row">
-                    <div class="col-sm-6 form-group">
+                    <div class="col-sm-4 form-group">
                         <date-time-picker
                                 name="evaluatedDate"
                                 label="Ewaluowana"
+                                placeholder="Data ewaluacji"
                                 ng-model="data.evaluated"></date-time-picker>
                     </div>
+
                     <div class="col-sm-6 form-group">
                         <label>Twórca</label>
 
-                        <user-picker ng-model="data.creator"></user-picker>
+                        <user-picker ng-model="data.creator"
+                                     placeholder="Pozostaw puste dla bieżącego użytkownika"></user-picker>
                     </div>
+
                 </div>
             </div>
         </div>
@@ -112,6 +91,7 @@
 
                         <input class="form-control input-sm"
                                type="text"
+                               placeholder="Opis"
                                name="description"
                                ng-maxlength="128"
                                ng-model="data.description">

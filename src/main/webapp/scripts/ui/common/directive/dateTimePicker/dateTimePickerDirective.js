@@ -7,10 +7,11 @@
             var locale = 'pl';
             return {
                 scope:       {
-                    ngModel:    "=",
-                    ngDisabled: "=",
-                    label:      "@",
-                    name:       "@"
+                    ngModel:     "=",
+                    ngDisabled:  "=",
+                    label:       "@",
+                    name:        "@",
+                    placeholder: "@"
                 },
                 restrict:    'E',
                 templateUrl: 'scripts/ui/common/directive/dateTimePicker/dateTimePickerDirective.html',
