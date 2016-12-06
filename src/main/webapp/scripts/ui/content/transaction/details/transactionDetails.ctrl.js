@@ -46,9 +46,9 @@
 
         $scope.isFormValid = function () {
             return !$scope.transactionDetailsForm.$invalid
-                && (!$scope.data.owners || $scope.data.owners.length < 1)
-                && (!$scope.data.categories || $scope.data.categories.length < 1)
-                && (!$scope.data.contractors || $scope.data.contractors.length < 1);
+                && !(!$scope.data.owners || $scope.data.owners.length < 1)
+                && !(!$scope.data.categories || $scope.data.categories.length < 1)
+                && !(!$scope.data.contractors || $scope.data.contractors.length < 1);
         };
 
         $scope.getPercentString = function (t, r) {
