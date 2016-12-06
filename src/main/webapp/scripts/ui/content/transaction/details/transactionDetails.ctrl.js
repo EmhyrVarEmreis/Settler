@@ -31,19 +31,29 @@
         }
 
         $scope.save = function () {
-            transactionDetailsFactory.save(
-                $scope.data,
-                function (data) {
-                    $scope.data = data;
-                    $stateParams.state = $scope.data.id;
-                }, function (err) {
-                    modalService.createErrorDialogFromResponse(err);
-                }
-            );
+            if ($scope.isFormValid()) {
+                transactionDetailsFactory.save(
+                    $scope.data,
+                    function (data) {
+                        $scope.data = data;
+                        $stateParams.state = $scope.data.id;
+                    }, function (err) {
+                        modalService.createErrorDialogFromResponse(err);
+                    }
+                );
+            }
+        };
+
+        $scope.isFormValid = function () {
+            return !$scope.transactionDetailsForm.$invalid;
         };
 
         $scope.getPercentString = function (t, r) {
-            return (parseFloat(r.value.toString().replace(/,/, '.')) / parseFloat(t.value.toString().replace(/,/, '.')) * 100).toFixed(2);
+            if (!r.value || !t.value) {
+                return parseFloat('0').toFixed(2);
+            } else {
+                return (parseFloat(r.value.toString().replace(/,/, '.')) / parseFloat(t.value.toString().replace(/,/, '.')) * 100).toFixed(2);
+            }
         };
 
         $scope.getValueString = function (t) {

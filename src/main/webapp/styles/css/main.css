@@ -52,6 +52,10 @@ body {
     background-color: #ffdcdf;
 }
 
+input.ng-invalid.ng-touched {
+    background-color: #ffdcdf;
+}
+
 .glph-def-em {
     font-size: 12px;
 }

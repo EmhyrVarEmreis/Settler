@@ -5,7 +5,7 @@
         </div>
         <div class="pull-right">
             <h1 class="text-right">
-                <button type="button"
+                <button type="submit"
                         class="btn btn-primary pull-right"
                         style="margin-left: 2px; margin-right: 2px;"
                         ng-click="save()">
@@ -37,7 +37,7 @@
         </h5>
     </div>
 
-    <form class="form">
+    <form class="form" name="transactionDetailsForm">
 
         <div class="panel panel-default">
             <div class="panel-heading">
@@ -52,11 +52,13 @@
 
                         <input class="form-control input-sm"
                                type="text"
-                               name="login"
+                               name="transactionValue"
+                               ng-class=""
                                placeholder="Podaj wartość"
                                ng-required="true"
                                ng-maxlength="50"
-                               ng-model="data.value">
+                               ng-model="data.value"
+                               required>
                     </div>
 
                     <div class="col-sm-4 form-group">
@@ -94,7 +96,8 @@
                                placeholder="Opis"
                                name="description"
                                ng-maxlength="128"
-                               ng-model="data.description">
+                               ng-model="data.description"
+                               required>
                     </div>
                 </div>
             </div>
