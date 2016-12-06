@@ -24,7 +24,8 @@ public class SequenceManager {
         String sequenceName = "T" + (transaction.getCategories() == null || transaction.getCategories().isEmpty() ? "RNS" : transaction.getCategories().get(0).getCode());
         Long next = getNextSequenceByName(sequenceName);
         if (next == null) {
-            manager.initSequence(sequenceName, 0L);
+            next = 0L;
+            manager.initSequence(sequenceName, next);
         }
         return sequenceName + String.format("%04d", next);
     }
