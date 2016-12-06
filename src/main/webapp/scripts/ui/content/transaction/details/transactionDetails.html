@@ -26,6 +26,11 @@
                       style="cursor: pointer; margin-left: 6px;"
                       ng-click="data.categories.splice($index, 1)"></span>
             </span>
+            <span class="label label-danger"
+                  ng-show="!data.categories || data.categories.length < 1"
+                  style="margin-right: 8px;">
+                <strong>Błąd!</strong> Transakcja musi być przypisana do przynajmniej jednej kategorii.
+            </span>
             <span class="label label-success"
                   style="margin-right: 8px; cursor: pointer;">
                 <span class="glyphicon glyphicon-plus"
@@ -173,7 +178,9 @@
                         <div class="row text-normal text-center text-italic"
                              ng-show="!data.owners || data.owners.length < 1">
                             <div class="col-sm-12">
-                                <strong>Brak</strong>
+                                <div class="alert alert-danger" role="alert">
+                                    <strong>Błąd!</strong> Transakcja musi posiadać przynajmniej jednego właściciela.
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -238,7 +245,9 @@
                         <div class="row text-normal text-center text-italic"
                              ng-show="!data.contractors || data.contractors.length < 1">
                             <div class="col-sm-12">
-                                <strong>Brak</strong>
+                                <div class="alert alert-danger" role="alert">
+                                    <strong>Błąd!</strong> Transakcja musi posiadać przynajmniej jednego kontraktora.
+                                </div>
                             </div>
                         </div>
                     </div>
