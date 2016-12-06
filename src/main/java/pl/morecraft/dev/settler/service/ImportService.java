@@ -276,7 +276,8 @@ public class ImportService {
                 || description.contains("filtry")
                 || description.contains("worki")
                 || description.contains("klucz")
-                || description.contains("silentium")) {
+                || description.contains("silentium")
+                || description.contains("matbud")) {
             categories.add("THG");
         }
         if (description.contains("rwe")
