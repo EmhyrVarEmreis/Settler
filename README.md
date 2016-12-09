@@ -1,22 +1,36 @@
 # Settler
+
+##### JenkinsCI
 [![Build Status](http://ci.dev.morecraft.pl/buildStatus/icon?job=Settler)](http://ci.dev.morecraft.pl/job/Settler/)
+
 ## What is it?
-Small transactions & settlements manager.
+Small transactions manager.
 
 ## Technologies
+
+### Tools
+
 * Vagrant
 * MySQL/MariaDB
+* Maven
+
+### Front-End
+
 * NPM
 * Bower
 * Gulp
+* HTML5
 * AngularJS
-* Maven
+
+### Back-End
+
 * Liquibase
 * Java 8
-* Spring
+* Spring IO Platform
   * Spring Core
   * Spring Boot
-  * Spring Parent
+  * Spring Mail
+  * Spring Security
 * Hibernate
 * ModelMapper
 * Quartz Scheduler
@@ -26,5 +40,4 @@ Small transactions & settlements manager.
 * MyBatis
 * Apache Commons Lang
 * Simple Logging Facade for Java
-
-*Applause*
+* JodaTime
