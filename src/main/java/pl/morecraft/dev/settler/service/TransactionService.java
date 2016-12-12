@@ -125,9 +125,16 @@ public class TransactionService extends AbstractService<Transaction, Transaction
     @Override
     protected UnaryOperator<Transaction> getSaveSavePostProcessingFunction() {
         return transaction -> {
-            emailService.sendNotificationEmailNewTransaction(transaction);
+            if (!hasId()) {
+                emailService.sendNotificationEmailNewTransaction(transaction);
+            }
             return super.getSaveSavePostProcessingFunction().apply(transaction);
         };
+    }
+
+    @Override
+    protected boolean checkIfHasId(TransactionDTO entity) {
+        return entity.getId() != null;
     }
 
 }

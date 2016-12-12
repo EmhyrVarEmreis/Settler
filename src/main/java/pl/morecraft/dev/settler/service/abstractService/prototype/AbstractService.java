@@ -59,6 +59,8 @@ public abstract class AbstractService<
     @Autowired
     private ListPageConverter listPageConverter;
 
+    private boolean hasId;
+
     public ResponseEntity<EntityDTO> get(EntityID id) {
         Entity entity = getRepository().findOne(id);
 
@@ -95,6 +97,8 @@ public abstract class AbstractService<
         if (!getSavePreValidationPredicate().test(entityDTO)) {
             return new ResponseEntity<>(HttpStatus.PRECONDITION_FAILED);
         }
+
+        setHasId(checkIfHasId(entityDTO));
 
         Entity entity = getSavePostProcessingFunction().apply(
                 getSaveConvertingFunction().apply(
@@ -238,6 +242,18 @@ public abstract class AbstractService<
     }
 
     protected abstract QEntity getEQ();
+
+    protected boolean checkIfHasId(EntityDTO entity) {
+        return false;
+    }
+
+    protected boolean hasId() {
+        return hasId;
+    }
+
+    private void setHasId(boolean hasId) {
+        this.hasId = hasId;
+    }
 
     private OrderSpecifier<?> applySorting(String sortBy, QEntity qObject) throws NoSuchFieldException, IllegalAccessException {
         return applySortingSupporter(
