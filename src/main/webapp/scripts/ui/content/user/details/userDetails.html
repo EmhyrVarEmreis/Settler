@@ -6,7 +6,7 @@
         <div class="pull-right">
             <h1 class="text-right">
                 <button type="button"
-                        class="btn btn-primary pull-right"
+                        class="btn btn-raised btn-primary pull-right"
                         style="margin-left: 2px; margin-right: 2px;"
                         ng-click="save()">
                     Zapisz
@@ -19,13 +19,13 @@
 
     <form class="form">
 
-        <div class="panel panel-default">
+        <div class="panel panel-primary">
             <div class="panel-heading">
                 Podstawowe dane
             </div>
             <div class="panel-body">
                 <div class="row">
-                    <div class="col-sm-6">
+                    <div class="col-sm-6 form-group">
                         <label>Imię</label>
 
                         <input class="form-control input-sm"
@@ -34,7 +34,7 @@
                                ng-maxlength="15"
                                ng-model="data.firstName">
                     </div>
-                    <div class="col-sm-6">
+                    <div class="col-sm-6 form-group">
                         <label>Nazwisko</label>
 
                         <input class="form-control input-sm"
@@ -45,7 +45,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-sm-6">
+                    <div class="col-sm-6 form-group">
                         <label>Login</label>
 
                         <input class="form-control input-sm"
@@ -54,7 +54,7 @@
                                ng-maxlength="50"
                                ng-model="data.login">
                     </div>
-                    <div class="col-sm-6">
+                    <div class="col-sm-6 form-group">
                         <label>Adres E-Mail</label>
 
                         <input class="form-control input-sm"
@@ -67,20 +67,20 @@
             </div>
         </div>
 
-        <div class="panel panel-default">
+        <div class="panel panel-primary">
             <div class="panel-heading">
                 Status konta
             </div>
             <div class="panel-body">
                 <div class="row">
-                    <div class="col-sm-6">
+                    <div class="col-sm-6 form-group">
                         <dictionary-selector dictionary-key="userStatus"
                                              ng-model="data.status"
                                              clear-btn="false"
                                              label="Status">
                         </dictionary-selector>
                     </div>
-                    <div class="col-sm-6" ng-show="data.status === 'TMP'">
+                    <div class="col-sm-6 form-group" ng-show="data.status === 'TMP'">
                         <date-time-picker
                                 name="accountExpireDate"
                                 label="Data wygasnięcia konta"
@@ -90,13 +90,13 @@
             </div>
         </div>
 
-        <div class="panel panel-default">
+        <div class="panel panel-primary">
             <div class="panel-heading">
                 Bezpieczeństwo
             </div>
             <div class="panel-body">
                 <div class="row">
-                    <div class="col-sm-6">
+                    <div class="col-sm-6 form-group">
                         <label>Hasło</label>
 
                         <input class="form-control input-sm"
@@ -106,7 +106,7 @@
                                placeholder="Pozostaw puste aby nie zmieniać obecnego hasła"
                                ng-model="data.password">
                     </div>
-                    <div class="col-sm-6">
+                    <div class="col-sm-6 form-group">
                         <date-time-picker
                                 name="passwordExpireDate"
                                 label="Data wygasnięcia hasła"

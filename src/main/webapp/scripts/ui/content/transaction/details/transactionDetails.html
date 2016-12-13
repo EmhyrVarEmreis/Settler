@@ -6,7 +6,7 @@
         <div class="pull-right">
             <h1 class="text-right">
                 <button type="submit"
-                        class="btn btn-primary pull-right"
+                        class="btn btn-raised btn-primary pull-right"
                         style="margin-left: 2px; margin-right: 2px;"
                         ng-click="save()">
                     <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
@@ -44,7 +44,7 @@
 
     <form class="form" name="transactionDetailsForm">
 
-        <div class="panel panel-default">
+        <div class="panel panel-primary">
             <div class="panel-heading">
                 Podstawowe dane
             </div>
@@ -85,7 +85,7 @@
             </div>
         </div>
 
-        <div class="panel panel-default">
+        <div class="panel panel-primary">
 
             <div class="panel-heading">
                 Dodatkowe informacje
@@ -93,7 +93,7 @@
 
             <div class="panel-body">
                 <div class="row">
-                    <div class="col-sm-12">
+                    <div class="col-sm-12 form-group">
                         <label>Opis</label>
 
                         <input class="form-control input-sm"
@@ -109,7 +109,7 @@
 
         </div>
 
-        <div class="panel panel-default">
+        <div class="panel panel-primary">
 
             <div class="panel-heading">
                 Redystrybucja
@@ -130,7 +130,7 @@
                                         style="margin-bottom: 8px;"
                                         ng-click="openAddRedistributionModal(data.owners)"
                                         ng-disabled="!data.value || parseFloatOwn(data.value) === 0"
-                                        class="btn btn-success btn-sm">
+                                        class="btn btn-raised btn-success btn-sm">
                                     <span class="glyphicon glyphicon-plus"
                                           style="margin-left: 2px;"
                                           aria-hidden="true"></span>
@@ -166,7 +166,7 @@
                                         <td>
                                             <button type="button"
                                                     style="margin-top: 4px;"
-                                                    class="btn btn-danger btn-sm"
+                                                    class="btn btn-raised btn-danger btn-xs"
                                                     ng-click="data.owners.splice($index, 1)">
                                                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                                             </button>
@@ -198,7 +198,7 @@
                                         style="margin-bottom: 8px;"
                                         ng-click="openAddRedistributionModal(data.contractors)"
                                         ng-disabled="!data.value || parseFloatOwn(data.value) === 0"
-                                        class="btn btn-success btn-sm">
+                                        class="btn btn-raised btn-success btn-sm">
                                     <span class="glyphicon glyphicon-plus"
                                           style="margin-left: 2px;"
                                           aria-hidden="true"></span>
@@ -234,7 +234,7 @@
                                         <td>
                                             <button type="button"
                                                     style="margin-top: 4px;"
-                                                    class="btn btn-danger btn-sm"
+                                                    class="btn btn-raised btn-danger btn-xs"
                                                     ng-click="data.contractors.splice($index, 1)">
                                                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                                             </button>

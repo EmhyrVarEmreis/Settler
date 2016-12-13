@@ -1,18 +1,18 @@
 <a ng-if="newEntityButton"
    href ng-href="{{newEntityButtonUrl}}"
    type="button"
-   class="btn btn-success btn-colPicker">
+   class="btn btn-raised btn-success btn-colPicker">
     <span class="glyphicon glyphicon-plus glph-def-em" aria-hidden="true"></span>
     <span class="hidden-xs hidden-sm">{{newEntityButton}}</span>
 </a>
 <button type="button"
-        class="btn btn-success btn-colPicker"
+        class="btn btn-raised btn-success btn-colPicker"
         ng-click="applyFilters()">
     <span class="glyphicon glyphicon-search glph-def-em" aria-hidden="true"></span>
     <span class="hidden-xs hidden-sm">Zastosuj filtry</span>
 </button>
 <button type="button"
-        class="btn btn-colPicker"
+        class="btn btn-raised btn-colPicker"
         uib-popover="Pokazuje/ukrywa wiersz z filtrami"
         popover-trigger="'mouseenter'"
         popover-placement="bottom"
@@ -22,7 +22,7 @@
     <span class="hidden-xs hidden-sm">Panel filtrów</span>
 </button>
 <button type="button"
-        class="btn btn-success btn-colPicker"
+        class="btn btn-raised btn-success btn-colPicker"
         ng-class="{'btn-warning' : showVisibility, 'btn-success' : !showVisibility}"
         ng-click="toggleVisibility()">
     <span class="glyphicon glyphicon-eye-open glph-def-em" aria-hidden="true"></span>

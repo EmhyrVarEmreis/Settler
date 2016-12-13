@@ -3,12 +3,14 @@
   "version": "1.0.0",
   "appPath": "src/main/webapp",
   "dependencies": {
-    "jquery": "3.1.0",
+    "jquery": "2.2",
     "angular": "1.5.5",
     "angular-resource": "1.5.5",
     "angular-messages": "1.5.5",
     "angular-sanitize": "1.5.5",
     "bootstrap": "3.3.4",
+    "bootstrap-sass": "3.3.4",
+    "bootstrap-material-design": "0.5.10",
     "ng-table": "1.0.0",
     "angular-loading-bar": "0.9.0",
     "angular-bootstrap": "2.0.1",
@@ -17,9 +19,13 @@
     "angular-local-storage": "0.3.0",
     "ng-file-upload": "12.0.4",
     "angular-ui-validate": "1.2.2",
-    "eonasdan-bootstrap-datetimepicker": "4.17.42",
     "moment": "2.17.0",
     "angular-moment": "1.0.0",
+    "eonasdan-bootstrap-datetimepicker": "4.17.42",
     "angularjs-slider": "5.8.7"
+  },
+  "resolutions": {
+    "bootstrap": "3.3.4",
+    "bootstrap-sass": "3.3.4"
   }
 }
