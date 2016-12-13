@@ -14,7 +14,7 @@ public class RedistributionRedistributionTinyDTOConverter extends AbstractConver
     protected RedistributionTinyDTO convert(Redistribution redistribution) {
         return new RedistributionTinyDTO(
                 redistribution.getId().getUser().getFirstName() + " " + redistribution.getId().getUser().getLastName(),
-                redistribution.getValue()
+                redistribution.getPercentage()
         );
     }
 

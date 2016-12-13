@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="1.0-path-008" author="settler">
+
+        <preConditions>
+            <tableExists tableName="mod_transaction"/>
+            <tableExists tableName="mod_redistribution"/>
+        </preConditions>
+
+        <addColumn tableName="mod_redistribution">
+            <column name="percentage" type="DECIMAL(8,5)"/>
+        </addColumn>
+
+        <sql>
+            UPDATE mod_redistribution mr
+            SET mr.percentage = mr.value / (SELECT mt.value
+                                            FROM mod_transaction mt
+                                            WHERE mt.id = mr.parent) * 100
+        </sql>
+
+        <dropColumn tableName="mod_redistribution" columnName="value"/>
+
+        <createView viewName="view_total_charge" replaceIfExists="true">
+            SELECT
+                mrc.user + 167 * mro.user                                             AS id,
+                CONCAT(puc.first_name, ' ', puc.last_name, ' (', puc.login, ')')      AS user_from,
+                mrc.user                                                              AS user_from_id,
+                CONCAT(puo.first_name, ' ', puo.last_name, ' (', puo.login, ')')      AS user_to,
+                mro.user                                                              AS user_to_id,
+                SUM(ROUND(mrc.percentage * mro.percentage * mt.value / 100 / 100, 2)) AS charge
+            FROM mod_transaction mt
+                LEFT JOIN mod_redistribution mrc
+                    ON mrc.parent = mt.id AND mrc.type = 'C'
+                LEFT JOIN mod_redistribution mro
+                    ON mro.parent = mrc.parent AND mro.type = 'O'
+                LEFT JOIN prv_user puc
+                    ON puc.id = mrc.user
+                LEFT JOIN prv_user puo
+                    ON puo.id = mro.user
+            WHERE mrc.user != mro.user
+            GROUP BY user_from_id, user_to_id, id, user_from, user_to;
+        </createView>
+
+        <modifyDataType tableName="mod_transaction"
+                        columnName="value"
+                        newDataType="DECIMAL(12,2)"/>
+
+    </changeSet>
+
+
+</databaseChangeLog>

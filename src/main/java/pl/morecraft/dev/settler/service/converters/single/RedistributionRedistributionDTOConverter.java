@@ -23,7 +23,7 @@ public class RedistributionRedistributionDTOConverter extends AbstractConverter<
                         redistribution.getId().getUser().getLastName(),
                         redistribution.getId().getUser().getEmail()
                 ),
-                redistribution.getValue()
+                redistribution.getPercentage()
         );
     }
 

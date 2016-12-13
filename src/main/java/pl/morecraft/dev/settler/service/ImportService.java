@@ -141,6 +141,16 @@ public class ImportService {
                     }
                 }
 
+                transaction.setValue(value);
+
+                owners.forEach(
+                        redistribution -> redistribution.setPercentage(redistribution.getPercentage() / 1.0 / transaction.getValue())
+                );
+
+                contractors.forEach(
+                        redistribution -> redistribution.setPercentage(redistribution.getPercentage() / 1.0 / transaction.getValue())
+                );
+
                 transaction.setOwners(owners);
                 transaction.setContractors(contractors);
 
@@ -149,7 +159,6 @@ public class ImportService {
                 transaction.setCreator(Security.currentUser());
                 transaction.setType(TransactionType.NOR);
                 transaction.setDescription(name);
-                transaction.setValue(value);
                 transaction.setEvaluated(date);
 
                 List<Category> cl = checkCategories(transaction.getDescription()).stream().map(
@@ -181,8 +190,8 @@ public class ImportService {
                             + " " + t.getReference()
                             + " " + t.getValue()
                             + " [" + t.getDescription() + "]"
-                            + " [" + t.getOwners().stream().map(r -> r.getId().getUser().getLogin() + "/" + r.getValue()).collect(Collectors.joining(", ")) + "]"
-                            + " [" + t.getContractors().stream().map(r -> r.getId().getUser().getLogin() + "/" + r.getValue()).collect(Collectors.joining(", ")) + "]"
+                            + " [" + t.getOwners().stream().map(r -> r.getId().getUser().getLogin() + "/" + r.getPercentage()).collect(Collectors.joining(", ")) + "]"
+                            + " [" + t.getContractors().stream().map(r -> r.getId().getUser().getLogin() + "/" + r.getPercentage()).collect(Collectors.joining(", ")) + "]"
                             + " [" + (t.getCategories() == null ? "" : t.getCategories().stream().map(Category::getCode).collect(Collectors.joining(", "))) + "]"
                     );
                     transactionRepository.save(t);

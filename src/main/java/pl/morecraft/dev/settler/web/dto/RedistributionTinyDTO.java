@@ -8,15 +8,15 @@ public class RedistributionTinyDTO {
     private String user;
 
     @JsonDeserialize(using = JsonDoubleDeserializer.class)
-    private Double value;
+    private Double percentage;
 
     public RedistributionTinyDTO() {
 
     }
 
-    public RedistributionTinyDTO(String user, Double value) {
+    public RedistributionTinyDTO(String user, Double percentage) {
         this.user = user;
-        this.value = value;
+        this.percentage = percentage;
     }
 
     public String getUser() {
@@ -27,12 +27,12 @@ public class RedistributionTinyDTO {
         this.user = user;
     }
 
-    public Double getValue() {
-        return value;
+    public Double getPercentage() {
+        return percentage;
     }
 
-    public void setValue(Double value) {
-        this.value = value;
+    public void setPercentage(Double percentage) {
+        this.percentage = percentage;
     }
 
 }

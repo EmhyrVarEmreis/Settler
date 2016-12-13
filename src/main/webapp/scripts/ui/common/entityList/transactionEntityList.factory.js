@@ -81,7 +81,7 @@
                 type:       'default',
                 isEmpty:    "N/D",
                 transform:  function (data, entry) {
-                    return data.user + ' (' + (data.value / entry.value.replace(/,/, '.') * 100).toFixed(0) + '%)';
+                    return data.user + ' (' + parseFloat(data.percentage.toString().replace(/,/, '.')).toFixed(0) + '%)';
                 },
                 index:      object.columnsCount++
             },
@@ -95,7 +95,7 @@
                 type:       'default',
                 isEmpty:    "N/D",
                 transform:  function (data, entry) {
-                    return data.user + ' (' + (data.value / entry.value.replace(/,/, '.') * 100).toFixed(0) + '%)';
+                    return data.user + ' (' + parseFloat(data.percentage.toString().replace(/,/, '.')).toFixed(0) + '%)';
                 },
                 index:      object.columnsCount++
             },

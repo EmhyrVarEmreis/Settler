@@ -129,6 +129,7 @@
                                 <button type="button"
                                         style="margin-bottom: 8px;"
                                         ng-click="openAddRedistributionModal(data.owners)"
+                                        ng-disabled="!data.value || parseFloatOwn(data.value) === 0"
                                         class="btn btn-success btn-sm">
                                     <span class="glyphicon glyphicon-plus"
                                           style="margin-left: 2px;"
@@ -159,8 +160,8 @@
                                             ({{redistribution.user.login}})
                                         </td>
                                         <td>
-                                            {{getValueString(redistribution)}}
-                                            ({{getPercentString(data, redistribution)}})%
+                                            {{getValueString(data, redistribution)}}
+                                            ({{getPercentString(data, redistribution)}}%)
                                         </td>
                                         <td>
                                             <button type="button"
@@ -196,6 +197,7 @@
                                 <button type="button"
                                         style="margin-bottom: 8px;"
                                         ng-click="openAddRedistributionModal(data.contractors)"
+                                        ng-disabled="!data.value || parseFloatOwn(data.value) === 0"
                                         class="btn btn-success btn-sm">
                                     <span class="glyphicon glyphicon-plus"
                                           style="margin-left: 2px;"
@@ -226,8 +228,8 @@
                                             ({{redistribution.user.login}})
                                         </td>
                                         <td>
-                                            {{getValueString(redistribution)}}
-                                            ({{getPercentString(data, redistribution)}})%
+                                            {{getValueString(data, redistribution)}}
+                                            ({{getPercentString(data, redistribution)}}%)
                                         </td>
                                         <td>
                                             <button type="button"

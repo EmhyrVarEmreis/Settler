@@ -51,16 +51,24 @@
                 && !(!$scope.data.contractors || $scope.data.contractors.length < 1);
         };
 
+        $scope.parseFloatOwn = function (s) {
+            return parseFloat(s.toString().replace(/,/, '.'));
+        };
+
         $scope.getPercentString = function (t, r) {
-            if (!r.value || !t.value) {
+            if (!r.percentage || !t.value) {
                 return parseFloat('0').toFixed(2);
             } else {
-                return (parseFloat(r.value.toString().replace(/,/, '.')) / parseFloat(t.value.toString().replace(/,/, '.')) * 100).toFixed(2);
+                return $scope.parseFloatOwn(r.percentage).toFixed(2);
             }
         };
 
-        $scope.getValueString = function (t) {
-            return parseFloat(t.value.toString().replace(/,/, '.')).toFixed(2);
+        $scope.getValueString = function (t, r) {
+            if (!r.percentage || !t.value) {
+                return parseFloat('0').toFixed(2);
+            } else {
+                return ($scope.parseFloatOwn(r.percentage) * $scope.parseFloatOwn(t.value) / 100).toFixed(2);
+            }
         };
 
         $scope.openAddRedistributionModal = function (redistributionList) {
@@ -82,8 +90,8 @@
             modalInstance.result.then(function (item) {
                 redistributionList.push(
                     {
-                        value: item.value,
-                        user:  item.user
+                        percentage: item.percentage,
+                        user:       item.user
                     }
                 );
             }, function () {

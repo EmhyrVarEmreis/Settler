@@ -27,7 +27,7 @@ public class RedistributionDTORedistributionConverter extends AbstractConverter<
                 redistributionDTO.getType() == null ? null : RedistributionType.valueOf(redistributionDTO.getType()),
                 PrivilegeObject.from(redistributionDTO.getParent()),
                 userRepository.findOne(redistributionDTO.getUser().getId()),
-                redistributionDTO.getValue()
+                redistributionDTO.getPercentage()
         );
     }
 

@@ -12,20 +12,20 @@ public class Redistribution {
     @EmbeddedId
     private RedistributionId id;
 
-    private Double value;
+    private Double percentage;
 
     public Redistribution() {
 
     }
 
-    public Redistribution(RedistributionId id, Double value) {
+    public Redistribution(RedistributionId id, Double percentage) {
         this.id = id;
-        this.value = value;
+        this.percentage = percentage;
     }
 
-    public Redistribution(RedistributionType type, PrivilegeObject parent, User user, Double value) {
+    public Redistribution(RedistributionType type, PrivilegeObject parent, User user, Double percentage) {
         this.id = new RedistributionId(type, parent, user);
-        this.value = value;
+        this.percentage = percentage;
     }
 
     public RedistributionId getId() {
@@ -36,12 +36,12 @@ public class Redistribution {
         this.id = id;
     }
 
-    public Double getValue() {
-        return value;
+    public Double getPercentage() {
+        return percentage;
     }
 
-    public void setValue(Double value) {
-        this.value = value;
+    public void setPercentage(Double percentage) {
+        this.percentage = percentage;
     }
 
     @Override
