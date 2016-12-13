@@ -11,7 +11,7 @@
                 </th>
             </tr>
             <tr class="ng-table-filters" ng-show="showFilters">
-                <th ng-repeat="column in columns" ng-show="column.isVisible || showVisibility"
+                <th class="form-group" ng-repeat="column in columns" ng-show="column.isVisible || showVisibility"
                     ng-class="getCssClassesHide(column)">
                     <input type="text"
                            ng-if="column.type === 'default' || column.type === 'money'"
