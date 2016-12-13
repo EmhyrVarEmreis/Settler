@@ -2,5 +2,11 @@
     border-color: rgba(255, 255, 255, 0.25);
     border-bottom: 1px solid rgba(13, 13, 13, 0.25);
     background: #FF9800 url("/images/brand.png") no-repeat right top;
-    background-size: auto 60px;
+    background-size: contain;
+}
+
+@media (max-width: 767px) {
+    .navbar-default {
+        background-size: auto 50px;
+    }
 }
