@@ -1,5 +1,6 @@
 package pl.morecraft.dev.settler.service;
 
+import org.joda.time.LocalDateTime;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -9,6 +10,7 @@ import pl.morecraft.dev.settler.dao.repository.PrivilegeObjectRepository;
 import pl.morecraft.dev.settler.domain.Comment;
 import pl.morecraft.dev.settler.domain.PrivilegeObject;
 import pl.morecraft.dev.settler.domain.QComment;
+import pl.morecraft.dev.settler.security.util.Security;
 import pl.morecraft.dev.settler.service.abstractService.prototype.AbstractService;
 import pl.morecraft.dev.settler.web.dto.CommentDTO;
 import pl.morecraft.dev.settler.web.dto.CommentListDTO;
@@ -16,6 +18,7 @@ import pl.morecraft.dev.settler.web.misc.CommentListFilters;
 
 import javax.inject.Inject;
 import java.util.List;
+import java.util.function.UnaryOperator;
 
 @Service
 @Transactional
@@ -63,6 +66,22 @@ public class CommentService extends AbstractService<Comment, CommentDTO, Comment
     @Override
     protected QComment getEQ() {
         return QComment.comment;
+    }
+
+    @Override
+    protected UnaryOperator<Comment> getSaveSavePreProcessingFunction() {
+        return comment -> {
+            if (comment.getOwner() == null) {
+                comment.setOwner(Security.currentUser());
+            }
+            if (comment.getCreated() == null) {
+                comment.setCreated(new LocalDateTime());
+            }
+            if (comment.getId() != null) {
+                comment.setEdited(new LocalDateTime());
+            }
+            return super.getSaveSavePreProcessingFunction().apply(comment);
+        };
     }
 
     public ResponseEntity<List<CommentDTO>> getByPrivilegeObject(Long objectId) {

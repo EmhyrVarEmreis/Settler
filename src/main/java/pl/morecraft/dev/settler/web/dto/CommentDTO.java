@@ -8,6 +8,7 @@ import pl.morecraft.dev.settler.web.utils.JsonJodaLocalDateTimeSerializer;
 
 public class CommentDTO {
 
+    private Long id;
     private Long object;
     private Long parentComment;
     private UserTinyDTO owner;
@@ -24,6 +25,14 @@ public class CommentDTO {
 
     public CommentDTO() {
 
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Long getObject() {

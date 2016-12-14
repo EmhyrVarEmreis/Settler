@@ -1,3 +1,22 @@
+<script type="text/ng-template" id="comment_tree_renderer.html">
+    <div class="col-sm-12">
+        <div class="row">
+            <div class="col-sm-12">
+                {{comment.value}} <span class="small"><em>by <strong>{{comment.owner.login}}</strong> on {{comment.created}}</em></span>
+                <div>
+                    <button type="button"
+                            class="btn btn-xs btn-primary"
+                            ng-click="openAddCommentModal(comment.id)">Odpowiedz
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <ul ng-show="comment.children">
+        <div class="row" ng-repeat="comment in comment.children" ng-include="'comment_tree_renderer.html'"></div>
+    </ul>
+</script>
+
 <div class="panel panel-primary">
 
     <div class="panel-heading" style="cursor: pointer;" ng-click="loadComments()">
@@ -10,18 +29,13 @@
                 <em>Brak komentarzy</em>
             </div>
         </div>
-        <div class="row" ng-repeat="comment in comments">
+        <div class="row" ng-repeat="comment in comments" ng-include="'comment_tree_renderer.html'"></div>
+        <div class="row">
             <div class="col-sm-12">
-                <div class="row">
-                    <div class="col-sm-12">
-                        {{comment.value}}
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-12 small" style="margin-left: 32px;">
-                        <em>by</em> <strong>{{comment.owner.login}}</strong> <em>on</em> {{comment.created}}
-                    </div>
-                </div>
+                <button type="button"
+                        class="btn btn-xs btn-raised btn-primary"
+                        ng-click="openAddCommentModal(comment.parentComment)">Dodaj komentarz
+                </button>
             </div>
         </div>
     </div>

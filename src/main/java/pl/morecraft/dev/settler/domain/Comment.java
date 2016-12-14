@@ -14,7 +14,7 @@ public class Comment extends PrivilegeObject {
 
     @ManyToOne
     @JoinColumn(name = "parent")
-    private Comment parentComment;
+    private PrivilegeObject parentComment;
 
     @ManyToOne
     @JoinColumn(name = "prv_user")
@@ -33,6 +33,15 @@ public class Comment extends PrivilegeObject {
 
     }
 
+    public Comment(PrivilegeObject object, PrivilegeObject parentComment, User owner, LocalDateTime created, LocalDateTime edited, String value) {
+        this.object = object;
+        this.parentComment = parentComment;
+        this.owner = owner;
+        this.created = created;
+        this.edited = edited;
+        this.value = value;
+    }
+
     public PrivilegeObject getObject() {
         return object;
     }
@@ -41,11 +50,11 @@ public class Comment extends PrivilegeObject {
         this.object = object;
     }
 
-    public Comment getParentComment() {
+    public PrivilegeObject getParentComment() {
         return parentComment;
     }
 
-    public void setParentComment(Comment parentComment) {
+    public void setParentComment(PrivilegeObject parentComment) {
         this.parentComment = parentComment;
     }
 

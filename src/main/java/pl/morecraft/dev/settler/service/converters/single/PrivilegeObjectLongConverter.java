@@ -11,7 +11,7 @@ public class PrivilegeObjectLongConverter extends AbstractConverter<PrivilegeObj
 
     @Override
     protected Long convert(PrivilegeObject privilegeObject) {
-        return privilegeObject.getId();
+        return privilegeObject == null ? null : privilegeObject.getId();
     }
 
 }
