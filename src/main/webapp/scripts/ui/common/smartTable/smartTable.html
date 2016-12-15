@@ -6,8 +6,8 @@
                 <th ng-repeat="column in columns" ng-show="column.isVisible || showVisibility"
                     class="text-center sortable"
                     ng-class="getCssClasses(column, tableParams)"
-                    ng-click="tableParams.sorting(column.sortField ? column.filterField : column.field, tableParams.isSortBy(column.sortField ? column.filterField : column.field, 'asc') ? 'desc' : 'asc')">
-                    <div class="sort-indicator" ng-bind-html="column.title"></div>
+                    ng-click="tableParamsSorting(tableParams, column)">
+                    <div ng-class="{'sort-indicator' : column.sortable}" ng-bind-html="column.title"></div>
                 </th>
             </tr>
             <tr class="ng-table-filters" ng-show="showFilters">

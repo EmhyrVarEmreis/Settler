@@ -1,7 +1,7 @@
-(function () {
+(function() {
     'use strict';
 
-    angular.module('settlerApplication').factory('transactionEntityListFactory', function (transactionListFactory) {
+    angular.module('settlerApplication').factory('transactionEntityListFactory', function(transactionListFactory) {
         var object = {};
 
         object.columnsCount = 0;
@@ -45,7 +45,7 @@
                 placeholder: 'Kategorie',
                 isVisible:   true,
                 filterable:  true,
-                sortable:    true,
+                sortable:    false,
                 hideOn:      {xs: true},
                 type:        'default',
                 isEmpty:     "N/D",
@@ -65,6 +65,7 @@
             },
             {
                 field:       'creator',
+                sortField:   'creator.login',
                 title:       '<span class="glyphicon glyphicon-user" aria-hidden="true"></span>',
                 placeholder: 'Twórca',
                 isVisible:   true,
@@ -81,11 +82,11 @@
                 placeholder: 'Właściciel',
                 isVisible:   true,
                 filterable:  true,
-                sortable:    true,
+                sortable:    false,
                 hideOn:      {xs: true},
                 type:        'default',
                 isEmpty:     "N/D",
-                transform:   function (data, entry) {
+                transform:   function(data, entry) {
                     return data.user + ' (' + parseFloat(data.percentage.toString().replace(/,/, '.')).toFixed(0) + '%)';
                 },
                 index:       object.columnsCount++
@@ -96,11 +97,11 @@
                 placeholder: 'Kontraktor',
                 isVisible:   true,
                 filterable:  true,
-                sortable:    true,
+                sortable:    false,
                 hideOn:      {xs: true},
                 type:        'default',
                 isEmpty:     "N/D",
-                transform:   function (data, entry) {
+                transform:   function(data, entry) {
                     return data.user + ' (' + parseFloat(data.percentage.toString().replace(/,/, '.')).toFixed(0) + '%)';
                 },
                 index:       object.columnsCount++
@@ -131,11 +132,12 @@
             },
             {
                 field:       'comments',
+                sortField:   'comments.size',
                 title:       '<span class="glyphicon glyphicon-comment" aria-hidden="true"></span>',
                 placeholder: 'Komentarze',
                 isVisible:   true,
                 filterable:  true,
-                sortable:    true,
+                sortable:    false,
                 hideOn:      {xs: true},
                 type:        'default',
                 isEmpty:     "Brak",

@@ -1,4 +1,4 @@
-package pl.morecraft.dev.settler.service.abstractService.singleFilters;
+package pl.morecraft.dev.settler.service.abstractService.annotation;
 
 import pl.morecraft.dev.settler.service.abstractService.prototype.AbstractServiceSingleFilter;
 

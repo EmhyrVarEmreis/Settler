@@ -20,6 +20,7 @@ import pl.morecraft.dev.settler.web.misc.ListPage;
 import java.io.IOException;
 import java.io.Serializable;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -134,7 +135,7 @@ public abstract class AbstractService<
                             applySorting(sortBy, user)
                     )
             );
-        } catch (NoSuchFieldException | IllegalAccessException e) {
+        } catch (NoSuchFieldException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
             e.printStackTrace();
         }
         return listPageConverter.convert(entityPage, getListDtoClass());
@@ -241,6 +242,21 @@ public abstract class AbstractService<
         return listPageConverter;
     }
 
+    protected ComparableExpressionBase<?> getComparableExpressionBase(String fieldName, QEntity qObject) throws NoSuchFieldException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+        String[] t = fieldName.split("\\.");
+        Object o = qObject;
+        for (String fieldNameTmp : t) {
+            Field f = o.getClass().getField(fieldNameTmp);
+            f.setAccessible(true);
+            o = f.get(o);
+        }
+        if (o instanceof ComparableExpressionBase) {
+            return (ComparableExpressionBase<?>) o;
+        } else {
+            return null;
+        }
+    }
+
     protected abstract QEntity getEQ();
 
     protected boolean checkIfHasId(EntityDTO entity) {
@@ -255,10 +271,10 @@ public abstract class AbstractService<
         this.hasId = hasId;
     }
 
-    private OrderSpecifier<?> applySorting(String sortBy, QEntity qObject) throws NoSuchFieldException, IllegalAccessException {
+    private OrderSpecifier<?> applySorting(String sortBy, QEntity qObject) throws NoSuchFieldException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         return applySortingSupporter(
                 sortBy.startsWith("-"),
-                ((ComparableExpressionBase<?>) qObject.getClass().getDeclaredField(sortBy.substring(1)).get(qObject))
+                getComparableExpressionBase(sortBy.substring(1), qObject)
         );
     }
 

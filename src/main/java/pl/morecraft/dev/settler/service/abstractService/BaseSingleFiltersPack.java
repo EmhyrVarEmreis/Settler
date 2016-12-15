@@ -3,8 +3,8 @@ package pl.morecraft.dev.settler.service.abstractService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+import pl.morecraft.dev.settler.service.abstractService.annotation.BaseSingleFilter;
 import pl.morecraft.dev.settler.service.abstractService.prototype.AbstractServiceSingleFilter;
-import pl.morecraft.dev.settler.service.abstractService.prototype.BaseSingleFilter;
 import pl.morecraft.dev.settler.service.abstractService.prototype.SingleFiltersPack;
 
 import javax.inject.Inject;

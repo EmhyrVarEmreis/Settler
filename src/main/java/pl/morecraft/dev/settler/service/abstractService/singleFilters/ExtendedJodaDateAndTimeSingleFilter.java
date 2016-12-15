@@ -6,9 +6,9 @@ import com.querydsl.core.types.dsl.DateTimePath;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.springframework.stereotype.Component;
+import pl.morecraft.dev.settler.service.abstractService.annotation.BaseSingleFilter;
+import pl.morecraft.dev.settler.service.abstractService.annotation.SingleFilterApplicableTypes;
 import pl.morecraft.dev.settler.service.abstractService.prototype.AbstractServiceSingleFilter;
-import pl.morecraft.dev.settler.service.abstractService.prototype.BaseSingleFilter;
-import pl.morecraft.dev.settler.service.abstractService.prototype.SingleFilterApplicableTypes;
 
 @Component
 @BaseSingleFilter(types = {

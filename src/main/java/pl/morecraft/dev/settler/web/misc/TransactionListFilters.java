@@ -3,7 +3,7 @@ package pl.morecraft.dev.settler.web.misc;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.joda.time.LocalDate;
-import pl.morecraft.dev.settler.service.abstractService.singleFilters.BaseFilter;
+import pl.morecraft.dev.settler.service.abstractService.annotation.BaseFilter;
 import pl.morecraft.dev.settler.service.abstractService.singleFilters.ExtendedJodaDateAndTimeSingleFilter;
 import pl.morecraft.dev.settler.service.abstractService.singleFilters.standard.*;
 import pl.morecraft.dev.settler.web.utils.JsonJodaLocalDateDeserializer;

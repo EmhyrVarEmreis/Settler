@@ -2,7 +2,9 @@ package pl.morecraft.dev.settler.service.abstractService.prototype;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
 import pl.morecraft.dev.settler.service.abstractService.AnnotationNotPresentException;
-import pl.morecraft.dev.settler.service.abstractService.singleFilters.BaseFilter;
+import pl.morecraft.dev.settler.service.abstractService.annotation.BaseFilter;
+import pl.morecraft.dev.settler.service.abstractService.annotation.BaseSingleFilter;
+import pl.morecraft.dev.settler.service.abstractService.annotation.SingleFilterApplicableTypes;
 
 import java.lang.reflect.Field;
 import java.util.function.BiFunction;

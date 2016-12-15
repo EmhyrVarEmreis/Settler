@@ -1,4 +1,4 @@
-package pl.morecraft.dev.settler.service.abstractService.prototype;
+package pl.morecraft.dev.settler.service.abstractService.annotation;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
