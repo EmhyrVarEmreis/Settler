@@ -6,4 +6,6 @@ public interface SingleFiltersPack {
 
     List<AbstractServiceSingleFilter> getFullEntityAbstractServiceSingleFiltersPack();
 
+    AbstractServiceSingleFilter get(Class<? extends AbstractServiceSingleFilter> clazz);
+
 }

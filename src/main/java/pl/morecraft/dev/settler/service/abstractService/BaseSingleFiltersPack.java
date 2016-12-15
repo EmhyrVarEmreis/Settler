@@ -17,7 +17,7 @@ import java.util.Map;
 @Scope("singleton")
 public class BaseSingleFiltersPack implements SingleFiltersPack {
 
-    private Map<BaseSingleFilter, AbstractServiceSingleFilter> abstractServiceSingleFilterMap;
+    private Map<Class<? extends AbstractServiceSingleFilter>, AbstractServiceSingleFilter> abstractServiceSingleFilterMap;
 
     @Inject
     public BaseSingleFiltersPack(ApplicationContext applicationContext) {
@@ -25,7 +25,7 @@ public class BaseSingleFiltersPack implements SingleFiltersPack {
         abstractServiceSingleFilterMap = new HashMap<>(beans.size());
         for (Object o : beans.values()) {
             if (o instanceof AbstractServiceSingleFilter) {
-                abstractServiceSingleFilterMap.put(o.getClass().getAnnotation(BaseSingleFilter.class), (AbstractServiceSingleFilter) o);
+                abstractServiceSingleFilterMap.put(((AbstractServiceSingleFilter) o).getClass(), (AbstractServiceSingleFilter) o);
             } else {
                 throw new ClassCastException("Unable to cast " + o.getClass() + " to AbstractConverter");
             }
@@ -35,6 +35,11 @@ public class BaseSingleFiltersPack implements SingleFiltersPack {
     @Override
     public synchronized List<AbstractServiceSingleFilter> getFullEntityAbstractServiceSingleFiltersPack() {
         return new ArrayList<>(abstractServiceSingleFilterMap.values());
+    }
+
+    @Override
+    public AbstractServiceSingleFilter get(Class<? extends AbstractServiceSingleFilter> clazz) {
+        return abstractServiceSingleFilterMap.get(clazz);
     }
 
 }

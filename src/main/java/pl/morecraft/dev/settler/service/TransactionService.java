@@ -51,7 +51,7 @@ public class TransactionService extends AbstractService<Transaction, Transaction
 
     @Override
     protected Boolean isFilterClassExtended() {
-        return true;
+        return false;
     }
 
     @Override

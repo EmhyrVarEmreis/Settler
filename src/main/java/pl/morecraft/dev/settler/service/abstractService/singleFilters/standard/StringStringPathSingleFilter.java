@@ -8,7 +8,7 @@ import pl.morecraft.dev.settler.service.abstractService.prototype.BaseSingleFilt
 import pl.morecraft.dev.settler.service.abstractService.prototype.SingleFilterApplicableTypes;
 
 @Component
-@BaseSingleFilter(types = @SingleFilterApplicableTypes(filterType = String.class, qObjectType = StringPath.class))
+@BaseSingleFilter(types = @SingleFilterApplicableTypes(qValueType = String.class, qObjectType = StringPath.class))
 public class StringStringPathSingleFilter extends AbstractServiceSingleFilter {
 
     @Override

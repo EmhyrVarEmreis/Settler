@@ -12,8 +12,8 @@ import pl.morecraft.dev.settler.service.abstractService.prototype.SingleFilterAp
 
 @Component
 @BaseSingleFilter(types = {
-        @SingleFilterApplicableTypes(filterType = Boolean.class, qObjectType = DatePath.class),
-        @SingleFilterApplicableTypes(filterType = Boolean.class, qObjectType = DateTimePath.class)
+        @SingleFilterApplicableTypes(qValueType = Boolean.class, qObjectType = DatePath.class),
+        @SingleFilterApplicableTypes(qValueType = Boolean.class, qObjectType = DateTimePath.class)
 })
 public class ExtendedBooleanJodaDateAndTimeSingleFilter extends AbstractServiceSingleFilter {
 

@@ -294,37 +294,55 @@ public abstract class AbstractService<
             ).filter(
                     field -> extractValueFromField(field, filters) != null
             ).forEach(
-                    field -> getAbstractServiceSingleFilters()
-                            .stream()
-                            .filter(filter -> filter.isApplicable(
-                                    extractValueFromField(field, filters),
-                                    extractValueFromField(
-                                            extractFieldFromObject(
-                                                    qObject,
-                                                    field.getName()
-                                            ),
-                                            qObject
-                                    ))
-                            )
-                            .forEach(filter -> pWrapper.predicate = filter.predicate(
-                                    pWrapper.predicate,
-                                    extractValueFromField(field, filters),
-                                    extractValueFromField(
-                                            extractFieldFromObject(
-                                                    qObject,
-                                                    field.getName()
-                                            ),
-                                            qObject
-                                    ),
-                                    isAnd ? BooleanExpression::and : BooleanExpression::or
+                    field -> {
+                        AbstractServiceSingleFilter abstractServiceSingleFilter = AbstractServiceSingleFilter.getAbstractServiceSingleFilterClassFromField(field, singleFiltersPack);
+                        if (abstractServiceSingleFilter == null) {
+                            getAbstractServiceSingleFilters()
+                                    .stream()
+                                    .filter(filter -> filter.isApplicable(
+                                            extractValueFromField(field, filters),
+                                            extractValueFromField(
+                                                    extractFieldFromObject(
+                                                            qObject,
+                                                            field.getName()
+                                                    ),
+                                                    qObject
+                                            ))
                                     )
-                            )
+                                    .findFirst()
+                                    .ifPresent(
+                                            filter -> pWrapper.predicate = apply(
+                                                    pWrapper, filter, field, filters, qObject, isAnd
+                                            )
+                                    );
+                        } else {
+                            pWrapper.predicate = apply(
+                                    pWrapper, abstractServiceSingleFilter, field, filters, qObject, isAnd
+                            );
+                        }
+
+                    }
             );
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         return pWrapper.predicate;
+    }
+
+    private BooleanExpression apply(BooleanExpressionWrapper pWrapper, AbstractServiceSingleFilter filter, Field field, ListFilters filters, QEntity qObject, boolean isAnd) {
+        return pWrapper.predicate = filter.predicate(
+                pWrapper.predicate,
+                extractValueFromField(field, filters),
+                extractValueFromField(
+                        extractFieldFromObject(
+                                qObject,
+                                field.getName()
+                        ),
+                        qObject
+                ),
+                isAnd ? BooleanExpression::and : BooleanExpression::or
+        );
     }
 
     private Stream<Field> getExtendedFields(ListFilters filters) {

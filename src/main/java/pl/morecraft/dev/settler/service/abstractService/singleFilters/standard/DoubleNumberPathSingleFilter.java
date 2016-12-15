@@ -8,7 +8,7 @@ import pl.morecraft.dev.settler.service.abstractService.prototype.BaseSingleFilt
 import pl.morecraft.dev.settler.service.abstractService.prototype.SingleFilterApplicableTypes;
 
 @Component
-@BaseSingleFilter(types = @SingleFilterApplicableTypes(filterType = Double.class, qObjectType = NumberPath.class))
+@BaseSingleFilter(types = @SingleFilterApplicableTypes(qValueType = Double.class, qObjectType = NumberPath.class))
 public class DoubleNumberPathSingleFilter extends AbstractServiceSingleFilter {
 
     @SuppressWarnings("unchecked")

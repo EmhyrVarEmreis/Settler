@@ -1,4 +1,4 @@
-package pl.morecraft.dev.settler.service.abstractService.singleFilters;
+package pl.morecraft.dev.settler.service.abstractService.singleFilters.standard;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
 import org.springframework.stereotype.Component;
@@ -8,8 +8,8 @@ import pl.morecraft.dev.settler.service.abstractService.prototype.BaseSingleFilt
 import pl.morecraft.dev.settler.service.abstractService.prototype.SingleFilterApplicableTypes;
 
 @Component
-@BaseSingleFilter(types = @SingleFilterApplicableTypes(filterType = String.class, qObjectType = QUser.class))
-public class CustomStringUserSingleFilter extends AbstractServiceSingleFilter {
+@BaseSingleFilter(types = @SingleFilterApplicableTypes(qValueType = String.class, qObjectType = QUser.class))
+public class StringUserSingleFilter extends AbstractServiceSingleFilter {
 
     @Override
     public BooleanExpression predicate(Object filterValue, Object qObjectValue) {

@@ -12,10 +12,10 @@ import pl.morecraft.dev.settler.service.abstractService.prototype.SingleFilterAp
 
 @Component
 @BaseSingleFilter(types = {
-        @SingleFilterApplicableTypes(filterType = LocalDate.class, qObjectType = DatePath.class),
-        @SingleFilterApplicableTypes(filterType = LocalDate.class, qObjectType = DateTimePath.class),
-        @SingleFilterApplicableTypes(filterType = LocalDateTime.class, qObjectType = DateTimePath.class),
-        @SingleFilterApplicableTypes(filterType = LocalDateTime.class, qObjectType = DatePath.class)
+        @SingleFilterApplicableTypes(qValueType = LocalDate.class, qObjectType = DatePath.class),
+        @SingleFilterApplicableTypes(qValueType = LocalDate.class, qObjectType = DateTimePath.class),
+        @SingleFilterApplicableTypes(qValueType = LocalDateTime.class, qObjectType = DateTimePath.class),
+        @SingleFilterApplicableTypes(qValueType = LocalDateTime.class, qObjectType = DatePath.class)
 })
 public class ExtendedJodaDateAndTimeSingleFilter extends AbstractServiceSingleFilter {
 

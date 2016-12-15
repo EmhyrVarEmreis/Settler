@@ -9,7 +9,7 @@ import pl.morecraft.dev.settler.service.abstractService.prototype.BaseSingleFilt
 import pl.morecraft.dev.settler.service.abstractService.prototype.SingleFilterApplicableTypes;
 
 @Component
-@BaseSingleFilter(types = @SingleFilterApplicableTypes(filterType = DefaultDictionary.class, qObjectType = EnumPath.class))
+@BaseSingleFilter(types = @SingleFilterApplicableTypes(qValueType = DefaultDictionary.class, qObjectType = EnumPath.class))
 public class StringDefaultDictionarySingleFilter extends AbstractServiceSingleFilter {
 
     @SuppressWarnings("unchecked")
