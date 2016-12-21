@@ -1,20 +1,42 @@
 <div class="container">
     <div class="page-header">
-        <div class="pull-left">
-            <h2>Użytkownik <strong>{{data.firstName}} {{data.lastName}}</strong></h2>
-        </div>
-        <div class="pull-right">
-            <h1 class="text-right">
+        <div class="row">
+            <div class="col-sm-2 text-center panel-header-avatar-margin circular-container">
+                <div class="circular-wrapper circular-64">
+                    <img ng-show="avatar" class="circular-avatar" width="64" src=""
+                         data-ng-src="data:{{avatar.type}};base64,{{avatar.content}}" alt="avatar"/>
+                    <img ng-hide="avatar" class="circular-avatar" width="64" src="/images/avatar.png" alt="avatar"/>
+                    <div class="circular-avatar-text">
+                        <div class="text-center circular-64" ng-click="changeAvatarTrigger()">Zmień</div>
+                        <input id="changeAvatar" type="file" accept="image/*" ngf-select="changeAvatar($file)"
+                               ngf-max-size="128KB" class="hide"/>
+                    </div>
+                </div>
+                <div class="col-sm-12" ng-show="avatarFile">
+                    <div class="progress" ng-click="file = false" role="button">
+                        <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0"
+                             aria-valuemax="100"
+                             ng-style="{'width': avatarFile.progress + '%'}">
+                            {{avatarFile.progress}}%
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-7 panel-header-avatar-margin">
+                <div>
+                    <h2 class="list-group-item-heading">{{data.firstName}} {{data.lastName}}</h2>
+                    <h4 class="list-group-item-text">Utworzony: {{data.created}}</h4>
+                </div>
+            </div>
+            <div class="col-sm-3 panel-header-avatar-margin">
                 <button type="button"
-                        class="btn btn-raised btn-primary pull-right"
-                        style="margin-left: 2px; margin-right: 2px;"
+                        class="btn btn-success btn-raised text-center"
+                        style="width: 100%;"
                         ng-click="save()">
                     Zapisz
                 </button>
-            </h1>
+            </div>
         </div>
-        <div class="clearfix"></div>
-        <h4>Utworzony: {{data.created}}</h4>
     </div>
 
     <form class="form">

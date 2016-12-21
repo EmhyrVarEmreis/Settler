@@ -57,6 +57,8 @@ public class UserDTO {
 
     private List<RoleAssignmentDTO> roleAssignments;
 
+    private Long avatar;
+
     public UserDTO() {
     }
 
@@ -155,6 +157,14 @@ public class UserDTO {
 
     public void setRoleAssignments(List<RoleAssignmentDTO> roleAssignments) {
         this.roleAssignments = roleAssignments;
+    }
+
+    public Long getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(Long avatar) {
+        this.avatar = avatar;
     }
 
     @Override

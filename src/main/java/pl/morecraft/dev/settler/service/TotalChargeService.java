@@ -24,8 +24,7 @@ public class TotalChargeService extends AbstractService<TotalCharge, TotalCharge
         this.totalChargeRepository = totalChargeRepository;
     }
 
-    @Override
-    protected TotalChargeRepository getRepository() {
+    protected TotalChargeRepository getUserRepository() {
         return totalChargeRepository;
     }
 
@@ -64,7 +63,7 @@ public class TotalChargeService extends AbstractService<TotalCharge, TotalCharge
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        List<TotalCharge> totalChargeList = getRepository().findAllByUserFromId(id);
+        List<TotalCharge> totalChargeList = getUserRepository().findAllByUserFromId(id);
 
         List<TotalChargeDTO> totalChargeDTOList = getListPageConverter().convert(totalChargeList, TotalChargeDTO.class);
 
@@ -76,7 +75,7 @@ public class TotalChargeService extends AbstractService<TotalCharge, TotalCharge
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        List<TotalCharge> totalChargeList = getRepository().findAllByUserToId(id);
+        List<TotalCharge> totalChargeList = getUserRepository().findAllByUserToId(id);
 
         List<TotalChargeDTO> totalChargeDTOList = getListPageConverter().convert(totalChargeList, TotalChargeDTO.class);
 

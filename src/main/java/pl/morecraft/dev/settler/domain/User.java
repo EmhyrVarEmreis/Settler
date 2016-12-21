@@ -28,6 +28,10 @@ public class User extends PrivilegeObject {
     private LocalDate passwordExpireDate;
     private LocalDate accountExpireDate;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "avatar")
+    private FileObject avatar;
+
     public User() {
 
     }
@@ -102,6 +106,14 @@ public class User extends PrivilegeObject {
 
     public void setAccountExpireDate(LocalDate accountExpireDate) {
         this.accountExpireDate = accountExpireDate;
+    }
+
+    public FileObject getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(FileObject avatar) {
+        this.avatar = avatar;
     }
 
     @Override

@@ -13,4 +13,8 @@
         return $resource('api/user/search/simple');
     });
 
+    angular.module('settlerApplication').factory('userAvatarFactory', function($resource) {
+        return $resource('api/user/avatar');
+    });
+
 })();

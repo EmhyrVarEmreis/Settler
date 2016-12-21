@@ -63,7 +63,7 @@ public abstract class AbstractService<
     private boolean hasId;
 
     public ResponseEntity<EntityDTO> get(EntityID id) {
-        Entity entity = getRepository().findOne(id);
+        Entity entity = getUserRepository().findOne(id);
 
         if (entity == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -128,7 +128,7 @@ public abstract class AbstractService<
         QEntity user = getEQ();
         Page<Entity> entityPage = null;
         try {
-            entityPage = getRepository().findAll(
+            entityPage = getUserRepository().findAll(
                     applyFilters(filters, user, isAnd),
                     new QPageRequest(page - 1,
                             limit,
@@ -142,11 +142,11 @@ public abstract class AbstractService<
     }
 
     public List<EntityDTO> findAll() {
-        List<Entity> entityDTOList = getRepository().findAll();
+        List<Entity> entityDTOList = getUserRepository().findAll();
         return listPageConverter.convert(entityDTOList, getDtoClass());
     }
 
-    protected abstract EntityRepository getRepository();
+    protected abstract EntityRepository getUserRepository();
 
     protected abstract Boolean isFilterClassExtended();
 
@@ -215,7 +215,7 @@ public abstract class AbstractService<
     }
 
     protected UnaryOperator<Entity> getSaveSaveFunction() {
-        return entity -> getRepository().save(entity);
+        return entity -> getUserRepository().save(entity);
     }
 
     protected List<AbstractServiceSingleFilter> getAbstractServiceSingleFilters() {

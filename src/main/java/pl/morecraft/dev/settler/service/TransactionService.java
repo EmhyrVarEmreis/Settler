@@ -44,8 +44,7 @@ public class TransactionService extends AbstractService<Transaction, Transaction
         this.redistributionRepository = redistributionRepository;
     }
 
-    @Override
-    protected TransactionRepository getRepository() {
+    protected TransactionRepository getUserRepository() {
         return transactionRepository;
     }
 

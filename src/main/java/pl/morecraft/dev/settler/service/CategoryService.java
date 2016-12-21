@@ -27,8 +27,7 @@ public class CategoryService extends AbstractService<Category, CategoryDTO, Cate
         this.repository = repository;
     }
 
-    @Override
-    protected CategoryRepository getRepository() {
+    protected CategoryRepository getUserRepository() {
         return repository;
     }
 

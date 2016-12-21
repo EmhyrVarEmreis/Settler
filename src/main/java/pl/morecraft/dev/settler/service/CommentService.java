@@ -33,8 +33,7 @@ public class CommentService extends AbstractService<Comment, CommentDTO, Comment
         this.privilegeObjectRepository = privilegeObjectRepository;
     }
 
-    @Override
-    protected CommentRepository getRepository() {
+    protected CommentRepository getUserRepository() {
         return commentRepository;
     }
 

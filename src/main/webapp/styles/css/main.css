@@ -117,3 +117,43 @@ input.ng-invalid.ng-touched {
     margin-top: 20px;
 }
 
+.circular-avatar {
+    border-radius: 150px;
+    -webkit-border-radius: 150px;
+    -moz-border-radius: 150px;
+}
+
+.circular-64 {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto;
+}
+
+div.circular-avatar-text {
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    cursor: pointer;
+    display: table;
+    position: absolute;
+    top: 0;
+    opacity: 0;
+
+    border-radius: 150px;
+    -webkit-border-radius: 150px;
+    -moz-border-radius: 150px;
+
+    -webkit-transition: opacity 200ms;
+    -moz-transition: opacity 200ms;
+    -o-transition: opacity 200ms;
+    transition: opacity 200ms;
+}
+
+div.circular-avatar-text div {
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.circular-wrapper:hover div.circular-avatar-text {
+    opacity: 1;
+}

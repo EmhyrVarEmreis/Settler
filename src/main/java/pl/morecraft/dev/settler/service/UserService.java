@@ -2,12 +2,15 @@ package pl.morecraft.dev.settler.service;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.util.CollectionUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.encoding.BasePasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import pl.morecraft.dev.settler.dao.repository.FileObjectRepository;
 import pl.morecraft.dev.settler.dao.repository.UserRepository;
+import pl.morecraft.dev.settler.domain.FileObject;
 import pl.morecraft.dev.settler.domain.QUser;
 import pl.morecraft.dev.settler.domain.User;
 import pl.morecraft.dev.settler.domain.dictionaries.OperationType;
@@ -16,13 +19,16 @@ import pl.morecraft.dev.settler.security.util.Security;
 import pl.morecraft.dev.settler.service.abstractService.prototype.AbstractService;
 import pl.morecraft.dev.settler.service.exception.DuplicatedEntityException;
 import pl.morecraft.dev.settler.service.exception.EntityNotFoundException;
+import pl.morecraft.dev.settler.web.dto.AvatarDTO;
+import pl.morecraft.dev.settler.web.dto.FileObjectDTO;
 import pl.morecraft.dev.settler.web.dto.UserDTO;
 import pl.morecraft.dev.settler.web.dto.UserListDTO;
 import pl.morecraft.dev.settler.web.misc.ListPage;
 import pl.morecraft.dev.settler.web.misc.UserListFilters;
 
-import javax.inject.Inject;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.function.UnaryOperator;
 
@@ -30,18 +36,23 @@ import java.util.function.UnaryOperator;
 @Transactional
 public class UserService extends AbstractService<User, UserDTO, UserListDTO, UserListFilters, QUser, Long, UserRepository> {
 
-    @Inject
-    private PermissionManager permissionManager;
+    private final FileObjectRepository fileObjectRepository;
+    private final BasePasswordEncoder passwordEncoder;
+    private final PermissionManager permissionManager;
+    private final UserRepository userRepository;
+    private final FileService fileService;
 
-    @Inject
-    private UserRepository repository;
+    @Autowired
+    public UserService(FileObjectRepository fileObjectRepository, BasePasswordEncoder passwordEncoder, PermissionManager permissionManager, UserRepository userRepository, FileService fileService) {
+        this.fileObjectRepository = fileObjectRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.permissionManager = permissionManager;
+        this.userRepository = userRepository;
+        this.fileService = fileService;
+    }
 
-    @Inject
-    private BasePasswordEncoder passwordEncoder;
-
-    @Override
-    protected UserRepository getRepository() {
-        return repository;
+    protected UserRepository getUserRepository() {
+        return userRepository;
     }
 
     @Override
@@ -98,11 +109,11 @@ public class UserService extends AbstractService<User, UserDTO, UserListDTO, Use
     protected UnaryOperator<User> getSavePostProcessingFunction() {
         return (user) -> {
             if (user.getId() == null) {
-                if (repository.findOneByLogin(user.getLogin()) != null) {
+                if (userRepository.findOneByLogin(user.getLogin()) != null) {
                     throw new DuplicatedEntityException("User with this login already exists: " + user.getLogin());
                 }
             } else {
-                User originUser = repository.findOne(user.getId());
+                User originUser = userRepository.findOne(user.getId());
                 if (originUser == null) {
                     throw new EntityNotFoundException("User with this ID was not found: " + user.getId());
                 } else {
@@ -118,6 +129,25 @@ public class UserService extends AbstractService<User, UserDTO, UserListDTO, Use
             }
             return user;
         };
+    }
+
+    public ResponseEntity<AvatarDTO> getAvatar(Long id, String login) throws IOException {
+        FileObject fileObject;
+
+        if (id > 0) {
+            fileObject = userRepository.findOne(id).getAvatar();
+        } else if (!login.isEmpty()) {
+            fileObject = userRepository.findOneByLogin(login).getAvatar();
+        } else {
+            return null;
+        }
+        return new ResponseEntity<>(
+                new AvatarDTO(
+                        fileObject.getType(),
+                        Base64.getEncoder().encodeToString(fileObject.getContent())
+                ),
+                HttpStatus.OK
+        );
     }
 
     public ResponseEntity<List<UserListDTO>> searchSimple(Integer limit, String string) {
@@ -142,6 +172,21 @@ public class UserService extends AbstractService<User, UserDTO, UserListDTO, Use
                 isAnd
         );
         return new ResponseEntity<>(listPage.getContent(), HttpStatus.OK);
+    }
+
+    public ResponseEntity<FileObjectDTO> setAvatar(String login, FileObjectDTO fileObjectDTO) {
+        User user = userRepository.findOneByLogin(login);
+
+        if (user == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        ResponseEntity<FileObjectDTO> fileObjectDTOResponseEntity = fileService.save(fileObjectDTO);
+
+        user.setAvatar(fileObjectRepository.findOne(fileObjectDTOResponseEntity.getBody().getId()));
+        userRepository.save(user);
+
+        return fileObjectDTOResponseEntity;
     }
 
 }

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="1.0-path-009" author="settler">
+
+        <createTable tableName="mod_file">
+            <column name="id"
+                    type="bigint">
+                <constraints primaryKey="true"
+                             primaryKeyName="PK_mod_file_id"
+                             references="prv_object(id)"
+                             nullable="false"
+                             foreignKeyName="FK_mod_file_id_prv_object_id"/>
+            </column>
+            <column name="name"
+                    type="nvarchar(32)">
+                <constraints primaryKey="true"
+                             unique="true"
+                             nullable="false"/>
+            </column>
+            <column name="type"
+                    type="nvarchar(64)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="extension"
+                    type="nvarchar(32)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="path"
+                    type="nvarchar(512)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="original_name"
+                    type="nvarchar(256)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="content"
+                    type="blob">
+                <constraints nullable="true"/>
+            </column>
+            <column name="updated"
+                    type="datetime">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addColumn tableName="prv_user">
+            <column name="avatar" type="BIGINT">
+                <constraints references="mod_file(id)"
+                             foreignKeyName="FK_prv_user_avatar_mod_file_id"/>
+            </column>
+        </addColumn>
+
+    </changeSet>
+
+</databaseChangeLog>

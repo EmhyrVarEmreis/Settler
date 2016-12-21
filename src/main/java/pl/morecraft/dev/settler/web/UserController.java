@@ -5,10 +5,12 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.morecraft.dev.settler.service.UserService;
+import pl.morecraft.dev.settler.web.dto.AvatarDTO;
 import pl.morecraft.dev.settler.web.dto.UserDTO;
 import pl.morecraft.dev.settler.web.dto.UserListDTO;
 import pl.morecraft.dev.settler.web.misc.ListPage;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -51,6 +53,16 @@ public class UserController {
     public ResponseEntity<List<UserListDTO>> getPaged(@RequestParam(value = "limit", required = false, defaultValue = "25") Integer limit,
                                                       @RequestParam(value = "string", required = false, defaultValue = "") String string) {
         return userService.searchSimple(limit, string);
+    }
+
+    @RequestMapping(
+            value = "/avatar",
+            method = RequestMethod.GET
+    )
+    public ResponseEntity<AvatarDTO> getExcelFile(
+            @RequestParam(value = "id", defaultValue = "-13", required = false) Long id,
+            @RequestParam(value = "login", defaultValue = "", required = false) String login) throws IOException {
+        return userService.getAvatar(id, login);
     }
 
 }
