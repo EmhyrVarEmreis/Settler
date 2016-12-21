@@ -132,15 +132,26 @@ public class UserService extends AbstractService<User, UserDTO, UserListDTO, Use
     }
 
     public ResponseEntity<AvatarDTO> getAvatar(Long id, String login) throws IOException {
-        FileObject fileObject;
+        User user;
 
         if (id > 0) {
-            fileObject = userRepository.findOne(id).getAvatar();
+            user = userRepository.findOne(id);
         } else if (!login.isEmpty()) {
-            fileObject = userRepository.findOneByLogin(login).getAvatar();
+            user = userRepository.findOneByLogin(login);
         } else {
             return null;
         }
+
+        if (user == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        FileObject fileObject = user.getAvatar();
+
+        if (fileObject == null) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+
         return new ResponseEntity<>(
                 new AvatarDTO(
                         fileObject.getType(),

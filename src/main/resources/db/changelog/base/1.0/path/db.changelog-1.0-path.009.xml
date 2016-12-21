@@ -40,7 +40,7 @@
                 <constraints nullable="false"/>
             </column>
             <column name="content"
-                    type="blob">
+                    type="mediumblob">
                 <constraints nullable="true"/>
             </column>
             <column name="updated"

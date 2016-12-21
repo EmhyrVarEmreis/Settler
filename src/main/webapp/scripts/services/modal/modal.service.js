@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    angular.module('settlerApplication').service('modalService', function($uibModal) {
+    angular.module('settlerServices').service('modalService', function ($uibModal) {
 
         this.createErrorDialogFromResponse = function(response) {
             console.log(response);

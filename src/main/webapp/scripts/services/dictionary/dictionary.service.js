@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    angular.module('settlerApplication').service('dictionaryService', function(dictionaryFactory) {
+    angular.module('settlerServices').service('dictionaryService', function (dictionaryFactory) {
 
         this.cached = {};
 

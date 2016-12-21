@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    angular.module('settlerApplication').service('downloadService', function(dictionaryService, localStorageService) {
+    angular.module('settlerServices').service('downloadService', function (dictionaryService, localStorageService) {
         var service = this;
 
         service.download = function(url, properties) {
