@@ -21,18 +21,20 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-7 panel-header-avatar-margin">
+            <div class="col-sm-8 panel-header-avatar-margin">
                 <div>
                     <h2 class="list-group-item-heading">{{data.firstName}} {{data.lastName}}</h2>
                     <h4 class="list-group-item-text">Utworzony: {{data.created}}</h4>
                 </div>
             </div>
-            <div class="col-sm-3 panel-header-avatar-margin">
+            <div class="col-sm-2 panel-header-avatar-margin">
                 <button type="button"
                         class="btn btn-success btn-raised text-center"
                         style="width: 100%;"
                         ng-click="save()">
-                    Zapisz
+                    <span class="glyphicon glyphicon-floppy-disk hidden-lg hidden-md hidden-xs"
+                          aria-hidden="true"></span>
+                    <span class="hidden-sm">Zapisz</span>
                 </button>
             </div>
         </div>

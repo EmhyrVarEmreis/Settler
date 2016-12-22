@@ -1,45 +1,71 @@
 <div class="container">
     <div class="page-header">
-        <div class="pull-left">
-            <h2>{{isNew() ? 'Nowa ' : ''}}Transakcja <strong>{{data.reference}}</strong></h2>
-        </div>
-        <div class="pull-right">
-            <h1 class="text-right">
-                <button type="submit"
-                        class="btn btn-raised btn-primary pull-right"
-                        style="margin-left: 2px; margin-right: 2px;"
+        <div class="row">
+            <div class="col-sm-2 text-center panel-header-avatar-margin circular-container">
+                <div class="circular-wrapper circular-64">
+                    <img class="circular-avatar" width="64"
+                         src="/images/transaction.png" alt="avatar"/>
+                    <div class="circular-avatar-text">
+                        <div class="text-center circular-64" ng-click="changeAvatarTrigger()">Zmień</div>
+                        <input id="changeAvatar" type="file" accept="image/*" ngf-select="changeAvatar($file)"
+                               ngf-max-size="128KB" class="hide"/>
+                    </div>
+                </div>
+                <div class="col-sm-12" ng-show="avatarFile">
+                    <div class="progress" ng-click="file = false" role="button">
+                        <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0"
+                             aria-valuemax="100"
+                             ng-style="{'width': avatarFile.progress + '%'}">
+                            {{avatarFile.progress}}%
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-8 panel-header-avatar-margin">
+                <div>
+                    <h2 class="list-group-item-heading">{{isNew() ? 'Nowa ' : ''}}Transakcja
+                        <strong>{{data.reference}}</strong></h2>
+                    <h4 class="list-group-item-text">Utworzona: {{isNew() ? '---' : data.created}}</h4>
+                </div>
+            </div>
+            <div class="col-sm-2 panel-header-avatar-margin">
+                <button type="button"
+                        class="btn btn-success btn-raised text-center"
+                        style="width: 100%;"
                         ng-click="save()">
-                    <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
-                    <span class="hidden-xs hidden-sm">Zapisz</span>
+                    <span class="glyphicon glyphicon-floppy-disk hidden-lg hidden-md hidden-xs"
+                          aria-hidden="true"></span>
+                    <span class="hidden-sm">Zapisz</span>
                 </button>
-            </h1>
+            </div>
         </div>
-        <div class="clearfix"></div>
-        <h4>Utworzona: {{isNew() ? '---' : data.created}}</h4>
-        <h5>Kategorie:
-            <span class="label label-info"
-                  style="margin-right: 8px;"
-                  ng-repeat="category in data.categories">
-                {{category.code+' - ' + category.description}}
-                <span class="glyphicon glyphicon-remove"
-                      aria-hidden="true"
-                      style="cursor: pointer; margin-left: 6px;"
-                      ng-click="data.categories.splice($index, 1)"></span>
-            </span>
-            <span class="label label-danger"
-                  ng-show="!data.categories || data.categories.length < 1"
-                  style="margin-right: 8px;">
-                <strong>Błąd!</strong> Transakcja musi być przypisana do przynajmniej jednej kategorii.
-            </span>
-            <span class="label label-success"
-                  style="margin-right: 8px; cursor: pointer;">
-                <span class="glyphicon glyphicon-plus"
-                      aria-hidden="true"
-                      style="margin-left: 1px;"
-                      ng-click="openAddCategoryModal()"></span>
-
-            </span>
-        </h5>
+        <div class="row">
+            <div class="col-sm-12">
+                <h5>Kategorie:
+                    <span class="label label-info"
+                          style="margin-right: 8px;"
+                          ng-repeat="category in data.categories">
+                        {{category.code+' - ' + category.description}}
+                        <span class="glyphicon glyphicon-remove"
+                              aria-hidden="true"
+                              style="cursor: pointer; margin-left: 6px;"
+                              ng-click="data.categories.splice($index, 1)"></span>
+                    </span>
+                    <span class="label label-danger"
+                          ng-show="!data.categories || data.categories.length < 1"
+                          style="margin-right: 8px;">
+                        <strong>Błąd!</strong> Transakcja musi być przypisana do przynajmniej jednej kategorii.
+                    </span>
+                    <span class="label label-success"
+                          style="margin-right: 8px; cursor: pointer;">
+                        <span class="glyphicon glyphicon-plus"
+                              aria-hidden="true"
+                              style="margin-left: 1px;"
+                              ng-click="openAddCategoryModal()"></span>
+                    </span>
+                </h5>
+            </div>
+        </div>
     </div>
 
     <form class="form" name="transactionDetailsForm">
