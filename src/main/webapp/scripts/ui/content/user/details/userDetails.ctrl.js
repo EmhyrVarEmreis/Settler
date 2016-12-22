@@ -7,7 +7,7 @@
                                                                                  $stateParams,
                                                                                  modalService,
                                                                                  $timeout,
-                                                                                 userAvatarFactory,
+                                                                                 avatarService,
                                                                                  Upload) {
 
         $scope.data = {};
@@ -15,18 +15,9 @@
         $scope.avatar = null;
 
         $scope.loadAvatar = function () {
-            userAvatarFactory.get(
-                {
-                    id: $stateParams.state
-                },
-                function (data) {
-                    if (data.content) {
-                        $scope.avatar = data;
-                    }
-                }, function (err) {
-                    modalService.createErrorDialogFromResponse(err);
-                }
-            );
+            avatarService.getAvatarByUserId($stateParams.state, function (data) {
+                $scope.avatar = data;
+            });
         };
 
         if ($stateParams.state !== 'new') {
