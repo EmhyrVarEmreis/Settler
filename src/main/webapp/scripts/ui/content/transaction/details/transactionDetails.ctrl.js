@@ -6,11 +6,19 @@
                                                                                         transactionDetailsFactory,
                                                                                         $stateParams,
                                                                                         modalService,
+                                                                                        avatarService,
+                                                                                        userAvatarFactory,
                                                                                         $uibModal) {
 
         $scope.data = {
             owners:      [],
             contractors: []
+        };
+
+        $scope.avatars = {};
+
+        $scope.getAvatar = function (userId) {
+            return avatarService.getAvatarByUserId(userId);
         };
 
         $scope.isNew = function () {

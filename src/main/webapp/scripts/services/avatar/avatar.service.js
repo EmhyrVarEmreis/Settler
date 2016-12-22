@@ -3,12 +3,55 @@
 
     angular.module('settlerServices').service('avatarService', function (userAvatarFactory, modalService) {
 
-        this.getAvatarByUserId = function (id, callback) {
-            return this.loadAvatar(id, null, callback);
+        var defaultAvatarLocation = '/images/avatar.png';
+        this.defaultAvatarLocation = defaultAvatarLocation;
+
+        this.cacheById = {};
+
+        this.deCacheByUserId = function (id) {
+            this.cacheById['' + id] = undefined;
         };
 
-        this.getAvatarByUserLogin = function (login, callback) {
-            return this.loadAvatar(null, login, callback);
+        var getString = function (data) {
+            if (data) {
+                return 'data:' + data.type + ';base64,' + data.content;
+            } else {
+                return defaultAvatarLocation;
+            }
+        };
+        this.getString = getString;
+
+        this.getAvatarByUserId = function (id, callback, asString) {
+            var cached = this.cacheById['' + id];
+            if (cached === undefined) {
+                cached = userAvatarFactory.get(
+                    {
+                        id: !id ? undefined : id
+                    }
+                );
+                this.cacheById['' + id] = cached;
+                if (true || asString) {
+                    cached.$promise.then(function (data) {
+                        if (data.content) {
+                            cached.string = getString(data);
+                        } else {
+                            cached.string = defaultAvatarLocation;
+                        }
+                    });
+                }
+            }
+            return cached;
+        };
+
+        this.getAvatarByUserLogin = function (login, callback, asString) {
+            var newCallback = callback;
+            if (asString) {
+                var getString = this.getString;
+                newCallback = function (data) {
+                    return callback(getString(data));
+                };
+            }
+            return this.loadAvatar(null, login, newCallback);
         };
 
         this.loadAvatar = function (id, login, callback) {

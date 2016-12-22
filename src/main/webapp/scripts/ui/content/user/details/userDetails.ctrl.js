@@ -15,9 +15,7 @@
         $scope.avatar = null;
 
         $scope.loadAvatar = function () {
-            avatarService.getAvatarByUserId($stateParams.state, function (data) {
-                $scope.avatar = data;
-            });
+            $scope.avatar = avatarService.getAvatarByUserId(!$scope.data.id ? $stateParams.state : $scope.data.id);
         };
 
         if ($stateParams.state !== 'new') {
@@ -70,6 +68,7 @@
                     file.result = response.data;
                     $scope.data.avatar = response.data.id;
                     $scope.avatarFile = null;
+                    avatarService.deCacheByUserId(!$scope.data.id ? $stateParams.state : $scope.data.id);
                     $scope.loadAvatar();
                 });
             }, function (response) {

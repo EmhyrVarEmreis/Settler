@@ -156,6 +156,9 @@
                                     <tbody>
                                     <tr ng-repeat="redistribution in data.owners track by $index">
                                         <td>
+                                            <img class="circular-avatar" width="32"
+                                                 data-ng-src="{{getAvatar(redistribution.user.id).string}}"
+                                                 alt="avatar"/>
                                             {{redistribution.user.firstName}} {{redistribution.user.lastName}}
                                             ({{redistribution.user.login}})
                                         </td>
@@ -224,6 +227,9 @@
                                     <tbody>
                                     <tr ng-repeat="redistribution in data.contractors track by $index">
                                         <td>
+                                            <img class="circular-avatar" width="32"
+                                                 data-ng-src="{{getAvatar(redistribution.user.id).string}}"
+                                                 alt="avatar"/>
                                             {{redistribution.user.firstName}} {{redistribution.user.lastName}}
                                             ({{redistribution.user.login}})
                                         </td>

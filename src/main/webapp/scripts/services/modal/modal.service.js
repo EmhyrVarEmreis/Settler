@@ -8,7 +8,6 @@
         };
 
         this.createSuccessDialog = function(body) {
-            console.log(body);
             $uibModal.open({
                 templateUrl: 'scripts/ui/common/dialogs/statusDialog/statusDialog.html',
                 controller:  'statusDialogCtrl',

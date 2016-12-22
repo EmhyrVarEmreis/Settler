@@ -3,9 +3,8 @@
         <div class="row">
             <div class="col-sm-2 text-center panel-header-avatar-margin circular-container">
                 <div class="circular-wrapper circular-64">
-                    <img ng-show="avatar" class="circular-avatar" width="64" src=""
-                         data-ng-src="data:{{avatar.type}};base64,{{avatar.content}}" alt="avatar"/>
-                    <img ng-hide="avatar" class="circular-avatar" width="64" src="/images/avatar.png" alt="avatar"/>
+                    <img ng-show="avatar.string" class="circular-avatar" width="64" src=""
+                         data-ng-src="{{avatar.string}}" alt="avatar"/>
                     <div class="circular-avatar-text">
                         <div class="text-center circular-64" ng-click="changeAvatarTrigger()">Zmień</div>
                         <input id="changeAvatar" type="file" accept="image/*" ngf-select="changeAvatar($file)"
