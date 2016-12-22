@@ -118,6 +118,7 @@ input.ng-invalid.ng-touched {
 }
 
 .circular-avatar {
+    box-shadow: 0 0 0 2px #fff;
     border-radius: 150px;
     -webkit-border-radius: 150px;
     -moz-border-radius: 150px;

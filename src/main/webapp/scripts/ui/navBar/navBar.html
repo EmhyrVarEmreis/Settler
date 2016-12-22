@@ -1,60 +1,74 @@
 <nav class="navbar navbar-default">
     <div class="container-fluid">
-        <ul class="nav navbar-nav">
-            <li>
-                <a href="#/panel/default" class="active">
-                    <span class="glyphicon glyphicon-th glph-def-em" aria-hidden="true"></span>
-                    Panel
-                </a>
-            </li>
-            <li>
-                <a href="#/transaction/list">
-                    <span class="glyphicon glyphicon-th-list glph-def-em" aria-hidden="true"></span>
-                    Lista transakcji
-                </a>
-            </li>
-            <li class="dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                   aria-expanded="false">
-                    <span class="glyphicon glyphicon-briefcase glph-def-em" aria-hidden="true"></span>
-                    Administracja
-                </a>
-                <ul class="dropdown-menu">
-                    <li>
-                        <a href="#/user/list">
-                            <span class="glyphicon glyphicon-list glph-def-em" aria-hidden="true"></span>
-                            Lista użytkowników
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#/category/list">
-                            <span class="glyphicon glyphicon-list glph-def-em" aria-hidden="true"></span>
-                            Lista kategorii
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#/import">
-                            <span class="glyphicon glyphicon-import glph-def-em" aria-hidden="true"></span>
-                            Import
-                        </a>
-                    </li>
-                </ul>
-            </li>
-            <li class="dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                   aria-expanded="false">
-                    <span class="glyphicon glyphicon-user glph-def-em" aria-hidden="true"></span>
-                    {{nav.userData.lastName}} {{nav.userData.firstName}}
-                </a>
-                <ul class="dropdown-menu">
-                    <li>
-                        <a href="#" ng-click="nav.logout()">
-                            <span class="glyphicon glyphicon-log-out glph-def-em" aria-hidden="true"></span>
-                            Wyloguj się
-                        </a>
-                    </li>
-                </ul>
-            </li>
-        </ul>
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse"
+                    data-target=".navbar-responsive-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <div class="navbar-brand">
+                <img ng-show="nav.userData.avatar.string" class="circular-avatar" width="32" src=""
+                     data-ng-src="{{nav.userData.avatar.string}}" alt="avatar"/>
+            </div>
+        </div>
+        <div class="navbar-collapse collapse navbar-responsive-collapse">
+            <ul class="nav navbar-nav">
+                <li>
+                    <a href="#/panel/default" class="active">
+                        <span class="glyphicon glyphicon-th glph-def-em" aria-hidden="true"></span>
+                        Panel
+                    </a>
+                </li>
+                <li>
+                    <a href="#/transaction/list">
+                        <span class="glyphicon glyphicon-th-list glph-def-em" aria-hidden="true"></span>
+                        Lista transakcji
+                    </a>
+                </li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">
+                        <span class="glyphicon glyphicon-briefcase glph-def-em" aria-hidden="true"></span>
+                        Administracja
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="#/user/list">
+                                <span class="glyphicon glyphicon-list glph-def-em" aria-hidden="true"></span>
+                                Lista użytkowników
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#/category/list">
+                                <span class="glyphicon glyphicon-list glph-def-em" aria-hidden="true"></span>
+                                Lista kategorii
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#/import">
+                                <span class="glyphicon glyphicon-import glph-def-em" aria-hidden="true"></span>
+                                Import
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">
+                        <span class="glyphicon glyphicon-user glph-def-em" aria-hidden="true"></span>
+                        {{nav.userData.lastName}} {{nav.userData.firstName}}
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="#" ng-click="nav.logout()">
+                                <span class="glyphicon glyphicon-log-out glph-def-em" aria-hidden="true"></span>
+                                Wyloguj się
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
     </div>
 </nav>

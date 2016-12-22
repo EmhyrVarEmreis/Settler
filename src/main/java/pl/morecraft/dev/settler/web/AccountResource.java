@@ -19,7 +19,6 @@ import pl.morecraft.dev.settler.security.util.Security;
 import pl.morecraft.dev.settler.security.xauth.TokenProvider;
 import pl.morecraft.dev.settler.web.dto.AuthenticationDTO;
 import pl.morecraft.dev.settler.web.dto.LoginDTO;
-import pl.morecraft.dev.settler.web.dto.RoleAssignmentDTO;
 import pl.morecraft.dev.settler.web.dto.UserDTO;
 
 import java.util.Collections;
@@ -116,12 +115,13 @@ public class AccountResource {
     public UserDTO getAccount() {
         User user = Security.currentUser();
         return new UserDTO(
+                user.getId(),
                 user.getLogin(),
                 null,
                 user.getFirstName(),
                 user.getLastName(),
                 user.getEmail(),
-                Collections.<RoleAssignmentDTO>emptyList()
+                Collections.emptyList()
         );
     }
 

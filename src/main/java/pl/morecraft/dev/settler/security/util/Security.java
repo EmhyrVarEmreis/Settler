@@ -14,18 +14,16 @@ import java.util.Optional;
 public class Security {
 
     private Security() {
+
     }
 
-    @SuppressWarnings("UnnecessaryLocalVariable")
     public static User currentUser() {
-        Optional<SecurityContext> context = Optional.ofNullable(SecurityContextHolder.getContext());
-        User user = context
+        return Optional.ofNullable(SecurityContextHolder.getContext())
                 .map(SecurityContext::getAuthentication)
                 .map(Authentication::getPrincipal)
                 .map(UserDetailsWrapper.class::cast)
                 .map(UserDetailsWrapper::getUser)
                 .orElse(null);
-        return user;
     }
 
 }

@@ -8,5 +8,6 @@
 @media (max-width: 767px) {
     .navbar-default {
         background-size: auto 50px;
+        background-position: center top;
     }
 }
