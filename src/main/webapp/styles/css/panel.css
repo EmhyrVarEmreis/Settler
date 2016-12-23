@@ -14,3 +14,9 @@
 .panel-header-avatar-margin {
     margin-bottom: 8px;
 }
+
+@media (max-width: 767px) {
+    .panel-main {
+        margin: 10px 8px 25px;
+    }
+}
