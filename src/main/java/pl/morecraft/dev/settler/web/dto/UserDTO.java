@@ -64,6 +64,7 @@ public class UserDTO {
 
     public UserDTO(Long id, String login, String password, String firstName, String lastName, String email, List<RoleAssignmentDTO> roleAssignments) {
         this.id = id;
+        this.login = login;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;

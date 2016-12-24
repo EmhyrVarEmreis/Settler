@@ -98,7 +98,8 @@
                     <div class="col-sm-6 form-group">
                         <label>Twórca</label>
                         <div style="margin-top:-10px;">
-                            <user-picker ng-model="data.creator"></user-picker>
+                            <user-picker ng-model="data.creator"
+                                         placeholder="Pozostaw puste dla bieżącego użytkownika"></user-picker>
                         </div>
                     </div>
 
@@ -158,6 +159,17 @@
                                 </button>
                             </div>
                         </div>
+                        <div ng-show="data.owners.length === 0" class="row text-center">
+                            <div class="col-sm-12">
+                                <button type="button"
+                                        style="margin-bottom: 8px;"
+                                        ng-click="addLoggedUserToRedistribution(data.owners, 100)"
+                                        ng-disabled="!data.value || parseFloatOwn(data.value) === 0"
+                                        class="btn btn-raised btn-success btn-sm">
+                                    Dodaj mnie z 100%
+                                </button>
+                            </div>
+                        </div>
                         <div class="row" ng-hide="!data.owners || data.owners.length < 1">
                             <div class="col-sm-12">
                                 <table width="100%">
@@ -169,7 +181,7 @@
                                         <td width="30%">
                                             <strong>Wartość</strong>
                                         </td>
-                                        <td width="10%">
+                                        <td width="10%" class="text-center">
                                             <strong>Akcja</strong>
                                         </td>
                                     </tr>
@@ -189,7 +201,7 @@
                                         </td>
                                         <td>
                                             <button type="button"
-                                                    style="margin-top: 4px;"
+                                                    style="margin-top: 4px; width: 100%;"
                                                     class="btn btn-raised btn-danger btn-xs"
                                                     ng-click="data.owners.splice($index, 1)">
                                                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
@@ -198,6 +210,15 @@
                                     </tr>
                                     </tbody>
                                 </table>
+                            </div>
+                        </div>
+                        <div class="row text-normal text-center text-italic"
+                             style="margin-top: 8px;"
+                             ng-show="data.owners && data.owners.length > 0 && !isRedistributionListComplete(data.owners)">
+                            <div class="col-sm-12">
+                                <div class="alert alert-warning" role="alert">
+                                    <strong>Uwaga!</strong> Suma wartości właścicieli nie daje 100%.
+                                </div>
                             </div>
                         </div>
                         <div class="row text-normal text-center text-italic"
@@ -229,6 +250,17 @@
                                 </button>
                             </div>
                         </div>
+                        <div ng-show="data.contractors.length === 0" class="row text-center">
+                            <div class="col-sm-12">
+                                <button type="button"
+                                        style="margin-bottom: 8px;"
+                                        ng-click="addLoggedUserToRedistribution(data.contractors, 50)"
+                                        ng-disabled="!data.value || parseFloatOwn(data.value) === 0"
+                                        class="btn btn-raised btn-success btn-sm">
+                                    Dodaj mnie z 50%
+                                </button>
+                            </div>
+                        </div>
                         <div class="row" ng-hide="!data.contractors || data.contractors.length < 1">
                             <div class="col-sm-12">
                                 <table width="100%">
@@ -240,7 +272,7 @@
                                         <td width="30%">
                                             <strong>Wartość</strong>
                                         </td>
-                                        <td width="10%">
+                                        <td width="10%" class="text-center">
                                             <strong>Akcja</strong>
                                         </td>
                                     </tr>
@@ -260,7 +292,7 @@
                                         </td>
                                         <td>
                                             <button type="button"
-                                                    style="margin-top: 4px;"
+                                                    style="margin-top: 4px; width: 100%;"
                                                     class="btn btn-raised btn-danger btn-xs"
                                                     ng-click="data.contractors.splice($index, 1)">
                                                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
@@ -272,13 +304,23 @@
                             </div>
                         </div>
                         <div class="row text-normal text-center text-italic"
-                             ng-show="!data.contractors || data.contractors.length < 1">
+                             style="margin-top: 8px;"
+                             ng-show="data.contractors && data.contractors.length > 0 && !isRedistributionListComplete(data.contractors)">
                             <div class="col-sm-12">
-                                <div class="alert alert-danger" role="alert">
-                                    <strong>Błąd!</strong> Transakcja musi posiadać przynajmniej jednego kontraktora.
+                                <div class="alert alert-warning"
+                                " role="alert">
+                                <strong>Uwaga!</strong> Suma wartości kontraktorów nie daje 100%.
                                 </div>
                             </div>
                         </div>
+                    <div class="row text-normal text-center text-italic"
+                         ng-show="!data.contractors || data.contractors.length < 1">
+                        <div class="col-sm-12">
+                            <div class="alert alert-danger" role="alert">
+                                <strong>Błąd!</strong> Transakcja musi posiadać przynajmniej jednego kontraktora.
+                            </div>
+                        </div>
+                    </div>
                     </div>
 
                 </div>
