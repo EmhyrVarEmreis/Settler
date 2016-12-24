@@ -52,9 +52,9 @@ public class EmailService {
                     redistribution -> {
                         Map<String, String> options = new HashMap<>();
                         options.put("creator", transaction.getCreator().getLogin());
-                        options.put("user", redistribution.getId().getUser().getLogin());
+                        options.put("user", redistribution.getId().getUser().getFirstName());
                         options.put("transactionId", transaction.getReference());
-                        options.put("value", String.format("%.2f", redistribution.getPercentage() * transaction.getValue()));
+                        options.put("value", String.format("%.2f", redistribution.getPercentage() * transaction.getValue() / 100.0));
                         options.put("total", String.format("%.2f", transaction.getValue()));
                         sendEmail(Collections.singletonList(redistribution.getId().getUser().getEmail()), emailTemplate, options);
                     }
