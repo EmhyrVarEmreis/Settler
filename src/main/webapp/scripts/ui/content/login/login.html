@@ -38,13 +38,15 @@
                                        placeholder="Hasło"
                                        ng-model="password">
                             </div>
+
+                            <button type="submit"
+                                    class="btn btn-raised btn-success"
+                                    ng-click="login()">
+                                <span class="glyphicon glyphicon-log-in  glph-def-em" aria-hidden="true"></span>
+                                Zaloguj się
+                            </button>
                         </div>
                     </div>
-
-                    <button type="submit" class="btn btn-primary" ng-click="login()">
-                        <span class="glyphicon glyphicon-log-in  glph-def-em" aria-hidden="true"></span>
-                        Zaloguj się
-                    </button>
                 </div>
             </div>
         </div>
