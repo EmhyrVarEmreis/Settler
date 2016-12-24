@@ -5,11 +5,6 @@
                 <div class="circular-wrapper circular-64">
                     <img class="circular-avatar" width="64"
                          src="/images/transaction.png" alt="avatar"/>
-                    <div class="circular-avatar-text">
-                        <div class="text-center circular-64" ng-click="changeAvatarTrigger()">Zmień</div>
-                        <input id="changeAvatar" type="file" accept="image/*" ngf-select="changeAvatar($file)"
-                               ngf-max-size="128KB" class="hide"/>
-                    </div>
                 </div>
                 <div class="col-sm-12" ng-show="avatarFile">
                     <div class="progress" ng-click="file = false" role="button">
