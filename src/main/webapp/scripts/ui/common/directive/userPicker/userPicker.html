@@ -1,13 +1,14 @@
-<ui-select theme="bootstrap"
-           reset-search-input="false"
-           title="Wybierz użytkownika">
-    <ui-select-match placeholder="{{placeholder}}">
-        {{$select.selected.firstName + ' ' + $select.selected.lastName + ' (' +
-        $select.selected.login + ')'}}
-    </ui-select-match>
-    <ui-select-choices repeat="user in userList track by user.id"
-                       refresh="refreshUserList($select.search)"
-                       refresh-delay="0">
-        <div ng-bind-html="user.firstName + ' ' + user.lastName + ' (' + user.login + ')' | highlight: $select.search"></div>
-    </ui-select-choices>
-</ui-select>
+<div>
+    <ui-select reset-search-input="false"
+               title="Wybierz użytkownika">
+        <ui-select-match placeholder="{{placeholder}}">
+            {{$select.selected.firstName + ' ' + $select.selected.lastName + ' (' +
+            $select.selected.login + ')'}}
+        </ui-select-match>
+        <ui-select-choices repeat="user in userList track by user.id"
+                           refresh="refreshUserList($select.search)"
+                           refresh-delay="0">
+            <div ng-bind-html="user.firstName + ' ' + user.lastName + ' (' + user.login + ')' | highlight: $select.search"></div>
+        </ui-select-choices>
+    </ui-select>
+</div>
