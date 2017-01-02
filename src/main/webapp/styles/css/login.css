@@ -1,5 +1,4 @@
-
-.jumbotron.vertical-center {
+.vertical-center {
     margin-bottom: 0; /* Remove the default bottom margin of .jumbotron */
 }
 
@@ -34,6 +33,7 @@
         /* In legacy web browsers such as Firefox 9
            we need to specify the width of the flex container */
         width: 100%;
+        height: 100%;
 
         /* Also 'margin: 0 auto' doesn't have any effect on flex items in such web browsers
            hence the bootstrap's container won't be aligned to the center anymore.
@@ -56,5 +56,7 @@
 
 .login-page-bg {
     height: 100%;
+    width: 100%;
+    position: absolute;
     background-color: #009688;
 }
