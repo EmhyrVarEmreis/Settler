@@ -2,6 +2,20 @@
     margin-bottom: 0; /* Remove the default bottom margin of .jumbotron */
 }
 
+.login-page {
+    padding-bottom: 25%;
+    padding-top: 70px;
+    background: url("/images/brand.png") no-repeat center top;
+    background-size: auto 60px;
+}
+
+.login-page-bg {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    background-color: #009688;
+}
+
 @media (min-width: 767px) {
     .vertical-center {
         min-height: 100%; /* Fallback for vh unit */
@@ -47,16 +61,8 @@
     }
 }
 
-.login-page {
-    padding-bottom: 25%;
-    padding-top: 70px;
-    background: url("/images/brand.png") no-repeat center top;
-    background-size: auto 60px;
-}
-
-.login-page-bg {
-    height: 100%;
-    width: 100%;
-    position: absolute;
-    background-color: #009688;
+@media (max-width: 767px) {
+    .login-page-bg {
+        padding-top: 15%;
+    }
 }
