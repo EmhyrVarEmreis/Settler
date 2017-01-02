@@ -1,81 +1,79 @@
-<div class="row panel-body">
-    <form class="form" role="form" ng-submit="applyFilters()">
-        <table ng-table="tableParams" class="table">
-            <thead>
-            <tr>
-                <th ng-repeat="column in columns" ng-show="column.isVisible || showVisibility"
-                    class="text-center sortable"
-                    ng-class="getCssClasses(column, tableParams)"
-                    ng-click="tableParamsSorting(tableParams, column)">
-                    <div ng-class="{'sort-indicator' : column.sortable}" ng-bind-html="column.title"></div>
-                </th>
-            </tr>
-            <tr class="ng-table-filters" ng-show="showFilters">
-                <th class="form-group" ng-repeat="column in columns" ng-show="column.isVisible || showVisibility"
-                    ng-class="getCssClassesHide(column)">
-                    <input type="text"
-                           ng-if="column.type === 'default' || column.type === 'money'"
-                           ng-disabled="!isFilterable(column)"
-                           placeholder="{{column.placeholder ? column.placeholder : column.title}}"
-                           class="input-sm form-control"
-                           ng-model="filters[column.filterField ? column.filterField : column.field]"
-                           title="{{column.title}}"/>
-                    <input type="text"
-                           ng-if="column.type === 'date'"
-                           ng-disabled="!isFilterable(column)"
-                           placeholder="{{column.placeholder ? column.placeholder : column.title}}"
-                           ng-pattern="/[0-9]{4}\-[0-9]{2}\-[0-9]{2}/"
-                           class="input-sm form-control"
-                           ng-model="filters[column.filterField ? column.filterField : column.field]"
-                           title="{{column.title}}"/>
-                    <input type="checkbox"
-                           ng-if="column.type === 'boolean'"
-                           ng-disabled="!isFilterable(column)"
-                           placeholder="{{column.placeholder ? column.placeholder : column.title}}"
-                           class="input-sm form-control"
-                           ng-model="filters[column.filterField ? column.filterField : column.field]"
-                           title="{{column.title}}"/>
-                </th>
-            </tr>
-            <tr class="ng-table-filters" ng-show="showVisibility">
-                <th ng-repeat="column in columns" ng-class="getCssClassesHide(column)">
-                    <button type="button"
-                            class="btn btn-colPicker"
-                            ng-class="{'btn-success' : !column.isVisible, 'btn-warning' : column.isVisible}"
-                            ng-click="column.isVisible = !column.isVisible">{{column.isVisible ? 'Ukryj' : 'Pokaż'}}
-                    </button>
-            </tr>
-            </thead>
-            <tbody class="table-row-highlight">
-            <tr ng-repeat="entry in data"
-                ng-click="navigateToUrl(entry)"
-                ng-class="{'table-row-cursor-hand' : defaultUrl}">
-                <td ng-repeat="column in columns" ng-show="column.isVisible || showVisibility"
-                    ng-class="getCssClassesHide(column)">
-                    <a ng-if="column.url" href ng-href="{{column.url || entry ? getUrl(column.url,entry) : ''}}">
-                        <strong>{{getTransformedEntry(entry[column.field], column, entry) |
-                            isEmpty:column.isEmpty}}</strong>
-                    </a>
-                    <div ng-if="!column.url && !isArray(entry[column.field]) && column.type !== 'boolean'">
-                        {{getTransformedEntry(entry[column.field], column, entry) | isEmpty:column.isEmpty}}
-                    </div>
-                    <div ng-if="!column.url && isArray(entry[column.field])"
-                         ng-repeat="value in entry[column.field] track by $index">
-                        {{getTransformedEntry(value, column, entry)}}
-                    </div>
-                    <div ng-if="!column.url && column.type === 'boolean'">
-                        <span ng-if="entry[column.field]" class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-                        <span ng-if="!entry[column.field]" class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td ng-show="!data || data.length === 0" colspan="{{getVisibleColumnsCount()}}" class="text-center">
-                    {{emptyTableString}}
-                </td>
-            </tr>
-            </tbody>
-        </table>
-        <input type="submit" style="position: absolute; left: -9999px"/>
-    </form>
-</div>
+<form class="form" role="form" ng-submit="applyFilters()">
+    <table ng-table="tableParams" class="table">
+        <thead>
+        <tr>
+            <th ng-repeat="column in columns" ng-show="column.isVisible || showVisibility"
+                class="text-center sortable"
+                ng-class="getCssClasses(column, tableParams)"
+                ng-click="tableParamsSorting(tableParams, column)">
+                <div ng-class="{'sort-indicator' : column.sortable}" ng-bind-html="column.title"></div>
+            </th>
+        </tr>
+        <tr class="ng-table-filters" ng-show="showFilters">
+            <th class="form-group" ng-repeat="column in columns" ng-show="column.isVisible || showVisibility"
+                ng-class="getCssClassesHide(column)">
+                <input type="text"
+                       ng-if="column.type === 'default' || column.type === 'money'"
+                       ng-disabled="!isFilterable(column)"
+                       placeholder="{{column.placeholder ? column.placeholder : column.title}}"
+                       class="input-sm form-control"
+                       ng-model="filters[column.filterField ? column.filterField : column.field]"
+                       title="{{column.title}}"/>
+                <input type="text"
+                       ng-if="column.type === 'date'"
+                       ng-disabled="!isFilterable(column)"
+                       placeholder="{{column.placeholder ? column.placeholder : column.title}}"
+                       ng-pattern="/[0-9]{4}\-[0-9]{2}\-[0-9]{2}/"
+                       class="input-sm form-control"
+                       ng-model="filters[column.filterField ? column.filterField : column.field]"
+                       title="{{column.title}}"/>
+                <input type="checkbox"
+                       ng-if="column.type === 'boolean'"
+                       ng-disabled="!isFilterable(column)"
+                       placeholder="{{column.placeholder ? column.placeholder : column.title}}"
+                       class="input-sm form-control"
+                       ng-model="filters[column.filterField ? column.filterField : column.field]"
+                       title="{{column.title}}"/>
+            </th>
+        </tr>
+        <tr class="ng-table-filters" ng-show="showVisibility">
+            <th ng-repeat="column in columns" ng-class="getCssClassesHide(column)">
+                <button type="button"
+                        class="btn btn-colPicker"
+                        ng-class="{'btn-success' : !column.isVisible, 'btn-warning' : column.isVisible}"
+                        ng-click="column.isVisible = !column.isVisible">{{column.isVisible ? 'Ukryj' : 'Pokaż'}}
+                </button>
+        </tr>
+        </thead>
+        <tbody class="table-row-highlight">
+        <tr ng-repeat="entry in data"
+            ng-click="navigateToUrl(entry)"
+            ng-class="{'table-row-cursor-hand' : defaultUrl}">
+            <td ng-repeat="column in columns" ng-show="column.isVisible || showVisibility"
+                ng-class="getCssClassesHide(column)">
+                <a ng-if="column.url" href ng-href="{{column.url || entry ? getUrl(column.url,entry) : ''}}">
+                    <strong>{{getTransformedEntry(entry[column.field], column, entry) |
+                        isEmpty:column.isEmpty}}</strong>
+                </a>
+                <div ng-if="!column.url && !isArray(entry[column.field]) && column.type !== 'boolean'">
+                    {{getTransformedEntry(entry[column.field], column, entry) | isEmpty:column.isEmpty}}
+                </div>
+                <div ng-if="!column.url && isArray(entry[column.field])"
+                     ng-repeat="value in entry[column.field] track by $index">
+                    {{getTransformedEntry(value, column, entry)}}
+                </div>
+                <div ng-if="!column.url && column.type === 'boolean'">
+                    <span ng-if="entry[column.field]" class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                    <span ng-if="!entry[column.field]" class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td ng-show="!data || data.length === 0" colspan="{{getVisibleColumnsCount()}}" class="text-center">
+                {{emptyTableString}}
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <input type="submit" style="position: absolute; left: -9999px"/>
+</form>
