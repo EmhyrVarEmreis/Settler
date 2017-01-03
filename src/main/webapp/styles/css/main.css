@@ -103,3 +103,9 @@ div.circular-avatar-text div {
 .circular-wrapper:hover div.circular-avatar-text {
     opacity: 1;
 }
+
+@media (max-width: 767px) {
+    .transaction-header, .user-header {
+        text-align: center;
+    }
+}

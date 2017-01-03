@@ -16,11 +16,15 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-8 panel-header-avatar-margin">
+            <div class="col-sm-8 panel-header-avatar-margin transaction-header">
                 <div>
                     <h2 class="list-group-item-heading">{{isNew() ? 'Nowa ' : ''}}Transakcja
                         <strong>{{data.reference}}</strong></h2>
-                    <h4 class="list-group-item-text">Utworzona: {{isNew() ? '---' : data.created}}</h4>
+                    <h4 class="list-group-item-text">Utworzona: {{isNew() ? '---' : data.created}}
+                        <small style="display:inline-block;">przez {{data.creator.firstName}} {{data.creator.lastName}}
+                            ({{data.creator.login}})
+                        </small>
+                    </h4>
                 </div>
             </div>
             <div class="col-sm-2 panel-header-avatar-margin">
@@ -49,7 +53,7 @@
                     <span class="label label-danger"
                           ng-show="!data.categories || data.categories.length < 1"
                           style="margin-right: 8px;">
-                        <strong>Błąd!</strong> Transakcja musi być przypisana do przynajmniej jednej kategorii.
+                        <strong>Błąd!</strong> Przypisz przynajmniej jedną kategorię.
                     </span>
                     <span class="label label-success"
                           style="margin-right: 8px; cursor: pointer;">
@@ -96,26 +100,6 @@
                     </div>
 
                     <div class="col-sm-6 form-group">
-                        <label>Twórca</label>
-                        <div style="margin-top:-10px;">
-                            <user-picker ng-model="data.creator"
-                                         placeholder="Pozostaw puste dla bieżącego użytkownika"></user-picker>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-
-        <div class="panel panel-primary">
-
-            <div class="panel-heading">
-                Dodatkowe informacje
-            </div>
-
-            <div class="panel-body">
-                <div class="row">
-                    <div class="col-sm-12 form-group">
                         <label>Opis</label>
 
                         <input class="form-control input-sm"
@@ -310,9 +294,9 @@
                                 <div class="alert alert-warning"
                                 " role="alert">
                                 <strong>Uwaga!</strong> Suma wartości kontraktorów nie daje 100%.
-                                </div>
                             </div>
                         </div>
+                    </div>
                     <div class="row text-normal text-center text-italic"
                          ng-show="!data.contractors || data.contractors.length < 1">
                         <div class="col-sm-12">
@@ -321,14 +305,14 @@
                             </div>
                         </div>
                     </div>
-                    </div>
-
                 </div>
-            </div>
 
+            </div>
         </div>
 
-        <comments-directive id="data.id" ng-show="data.id"></comments-directive>
+</div>
 
-    </form>
+<comments-directive id="data.id" ng-show="data.id"></comments-directive>
+
+</form>
 </div>

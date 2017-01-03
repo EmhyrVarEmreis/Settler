@@ -1,7 +1,7 @@
-(function() {
+(function () {
     'use strict';
 
-    angular.module('settlerApplication').factory('transactionEntityListFactory', function(transactionListFactory) {
+    angular.module('settlerApplication').factory('transactionEntityListFactory', function (transactionListFactory) {
         var object = {};
 
         object.columnsCount = 0;
@@ -71,7 +71,7 @@
                 isVisible:   true,
                 filterable:  true,
                 sortable:    true,
-                hideOn:      {},
+                hideOn:      {xs: true},
                 type:        'default',
                 isEmpty:     "N/D",
                 index:       object.columnsCount++
@@ -86,7 +86,7 @@
                 hideOn:      {xs: true},
                 type:        'default',
                 isEmpty:     "N/D",
-                transform:   function(data, entry) {
+                transform:   function (data, entry) {
                     return data.user + ' (' + parseFloat(data.percentage.toString().replace(/,/, '.')).toFixed(0) + '%)';
                 },
                 index:       object.columnsCount++
@@ -101,7 +101,7 @@
                 hideOn:      {xs: true},
                 type:        'default',
                 isEmpty:     "N/D",
-                transform:   function(data, entry) {
+                transform:   function (data, entry) {
                     return data.user + ' (' + parseFloat(data.percentage.toString().replace(/,/, '.')).toFixed(0) + '%)';
                 },
                 index:       object.columnsCount++
