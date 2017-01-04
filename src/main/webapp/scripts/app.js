@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
 
     angular
@@ -19,10 +19,10 @@
             'rzModule'
         ])
 
-        .factory('authInterceptor', function($rootScope, $q, $location, localStorageService, $injector) {
+        .factory('authInterceptor', function ($rootScope, $q, $location, localStorageService, $injector, historyService) {
             return {
                 // Add authorization token to headers
-                request:       function(config) {
+                request:       function (config) {
                     config.headers = config.headers || {};
                     var token = localStorageService.get('token');
 
@@ -38,45 +38,53 @@
 
                     return config;
                 },
-                response:      function(response) {
+                response:      function (response) {
                     var token = response.headers('x-auth-token');
                     if (token) localStorageService.set('token', token);
                     return response;
                 },
-                responseError: function(rejection) {
+                responseError: function (rejection) {
                     if (rejection.status === 401 && !$rootScope.sessionLost) {
                         $rootScope.sessionLost = true;
                         $location.path('/login');
-                        $injector.get('$uibModal').open({
-                            templateUrl: 'scripts/ui/common/dialogs/statusDialog/statusDialog.html',
-                            controller:  'statusDialogCtrl',
-                            resolve:     {
-                                conf: function() {
-                                    return {
-                                        modalTitle: 'Informacja',
-                                        modalBody:  'Twoja sesja wygasła lub cofnięto dostęp do zasobu!<br/><strong>Zaloguj się ponownie!</strong>',
-                                        isOK:       false
-                                    };
+                        if (historyService.prev() !== null) {
+                            $rootScope.sessionLost = false;
+                        } else {
+                            $injector.get('$uibModal').open({
+                                templateUrl: 'scripts/ui/common/dialogs/statusDialog/statusDialog.html',
+                                controller:  'statusDialogCtrl',
+                                resolve:     {
+                                    conf: function () {
+                                        return {
+                                            modalTitle: 'Informacja',
+                                            modalBody:  'Twoja sesja wygasła lub cofnięto dostęp do zasobu!<br/><strong>Zaloguj się ponownie!</strong>',
+                                            isOK:       false
+                                        };
+                                    }
                                 }
-                            }
-                        }).result.then(function() {
-                            $rootScope.sessionLost = false;
-                        }, function() {
-                            $rootScope.sessionLost = false;
-                        });
+                            }).result.then(function () {
+                                $rootScope.sessionLost = false;
+                            }, function () {
+                                $rootScope.sessionLost = false;
+                            });
+                        }
+                        historyService.clear();
                     }
                     return $q.reject(rejection);
                 }
             };
         })
 
-        .config(function($stateProvider, $urlRouterProvider, $httpProvider) {
-            $urlRouterProvider.otherwise('/panel');
+        .config(function ($stateProvider, $urlRouterProvider, $httpProvider) {
+            $urlRouterProvider.otherwise(function ($injector, $location) {
+                $injector.get('historyService').push($location.$$path);
+                return '/panel';
+            });
             $httpProvider.interceptors.push('authInterceptor');
         })
 
-        .run(function($rootScope, $state, Auth, Principal) {
-            $rootScope.$on('$stateChangeStart', function(event, toState, toStateParams) {
+        .run(function ($rootScope, $state, Auth, Principal) {
+            $rootScope.$on('$stateChangeStart', function (event, toState, toStateParams) {
                 $rootScope.toState = toState;
                 $rootScope.toStateParams = toStateParams;
 
@@ -84,12 +92,12 @@
                     Auth.authorize();
             });
 
-            $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
+            $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
                 $rootScope.previousStateName = fromState.name;
                 $rootScope.previousStateParams = fromParams;
             });
 
-            $rootScope.back = function() {
+            $rootScope.back = function () {
                 // If previous state is 'activate' or do not exist go to 'home'
                 if ($rootScope.previousStateName === 'activate' || $state.get($rootScope.previousStateName) === null) {
                     $state.go('home');
