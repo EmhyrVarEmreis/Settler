@@ -6,7 +6,7 @@
 
     <groupId>pl.morecraft.dev</groupId>
     <artifactId>settler</artifactId>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
     <packaging>war</packaging>
 
     <name>Settler</name>
@@ -14,7 +14,7 @@
     <parent>
         <groupId>io.spring.platform</groupId>
         <artifactId>platform-bom</artifactId>
-        <version>Athens-SR1</version>
+        <version>Athens-SR3</version>
     </parent>
 
     <properties>
