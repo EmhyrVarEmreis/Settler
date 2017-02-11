@@ -51,6 +51,7 @@ public class EmailService {
             ).forEach(
                     redistribution -> {
                         Map<String, String> options = new HashMap<>();
+                        options.put("description", transaction.getDescription());
                         options.put("creator", transaction.getCreator().getLogin());
                         options.put("user", redistribution.getId().getUser().getFirstName());
                         options.put("transactionId", transaction.getReference());
