@@ -1,0 +1,7 @@
+Maven
+NPM
+bower
+gulp
+Protractor
+Jasmine
+(Webdriver - webdriver-manager update && webdriver-manager start)
