@@ -4,6 +4,7 @@
   "description": "App for settlements management",
   "private": true,
   "dependencies": {
+    "gulp-install": "^0.6.0",
     "gulp-natural-sort": "^0.1.1"
   },
   "devDependencies": {
@@ -11,7 +12,7 @@
     "browser-sync": "2.12.5",
     "deep-extend": "^0.4.1",
     "del": "2.2.0",
-    "gulp": "3.9.1",
+    "gulp": "^3.9.1",
     "gulp-angular-filesort": "1.1.1",
     "gulp-angular-templatecache": "1.8.0",
     "gulp-clean-css": "2.0.12",
@@ -19,6 +20,7 @@
     "gulp-filter": "4.0.0",
     "gulp-if": "2.0.0",
     "gulp-inject": "4.0.0",
+    "gulp-install": "^0.6.0",
     "gulp-ng-annotate": "2.0.0",
     "gulp-rev": "7.0.0",
     "gulp-rev-replace": "0.4.3",
