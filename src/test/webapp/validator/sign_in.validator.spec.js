@@ -6,7 +6,7 @@ describe('Protractor first sign in test', function() {
         //expect(browser.getCurrentUrl()).toEqual(browser.baseUrl + '#/login');
     }, 30000);
 
-    it('dupa', function () {
+    it('Should be ', function () {
         var user = browser.driver.findElement(by.id('username'));
         var password = browser.driver.findElement(by.id('password'));
         //var button = browser.driver.findElement(by.css('[ng-click="login()"]'));
@@ -16,12 +16,28 @@ describe('Protractor first sign in test', function() {
         password.sendKeys('nope');
 
         expect(user.getAttribute('value')).toEqual('first');
-        expect(password.getAttribute('value')).toEqual('nope');
+        expect(password.getAttribute('value')).toEqual('nope'); //TODO ->
+/*
+        element.all(by.css('a')).each(function (element) {
+            var linkTarget = element.getAttribute('href').then(function(attr) {;
+            expect(typeof attr).toBe("string");
+        });
+    });*/
 
         button.click().then(function (){
             browser.waitForAngular();
-            expect(browser.driver.get('http://localhost:3000/#/panel'));
+            //expect(browser.getCurrentUrl().not.equals("http://localhost:3000/#/panel"));
             //expect(authenticationError.toBe(true));
+            // browser.wait(urlChanged("http://localhost:3000/#/panel"), 5000);
+
         }, 10000);
     });
+
+    var urlChanged = function(url) {
+        return function () {
+            return browser.getCurrentUrl().then(function(actualUrl) {
+                return url != actualUrl;
+            });
+        };
+    };
 });
