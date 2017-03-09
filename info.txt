@@ -5,4 +5,5 @@ gulp
 Protractor
 Jasmine
 Mocha
+Karma
 (Webdriver - webdriver-manager update && webdriver-manager start)
