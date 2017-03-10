@@ -17,4 +17,8 @@
         return $resource('api/user/avatar');
     });
 
+    angular.module('settlerApplication').factory('userProfileFactory', function($resource) {
+        return $resource('api/user/profile');
+    });
+
 })();

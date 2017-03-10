@@ -28,7 +28,7 @@ public class User extends PrivilegeObject {
     private LocalDate passwordExpireDate;
     private LocalDate accountExpireDate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "avatar")
     private FileObject avatar;
 

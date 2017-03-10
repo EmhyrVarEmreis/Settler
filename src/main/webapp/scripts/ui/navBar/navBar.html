@@ -8,8 +8,10 @@
                 <span class="icon-bar"></span>
             </button>
             <div class="navbar-brand">
-                <img ng-show="nav.userData.avatar.string" class="circular-avatar" width="32" src=""
-                     data-ng-src="{{nav.userData.avatar.string}}" alt="avatar"/>
+                <a href="#/profile">
+                    <img ng-show="nav.userData.avatar.string" class="circular-avatar" width="32" src=""
+                         data-ng-src="{{nav.userData.avatar.string}}" alt="avatar"/>
+                </a>
             </div>
         </div>
         <div class="navbar-collapse collapse navbar-responsive-collapse">
@@ -60,6 +62,12 @@
                         {{nav.userData.lastName}} {{nav.userData.firstName}}
                     </a>
                     <ul class="dropdown-menu">
+                        <li>
+                            <a href="#/profile">
+                                <span class="glyphicon glyphicon-user glph-def-em" aria-hidden="true"></span>
+                                Profil
+                            </a>
+                        </li>
                         <li>
                             <a href="#" ng-click="nav.logout()">
                                 <span class="glyphicon glyphicon-log-out glph-def-em" aria-hidden="true"></span>
