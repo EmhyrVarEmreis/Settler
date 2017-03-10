@@ -26,18 +26,18 @@ describe('Protractor first sign in test', function() {
 
         button.click().then(function (){
             browser.waitForAngular();
-            //expect(browser.getCurrentUrl().not.equals("http://localhost:3000/#/panel"));
+            expect(browser.getCurrentUrl() != ("http://localhost:3000/#/panel"));
             //expect(authenticationError.toBe(true));
             // browser.wait(urlChanged("http://localhost:3000/#/panel"), 5000);
 
         }, 10000);
     });
 
-    var urlChanged = function(url) {
+    /*var urlChanged = function(url) {
         return function () {
             return browser.getCurrentUrl().then(function(actualUrl) {
                 return url != actualUrl;
             });
         };
-    };
+    };*/
 });
