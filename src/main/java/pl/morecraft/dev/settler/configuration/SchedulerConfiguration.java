@@ -1,5 +1,6 @@
 package pl.morecraft.dev.settler.configuration;
 
+import lombok.extern.slf4j.Slf4j;
 import org.quartz.spi.JobFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -11,6 +12,7 @@ import pl.morecraft.dev.settler.jobs.AutowiringSpringBeanJobFactory;
 import javax.sql.DataSource;
 
 @Configuration
+@Slf4j
 public class SchedulerConfiguration {
 
     @Bean
@@ -22,6 +24,7 @@ public class SchedulerConfiguration {
 
     @Bean
     public SchedulerFactoryBean schedulerFactoryBean(JobFactory jobFactory, DataSource dataSource) {
+        log.debug("Creating SchedulerFactoryBean");
         SchedulerFactoryBean factoryBean = new SchedulerFactoryBean();
         factoryBean.setSchedulerName("defaultScheduler");
         factoryBean.setStartupDelay(15);

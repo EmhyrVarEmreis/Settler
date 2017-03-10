@@ -8,7 +8,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-import pl.morecraft.dev.settler.configuration.MailConfiguration;
+import pl.morecraft.dev.settler.configuration.SettlerProperties;
 import pl.morecraft.dev.settler.dao.repository.EmailTemplateRepository;
 import pl.morecraft.dev.settler.domain.EmailTemplate;
 import pl.morecraft.dev.settler.domain.Transaction;
@@ -27,13 +27,13 @@ public class EmailService {
     private static Logger log = LoggerFactory.getLogger(EmailService.class);
 
     private final EmailTemplateRepository emailTemplateRepository;
-    private final MailConfiguration mailConfiguration;
+    private final SettlerProperties settlerProperties;
     private final JavaMailSender mailSender;
 
     @Autowired
-    public EmailService(EmailTemplateRepository emailTemplateRepository, MailConfiguration mailConfiguration, JavaMailSender mailSender) {
+    public EmailService(EmailTemplateRepository emailTemplateRepository, SettlerProperties settlerProperties, JavaMailSender mailSender) {
         this.emailTemplateRepository = emailTemplateRepository;
-        this.mailConfiguration = mailConfiguration;
+        this.settlerProperties = settlerProperties;
         this.mailSender = mailSender;
     }
 
@@ -73,7 +73,7 @@ public class EmailService {
         MimeMessagePreparator preparator = mimeMessage -> {
             MimeMessageHelper message = new MimeMessageHelper(mimeMessage);
             message.setTo(to.toArray(new String[to.size()]));
-            message.setFrom(mailConfiguration.getFromAddress());
+            message.setFrom(settlerProperties.getMail().getFromAddress());
             message.setSubject(emailTemplateTmp.subject);
             message.setText(emailTemplateTmp.content, true);
         };
