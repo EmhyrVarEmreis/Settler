@@ -19,10 +19,7 @@ import pl.morecraft.dev.settler.security.util.Security;
 import pl.morecraft.dev.settler.service.abstractService.prototype.AbstractService;
 import pl.morecraft.dev.settler.service.exception.DuplicatedEntityException;
 import pl.morecraft.dev.settler.service.exception.EntityNotFoundException;
-import pl.morecraft.dev.settler.web.dto.AvatarDTO;
-import pl.morecraft.dev.settler.web.dto.FileObjectDTO;
-import pl.morecraft.dev.settler.web.dto.UserDTO;
-import pl.morecraft.dev.settler.web.dto.UserListDTO;
+import pl.morecraft.dev.settler.web.dto.*;
 import pl.morecraft.dev.settler.web.misc.ListPage;
 import pl.morecraft.dev.settler.web.misc.UserListFilters;
 
@@ -198,6 +195,40 @@ public class UserService extends AbstractService<User, UserDTO, UserListDTO, Use
         userRepository.save(user);
 
         return fileObjectDTOResponseEntity;
+    }
+
+    public ResponseEntity<ProfileDTO> getProfile() {
+        User user = Security.currentUser();
+        if (user == null) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        user.setPassword(null);
+        return new ResponseEntity<>(
+                entityConvertersPack.getPreparedModelMapper().map(user, ProfileDTO.class),
+                HttpStatus.OK
+        );
+    }
+
+    public ResponseEntity<ProfileDTO> saveProfile(ProfileDTO profileDTO) {
+        User user = userRepository.findOneByLogin(profileDTO.getLogin());
+
+        if (user == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        UserDTO userDTO = entityConvertersPack.getPreparedModelMapper().map(user, UserDTO.class);
+
+        userDTO.setEmail(profileDTO.getEmail());
+        userDTO.setFirstName(profileDTO.getFirstName());
+        userDTO.setLastName(profileDTO.getLastName());
+        userDTO.setPassword(profileDTO.getPassword());
+
+        ResponseEntity<UserDTO> responseEntity = save(userDTO);
+
+        return new ResponseEntity<>(
+                entityConvertersPack.getPreparedModelMapper().map(responseEntity.getBody(), ProfileDTO.class),
+                responseEntity.getStatusCode()
+        );
     }
 
 }

@@ -50,7 +50,7 @@ public abstract class AbstractService<
 
     @SuppressWarnings("SpringAutowiredFieldsWarningInspection")
     @Autowired
-    private EntityConvertersPack entityConvertersPack;
+    protected EntityConvertersPack entityConvertersPack;
 
     @SuppressWarnings("SpringAutowiredFieldsWarningInspection")
     @Autowired

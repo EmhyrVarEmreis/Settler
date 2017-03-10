@@ -4,7 +4,8 @@
   "description": "App for settlements management",
   "private": true,
   "dependencies": {
-    "gulp-natural-sort": "^0.1.1"
+    "gulp-natural-sort": "^0.1.1",
+    "vinyl-fs": "^2.4.4"
   },
   "devDependencies": {
     "bower": "1.7.9",

@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.morecraft.dev.settler.service.UserService;
 import pl.morecraft.dev.settler.web.dto.AvatarDTO;
+import pl.morecraft.dev.settler.web.dto.ProfileDTO;
 import pl.morecraft.dev.settler.web.dto.UserDTO;
 import pl.morecraft.dev.settler.web.dto.UserListDTO;
 import pl.morecraft.dev.settler.web.misc.ListPage;
@@ -39,6 +40,24 @@ public class UserController {
     )
     public ResponseEntity<UserDTO> save(@RequestBody UserDTO userDTO) {
         return userService.save(userDTO);
+    }
+
+    @RequestMapping(
+            value = "/profile",
+            method = {RequestMethod.GET},
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public ResponseEntity<ProfileDTO> getProfile() {
+        return userService.getProfile();
+    }
+
+    @RequestMapping(
+            value = "/profile",
+            method = {RequestMethod.PUT, RequestMethod.POST},
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public ResponseEntity<ProfileDTO> save(@RequestBody ProfileDTO profileDTO) {
+        return userService.saveProfile(profileDTO);
     }
 
     @RequestMapping("/list")
