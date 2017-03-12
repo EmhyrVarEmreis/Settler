@@ -21,7 +21,7 @@
             </div>
             <div class="col-sm-4">
                 <div class="numberCircle">
-                    {{stats.totalValue}}
+                    {{parseFloat(stats.totalValue.toString().replace(',', '.')).toFixed(0)}}
                     <div>Łączna kwota</div>
                 </div>
             </div>
