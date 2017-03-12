@@ -9,4 +9,8 @@
         return $resource('api/transaction/details');
     });
 
+    angular.module('settlerApplication').factory('transactionMostUsedUsersFactory', function ($resource) {
+        return $resource('api/transaction/users');
+    });
+
 })();

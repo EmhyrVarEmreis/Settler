@@ -2,6 +2,10 @@ body {
 
 }
 
+.pointer-hand {
+    cursor: pointer;
+}
+
 .ng-invalid.ng-touched {
     background-color: #F17F0C;
 }
@@ -67,6 +71,10 @@ input.ng-invalid.ng-touched {
     border-radius: 150px;
     -webkit-border-radius: 150px;
     -moz-border-radius: 150px;
+}
+
+.circular-avatar-selected {
+    box-shadow: 0 0 0 3px #2e7d32;
 }
 
 .circular-64 {

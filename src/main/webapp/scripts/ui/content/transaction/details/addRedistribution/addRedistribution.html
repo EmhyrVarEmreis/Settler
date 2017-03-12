@@ -7,7 +7,24 @@
             <div class="row">
                 <div class="col-sm-12 form-group">
                     <label>Użytkownik</label>
-                    <user-picker ng-model="$ctrl.selected.user"></user-picker>
+                    <div class="row">
+                        <div class="col-sm-3 text-center">
+                            <div style="padding-top: 12px;">
+                                <img ng-repeat="userTmp in $ctrl.mostUsedUsers"
+                                     style="margin: 2px;"
+                                     class="circular-avatar pointer-hand"
+                                     width="32"
+                                     ng-class="{'circular-avatar-selected' : $ctrl.selected.user.id === userTmp.id}"
+                                     ng-click="$ctrl.selected.user = userTmp"
+                                     data-ng-src="{{$ctrl.getAvatar(userTmp.id).string}}"
+                                     title="{{userTmp.firstName + ' ' + userTmp.lastName}}"
+                                     alt="{{userTmp.firstName + ' ' + userTmp.lastName}}"/>
+                            </div>
+                        </div>
+                        <div class="col-sm-9">
+                            <user-picker ng-model="$ctrl.selected.user"></user-picker>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="row text-center" style="margin-top: 16px;">

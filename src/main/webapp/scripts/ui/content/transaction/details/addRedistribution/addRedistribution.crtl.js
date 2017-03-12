@@ -3,7 +3,9 @@
 
     angular.module('settlerApplication').controller('AddRedistributionCtrl', function ($uibModalInstance,
                                                                                        redistributionList,
+                                                                                       transactionMostUsedUsersFactory,
                                                                                        totalValue,
+                                                                                       avatarService,
                                                                                        $rootScope) {
         var $ctrl = this;
 
@@ -18,6 +20,12 @@
 
         $ctrl.selected = {
             percentage: 0
+        };
+
+        $ctrl.mostUsedUsers = transactionMostUsedUsersFactory.query({count: 3});
+
+        $ctrl.getAvatar = function (userId) {
+            return avatarService.getAvatarByUserId(userId);
         };
 
         $ctrl.refreshSlider = function () {

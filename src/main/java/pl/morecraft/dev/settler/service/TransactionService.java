@@ -2,15 +2,18 @@ package pl.morecraft.dev.settler.service;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.util.CollectionUtils;
+import com.querydsl.jpa.JPAExpressions;
+import com.querydsl.jpa.impl.JPAQuery;
 import org.joda.time.LocalDateTime;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.morecraft.dev.settler.dao.repository.RedistributionRepository;
 import pl.morecraft.dev.settler.dao.repository.TransactionRepository;
-import pl.morecraft.dev.settler.domain.QTransaction;
-import pl.morecraft.dev.settler.domain.Redistribution;
-import pl.morecraft.dev.settler.domain.Transaction;
+import pl.morecraft.dev.settler.domain.*;
 import pl.morecraft.dev.settler.domain.dictionaries.OperationType;
 import pl.morecraft.dev.settler.domain.dictionaries.RedistributionType;
 import pl.morecraft.dev.settler.domain.dictionaries.TransactionType;
@@ -19,8 +22,11 @@ import pl.morecraft.dev.settler.security.util.Security;
 import pl.morecraft.dev.settler.service.abstractService.prototype.AbstractService;
 import pl.morecraft.dev.settler.web.dto.TransactionDTO;
 import pl.morecraft.dev.settler.web.dto.TransactionListDTO;
+import pl.morecraft.dev.settler.web.dto.UserListDTO;
 import pl.morecraft.dev.settler.web.misc.TransactionListFilters;
 
+import javax.persistence.EntityManager;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.UnaryOperator;
@@ -30,14 +36,16 @@ import java.util.function.UnaryOperator;
 public class TransactionService extends AbstractService<Transaction, TransactionDTO, TransactionListDTO, TransactionListFilters, QTransaction, Long, TransactionRepository> {
 
     private final EmailService emailService;
+    private final EntityManager entityManager;
     private final SequenceManager sequenceManager;
     private final PermissionManager permissionManager;
     private final TransactionRepository transactionRepository;
     private final RedistributionRepository redistributionRepository;
 
     @Autowired
-    public TransactionService(EmailService emailService, SequenceManager sequenceManager, PermissionManager permissionManager, TransactionRepository transactionRepository, RedistributionRepository redistributionRepository) {
+    public TransactionService(EmailService emailService, EntityManager entityManager, SequenceManager sequenceManager, PermissionManager permissionManager, TransactionRepository transactionRepository, RedistributionRepository redistributionRepository) {
         this.emailService = emailService;
+        this.entityManager = entityManager;
         this.sequenceManager = sequenceManager;
         this.permissionManager = permissionManager;
         this.transactionRepository = transactionRepository;
@@ -134,6 +142,34 @@ public class TransactionService extends AbstractService<Transaction, Transaction
     @Override
     protected boolean checkIfHasId(TransactionDTO entity) {
         return entity.getId() != null;
+    }
+
+    public ResponseEntity<List<UserListDTO>> getMostUsedUsers(Long count) {
+        QUser user = QUser.user;
+        QTransaction transaction = QTransaction.transaction;
+        QRedistribution redistribution = QRedistribution.redistribution;
+        List<User> userList = new JPAQuery<>(entityManager)
+                .from(user)
+                .select(user)
+                .where(
+                        user.id.in(
+                                JPAExpressions.selectFrom(transaction)
+                                        .select(redistribution.id.user.id)
+                                        .leftJoin(redistribution).on(redistribution.id.parent.id.eq(transaction.id))
+                                        .where(transaction.creator.id.eq(Security.currentUser().getId()))
+                                        .groupBy(redistribution.id.user.id)
+                                        .orderBy(redistribution.id.user.id.count().desc())
+                                        .limit(count)
+                        )
+                )
+                .fetch();
+        Type listType = new TypeToken<List<UserListDTO>>() {
+        }.getType();
+        List<UserListDTO> userListDTOList = getEntityConvertersPack().getPreparedModelMapper().map(userList, listType);
+        return new ResponseEntity<>(
+                userListDTOList,
+                HttpStatus.OK
+        );
     }
 
 }
