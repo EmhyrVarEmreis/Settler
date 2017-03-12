@@ -13,4 +13,8 @@
         return $resource('api/category/search/simple');
     });
 
+    angular.module('settlerApplication').factory('categoryWithValueFactory', function ($resource) {
+        return $resource('api/category/values');
+    });
+
 })();

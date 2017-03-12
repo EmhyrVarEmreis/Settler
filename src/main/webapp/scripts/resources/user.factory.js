@@ -21,4 +21,8 @@
         return $resource('api/user/profile');
     });
 
+    angular.module('settlerApplication').factory('userWithValueFactory', function ($resource) {
+        return $resource('api/user/values');
+    });
+
 })();
