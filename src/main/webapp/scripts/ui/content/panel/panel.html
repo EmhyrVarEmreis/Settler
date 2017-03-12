@@ -99,4 +99,91 @@
             </div>
         </div>
     </div>
+    <div class="panel-last-row">
+        <div class="col-sm-12">
+            <div class="row text-center">
+                <div class="col-sm-12">
+                    <h2>Statystyki</h2>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="row">
+                    <div class="row text-center">
+                        <div class="col-sm-12">
+                            <h3>wg. kategorii</h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <table width="100%">
+                                        <thead>
+                                        <tr>
+                                            <td width="80%">
+                                                <strong>Kategoria</strong>
+                                            </td>
+                                            <td width="20%">
+                                                <strong>Suma</strong>
+                                            </td>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr ng-repeat="category in categoriesWithValue">
+                                            <td>
+                                                {{category.category.code}}
+                                            </td>
+                                            <td>
+                                                {{category.value | myCurrency:'PLN'}}
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="row">
+                    <div class="row text-center">
+                        <div class="col-sm-12">
+                            <h3>wg. użytkowników</h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <table width="100%">
+                                        <thead>
+                                        <tr>
+                                            <td width="80%">
+                                                <strong>Użytkownik</strong>
+                                            </td>
+                                            <td width="20%">
+                                                <strong>Suma</strong>
+                                            </td>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr ng-repeat="user in usersWithValue">
+                                            <td>
+                                                {{user.user}}
+                                            </td>
+                                            <td>
+                                                {{user.value | myCurrency:'PLN'}}
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

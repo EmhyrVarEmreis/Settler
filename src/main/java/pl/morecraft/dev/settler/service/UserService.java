@@ -1,7 +1,10 @@
 package pl.morecraft.dev.settler.service;
 
+import com.querydsl.core.Tuple;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.util.CollectionUtils;
+import com.querydsl.jpa.impl.JPAQuery;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import pl.morecraft.dev.settler.dao.repository.FileObjectRepository;
 import pl.morecraft.dev.settler.dao.repository.UserRepository;
 import pl.morecraft.dev.settler.domain.FileObject;
+import pl.morecraft.dev.settler.domain.QTransaction;
 import pl.morecraft.dev.settler.domain.QUser;
 import pl.morecraft.dev.settler.domain.User;
 import pl.morecraft.dev.settler.domain.dictionaries.OperationType;
@@ -23,10 +27,12 @@ import pl.morecraft.dev.settler.web.dto.*;
 import pl.morecraft.dev.settler.web.misc.ListPage;
 import pl.morecraft.dev.settler.web.misc.UserListFilters;
 
+import javax.persistence.EntityManager;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.UnaryOperator;
 
 @Service
@@ -37,14 +43,16 @@ public class UserService extends AbstractService<User, UserDTO, UserListDTO, Use
     private final BasePasswordEncoder passwordEncoder;
     private final PermissionManager permissionManager;
     private final UserRepository userRepository;
+    private final EntityManager entityManager;
     private final FileService fileService;
 
     @Autowired
-    public UserService(FileObjectRepository fileObjectRepository, BasePasswordEncoder passwordEncoder, PermissionManager permissionManager, UserRepository userRepository, FileService fileService) {
+    public UserService(FileObjectRepository fileObjectRepository, BasePasswordEncoder passwordEncoder, PermissionManager permissionManager, UserRepository userRepository, EntityManager entityManager, FileService fileService) {
         this.fileObjectRepository = fileObjectRepository;
         this.passwordEncoder = passwordEncoder;
         this.permissionManager = permissionManager;
         this.userRepository = userRepository;
+        this.entityManager = entityManager;
         this.fileService = fileService;
     }
 
@@ -229,6 +237,42 @@ public class UserService extends AbstractService<User, UserDTO, UserListDTO, Use
                 entityConvertersPack.getPreparedModelMapper().map(responseEntity.getBody(), ProfileDTO.class),
                 responseEntity.getStatusCode()
         );
+    }
+
+    public ResponseEntity<List<UserWithValueDTO>> getUsersWithValue(Long userId) {
+        if (Objects.isNull(userId) || userId < 0) {
+            userId = Security.currentUser().getId();
+        }
+        QUser user = QUser.user;
+        QTransaction transaction = QTransaction.transaction;
+        List<Tuple> fetch = new JPAQuery<>(entityManager)
+                .from(user, transaction)
+                .select(user, transaction.value.sum())
+                .where(transaction.creator.id.eq(userId))
+                .where(
+                        transaction.owners.any().id.user.eq(user).or(
+                                transaction.contractors.any().id.user.eq(user)
+                        )
+                )
+                .groupBy(user)
+                .orderBy(transaction.value.sum().desc())
+                .fetch();
+        ModelMapper preparedModelMapper = getEntityConvertersPack().getPreparedModelMapper();
+        List<UserWithValueDTO> userWithValueDTOList = new ArrayList<>(fetch.size());
+        for (Tuple tuple : fetch) {
+            User u = tuple.get(user);
+            Double d = tuple.get(transaction.value.sum());
+            if (Objects.nonNull(u)) {
+                userWithValueDTOList.add(
+                        new UserWithValueDTO(
+                                userId,
+                                preparedModelMapper.map(u, String.class),
+                                d
+                        )
+                );
+            }
+        }
+        return new ResponseEntity<>(userWithValueDTOList, HttpStatus.OK);
     }
 
 }

@@ -3,9 +3,14 @@
 
     angular.module('settlerApplication').controller('PanelCtrl', function ($scope,
                                                                            totalChargeUserToFactory,
-                                                                           totalChargeUserFromFactory) {
+                                                                           totalChargeUserFromFactory,
+                                                                           categoryWithValueFactory,
+                                                                           userWithValueFactory) {
 
         $scope.charges = {};
+
+        $scope.categoriesWithValue = categoryWithValueFactory.query();
+        $scope.usersWithValue = userWithValueFactory.query();
 
         totalChargeUserToFactory.query({
             id: null

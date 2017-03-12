@@ -5,10 +5,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.morecraft.dev.settler.service.UserService;
-import pl.morecraft.dev.settler.web.dto.AvatarDTO;
-import pl.morecraft.dev.settler.web.dto.ProfileDTO;
-import pl.morecraft.dev.settler.web.dto.UserDTO;
-import pl.morecraft.dev.settler.web.dto.UserListDTO;
+import pl.morecraft.dev.settler.web.dto.*;
 import pl.morecraft.dev.settler.web.misc.ListPage;
 
 import java.io.IOException;
@@ -82,6 +79,14 @@ public class UserController {
             @RequestParam(value = "id", defaultValue = "-13", required = false) Long id,
             @RequestParam(value = "login", defaultValue = "", required = false) String login) throws IOException {
         return userService.getAvatar(id, login);
+    }
+
+    @RequestMapping(
+            value = "/values",
+            method = RequestMethod.GET
+    )
+    public ResponseEntity<List<UserWithValueDTO>> getUsersWithValue(@RequestParam(value = "count", required = false, defaultValue = "-13") Long userId) {
+        return userService.getUsersWithValue(userId);
     }
 
 }
