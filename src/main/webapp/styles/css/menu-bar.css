@@ -3,6 +3,7 @@
     border-bottom: 1px solid rgba(13, 13, 13, 0.25);
     background: #FF9800 url("/images/brand.png") no-repeat right top;
     background-size: contain;
+    min-height: 52px;
 }
 
 @media (max-width: 767px) {

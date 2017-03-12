@@ -78,7 +78,11 @@
         .config(function ($stateProvider, $urlRouterProvider, $httpProvider) {
             $urlRouterProvider.otherwise(function ($injector, $location) {
                 $injector.get('historyService').push($location.$$path);
-                return '/panel';
+                if (!!$injector.get('localStorageService').get('token')) {
+                    return '/panel';
+                } else {
+                    return '/home';
+                }
             });
             $httpProvider.interceptors.push('authInterceptor');
         })
@@ -88,8 +92,9 @@
                 $rootScope.toState = toState;
                 $rootScope.toStateParams = toStateParams;
 
-                if (Principal.isIdentityResolved())
+                if (Principal.isIdentityResolved()) {
                     Auth.authorize();
+                }
             });
 
             $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {

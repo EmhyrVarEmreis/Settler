@@ -16,7 +16,7 @@
 
             ctrl.logout = function() {
                 Auth.logout();
-                $state.go('login');
+                $state.go('home');
             };
         }
     );
