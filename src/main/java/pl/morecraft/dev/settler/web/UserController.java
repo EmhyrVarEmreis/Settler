@@ -78,7 +78,7 @@ public class UserController {
             value = "/avatar",
             method = RequestMethod.GET
     )
-    public ResponseEntity<AvatarDTO> getExcelFile(
+    public ResponseEntity<AvatarDTO> getAvatar(
             @RequestParam(value = "id", defaultValue = "-13", required = false) Long id,
             @RequestParam(value = "login", defaultValue = "", required = false) String login) throws IOException {
         return userService.getAvatar(id, login);

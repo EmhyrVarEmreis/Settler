@@ -7,7 +7,10 @@ import org.springframework.web.bind.annotation.*;
 import pl.morecraft.dev.settler.service.TransactionService;
 import pl.morecraft.dev.settler.web.dto.TransactionDTO;
 import pl.morecraft.dev.settler.web.dto.TransactionListDTO;
+import pl.morecraft.dev.settler.web.dto.UserListDTO;
 import pl.morecraft.dev.settler.web.misc.ListPage;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/transaction")
@@ -46,6 +49,14 @@ public class TransactionController {
                                                  @RequestParam(value = "sortBy", required = false, defaultValue = "-reference") String sort,
                                                  @RequestParam(value = "filters", required = false, defaultValue = "") String filters) {
         return transactionService.get(page, limit, sort, filters);
+    }
+
+    @RequestMapping(
+            value = "/users",
+            method = RequestMethod.GET
+    )
+    public ResponseEntity<List<UserListDTO>> getMostUsedUsers(@RequestParam(value = "count") Long count) {
+        return transactionService.getMostUsedUsers(count);
     }
 
 }
