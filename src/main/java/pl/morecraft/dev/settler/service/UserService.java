@@ -249,12 +249,13 @@ public class UserService extends AbstractService<User, UserDTO, UserListDTO, Use
                 .from(user, transaction)
                 .select(user, transaction.value.sum())
                 .where(transaction.creator.id.eq(userId))
+                .where(user.id.ne(userId))
                 .where(
                         transaction.owners.any().id.user.eq(user).or(
                                 transaction.contractors.any().id.user.eq(user)
                         )
                 )
-                .groupBy(user)
+                .groupBy(user.id, user.firstName, user.lastName, user.email, user.created, user.avatar, user.login, user.accountExpireDate)
                 .orderBy(transaction.value.sum().desc())
                 .fetch();
         ModelMapper preparedModelMapper = getEntityConvertersPack().getPreparedModelMapper();
