@@ -1,0 +1,27 @@
+.panel-home .numberCircle {
+    border-radius: 50%;
+    /*behavior: url(PIE.htc); !* remove if you don't care about IE8 *!*/
+
+    width: 256px;
+    height: 256px;
+    padding-top: 56px;
+    padding-bottom: 16px;
+    margin: auto auto 16px;
+
+    background: #009688;
+    border: 2px solid #fff;
+    color: #fff;
+    text-align: center;
+
+    font-size: 80px;
+}
+
+.panel-home .numberCircle div {
+    font-size: 24px;
+    position: relative;
+    top: -16px;
+}
+
+.panel-home .login-button {
+    margin-top: 32px;
+}
