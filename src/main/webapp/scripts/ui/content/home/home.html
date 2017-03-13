@@ -6,34 +6,36 @@
         </h1>
     </div>
     <div class="panel-last-row">
-        <div class="row">
-            <div class="col-sm-4">
-                <div class="numberCircle">
-                    {{stats.usersCount}}
-                    <div>Użytkowników</div>
+        <div class="col-sm-12">
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="numberCircle">
+                        {{stats.usersCount}}
+                        <div>Użytkowników</div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="numberCircle">
+                        {{stats.transactionsCount}}
+                        <div>Transakcji</div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="numberCircle">
+                        {{stats.totalValue.toFixed(0)}}
+                        <div>Łączna kwota</div>
+                    </div>
                 </div>
             </div>
-            <div class="col-sm-4">
-                <div class="numberCircle">
-                    {{stats.transactionsCount}}
-                    <div>Transakcji</div>
+            <div class="row">
+                <div class="col-sm-12 text-center login-button">
+                    <a href="#/login">
+                        <button type="button" class="btn btn-lg btn-raised btn-success">
+                            <span class="glyphicon glyphicon-log-in  glph-def-em" aria-hidden="true"></span>
+                            Zaloguj się
+                        </button>
+                    </a>
                 </div>
-            </div>
-            <div class="col-sm-4">
-                <div class="numberCircle">
-                    {{stats.totalValue.toFixed(0)}}
-                    <div>Łączna kwota</div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-12 text-center login-button">
-                <a href="#/login">
-                    <button type="button" class="btn btn-lg btn-raised btn-success">
-                        <span class="glyphicon glyphicon-log-in  glph-def-em" aria-hidden="true"></span>
-                        Zaloguj się
-                    </button>
-                </a>
             </div>
         </div>
     </div>
