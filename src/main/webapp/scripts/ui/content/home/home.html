@@ -1,8 +1,8 @@
 <nav class="navbar navbar-default"></nav>
 <div class="panel-main panel-home">
     <div class="page-header">
-        <h1>Do tej pory odnotowano
-            <small>w systemie Settler</small>
+        <h1>Setter
+            <small>System do zarządzania małymi rozliczeniami</small>
         </h1>
     </div>
     <div class="panel-last-row">
@@ -27,25 +27,37 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-sm-12 text-center login-button">
-                    <div ng-hide="isAuth()">
-                        <a href="#/login">
-                            <button type="button" class="btn btn-lg btn-raised btn-success">
-                                <span class="glyphicon glyphicon-log-in  glph-def-em" aria-hidden="true"></span>
-                                Zaloguj się
-                            </button>
-                        </a>
-                    </div>
-                    <div ng-show="isAuth()">
-                        <a href="#/panel">
-                            <button type="button" class="btn btn-lg btn-raised btn-success">
-                                <span class="glyphicon glyphicon-log-in  glph-def-em" aria-hidden="true"></span>
-                                Przejdź do panelu
-                            </button>
-                        </a>
-                    </div>
-                </div>
+        </div>
+    </div>
+    <div class="page-header">
+        <h2>Opis aplikacji
+            <small>Settler</small>
+        </h2>
+    </div>
+    <div class="panel-last-row">
+        <div class="col-sm-12">
+            <h3>Aplikacja umożliwia wygdne rozliczanie się ze znajomymi. Dodajesz transakcję, wpisujesz kto ile się
+                złożył. System oblicza kto ile jest komu winien, a także wysyła powiadomienia emailowe o nowych
+                transakcjach.</h3>
+        </div>
+    </div>
+    <div class="panel-last-row">
+        <div class="col-sm-12 text-center login-button">
+            <div ng-hide="isAuth()">
+                <a href="#/login">
+                    <button type="button" class="btn btn-lg btn-raised btn-success">
+                        <span class="glyphicon glyphicon-log-in  glph-def-em" aria-hidden="true"></span>
+                        Zaloguj się
+                    </button>
+                </a>
+            </div>
+            <div ng-show="isAuth()">
+                <a href="#/panel">
+                    <button type="button" class="btn btn-lg btn-raised btn-success">
+                        <span class="glyphicon glyphicon-log-in  glph-def-em" aria-hidden="true"></span>
+                        Przejdź do panelu
+                    </button>
+                </a>
             </div>
         </div>
     </div>
