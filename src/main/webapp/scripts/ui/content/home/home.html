@@ -29,12 +29,22 @@
             </div>
             <div class="row">
                 <div class="col-sm-12 text-center login-button">
-                    <a href="#/login">
-                        <button type="button" class="btn btn-lg btn-raised btn-success">
-                            <span class="glyphicon glyphicon-log-in  glph-def-em" aria-hidden="true"></span>
-                            Zaloguj się
-                        </button>
-                    </a>
+                    <div ng-hide="isAuth()">
+                        <a href="#/login">
+                            <button type="button" class="btn btn-lg btn-raised btn-success">
+                                <span class="glyphicon glyphicon-log-in  glph-def-em" aria-hidden="true"></span>
+                                Zaloguj się
+                            </button>
+                        </a>
+                    </div>
+                    <div ng-show="isAuth()">
+                        <a href="#/panel">
+                            <button type="button" class="btn btn-lg btn-raised btn-success">
+                                <span class="glyphicon glyphicon-log-in  glph-def-em" aria-hidden="true"></span>
+                                Przejdź do panelu
+                            </button>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>

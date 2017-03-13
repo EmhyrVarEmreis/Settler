@@ -4,6 +4,10 @@
     angular.module('settlerServices')
         .factory('Auth', function Auth(Principal, AuthenticateCli, localStorageService, $rootScope, $state, $q/*, Account, Register, Activate, Password*/) {
             return {
+                isToken: function() {
+                    return !!localStorageService.get('token');
+                },
+
                 login: function(credentials) {
                     var deferred = $q.defer();
 

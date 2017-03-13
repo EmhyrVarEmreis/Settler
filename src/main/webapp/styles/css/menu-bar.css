@@ -6,6 +6,12 @@
     min-height: 52px;
 }
 
+@media (min-width: 1200px) {
+    .navbar-default {
+        min-height: 61px;
+    }
+}
+
 @media (max-width: 767px) {
     .navbar-default {
         background-size: auto 50px;
