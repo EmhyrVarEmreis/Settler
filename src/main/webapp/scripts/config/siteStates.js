@@ -4,7 +4,14 @@
     angular.module('settlerApplication').config(function($stateProvider) {
 
         $stateProvider.state("publicSite", {
-            abstract: true
+            abstract: true,
+            views:    {
+                'footer@': {
+                    templateUrl:  'scripts/ui/footer/footer.html',
+                    controller:   'FooterCtrl',
+                    controllerAs: 'ftr'
+                }
+            }
         });
 
         $stateProvider.state("restrictedSite", {
