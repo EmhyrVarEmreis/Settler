@@ -98,7 +98,7 @@ public class CategoryService extends AbstractService<Category, CategoryDTO, Cate
                 .groupBy(category.code, category.description)
                 .orderBy(transaction.value.sum().desc())
                 .fetch();
-        ModelMapper preparedModelMapper = getEntityConvertersPack().getPreparedModelMapper();
+        ModelMapper preparedModelMapper = getModelMapper();
         List<CategoryWithValueDTO> categoryWithValueDTOList = new ArrayList<>(fetch.size());
         for (Tuple tuple : fetch) {
             Category c = tuple.get(category);

@@ -212,7 +212,7 @@ public class UserService extends AbstractService<User, UserDTO, UserListDTO, Use
         }
         user.setPassword(null);
         return new ResponseEntity<>(
-                entityConvertersPack.getPreparedModelMapper().map(user, ProfileDTO.class),
+                getModelMapper().map(user, ProfileDTO.class),
                 HttpStatus.OK
         );
     }
@@ -224,7 +224,7 @@ public class UserService extends AbstractService<User, UserDTO, UserListDTO, Use
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        UserDTO userDTO = entityConvertersPack.getPreparedModelMapper().map(user, UserDTO.class);
+        UserDTO userDTO = getModelMapper().map(user, UserDTO.class);
 
         userDTO.setEmail(profileDTO.getEmail());
         userDTO.setFirstName(profileDTO.getFirstName());
@@ -234,7 +234,7 @@ public class UserService extends AbstractService<User, UserDTO, UserListDTO, Use
         ResponseEntity<UserDTO> responseEntity = save(userDTO);
 
         return new ResponseEntity<>(
-                entityConvertersPack.getPreparedModelMapper().map(responseEntity.getBody(), ProfileDTO.class),
+                getModelMapper().map(responseEntity.getBody(), ProfileDTO.class),
                 responseEntity.getStatusCode()
         );
     }
@@ -258,7 +258,7 @@ public class UserService extends AbstractService<User, UserDTO, UserListDTO, Use
                 .groupBy(user.id, user.firstName, user.lastName, user.email, user.created, user.avatar, user.login, user.accountExpireDate)
                 .orderBy(transaction.value.sum().desc())
                 .fetch();
-        ModelMapper preparedModelMapper = getEntityConvertersPack().getPreparedModelMapper();
+        ModelMapper preparedModelMapper = getModelMapper();
         List<UserWithValueDTO> userWithValueDTOList = new ArrayList<>(fetch.size());
         for (Tuple tuple : fetch) {
             User u = tuple.get(user);

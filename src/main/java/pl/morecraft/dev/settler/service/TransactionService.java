@@ -165,7 +165,7 @@ public class TransactionService extends AbstractService<Transaction, Transaction
                 .fetch();
         Type listType = new TypeToken<List<UserListDTO>>() {
         }.getType();
-        List<UserListDTO> userListDTOList = getEntityConvertersPack().getPreparedModelMapper().map(userList, listType);
+        List<UserListDTO> userListDTOList = getModelMapper().map(userList, listType);
         return new ResponseEntity<>(
                 userListDTOList,
                 HttpStatus.OK

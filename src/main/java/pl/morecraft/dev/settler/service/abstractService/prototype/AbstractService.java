@@ -5,7 +5,7 @@ import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.ComparableExpressionBase;
 import com.querydsl.core.types.dsl.EntityPathBase;
-import org.modelmapper.AbstractConverter;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,7 +14,6 @@ import org.springframework.data.querydsl.QueryDslPredicateExecutor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import pl.morecraft.dev.settler.service.converters.ListPageConverter;
-import pl.morecraft.dev.settler.service.converters.prototype.EntityConvertersPack;
 import pl.morecraft.dev.settler.web.misc.ListPage;
 
 import java.io.IOException;
@@ -50,7 +49,7 @@ public abstract class AbstractService<
 
     @SuppressWarnings("SpringAutowiredFieldsWarningInspection")
     @Autowired
-    protected EntityConvertersPack entityConvertersPack;
+    private ModelMapper modelMapper;
 
     @SuppressWarnings("SpringAutowiredFieldsWarningInspection")
     @Autowired
@@ -175,7 +174,7 @@ public abstract class AbstractService<
     }
 
     protected Function<EntityDTO, Entity> getSaveConvertingFunction() {
-        return entityDTO -> entityConvertersPack.getPreparedModelMapper().map(entityDTO, getEntityClass());
+        return entityDTO -> modelMapper.map(entityDTO, getEntityClass());
     }
 
     protected UnaryOperator<EntityDTO> getSavePreProcessingFunction() {
@@ -199,7 +198,7 @@ public abstract class AbstractService<
     }
 
     protected Function<Entity, EntityDTO> getGetProcessingFunction() {
-        return entity -> entityConvertersPack.getPreparedModelMapper().map(entity, getDtoClass());
+        return entity -> modelMapper.map(entity, getDtoClass());
     }
 
     protected UnaryOperator<Entity> getGetPreProcessingFunction() {
@@ -226,20 +225,16 @@ public abstract class AbstractService<
         return Collections.emptyList();
     }
 
-    protected List<AbstractConverter> getConverters() {
-        return entityConvertersPack.getFullEntityConvertersPack();
-    }
-
-    protected EntityConvertersPack getEntityConvertersPack() {
-        return entityConvertersPack;
-    }
-
     protected SingleFiltersPack getSingleFiltersPack() {
         return singleFiltersPack;
     }
 
     protected ListPageConverter getListPageConverter() {
         return listPageConverter;
+    }
+
+    protected ModelMapper getModelMapper() {
+        return modelMapper;
     }
 
     protected ComparableExpressionBase<?> getComparableExpressionBase(String fieldName, QEntity qObject) throws NoSuchFieldException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {

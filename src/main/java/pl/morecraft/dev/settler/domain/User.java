@@ -28,9 +28,12 @@ public class User extends PrivilegeObject {
     private LocalDate passwordExpireDate;
     private LocalDate accountExpireDate;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "avatar")
     private FileObject avatar;
+
+    @Column(name = "avatar", insertable = false, updatable = false)
+    private Long avatarId;
 
     public User() {
 
@@ -114,6 +117,14 @@ public class User extends PrivilegeObject {
 
     public void setAvatar(FileObject avatar) {
         this.avatar = avatar;
+    }
+
+    public Long getAvatarId() {
+        return avatarId;
+    }
+
+    public void setAvatarId(Long avatarId) {
+        this.avatarId = avatarId;
     }
 
     @Override
