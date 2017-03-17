@@ -87,7 +87,7 @@
             $httpProvider.interceptors.push('authInterceptor');
         })
 
-        .run(function ($rootScope, $state, Auth, Principal) {
+        .run(function($rootScope, $state, Auth, Principal, $window) {
             $rootScope.$on('$stateChangeStart', function (event, toState, toStateParams) {
                 $rootScope.toState = toState;
                 $rootScope.toStateParams = toStateParams;
@@ -109,6 +109,77 @@
                 } else {
                     $state.go($rootScope.previousStateName, $rootScope.previousStateParams);
                 }
+            };
+
+            $window.fbAsyncInit = function() {
+                // Executed when the SDK is loaded
+
+                FB.init({
+
+                    /*
+                     The app id of the web app;
+                     To register a new app visit Facebook App Dashboard
+                     ( https://developers.facebook.com/apps/ )
+                     */
+
+                    appId: '413655548988654',
+
+                    /*
+                     Adding a Channel File improves the performance
+                     of the javascript SDK, by addressing issues
+                     with cross-domain communication in certain browsers.
+                     */
+
+                    // channelUrl: 'app/channel.html',
+
+                    /*
+                     Set if you want to check the authentication status
+                     at the start up of the app
+                     */
+
+                    status: true,
+
+                    /*
+                     Enable cookies to allow the server to access
+                     the session
+                     */
+
+                    cookie: true,
+
+                    /* Parse XFBML */
+
+                    xfbml: true
+                });
+
+                FB.Event.subscribe('auth.authResponseChange', function(res) {
+
+                    if (res.status === 'connected') {
+                        console.log("authorized");
+                        /*
+                         The user is already logged,
+                         is possible retrieve his personal info
+                         */
+                        _self.getUserInfo();
+
+                        /*
+                         This is also the point where you should create a
+                         session for the current user.
+                         For this purpose you can use the data inside the
+                         res.authResponse object.
+                         */
+
+                    }
+                    else {
+                        console.log("bad");
+                        /*
+                         The user is not logged to the app, or into Facebook:
+                         destroy the session on the server.
+                         */
+
+                    }
+
+                });
+
             };
 
         });
