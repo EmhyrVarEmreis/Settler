@@ -25,8 +25,9 @@ var vinylPaths = require('vinyl-paths');
 var wiredep = require('wiredep').stream;
 
 var config = {
-    app:          'src/main/webapp',
-    bootstrapDir: 'bower_components/bootstrap',
+    app:            'src/main/webapp',
+    bootstrapDir:   'bower_components/bootstrap',
+    fontAwesomeDir: 'bower_components/components-font-awesome',
 
     work: 'target/work/',
     dist: 'target/classes/static',
@@ -55,7 +56,7 @@ gulp.task('copy', function() {
 });
 
 gulp.task('copy-fonts', function() {
-    return gulp.src(config.bootstrapDir + '/fonts/**/*')
+    return gulp.src([config.bootstrapDir + '/fonts/**/*', config.fontAwesomeDir + '/fonts/**/*'])
         .pipe(gulp.dest(config.dist + '/fonts'));
 });
 
