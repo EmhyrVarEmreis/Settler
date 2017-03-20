@@ -2,16 +2,31 @@
     'use strict';
 
     angular.module('settlerServices')
-        .factory('Auth', function Auth(Principal, AuthenticateCli, localStorageService, $rootScope, $state, $q/*, Account, Register, Activate, Password*/) {
+        .factory('Auth', function Auth(Principal, AuthenticateCli, AuthenticateFbCli, localStorageService, $rootScope, $state, $q) {
+            var _fbId;
             return {
                 isToken: function() {
                     return !!localStorageService.get('token');
                 },
 
+                getFbId: function() {
+                    FB.login(function(response) {
+                        return response.id;
+                    });
+                },
+
                 login: function(credentials) {
+                    return this.loginMain(AuthenticateCli, credentials);
+                },
+
+                loginFb: function(credentials) {
+                    return this.loginMain(AuthenticateFbCli, credentials);
+                },
+
+                loginMain: function(cli, credentials) {
                     var deferred = $q.defer();
 
-                    AuthenticateCli.login(credentials).$promise.then(function(data) {
+                    cli.login(credentials).$promise.then(function(data) {
                         localStorageService.set('token', data.token);
                         Principal.identity(true).then(function(identity) {
                             identity.passwordExpireDate = data.passwordExpireDate;
@@ -20,7 +35,6 @@
                             deferred.reject(err);
                         });
                     }).catch(function(err) {
-                        //this.logout();
                         deferred.reject(err);
                     });
 
@@ -30,6 +44,18 @@
                 logout: function() {
                     localStorageService.remove('token');
                     Principal.authenticate(null);
+                    this.logoutFb();
+                },
+
+                logoutFb: function() {
+                    _fbId = null;
+                    FB.getLoginStatus(function(response) {
+                        if (response.status === 'connected') {
+                            FB.logout();
+                        } else if (response.status === 'not_authorized') {
+                        } else {
+                        }
+                    });
                 },
 
                 authorize: function() {

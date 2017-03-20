@@ -25,4 +25,12 @@
         return $resource('api/user/values');
     });
 
+    angular.module('settlerApplication').factory('userSocialFactory', function($resource) {
+        return $resource('api/user/social');
+    });
+
+    angular.module('settlerApplication').factory('userSocialFbFactory', function($resource) {
+        return $resource('api/user/social/fb');
+    });
+
 })();

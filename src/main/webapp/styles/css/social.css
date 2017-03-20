@@ -1,0 +1,18 @@
+.btn-facebook {
+    background-color: #495BC0 !important;
+}
+
+.btn-settler {
+    background-color: #009688 !important;
+}
+
+.btn-google {
+    background-color: #C23321 !important;
+}
+
+.btn-social span {
+    left: -14px;
+    padding-right: 16px;
+    position: relative;
+    border-right: thin double #FFFFFF;
+}

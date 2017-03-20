@@ -4,13 +4,17 @@
     angular.module('settlerApplication').controller('ProfileCtrl', function($scope,
                                                                             NgTableParams,
                                                                             userProfileFactory,
+                                                                            userSocialFactory,
+                                                                            userSocialFbFactory,
                                                                             $stateParams,
                                                                             modalService,
                                                                             $timeout,
                                                                             avatarService,
-                                                                            Upload) {
+                                                                            Upload,
+                                                                            Auth) {
 
         $scope.data = {};
+        $scope.social = {};
         $scope.avatarFile = null;
         $scope.avatar = null;
 
@@ -18,17 +22,32 @@
             $scope.avatar = avatarService.getAvatarByUserId(!$scope.data.id ? $stateParams.state : $scope.data.id);
         };
 
-        userProfileFactory.get(
-            {
-                id: $stateParams.state
-            },
-            function(data) {
-                $scope.data = data;
-                $scope.loadAvatar();
-            }, function(err) {
-                modalService.createErrorDialogFromResponse(err);
-            }
-        );
+        $scope.loadUserSocial = function() {
+            userSocialFactory.get(
+                {
+                    id: $stateParams.state
+                },
+                function(data) {
+                    $scope.social = data;
+                }, function(err) {
+                    modalService.createErrorDialogFromResponse(err);
+                }
+            );
+        };
+
+        $scope.loadUserProfile = function() {
+            userProfileFactory.get(
+                {
+                    id: $stateParams.state
+                },
+                function(data) {
+                    $scope.data = data;
+                    $scope.loadAvatar();
+                }, function(err) {
+                    modalService.createErrorDialogFromResponse(err);
+                }
+            );
+        };
 
         $scope.save = function() {
             userProfileFactory.save(
@@ -79,6 +98,48 @@
                 file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
             });
         };
+
+        $scope.linkFb = function() {
+            if (!$scope.social.fbId) {
+                Auth.logoutFb();
+                FB.login(function(response) {
+                    userSocialFbFactory.save(
+                        {
+                            user:       {
+                                id: $scope.data.id
+                            },
+                            userSocial: {
+                                fbId:    response.authResponse.userID,
+                                fbToken: response.authResponse.accessToken
+                            }
+                        },
+                        function(data) {
+                            $scope.loadUserSocial();
+                        }, function(err) {
+                            modalService.createErrorDialogFromResponse(err);
+                        }
+                    );
+                });
+            } else {
+                userSocialFbFactory.delete(
+                    {
+                        id: $scope.data.id
+                    },
+                    function(data) {
+                        $scope.loadUserSocial();
+                    }, function(err) {
+                        modalService.createErrorDialogFromResponse(err);
+                    }
+                );
+            }
+        };
+
+        $scope.linkGoogle = function() {
+
+        };
+
+        $scope.loadUserProfile();
+        $scope.loadUserSocial();
 
     });
 

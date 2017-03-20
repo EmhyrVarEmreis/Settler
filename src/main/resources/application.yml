@@ -35,3 +35,6 @@ settler:
   mail:
     from-title: Settler
     from-address: settler@dev.morecraft.pl
+  fb:
+    app-id: @settler.fb.id@
+    app-secret: @settler.fb.secret@

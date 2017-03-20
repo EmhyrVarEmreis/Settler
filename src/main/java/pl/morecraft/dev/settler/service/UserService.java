@@ -18,11 +18,16 @@ import pl.morecraft.dev.settler.domain.QTransaction;
 import pl.morecraft.dev.settler.domain.QUser;
 import pl.morecraft.dev.settler.domain.User;
 import pl.morecraft.dev.settler.domain.dictionaries.OperationType;
+import pl.morecraft.dev.settler.domain.dictionaries.internal.SocialEnum;
 import pl.morecraft.dev.settler.security.authorisation.PermissionManager;
+import pl.morecraft.dev.settler.security.exception.AuthorizationMethodNotImplemented;
+import pl.morecraft.dev.settler.security.exception.FacebookLoginException;
 import pl.morecraft.dev.settler.security.util.Security;
 import pl.morecraft.dev.settler.service.abstractService.prototype.AbstractService;
 import pl.morecraft.dev.settler.service.exception.DuplicatedEntityException;
 import pl.morecraft.dev.settler.service.exception.EntityNotFoundException;
+import pl.morecraft.dev.settler.service.exception.UserNotFoundException;
+import pl.morecraft.dev.settler.service.social.FacebookService;
 import pl.morecraft.dev.settler.web.dto.*;
 import pl.morecraft.dev.settler.web.misc.ListPage;
 import pl.morecraft.dev.settler.web.misc.UserListFilters;
@@ -42,15 +47,17 @@ public class UserService extends AbstractService<User, UserDTO, UserListDTO, Use
     private final FileObjectRepository fileObjectRepository;
     private final BasePasswordEncoder passwordEncoder;
     private final PermissionManager permissionManager;
+    private final FacebookService facebookService;
     private final UserRepository userRepository;
     private final EntityManager entityManager;
     private final FileService fileService;
 
     @Autowired
-    public UserService(FileObjectRepository fileObjectRepository, BasePasswordEncoder passwordEncoder, PermissionManager permissionManager, UserRepository userRepository, EntityManager entityManager, FileService fileService) {
+    public UserService(FileObjectRepository fileObjectRepository, BasePasswordEncoder passwordEncoder, PermissionManager permissionManager, FacebookService facebookService, UserRepository userRepository, EntityManager entityManager, FileService fileService) {
         this.fileObjectRepository = fileObjectRepository;
         this.passwordEncoder = passwordEncoder;
         this.permissionManager = permissionManager;
+        this.facebookService = facebookService;
         this.userRepository = userRepository;
         this.entityManager = entityManager;
         this.fileService = fileService;
@@ -274,6 +281,86 @@ public class UserService extends AbstractService<User, UserDTO, UserListDTO, Use
             }
         }
         return new ResponseEntity<>(userWithValueDTOList, HttpStatus.OK);
+    }
+
+    public ResponseEntity<UserSocialDTO> getUserSocial(String username) {
+        User user;
+        if (Objects.isNull(username) || username.isEmpty()) {
+            user = Security.currentUser();
+        } else {
+            user = userRepository.findOneByLogin(username);
+        }
+        return getUserSocial(user);
+    }
+
+    public ResponseEntity<UserSocialDTO> getUserSocial(Long userId) {
+        User user;
+        if (Objects.isNull(userId) || userId < 0) {
+            user = Security.currentUser();
+        } else {
+            user = userRepository.findOne(userId);
+        }
+        return getUserSocial(user);
+    }
+
+    public ResponseEntity removeSocialIntegration(User user, SocialEnum type) {
+        switch (type) {
+            case FACEBOOK:
+                user.setFbId(null);
+                userRepository.save(user);
+                break;
+            case GOOGLE:
+            default:
+                throw new AuthorizationMethodNotImplemented("Not implemented yet");
+        }
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    public ResponseEntity addSocialIntegration(User user, SocialEnum type, UserSocialDTO userSocialDTO) {
+        switch (type) {
+            case FACEBOOK:
+                Long id = Long.parseLong(userSocialDTO.getFbId());
+                if (facebookService.authTokenVerifyUserId(userSocialDTO.getFbToken(), id)) {
+                    if (userRepository.exists(QUser.user.fbId.eq(id))) {
+                        return new ResponseEntity(HttpStatus.CONFLICT);
+                    }
+                    user.setFbId(id);
+                    userRepository.save(user);
+                } else {
+                    throw new FacebookLoginException("Cannot verify user id");
+                }
+                break;
+            case GOOGLE:
+            default:
+                throw new AuthorizationMethodNotImplemented("Not implemented yet");
+        }
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    public ResponseEntity<UserSocialDTO> getUserSocial(User user) {
+        if (user == null) {
+            throw new UserNotFoundException("User not found");
+        }
+        return new ResponseEntity<>(
+                new UserSocialDTO(
+                        user.getFbId() == null ? null : String.valueOf(user.getFbId()),
+                        null,
+                        null
+                ),
+                HttpStatus.OK
+        );
+    }
+
+    public User getUser(UserIdDTO userId) {
+        if (Objects.isNull(userId.getId()) || userId.getId() < 0) {
+            if (Objects.isNull(userId.getLogin()) || userId.getLogin().isEmpty()) {
+                return Security.currentUser();
+            } else {
+                return userRepository.findOneByLogin(userId.getLogin());
+            }
+        } else {
+            return userRepository.findOne(userId.getId());
+        }
     }
 
 }

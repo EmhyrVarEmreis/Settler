@@ -7,19 +7,25 @@
                         <div class="panel-body">
                             <h2>Logowanie</h2>
 
-                            <div class="alert alert-danger" ng-show="authenticationError">
+                            <div class="alert alert-danger" ng-show="error.error">
                                 <strong>Podczas logowania wystąpił następujący problem:</strong>
                                 <br/>
-
-                                <div class="text-center" ng-show="authenticationErrorSuperStatusCode === 401">
+                                <div class="text-center" ng-show="error.mode === 'std' && error.code === 401">
                                     Wprowadzony Login oraz Hasło niestety wydają się nie być prawidłowe. Upewnij się, że
                                     prawidłowo uzupełniasz ww. pola. Jeśli mimo tego problem nadal występuje -
                                     skontaktuj się z administratorem.
                                 </div>
-                                <div class="text-center"
-                                     ng-show="!authenticationErrorSuperStatusCode || (authenticationErrorSuperStatusCode < 600 && authenticationErrorSuperStatusCode !== 401)">
+                                <div class="text-center" ng-show="error.mode === 'fbk' && error.code === 401">
+                                    Wystąpił błąd podczas logowania przy pomocy serwisu Facebook. Upewnij się, że
+                                    autoryzowano aplikację Settler w serwisie Facebook oraz, że konta są połączone.
+                                    Połączyć konto Settler z kontem Facebook możesz w swoim profilu aplikacji Settler.
+                                </div>
+                                <div class="text-center" ng-show="error.mode === 'std' && error.code !== 401">
                                     Serwer nie odpowiada lub wystapił inny błąd krytyczny. Jeśli nie zaplanowano żadnych
                                     prac konserwacyjnych, koniecznie skontaktuj się z administratorem.
+                                </div>
+                                <div class="text-center" ng-show="error.code === 501">
+                                    Wybrana metoda logowania nie jest jeszcze obsługiwana.
                                 </div>
                             </div>
                             <div class="form-group">
@@ -40,10 +46,15 @@
                             </div>
 
                             <button type="submit"
-                                    class="btn btn-raised btn-success"
+                                    class="btn btn-raised btn-social btn-settler btn-inverse"
                                     ng-click="login()">
-                                <span class="glyphicon glyphicon-log-in  glph-def-em" aria-hidden="true"></span>
-                                Zaloguj się
+                                <span class="fa fa-user"></span> Settler
+                            </button>
+                            <button class="btn btn-raised btn-social btn-facebook btn-inverse" ng-click="loginFB()">
+                                <span class="fa fa-facebook"></span> Facebook
+                            </button>
+                            <button class="btn btn-raised btn-social btn-google btn-inverse" ng-click="loginGoogle()">
+                                <span class="fa fa-google"></span> Google
                             </button>
                         </div>
                     </div>

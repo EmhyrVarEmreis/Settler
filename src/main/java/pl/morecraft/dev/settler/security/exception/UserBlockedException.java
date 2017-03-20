@@ -1,4 +1,4 @@
-package pl.morecraft.dev.settler.security;
+package pl.morecraft.dev.settler.security.exception;
 
 
 import org.springframework.security.core.AuthenticationException;

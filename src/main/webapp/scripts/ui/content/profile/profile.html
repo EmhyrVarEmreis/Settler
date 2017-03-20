@@ -100,5 +100,28 @@
                 </div>
             </div>
         </div>
+
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                Integracja
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-sm-6 form-group">
+                        <button class="btn btn-raised btn-social btn-facebook btn-inverse btn-block text-center"
+                                ng-click="linkFb()">
+                            <span class="fa fa-facebook"></span> Facebook - {{!social.fbId ? 'Połącz' : 'Odłącz'}}
+                        </button>
+                    </div>
+                    <div class="col-sm-6 form-group">
+                        <button class="btn btn-raised btn-social btn-google btn-inverse btn-block text-center"
+                                disabled="true"
+                                ng-click="linkGoogle()">
+                            <span class="fa fa-google"></span> Google - Odłącz
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </form>
 </div>

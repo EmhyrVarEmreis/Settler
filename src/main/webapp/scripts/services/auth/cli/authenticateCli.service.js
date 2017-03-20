@@ -7,4 +7,10 @@
         });
     });
 
+    angular.module('settlerServices').factory('AuthenticateFbCli', function($resource) {
+        return $resource('api/authenticate/fb', {}, {
+            'login': {method: 'POST'}
+        });
+    });
+
 })();

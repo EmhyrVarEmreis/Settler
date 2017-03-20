@@ -1,5 +1,6 @@
 package pl.morecraft.dev.settler.configuration;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.encoding.BasePasswordEncoder;
@@ -24,13 +25,16 @@ import javax.inject.Inject;
 @EnableGlobalMethodSecurity(prePostEnabled = true, jsr250Enabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    @Inject
+    @SuppressWarnings("SpringAutowiredFieldsWarningInspection")
+    @Autowired
     private Http401UnauthorizedEntryPoint authenticationEntryPoint;
 
-    @Inject
+    @SuppressWarnings("SpringAutowiredFieldsWarningInspection")
+    @Autowired
     private UserDetailsService userDetailsService;
 
-    @Inject
+    @SuppressWarnings("SpringAutowiredFieldsWarningInspection")
+    @Autowired
     private TokenProvider tokenProvider;
 
     @Bean
@@ -75,6 +79,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/api/register").permitAll()
                 .antMatchers("/api/authenticate").permitAll()
+                .antMatchers("/api/authenticate/**").permitAll()
                 .antMatchers("/api/home").permitAll()
                 .antMatchers("/api/**").authenticated()
                 .antMatchers("/protected/**").authenticated()

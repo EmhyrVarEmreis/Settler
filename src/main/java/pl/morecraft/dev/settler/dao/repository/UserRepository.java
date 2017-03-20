@@ -7,8 +7,7 @@ import pl.morecraft.dev.settler.domain.User;
 public interface UserRepository extends JpaRepository<User, Long>, QueryDslPredicateExecutor<User> {
 
     User findOneByLogin(String login);
-//
-//    @Modifying
-//    @Query("UPDATE User u SET u.password = :password WHERE u.id = :userId")
-//    void setPassword(@Param("userId") Long userId, @Param("password") String password);
+
+    User findOneByFbId(Long fbId);
+
 }

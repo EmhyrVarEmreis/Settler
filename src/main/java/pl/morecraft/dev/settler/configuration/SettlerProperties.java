@@ -13,6 +13,7 @@ public class SettlerProperties {
 
     private final Async async = new Async();
     private final MailConfiguration mail = new MailConfiguration();
+    private final FacebookConfiguration fb = new FacebookConfiguration();
 
     @Data
     @NoArgsConstructor
@@ -27,6 +28,13 @@ public class SettlerProperties {
     public class MailConfiguration {
         private String fromAddress;
         private String fromTitle;
+    }
+
+    @Data
+    @NoArgsConstructor
+    public class FacebookConfiguration {
+        private String appId;
+        private String appSecret;
     }
 
 }
