@@ -44,7 +44,7 @@
                                                 {{row.userFrom}}
                                             </td>
                                             <td>
-                                                {{row.charge | myCurrency:'PLN'}}
+                                                {{row.charge | setDecimal:2 | myCurrency:'PLN'}}
                                             </td>
                                         </tr>
                                         </tbody>
@@ -87,7 +87,7 @@
                                             {{row.userTo}}
                                         </td>
                                         <td>
-                                            {{row.charge | myCurrency:'PLN'}}
+                                            {{row.charge | setDecimal:2 | myCurrency:'PLN'}}
                                         </td>
                                     </tr>
                                     </tbody>
@@ -140,7 +140,7 @@
                                                 {{category.category.code}}
                                             </td>
                                             <td>
-                                                {{category.value | myCurrency:'PLN'}}
+                                                {{category.value | setDecimal:2 | myCurrency:'PLN'}}
                                             </td>
                                         </tr>
                                         </tbody>
@@ -184,7 +184,7 @@
                                                 {{user.user}}
                                             </td>
                                             <td>
-                                                {{user.value | myCurrency:'PLN'}}
+                                                {{user.value | setDecimal:2 | myCurrency:'PLN'}}
                                             </td>
                                         </tr>
                                         </tbody>
