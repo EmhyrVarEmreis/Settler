@@ -63,7 +63,7 @@ public class TotalChargeService extends AbstractService<TotalCharge, TotalCharge
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        List<TotalCharge> totalChargeList = getUserRepository().findAllByUserFromId(id);
+        List<TotalCharge> totalChargeList = getUserRepository().findAllByUserFromIdOrderByChargeDesc(id);
 
         List<TotalChargeDTO> totalChargeDTOList = getListPageConverter().convert(totalChargeList, TotalChargeDTO.class);
 
@@ -75,7 +75,7 @@ public class TotalChargeService extends AbstractService<TotalCharge, TotalCharge
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        List<TotalCharge> totalChargeList = getUserRepository().findAllByUserToId(id);
+        List<TotalCharge> totalChargeList = getUserRepository().findAllByUserToIdOrderByChargeDesc(id);
 
         List<TotalChargeDTO> totalChargeDTOList = getListPageConverter().convert(totalChargeList, TotalChargeDTO.class);
 

@@ -7,8 +7,8 @@ import java.util.List;
 
 public interface TotalChargeRepository extends ReadOnlyRepository<TotalCharge, Long> {
 
-    List<TotalCharge> findAllByUserFromId(Long userFromId);
+    List<TotalCharge> findAllByUserFromIdOrderByChargeDesc(Long userFromId);
 
-    List<TotalCharge> findAllByUserToId(Long userToId);
+    List<TotalCharge> findAllByUserToIdOrderByChargeDesc(Long userToId);
 
 }
