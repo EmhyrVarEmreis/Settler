@@ -1,7 +1,7 @@
 # Settler
 
 ##### JenkinsCI
-[![Build Status](http://ci.dev.morecraft.pl/buildStatus/icon?job=Settler)](http://ci.dev.morecraft.pl/job/Settler/)
+[![Build Status](https://ci.morecraft.pl/buildStatus/icon?job=Settler)](https://ci.morecraft.pl/job/Settler/)
 
 ## What is it?
 Small transactions manager.
