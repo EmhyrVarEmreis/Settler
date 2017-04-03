@@ -10,6 +10,10 @@
                 },
 
                 getFbId: function() {
+                    if (!FB) {
+                        console.log("Facebook (FB) is not initialized");
+                        return '';
+                    }
                     FB.login(function(response) {
                         return response.id;
                     });
@@ -49,6 +53,10 @@
 
                 logoutFb: function() {
                     _fbId = null;
+                    if (!FB) {
+                        console.log("Facebook (FB) is not initialized");
+                        return;
+                    }
                     FB.getLoginStatus(function(response) {
                         if (response.status === 'connected') {
                             FB.logout();
