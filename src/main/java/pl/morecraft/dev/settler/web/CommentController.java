@@ -41,4 +41,10 @@ public class CommentController {
         return commentService.save(commentDTO);
     }
 
+    public ResponseEntity<List<CommentDTO>> deleteByObjectId(
+            @RequestParam(value = "id") Long objectId
+    ) {
+        return commentService.deleteByPrivilegeObject(objectId);
+    }
+
 }
