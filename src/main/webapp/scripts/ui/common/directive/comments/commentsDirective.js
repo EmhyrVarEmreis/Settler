@@ -61,6 +61,31 @@
                         });
                     };
 
+                    $scope.openDeleteCommentModal = function(parentComment) {
+                        var modalInstance = $uibModal.open({
+                            animation:    true,
+                            templateUrl:  'scripts/ui/common/directive/comments/deleteComment/deleteComment.html',
+                            controller:   'DeleteCommentCtrl',
+                            controllerAs: '$ctrl'
+                        });
+
+                        modalInstance.result.then(function(item) {
+                            commentFactory.delete(
+                                {
+                                    object:        $scope.id,
+                                    parentComment: parentComment,
+                                    value:         item
+                                },
+                                function() {
+                                    $scope.loadComments();
+                                }, function(err) {
+                                    console.log(err);
+                                }
+                            );
+                        }, function() {
+                        });
+                    };
+
                 }
             };
         });
