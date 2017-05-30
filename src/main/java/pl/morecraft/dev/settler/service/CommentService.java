@@ -104,9 +104,7 @@ public class CommentService extends AbstractService<Comment, CommentDTO, Comment
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        List<Comment> commentList = getByPrivilegeObject(privilegeObject);
-//TODO
-        commentList.remove(privilegeObject);
+        commentRepository.delete(objectId);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }

@@ -20,10 +20,7 @@ public class CommentController {
         this.commentService = commentService;
     }
 
-    @RequestMapping(
-            value = "",
-            method = RequestMethod.GET
-    )
+    @GetMapping
     public ResponseEntity<List<CommentDTO>> getByObjectId(
             @RequestParam(value = "id") Long objectId
     ) {
@@ -41,6 +38,7 @@ public class CommentController {
         return commentService.save(commentDTO);
     }
 
+    @DeleteMapping
     public ResponseEntity<List<CommentDTO>> deleteByObjectId(
             @RequestParam(value = "id") Long objectId
     ) {
