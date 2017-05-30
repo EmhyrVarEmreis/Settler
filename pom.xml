@@ -213,6 +213,21 @@
                 <settler.db.context>dev</settler.db.context>
             </properties>
         </profile>
+        <profile> <!-- Invalid data -->
+            <id>settler-fb-mock</id>
+            <properties>
+                <settler.fb.id>456985632545691</settler.fb.id>
+                <settler.fb.secret>f7adafc3c98adeab63391490d3ef78e8</settler.fb.secret>
+            </properties>
+        </profile>
+        <profile> <!-- Invalid data -->
+            <id>settler-mail-mock</id>
+            <properties>
+                <settler.mail.host>mail.morecraft.pl</settler.mail.host>
+                <settler.mail.username>settler@dev.morecraft.pl</settler.mail.username>
+                <settler.mail.password>PAssWOrd@!</settler.mail.password>
+            </properties>
+        </profile>
 
         <profile>
             <id>prod</id>
