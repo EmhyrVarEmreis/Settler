@@ -49,7 +49,8 @@
                 hideOn:      {xs: true},
                 type:        'default',
                 isEmpty:     "N/D",
-                index:       object.columnsCount++
+                index:       object.columnsCount++,
+                url:         '#/category/list'
             },
             {
                 field:       'description',
