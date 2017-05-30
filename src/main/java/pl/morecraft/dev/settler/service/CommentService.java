@@ -97,6 +97,20 @@ public class CommentService extends AbstractService<Comment, CommentDTO, Comment
         return new ResponseEntity<>(commentDTOList, HttpStatus.OK);
     }
 
+    public ResponseEntity<List<CommentDTO>> deleteByPrivilegeObject(Long objectId) {
+        PrivilegeObject privilegeObject = privilegeObjectRepository.findOne(objectId);
+
+        if (privilegeObject == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        List<Comment> commentList = getByPrivilegeObject(privilegeObject);
+//TODO
+        commentList.remove(privilegeObject);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     private List<Comment> getByPrivilegeObject(PrivilegeObject privilegeObject) {
         return commentRepository.findAllByObject(privilegeObject);
     }
