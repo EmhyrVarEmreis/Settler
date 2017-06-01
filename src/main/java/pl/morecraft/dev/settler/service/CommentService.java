@@ -1,7 +1,6 @@
 package pl.morecraft.dev.settler.service;
 
 import org.joda.time.LocalDateTime;
-import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -19,7 +18,6 @@ import pl.morecraft.dev.settler.web.misc.CommentListFilters;
 
 import javax.inject.Inject;
 import java.util.List;
-import java.util.Objects;
 import java.util.function.UnaryOperator;
 
 @Service
@@ -106,12 +104,7 @@ public class CommentService extends AbstractService<Comment, CommentDTO, Comment
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        CommentDTO commentDTO = null;
         commentRepository.delete(objectId);
-
-        if (!Objects.isNull(commentRepository.findOne(getEntityClass().cast(commentDTO.getParentComment().equals(objectId)).getId()))){
-            commentRepository.delete(getEntityClass().cast(commentDTO.getParentComment().equals(objectId)).getId());
-        } //TODO - kurwAaaaa?!
 
         return new ResponseEntity<>(HttpStatus.OK);
     }

@@ -61,7 +61,7 @@
                         });
                     };
 
-                    $scope.openDeleteCommentModal = function(parentComment) {
+                    $scope.openDeleteCommentModal = function (comment) {
                         var modalInstance = $uibModal.open({
                             animation:    true,
                             templateUrl:  'scripts/ui/common/directive/comments/deleteComment/deleteComment.html',
@@ -72,9 +72,7 @@
                         modalInstance.result.then(function(item) {
                             commentFactory.delete(
                                 {
-                                    object:        $scope.id,
-                                    parentComment: parentComment,
-                                    value:         item
+                                    id: comment
                                 },
                                 function() {
                                     $scope.loadComments();
