@@ -25,6 +25,7 @@ public class CommentDTOCommentConverter extends AbstractConverter<CommentDTO, Co
         return new Comment(
                 PrivilegeObject.from(commentDTO.getObject()),
                 commentDTO.getParentComment() == null ? null : PrivilegeObject.from(commentDTO.getParentComment()),
+                null,
                 commentDTO.getOwner() == null ? null : userRepository.findOne(commentDTO.getOwner().getId()),
                 null,
                 null,
