@@ -11,7 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pl.morecraft.dev.settler.dao.repository.RedistributionRepository;
 import pl.morecraft.dev.settler.dao.repository.TransactionRepository;
 import pl.morecraft.dev.settler.domain.*;
 import pl.morecraft.dev.settler.domain.dictionaries.OperationType;
@@ -40,16 +39,14 @@ public class TransactionService extends AbstractService<Transaction, Transaction
     private final SequenceManager sequenceManager;
     private final PermissionManager permissionManager;
     private final TransactionRepository transactionRepository;
-    private final RedistributionRepository redistributionRepository;
 
     @Autowired
-    public TransactionService(EmailService emailService, EntityManager entityManager, SequenceManager sequenceManager, PermissionManager permissionManager, TransactionRepository transactionRepository, RedistributionRepository redistributionRepository) {
+    public TransactionService(EmailService emailService, EntityManager entityManager, SequenceManager sequenceManager, PermissionManager permissionManager, TransactionRepository transactionRepository) {
         this.emailService = emailService;
         this.entityManager = entityManager;
         this.sequenceManager = sequenceManager;
         this.permissionManager = permissionManager;
         this.transactionRepository = transactionRepository;
-        this.redistributionRepository = redistributionRepository;
     }
 
     protected TransactionRepository getUserRepository() {
