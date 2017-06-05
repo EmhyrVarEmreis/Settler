@@ -221,7 +221,7 @@ public abstract class AbstractService<
         return singleFiltersPack.getFullEntityAbstractServiceSingleFiltersPack();
     }
 
-    protected List<BooleanExpression> getPreFilters() {
+    protected List<BooleanExpression> getPreFilters(QEntity qObject) {
         return Collections.emptyList();
     }
 
@@ -286,7 +286,7 @@ public abstract class AbstractService<
             pWrapper.predicate = qObject.ne(qObject);
         }
 
-        for (BooleanExpression preFilter : getPreFilters()) {
+        for (BooleanExpression preFilter : getPreFilters(qObject)) {
             pWrapper.predicate = pWrapper.predicate.and(preFilter);
         }
 

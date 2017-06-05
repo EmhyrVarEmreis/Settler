@@ -93,12 +93,12 @@ public class UserService extends AbstractService<User, UserDTO, UserListDTO, Use
     }
 
     @Override
-    protected List<BooleanExpression> getPreFilters() {
+    protected List<BooleanExpression> getPreFilters(QUser qUser) {
         return CollectionUtils.add(
                 new ArrayList<>(),
                 permissionManager.objectFilter(
                         Security.currentUser(),
-                        QUser.user._super,
+                        qUser._super,
                         OperationType.RDM
                 )
         );

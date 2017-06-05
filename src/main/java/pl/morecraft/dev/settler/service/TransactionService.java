@@ -82,12 +82,12 @@ public class TransactionService extends AbstractService<Transaction, Transaction
     }
 
     @Override
-    protected List<BooleanExpression> getPreFilters() {
+    protected List<BooleanExpression> getPreFilters(QTransaction qTransaction) {
         return CollectionUtils.add(
                 new ArrayList<>(),
                 permissionManager.objectFilter(
                         Security.currentUser(),
-                        QTransaction.transaction._super,
+                        qTransaction._super,
                         OperationType.RDM
                 )
         );
