@@ -26,15 +26,6 @@
                 $scope.charges.from.list = data;
                 var i, j;
 
-                $scope.charges.to.sum = 0;
-                for (i = 0; i < $scope.charges.to.list.length; i++) {
-                    $scope.charges.to.sum += $scope.charges.to.list[i].charge;
-                }
-                $scope.charges.from.sum = 0;
-                for (i = 0; i < $scope.charges.from.list.length; i++) {
-                    $scope.charges.from.sum += $scope.charges.from.list[i].charge;
-                }
-
                 for (i = 0; i < $scope.charges.to.list.length; i++) {
                     for (j = 0; j < $scope.charges.from.list.length; j++) {
                         if ($scope.charges.to.list[i].userFromId === $scope.charges.from.list[j].userToId) {
@@ -51,6 +42,15 @@
                             }
                         }
                     }
+                }
+
+                $scope.charges.to.sum = 0;
+                for (i = 0; i < $scope.charges.to.list.length; i++) {
+                    $scope.charges.to.sum += $scope.charges.to.list[i].charge;
+                }
+                $scope.charges.from.sum = 0;
+                for (i = 0; i < $scope.charges.from.list.length; i++) {
+                    $scope.charges.from.sum += $scope.charges.from.list[i].charge;
                 }
 
             });
