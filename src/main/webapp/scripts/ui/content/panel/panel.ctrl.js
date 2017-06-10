@@ -31,12 +31,12 @@
                         if ($scope.charges.to.list[i].userFromId === $scope.charges.from.list[j].userToId) {
                             if ($scope.charges.to.list[i].charge < $scope.charges.from.list[j].charge) {
                                 $scope.charges.from.list[j].charge = (parseFloat($scope.charges.from.list[j].charge)
-                                - parseFloat($scope.charges.to.list[i].charge)).toFixed(2);
+                                - parseFloat($scope.charges.to.list[i].charge));
                                 $scope.charges.to.list.splice(i, 1);
                                 i--;
                             } else {
                                 $scope.charges.to.list[i].charge = (parseFloat($scope.charges.to.list[i].charge)
-                                - parseFloat($scope.charges.from.list[j].charge)).toFixed(2);
+                                - parseFloat($scope.charges.from.list[j].charge));
                                 $scope.charges.from.list.splice(j, 1);
                                 j--;
                             }
