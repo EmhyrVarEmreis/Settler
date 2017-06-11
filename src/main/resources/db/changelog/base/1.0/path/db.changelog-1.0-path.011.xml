@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="1.0-path-011" author="settler">
+
+        <dropAllForeignKeyConstraints baseTableName="prv_user_role"/>
+
+        <dropUniqueConstraint tableName="prv_user_role"
+                              constraintName="UQ_PRV_USER_ROLE"/>
+
+        <addForeignKeyConstraint baseTableName="prv_user_role"
+                                 baseColumnNames="prv_user"
+                                 constraintName="FK_prv_user_role_prv_user_prv_user_id"
+                                 referencedTableName="prv_user"
+                                 referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint baseTableName="prv_user_role"
+                                 baseColumnNames="prv_role"
+                                 constraintName="FK_prv_user_role_prv_role_prv_role_id"
+                                 referencedTableName="prv_role"
+                                 referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint baseTableName="prv_user_role"
+                                 baseColumnNames="target"
+                                 constraintName="FK_prv_user_role_target_id_prv_object_id"
+                                 referencedTableName="prv_object"
+                                 referencedColumnNames="id"/>
+
+        <addUniqueConstraint tableName="prv_user_role"
+                             constraintName="UQ_PRV_USER_ROLE"
+                             columnNames="prv_user, prv_role, target"/>
+
+        <sql>
+            DELETE FROM prv_user_role
+            WHERE target IN (SELECT id
+                             FROM mod_transaction);
+
+            INSERT INTO prv_user_role (prv_user, prv_role, target)
+                SELECT DISTINCT tab.*
+                FROM (
+                         SELECT
+                             mt.creator                        AS 'prv_user',
+                             (SELECT pr.id
+                              FROM prv_role pr
+                              WHERE pr.name = 'Administrator') AS 'prv_role',
+                             mt.id                             AS 'target'
+                         FROM mod_transaction mt
+                         UNION ALL
+                         SELECT
+                             mr.user                  AS 'prv_user',
+                             (SELECT pr.id
+                              FROM prv_role pr
+                              WHERE pr.name = 'User') AS 'prv_role',
+                             mr.parent                AS 'target'
+                         FROM mod_redistribution mr
+                     ) tab;
+        </sql>
+
+        <sql>
+            DROP PROCEDURE IF EXISTS dev_settler.proc_prv_user_role_refresh_by_transaction;
+        </sql>
+
+        <createProcedure>
+            CREATE PROCEDURE dev_settler.proc_prv_user_role_refresh_by_transaction(transaction BIGINT)
+                BEGIN
+                    DELETE FROM prv_user_role
+                    WHERE target = transaction;
+
+                    INSERT INTO prv_user_role (prv_user, prv_role, target)
+                        SELECT DISTINCT tab.*
+                        FROM (
+                                 SELECT
+                                     mt.creator                        AS 'prv_user',
+                                     (SELECT pr.id
+                                      FROM prv_role pr
+                                      WHERE pr.name = 'Administrator') AS 'prv_role',
+                                     mt.id                             AS 'target'
+                                 FROM mod_transaction mt
+                                 WHERE mt.id = transaction
+                                 UNION ALL
+                                 SELECT
+                                     mr.user                  AS 'prv_user',
+                                     (SELECT pr.id
+                                      FROM prv_role pr
+                                      WHERE pr.name = 'User') AS 'prv_role',
+                                     mr.parent                AS 'target'
+                                 FROM mod_redistribution mr
+                                 WHERE mr.parent = transaction
+                             ) tab;
+                END;
+        </createProcedure>
+
+        <sql>
+            DROP TRIGGER IF EXISTS dev_settler.trg_mod_transaction_insert;
+            DROP TRIGGER IF EXISTS dev_settler.trg_mod_transaction_delete;
+            DROP TRIGGER IF EXISTS dev_settler.trg_mod_transaction_update;
+            DROP TRIGGER IF EXISTS dev_settler.trg_mod_redistribution_insert;
+            DROP TRIGGER IF EXISTS dev_settler.trg_mod_redistribution_delete;
+            DROP TRIGGER IF EXISTS dev_settler.trg_mod_redistribution_update;
+        </sql>
+
+        <createProcedure>
+            CREATE TRIGGER dev_settler.trg_mod_transaction_insert
+            AFTER INSERT ON dev_settler.mod_transaction
+            FOR EACH ROW
+                BEGIN
+                    CALL proc_prv_user_role_refresh_by_transaction(NEW.id);
+                END;
+        </createProcedure>
+
+        <createProcedure>
+            CREATE TRIGGER dev_settler.trg_mod_transaction_delete
+            AFTER DELETE ON dev_settler.mod_transaction
+            FOR EACH ROW
+                BEGIN
+                    CALL proc_prv_user_role_refresh_by_transaction(OLD.id);
+                END;
+        </createProcedure>
+
+        <createProcedure>
+            CREATE TRIGGER dev_settler.trg_mod_transaction_update
+            AFTER UPDATE ON dev_settler.mod_transaction
+            FOR EACH ROW
+                BEGIN
+                    CALL proc_prv_user_role_refresh_by_transaction(NEW.id);
+                    CALL proc_prv_user_role_refresh_by_transaction(OLD.id);
+                END;
+        </createProcedure>
+
+        <createProcedure>
+            CREATE TRIGGER dev_settler.trg_mod_redistribution_insert
+            AFTER INSERT ON dev_settler.mod_redistribution
+            FOR EACH ROW
+                BEGIN
+                    CALL proc_prv_user_role_refresh_by_transaction(NEW.parent);
+                END;
+        </createProcedure>
+
+        <createProcedure>
+            CREATE TRIGGER dev_settler.trg_mod_redistribution_delete
+            AFTER DELETE ON dev_settler.mod_redistribution
+            FOR EACH ROW
+                BEGIN
+                    CALL proc_prv_user_role_refresh_by_transaction(OLD.parent);
+                END;
+        </createProcedure>
+
+        <createProcedure>
+            CREATE TRIGGER dev_settler.trg_mod_redistribution_update
+            AFTER UPDATE ON dev_settler.mod_redistribution
+            FOR EACH ROW
+                BEGIN
+                    CALL proc_prv_user_role_refresh_by_transaction(NEW.parent);
+                    CALL proc_prv_user_role_refresh_by_transaction(OLD.parent);
+                END;
+        </createProcedure>
+
+    </changeSet>
+
+</databaseChangeLog>
