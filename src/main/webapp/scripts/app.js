@@ -46,7 +46,6 @@
                 responseError: function(rejection) {
                     if (rejection.status === 401 && !$rootScope.sessionLost) {
                         $rootScope.sessionLost = true;
-                        $location.path('/login');
                         if (historyService.prev() !== null) {
                             $rootScope.sessionLost = false;
                         } else if ($location.$$path !== '/login') {
@@ -68,6 +67,7 @@
                                 $rootScope.sessionLost = false;
                             });
                         }
+                        $location.path('/login');
                         historyService.clear();
                     }
                     return $q.reject(rejection);
