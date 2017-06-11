@@ -36,28 +36,28 @@
                              columnNames="prv_user, prv_role, target"/>
 
         <sql>
-            DELETE FROM prv_user_role
+            DELETE FROM dev_settler.prv_user_role
             WHERE target IN (SELECT id
-                             FROM mod_transaction);
+                             FROM dev_settler.mod_transaction);
 
-            INSERT INTO prv_user_role (prv_user, prv_role, target)
+            INSERT INTO dev_settler.prv_user_role (prv_user, prv_role, target)
                 SELECT DISTINCT tab.*
                 FROM (
                          SELECT
                              mt.creator                        AS 'prv_user',
                              (SELECT pr.id
-                              FROM prv_role pr
+                              FROM dev_settler.prv_role pr
                               WHERE pr.name = 'Administrator') AS 'prv_role',
                              mt.id                             AS 'target'
-                         FROM mod_transaction mt
+                         FROM dev_settler.mod_transaction mt
                          UNION ALL
                          SELECT
                              mr.user                  AS 'prv_user',
                              (SELECT pr.id
-                              FROM prv_role pr
+                              FROM dev_settler.prv_role pr
                               WHERE pr.name = 'User') AS 'prv_role',
                              mr.parent                AS 'target'
-                         FROM mod_redistribution mr
+                         FROM dev_settler.mod_redistribution mr
                      ) tab;
         </sql>
 
@@ -68,28 +68,28 @@
         <createProcedure>
             CREATE PROCEDURE dev_settler.proc_prv_user_role_refresh_by_transaction(transaction BIGINT)
                 BEGIN
-                    DELETE FROM prv_user_role
+            DELETE FROM dev_settler.prv_user_role
                     WHERE target = transaction;
 
-                    INSERT INTO prv_user_role (prv_user, prv_role, target)
+            INSERT INTO dev_settler.prv_user_role (prv_user, prv_role, target)
                         SELECT DISTINCT tab.*
                         FROM (
                                  SELECT
                                      mt.creator                        AS 'prv_user',
                                      (SELECT pr.id
-                                      FROM prv_role pr
+            FROM dev_settler.prv_role pr
                                       WHERE pr.name = 'Administrator') AS 'prv_role',
                                      mt.id                             AS 'target'
-                                 FROM mod_transaction mt
+            FROM dev_settler.mod_transaction mt
                                  WHERE mt.id = transaction
                                  UNION ALL
                                  SELECT
                                      mr.user                  AS 'prv_user',
                                      (SELECT pr.id
-                                      FROM prv_role pr
+            FROM dev_settler.prv_role pr
                                       WHERE pr.name = 'User') AS 'prv_role',
                                      mr.parent                AS 'target'
-                                 FROM mod_redistribution mr
+            FROM dev_settler.mod_redistribution mr
                                  WHERE mr.parent = transaction
                              ) tab;
                 END;
@@ -157,6 +157,38 @@
                 BEGIN
                     CALL proc_prv_user_role_refresh_by_transaction(NEW.parent);
                     CALL proc_prv_user_role_refresh_by_transaction(OLD.parent);
+                END;
+        </createProcedure>
+
+        <sql>
+            INSERT INTO dev_settler.jtb_object_hierarchy (prv_object_from, prv_object_to)
+                SELECT
+                    id,
+                    id
+                FROM dev_settler.prv_object;
+        </sql>
+
+        <createProcedure>
+            CREATE TRIGGER dev_settler.trg_prv_object_insert
+            AFTER INSERT ON dev_settler.prv_object
+            FOR EACH ROW
+                BEGIN
+                    INSERT INTO dev_settler.jtb_object_hierarchy (prv_object_from, prv_object_to)
+                    VALUES (NEW.id, NEW.id);
+                END;
+        </createProcedure>
+
+        <createProcedure>
+            CREATE TRIGGER dev_settler.trg_prv_object_delete
+            AFTER DELETE ON dev_settler.prv_object
+            FOR EACH ROW
+                BEGIN
+                    DELETE FROM dev_settler.jtb_object_hierarchy
+                    WHERE prv_object_from = OLD.id
+                          OR prv_object_to = OLD.id;
+                    DELETE FROM dev_settler.jtb_object_privilege
+                    WHERE prv_object_from = OLD.id
+                          OR prv_object_to = OLD.id;
                 END;
         </createProcedure>
 
