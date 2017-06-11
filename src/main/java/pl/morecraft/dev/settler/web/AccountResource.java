@@ -18,6 +18,7 @@ import pl.morecraft.dev.settler.security.UserDetailsWrapper;
 import pl.morecraft.dev.settler.security.exception.AuthorizationMethodNotImplemented;
 import pl.morecraft.dev.settler.security.util.Security;
 import pl.morecraft.dev.settler.security.xauth.TokenProvider;
+import pl.morecraft.dev.settler.service.PermissionService;
 import pl.morecraft.dev.settler.web.dto.AuthenticationDTO;
 import pl.morecraft.dev.settler.web.dto.LoginDTO;
 import pl.morecraft.dev.settler.web.dto.LoginFbDTO;
@@ -37,12 +38,14 @@ public class AccountResource {
     private final AuthenticationManager authenticationManager;
     private final UserDetailsServiceInternal userDetailsService;
     private final TokenProvider tokenProvider;
+    private final PermissionService permissionService;
 
     @Autowired
-    public AccountResource(AuthenticationManager authenticationManager, UserDetailsServiceInternal userDetailsService, TokenProvider tokenProvider) {
+    public AccountResource(AuthenticationManager authenticationManager, UserDetailsServiceInternal userDetailsService, TokenProvider tokenProvider, PermissionService permissionService) {
         this.authenticationManager = authenticationManager;
         this.userDetailsService = userDetailsService;
         this.tokenProvider = tokenProvider;
+        this.permissionService = permissionService;
     }
 
     @RequestMapping(value = "/account",
@@ -57,6 +60,7 @@ public class AccountResource {
                 user.getFirstName(),
                 user.getLastName(),
                 user.getEmail(),
+                permissionService.getShortSummary(),
                 Collections.emptyList()
         );
     }
