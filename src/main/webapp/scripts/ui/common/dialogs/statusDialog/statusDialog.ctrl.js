@@ -5,6 +5,7 @@
 
         $scope.modalTitle = conf.modalTitle;
         $scope.modalBody = conf.modalBody;
+        $scope.modalMode = conf.modalMode;
         $scope.isOK = conf.isOK;
 
         $scope.ok = function() {

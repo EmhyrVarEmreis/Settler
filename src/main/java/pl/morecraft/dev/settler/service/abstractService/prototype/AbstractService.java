@@ -69,7 +69,7 @@ public abstract class AbstractService<
         }
 
         if (!getGetAuthorisationPredicate().test(entity)) {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
 
         if (!getGetPreValidationPredicate().test(entity)) {
@@ -91,7 +91,7 @@ public abstract class AbstractService<
 
     public ResponseEntity<EntityDTO> save(EntityDTO entityDTO) {
         if (!getSaveAuthorisationPredicate().test(entityDTO)) {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
 
         if (!getSavePreValidationPredicate().test(entityDTO)) {
