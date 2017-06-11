@@ -19,7 +19,7 @@
             'rzModule'
         ])
 
-        .factory('authInterceptor', function($rootScope, $q, $location, localStorageService, $injector, historyService) {
+        .factory('authInterceptor', function($rootScope, $q, $location, localStorageService, $injector, historyService, $window) {
             return {
                 // Add authorization token to headers
                 request:       function(config) {
@@ -57,6 +57,7 @@
                                         return {
                                             modalTitle: 'Informacja',
                                             modalBody:  'Twoja sesja wygasła lub cofnięto dostęp do zasobu!<br/><strong>Zaloguj się ponownie!</strong>',
+                                            modalMode:  'info',
                                             isOK:       false
                                         };
                                     }
@@ -69,6 +70,22 @@
                         }
                         $location.path('/login');
                         historyService.clear();
+                    } else if (rejection.status === 403) {
+                        $injector.get('$uibModal').open({
+                            templateUrl: 'scripts/ui/common/dialogs/statusDialog/statusDialog.html',
+                            controller:  'statusDialogCtrl',
+                            resolve:     {
+                                conf: function() {
+                                    return {
+                                        modalTitle: 'Ostrzeżenie',
+                                        modalBody:  'Nie masz dostępu do tego zasobu!',
+                                        modalMode:  'warning',
+                                        isOK:       false
+                                    };
+                                }
+                            }
+                        });
+                        $window.history.back();
                     }
                     return $q.reject(rejection);
                 }
