@@ -26,7 +26,7 @@
                     config.headers = config.headers || {};
                     var token = localStorageService.get('token');
 
-                    if (!token || typeof(token) != 'string') return config;
+                    if (!token || typeof(token) !== 'string') return config;
                     var expires = token.split(':')[1];
 
                     if (!expires) return config;
