@@ -55,6 +55,8 @@ public class UserDTO {
 
     private String status;
 
+    private List<String> operationTypes;
+
     private List<RoleAssignmentDTO> roleAssignments;
 
     private Long avatar;
@@ -62,13 +64,14 @@ public class UserDTO {
     public UserDTO() {
     }
 
-    public UserDTO(Long id, String login, String password, String firstName, String lastName, String email, List<RoleAssignmentDTO> roleAssignments) {
+    public UserDTO(Long id, String login, String password, String firstName, String lastName, String email, List<String> operationTypes, List<RoleAssignmentDTO> roleAssignments) {
         this.id = id;
         this.login = login;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+        this.operationTypes = operationTypes;
         this.roleAssignments = roleAssignments;
     }
 
@@ -152,6 +155,14 @@ public class UserDTO {
         this.status = status;
     }
 
+    public List<String> getOperationTypes() {
+        return operationTypes;
+    }
+
+    public void setOperationTypes(List<String> operationTypes) {
+        this.operationTypes = operationTypes;
+    }
+
     public List<RoleAssignmentDTO> getRoleAssignments() {
         return roleAssignments;
     }
@@ -176,7 +187,8 @@ public class UserDTO {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
-                ", roles=" + roleAssignments +
+                ", operationTypes=" + operationTypes +
+                ", roleAssignments=" + roleAssignments +
                 '}';
     }
 

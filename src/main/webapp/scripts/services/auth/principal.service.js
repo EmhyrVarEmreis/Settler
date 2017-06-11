@@ -53,6 +53,7 @@
                     AccountCli.get().$promise
                         .then(function(account) {
                             _identity = account.data;
+                            console.log(_identity);
                             if (_identity.roles === null || _identity.roles === undefined) _identity.roles = [];
                             _identity.roles.push('authenticated');
                             _authenticated = true;
