@@ -28,6 +28,7 @@ import javax.persistence.EntityManager;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.function.UnaryOperator;
 
 @Service
@@ -93,6 +94,16 @@ public class TransactionService extends AbstractService<Transaction, Transaction
     @Override
     protected QTransaction getEQ() {
         return QTransaction.transaction;
+    }
+
+    @Override
+    protected Predicate<TransactionDTO> getSaveAuthorisationPredicate() {
+        return (obj) -> permissionManager.isAuthorized(obj.getId(), OperationType.EDT);
+    }
+
+    @Override
+    protected Predicate<Transaction> getGetAuthorisationPredicate() {
+        return (obj) -> permissionManager.isAuthorized(obj, OperationType.RDM);
     }
 
     @Override

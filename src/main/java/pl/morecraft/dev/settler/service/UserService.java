@@ -38,6 +38,7 @@ import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Predicate;
 import java.util.function.UnaryOperator;
 
 @Service
@@ -107,6 +108,16 @@ public class UserService extends AbstractService<User, UserDTO, UserListDTO, Use
     @Override
     protected QUser getEQ() {
         return QUser.user;
+    }
+
+    @Override
+    protected Predicate<UserDTO> getSaveAuthorisationPredicate() {
+        return (obj) -> permissionManager.isAuthorized(obj.getId(), OperationType.EDT);
+    }
+
+    @Override
+    protected Predicate<User> getGetAuthorisationPredicate() {
+        return (obj) -> permissionManager.isAuthorized(obj, OperationType.RDM);
     }
 
     @Override
