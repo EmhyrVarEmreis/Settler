@@ -87,7 +87,7 @@
             $httpProvider.interceptors.push('authInterceptor');
         })
 
-        .run(function($rootScope, $state, Auth, Principal, $window) {
+        .run(function($rootScope, $state, Auth, Principal) {
             $rootScope.$on('$stateChangeStart', function(event, toState, toStateParams) {
                 $rootScope.toState = toState;
                 $rootScope.toStateParams = toStateParams;
@@ -109,17 +109,6 @@
                 } else {
                     $state.go($rootScope.previousStateName, $rootScope.previousStateParams);
                 }
-            };
-
-            $window.fbAsyncInit = function() {
-                FB.init({
-                    appId:   '413655548988654',
-                    status:  false,
-                    cookie:  true,
-                    xfbml:   true,
-                    version: 'v2.4'
-                });
-
             };
 
         });
