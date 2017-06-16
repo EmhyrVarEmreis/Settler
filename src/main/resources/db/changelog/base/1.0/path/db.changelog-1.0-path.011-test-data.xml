@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="1.0-path-011-test-data" author="settler" context="dev">
+
+        <sql>
+            INSERT INTO dev_settler.mod_category_object (
+                category_id,
+                object_id
+            ) SELECT
+                  (SELECT id
+                   FROM dev_settler.mod_category
+                   WHERE code = 'FNC')                  AS category_id,
+                  (SELECT id
+                   FROM dev_settler.mod_transaction
+                   WHERE reference = 'TRA151113150000') AS object_ud;
+            INSERT INTO dev_settler.mod_category_object (
+                category_id,
+                object_id
+            ) SELECT
+                  (SELECT id
+                   FROM dev_settler.mod_category
+                   WHERE code = 'FNC')                  AS category_id,
+                  (SELECT id
+                   FROM dev_settler.mod_transaction
+                   WHERE reference = 'TRA151112121212') AS object_ud;
+            INSERT INTO dev_settler.mod_category_object (
+                category_id,
+                object_id
+            ) SELECT
+                  (SELECT id
+                   FROM dev_settler.mod_category
+                   WHERE code = 'BLS')                  AS category_id,
+                  (SELECT id
+                   FROM dev_settler.mod_transaction
+                   WHERE reference = 'TRA151112121212') AS object_ud;
+            UPDATE dev_settler.mod_transaction t
+            SET t.description = CONCAT('Description ', t.reference), t.evaluated = NOW();
+        </sql>
+
+    </changeSet>
+
+</databaseChangeLog>
