@@ -32,6 +32,18 @@ public class CommentController {
             method = {RequestMethod.PUT, RequestMethod.POST},
             produces = MediaType.APPLICATION_JSON_VALUE
     )
+/*    public ResponseEntity<List<CommentDTO>> editCommentByObjectId(
+            @RequestBody CommentDTO commentDTO
+            ){
+
+//        commentService.update(commentDTO); // TODO - kwestia do podpytania się, czy funkcja save nie robi tego automatycznie :)
+    }*//*
+
+    @RequestMapping(
+            value = "",
+            method = {RequestMethod.PUT, RequestMethod.POST},
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )*/
     public ResponseEntity<CommentDTO> putByObjectId(
             @RequestBody CommentDTO commentDTO
     ) {

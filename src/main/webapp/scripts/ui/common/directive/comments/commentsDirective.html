@@ -4,6 +4,9 @@
             <div class="col-sm-12">
                 {{comment.value}} <span class="small"><em>by <strong>{{comment.owner.login}}</strong> on {{comment.created}}&emsp;</em></span>
                 <button type="button"
+                        class="btn btn-xs btn-secondary glyphicon glyphicon-pencil"
+                        ng-click="openEditCommentModal(comment.id)"/>
+                <button type="button"
                         class="btn btn-xs btn-secondary"
                         ng-click="openDeleteCommentModal(comment.id)">X</button>
                 <div>
@@ -23,6 +26,7 @@
 <div class="panel panel-primary">
 
     <div class="panel-heading" style="cursor: pointer;" ng-click="loadComments()">
+        <!--TODO - Tutaj pewnie mozna issue związany z brakiem rozsuwania się okna komentarzy -> nie wolno zmieniać ng-click na ng-model bez uprzedniego przerobienia controllera-->
         Komentarze (kliknij tutaj, aby {{comments ? 'odświeżyć' : ' wczytać'}})
     </div>
 
