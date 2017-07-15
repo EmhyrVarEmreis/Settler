@@ -3,6 +3,7 @@ package pl.morecraft.dev.settler.domain;
 import org.hibernate.envers.NotAudited;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.List;
@@ -13,7 +14,7 @@ public class Role extends PrivilegeObject {
 
     private String name;
 
-    @OneToMany(mappedBy = "role")
+    @OneToMany(mappedBy = "role", fetch = FetchType.LAZY)
     @NotAudited
     private List<RoleAssignment> roleAssignments;
 
