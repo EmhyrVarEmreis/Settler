@@ -1,0 +1,32 @@
+<div class="modal-header">
+    <h3 class="modal-title" id="modal-title">Nadaj rolę</h3>
+</div>
+<div class="modal-body" id="modal-body">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="row">
+                <div class="col-sm-12 form-group">
+                    <label>Treść</label>
+
+                    <textarea class="form-control input-sm"
+                              placeholder="Komentarz"
+                              name="description"
+                              ng-maxlength="512"
+                              ng-model="$ctrl.selected"
+                              rows="6"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-raised btn-primary"
+            type="button"
+            ng-disabled="!$ctrl.selected"
+            ng-click="$ctrl.ok()">Dodaj
+    </button>
+    <button class="btn btn-raised btn-warning"
+            type="button"
+            ng-click="$ctrl.cancel()">Anuluj
+    </button>
+</div>

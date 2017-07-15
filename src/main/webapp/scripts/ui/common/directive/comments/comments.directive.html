@@ -5,11 +5,12 @@
                 {{comment.value}} <span class="small"><em>by <strong>{{comment.owner.login}}</strong> on {{comment.created}}&emsp;</em></span>
                 <button type="button"
                         class="btn btn-xs btn-secondary"
-                        ng-click="openDeleteCommentModal(comment.id)">X</button>
+                        ng-click="openDeleteModal(comment.id)">X
+                </button>
                 <div>
                     <button type="button"
                             class="btn btn-xs btn-primary"
-                            ng-click="openAddCommentModal(comment.id)">Odpowiedz
+                            ng-click="openAddModal(comment.id)">Odpowiedz
                     </button>
                 </div>
             </div>
@@ -22,7 +23,7 @@
 
 <div class="panel panel-primary">
 
-    <div class="panel-heading" style="cursor: pointer;" ng-click="loadComments()">
+    <div class="panel-heading" style="cursor: pointer;" ng-click="load()">
         Komentarze (kliknij tutaj, aby {{comments ? 'odświeżyć' : ' wczytać'}})
     </div>
 
@@ -37,7 +38,7 @@
             <div class="col-sm-12">
                 <button type="button"
                         class="btn btn-xs btn-raised btn-primary"
-                        ng-click="openAddCommentModal(comment.parentComment)">Dodaj komentarz
+                        ng-click="openAddModal(comment.parentComment)">Dodaj komentarz
                 </button>
             </div>
         </div>

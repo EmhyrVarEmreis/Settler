@@ -1,16 +1,14 @@
-(function() {
-    'use strict';
-
-    angular.module('settlerApplication').controller('TransactionDetailsCtrl', function($scope,
-                                                                                       NgTableParams,
-                                                                                       transactionDetailsFactory,
-                                                                                       $state,
-                                                                                       $stateParams,
-                                                                                       modalService,
-                                                                                       avatarService,
-                                                                                       userAvatarFactory,
-                                                                                       $uibModal,
-                                                                                       Principal) {
+(function () {
+    angular.module('settlerApplication').controller('TransactionDetailsCtrl', function ($scope,
+                                                                                        $state,
+                                                                                        $stateParams,
+                                                                                        $uibModal,
+                                                                                        Principal,
+                                                                                        NgTableParams,
+                                                                                        transactionDetailsFactory,
+                                                                                        userAvatarFactory,
+                                                                                        modalService,
+                                                                                        avatarService) {
 
         $scope.data = {
             owners:      [],
@@ -19,15 +17,15 @@
 
         $scope.avatars = {};
 
-        Principal.identity().then(function(account) {
+        Principal.identity().then(function (account) {
             $scope.currentUser = account;
         });
 
-        $scope.getAvatar = function(userId) {
+        $scope.getAvatar = function (userId) {
             return avatarService.getAvatarByUserId(userId);
         };
 
-        $scope.isNew = function() {
+        $scope.isNew = function () {
             return $stateParams.state === 'new';
         };
 
@@ -36,21 +34,21 @@
                 {
                     id: $stateParams.state
                 },
-                function(data) {
+                function (data) {
                     $scope.data = data;
-                }, function(err) {
+                }, function (err) {
                     modalService.createErrorDialogFromResponse(err);
                 }
             );
         }
 
-        $scope.save = function() {
+        $scope.save = function () {
             if ($scope.isFormValid()
                 && $scope.isRedistributionListComplete($scope.data.owners)
                 && $scope.isRedistributionListComplete($scope.data.contractors)) {
                 transactionDetailsFactory.save(
                     $scope.data,
-                    function(data) {
+                    function (data) {
                         $scope.data = data;
                         $stateParams.state = $scope.data.id;
                         $state.go(
@@ -64,25 +62,25 @@
                                 notify:   false
                             }
                         );
-                    }, function(err) {
+                    }, function (err) {
                         modalService.createErrorDialogFromResponse(err);
                     }
                 );
             }
         };
 
-        $scope.isFormValid = function() {
+        $scope.isFormValid = function () {
             return !$scope.transactionDetailsForm.$invalid
                 && !(!$scope.data.owners || $scope.data.owners.length < 1)
                 && !(!$scope.data.categories || $scope.data.categories.length < 1)
                 && !(!$scope.data.contractors || $scope.data.contractors.length < 1);
         };
 
-        $scope.parseFloatOwn = function(s) {
+        $scope.parseFloatOwn = function (s) {
             return parseFloat(s.toString().replace(/,/, '.'));
         };
 
-        $scope.getPercentString = function(t, r) {
+        $scope.getPercentString = function (t, r) {
             if (!r.percentage || !t.value) {
                 return parseFloat('0').toFixed(2);
             } else {
@@ -90,7 +88,7 @@
             }
         };
 
-        $scope.getValueString = function(t, r) {
+        $scope.getValueString = function (t, r) {
             if (!r.percentage || !t.value) {
                 return parseFloat('0').toFixed(2);
             } else {
@@ -98,34 +96,34 @@
             }
         };
 
-        $scope.openAddRedistributionModal = function(redistributionList) {
+        $scope.openAddRedistributionModal = function (redistributionList) {
             var modalInstance = $uibModal.open({
                 animation:    true,
                 templateUrl:  'scripts/ui/content/transaction/details/addRedistribution/addRedistribution.html',
                 controller:   'AddRedistributionCtrl',
                 controllerAs: '$ctrl',
                 resolve:      {
-                    redistributionList: function() {
+                    redistributionList: function () {
                         return redistributionList;
                     },
-                    totalValue:         function() {
+                    totalValue:         function () {
                         return $scope.data.value;
                     }
                 }
             });
 
-            modalInstance.result.then(function(item) {
+            modalInstance.result.then(function (item) {
                 redistributionList.push(
                     {
                         percentage: item.percentage,
                         user:       item.user
                     }
                 );
-            }, function() {
+            }, function () {
             });
         };
 
-        $scope.openAddCategoryModal = function() {
+        $scope.openAddCategoryModal = function () {
             var modalInstance = $uibModal.open({
                 animation:    true,
                 templateUrl:  'scripts/ui/content/transaction/details/addCategory/addCategory.html',
@@ -133,7 +131,7 @@
                 controllerAs: '$ctrl'
             });
 
-            modalInstance.result.then(function(item) {
+            modalInstance.result.then(function (item) {
                 if (!$scope.data.categories) {
                     $scope.data.categories = [];
                 }
@@ -143,11 +141,11 @@
                     }
                 }
                 $scope.data.categories.push(item);
-            }, function() {
+            }, function () {
             });
         };
 
-        $scope.addLoggedUserToRedistribution = function(list, percentage) {
+        $scope.addLoggedUserToRedistribution = function (list, percentage) {
             list.push(
                 {
                     percentage: percentage,
@@ -156,7 +154,7 @@
             );
         };
 
-        $scope.isRedistributionListComplete = function(list) {
+        $scope.isRedistributionListComplete = function (list) {
             var sum = 0;
             for (var i = 0; i < list.length; i++) {
                 sum += list[i].percentage;
@@ -165,5 +163,7 @@
         };
 
     });
+
+    'use strict';
 
 })();

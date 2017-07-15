@@ -1,0 +1,62 @@
+<div class="panel panel-primary">
+
+    <div class="panel-heading" style="cursor: pointer;" ng-click="load()">
+        Role przypisane do tego obiektu (kliknij tutaj, aby {{roleAssignments ? 'odświeżyć' : ' wczytać'}})
+    </div>
+
+    <div class="panel-body" ng-show="roleAssignments">
+        <div class="row" ng-show="comments && comments.length == 0">
+            <div class="col-sm-12">
+                <em>Brak przypisanych ról</em>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <table width="100%">
+                    <thead>
+                    <tr>
+                        <td width="50%">
+                            <strong>Użytkownik</strong>
+                        </td>
+                        <td width="45%">
+                            <strong>Rola</strong>
+                        </td>
+                        <td width="5%" class="text-center">
+                            <strong>Akcja</strong>
+                        </td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="ra in roleAssignments">
+                        <td>
+                            {{ra.user}}
+                        </td>
+                        <td>
+                            {{ra.roleName}}
+                        </td>
+                        <td>
+                            <button type="button"
+                                    style="margin-top: 4px; width: 100%;"
+                                    class="btn btn-raised btn-danger btn-xs"
+                                    ng-disabled="true"
+                                    ng-click="openDeleteModal(ra)">
+                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <button type="button"
+                        class="btn btn-xs btn-raised btn-primary"
+                        ng-disabled="true"
+                        ng-click="openAddModal(comment.parentComment)">Nadaj rolę
+                </button>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -8,12 +8,12 @@
                     id: "="
                 },
                 restrict:    'E',
-                templateUrl: 'scripts/ui/common/directive/comments/commentsDirective.html',
+                templateUrl: 'scripts/ui/common/directive/comments/comments.directive.html',
                 link:        function($scope) {
 
                     $scope.comments = null;
 
-                    $scope.loadComments = function() {
+                    $scope.load = function () {
                         commentFactory.query({
                             id: $scope.id
                         }).$promise.then(function(data) {
@@ -36,10 +36,10 @@
                         });
                     };
 
-                    $scope.openAddCommentModal = function(parentComment) {
+                    $scope.openAddModal = function (parentComment) {
                         var modalInstance = $uibModal.open({
                             animation:    true,
-                            templateUrl:  'scripts/ui/common/directive/comments/addComment/addComment.html',
+                            templateUrl:  'scripts/ui/common/directive/comments/add/addComment.html',
                             controller:   'AddCommentCtrl',
                             controllerAs: '$ctrl'
                         });
@@ -52,7 +52,7 @@
                                     value:         item
                                 },
                                 function() {
-                                    $scope.loadComments();
+                                    $scope.load();
                                 }, function(err) {
                                     console.log(err);
                                 }
@@ -61,10 +61,10 @@
                         });
                     };
 
-                    $scope.openDeleteCommentModal = function (comment) {
+                    $scope.openDeleteModal = function (comment) {
                         var modalInstance = $uibModal.open({
                             animation:    true,
-                            templateUrl:  'scripts/ui/common/directive/comments/deleteComment/deleteComment.html',
+                            templateUrl:  'scripts/ui/common/directive/comments/delete/deleteComment.html',
                             controller:   'DeleteCommentCtrl',
                             controllerAs: '$ctrl'
                         });
@@ -75,7 +75,7 @@
                                     id: comment
                                 },
                                 function() {
-                                    $scope.loadComments();
+                                    $scope.load();
                                 }, function(err) {
                                     console.log(err);
                                 }
