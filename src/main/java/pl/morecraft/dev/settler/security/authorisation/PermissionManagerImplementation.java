@@ -13,6 +13,7 @@ import pl.morecraft.dev.settler.security.util.Security;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 import static pl.morecraft.dev.settler.domain.jtb.QJTBObjectHierarchy.jTBObjectHierarchy;
 import static pl.morecraft.dev.settler.domain.jtb.QJTBObjectPrivilege.jTBObjectPrivilege;
@@ -20,6 +21,7 @@ import static pl.morecraft.dev.settler.domain.jtb.QJTBObjectPrivilege.jTBObjectP
 @Service
 public class PermissionManagerImplementation implements PermissionManager {
 
+    @PersistenceContext
     private final EntityManager entityManager;
 
     @Inject
