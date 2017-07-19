@@ -1,7 +1,6 @@
 package pl.morecraft.dev.settler.web;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -29,11 +28,10 @@ import java.util.Collections;
 /**
  * REST controller for managing the current user's account.
  */
+@Slf4j
 @RestController
 @RequestMapping("/api")
-public class AccountResource {
-
-    private final Logger log = LoggerFactory.getLogger(AccountResource.class);
+public class AccountController {
 
     private final AuthenticationManager authenticationManager;
     private final UserDetailsServiceInternal userDetailsService;
@@ -41,7 +39,7 @@ public class AccountResource {
     private final PermissionService permissionService;
 
     @Autowired
-    public AccountResource(AuthenticationManager authenticationManager, UserDetailsServiceInternal userDetailsService, TokenProvider tokenProvider, PermissionService permissionService) {
+    public AccountController(AuthenticationManager authenticationManager, UserDetailsServiceInternal userDetailsService, TokenProvider tokenProvider, PermissionService permissionService) {
         this.authenticationManager = authenticationManager;
         this.userDetailsService = userDetailsService;
         this.tokenProvider = tokenProvider;
@@ -53,15 +51,24 @@ public class AccountResource {
             produces = MediaType.APPLICATION_JSON_VALUE)
     public UserDTO getAccount() {
         User user = Security.currentUser();
-        return new UserDTO(
-                user.getId(),
-                user.getLogin(),
-                null,
-                user.getFirstName(),
-                user.getLastName(),
-                user.getEmail(),
-                permissionService.getShortSummary(),
-                Collections.emptyList()
+        return permissionService.updateUserDTO(
+                new UserDTO(
+                        user.getId(),
+                        user.getLogin(),
+                        null,
+                        user.getFirstName(),
+                        user.getLastName(),
+                        user.getEmail(),
+                        user.getCreated(),
+                        user.getPasswordExpireDate(),
+                        user.getAccountExpireDate(),
+                        user.getStatus().getCode(),
+                        user.getAvatarId(),
+                        permissionService.getShortSummary(),
+                        Collections.emptyList(),
+                        false,
+                        false
+                )
         );
     }
 
