@@ -100,7 +100,7 @@ public class TransactionService extends AbstractService<Transaction, Transaction
     @Override
     protected Predicate<TransactionDTO> getSaveAuthorisationPredicate() {
         // FIXME Workaround with Objects.isNull - Needs to be fixed
-        return (obj) -> Objects.isNull(obj) || permissionManager.isAuthorized(obj.getId(), OperationType.EDT);
+        return (obj) -> Objects.isNull(obj.getId()) || permissionManager.isAuthorized(obj.getId(), OperationType.EDT);
     }
 
     @Override
