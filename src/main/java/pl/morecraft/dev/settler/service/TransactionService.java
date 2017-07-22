@@ -28,6 +28,7 @@ import javax.persistence.EntityManager;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Predicate;
 import java.util.function.UnaryOperator;
 
@@ -98,7 +99,8 @@ public class TransactionService extends AbstractService<Transaction, Transaction
 
     @Override
     protected Predicate<TransactionDTO> getSaveAuthorisationPredicate() {
-        return (obj) -> permissionManager.isAuthorized(obj.getId(), OperationType.EDT);
+        // FIXME Workaround with Objects.isNull - Needs to be fixed
+        return (obj) -> Objects.isNull(obj) || permissionManager.isAuthorized(obj.getId(), OperationType.EDT);
     }
 
     @Override
