@@ -43,7 +43,7 @@ public class PermissionManagerImplementation implements PermissionManager {
     public void authorize(Long sourceId, Long targetId, OperationType operationType) {
         if (!isAuthorized(sourceId, targetId, operationType)) {
             throw new AccessDeniedException(
-                    "Unable to authorize source [" + sourceId + "] to target [" + targetId + "]"
+                    "Unable to authorize source [" + sourceId + "] to target [" + targetId + "] with operationType [" + operationType.getCode() + "]"
             );
         }
     }
