@@ -4,208 +4,184 @@
             <small>Settler</small>
         </h1>
     </div>
-    <div class="panel-last-row">
+    <div class="row text-center">
         <div class="col-sm-12">
+            <h2>Należności</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
             <div class="row text-center">
                 <div class="col-sm-12">
-                    <h2>Należności</h2>
+                    <h3>Od innych</h3>
                 </div>
             </div>
-            <div class="col-sm-6">
-                <div class="row">
-                    <div class="row text-center">
-                        <div class="col-sm-12">
-                            <h3>Od innych</h3>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <div class="row text-center" ng-show="charges.to.list && charges.to.list.length === 0">
-                                <div class="col-sm-12">
-                                    <em>Niestety brak</em>
-                                </div>
-                            </div>
-                            <div class="row" ng-show="charges.to.list && charges.to.list.length > 0">
-                                <div class="col-sm-12">
-                                    <table class="panel-table">
-                                        <thead>
-                                        <tr>
-                                            <td>
-                                                <strong>Użytkownik</strong>
-                                            </td>
-                                            <td>
-                                                <strong>Wartość</strong>
-                                            </td>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr ng-repeat="row in charges.to.list track by $index">
-                                            <td>
-                                                {{row.userFrom}}
-                                            </td>
-                                            <td>
-                                                {{row.charge | number:2 | myCurrency:'PLN'}}
-                                            </td>
-                                        </tr>
-                                        <tr ng-show="charges.to.list && charges.to.list.length > 1">
-                                            <td>
-                                                <strong>Suma</strong>
-                                            </td>
-                                            <td>
-                                                <strong>{{charges.to.sum | number:2 | myCurrency:'PLN'}}</strong>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            <div class="row text-center" ng-show="charges.to.list && charges.to.list.length === 0">
+                <div class="col-sm-12">
+                    <em>Niestety brak</em>
                 </div>
             </div>
-            <div class="col-sm-6">
-                <div class="row">
-                    <div class="row text-center">
-                        <div class="col-sm-12">
-                            <h3>Komu płacę</h3>
-                        </div>
-                    </div>
-                    <div class="col-sm-12">
-                        <div class="row text-center" ng-show="charges.from.list && charges.from.list.length === 0">
-                            <div class="col-sm-12">
-                                <em>Na szczęście brak</em>
-                            </div>
-                        </div>
-                        <div class="row" ng-show="charges.from.list && charges.from.list.length > 0">
-                            <div class="col-sm-12">
-                                <table class="panel-table">
-                                    <thead>
-                                    <tr>
-                                        <td>
-                                            <strong>Użytkownik</strong>
-                                        </td>
-                                        <td>
-                                            <strong>Wartość</strong>
-                                        </td>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr ng-repeat="row in charges.from.list track by $index">
-                                        <td>
-                                            {{row.userTo}}
-                                        </td>
-                                        <td>
-                                            {{row.charge | number:2 | myCurrency:'PLN'}}
-                                        </td>
-                                    </tr>
-                                    <tr ng-show="charges.from.list && charges.from.list.length > 1">
-                                        <td>
-                                            <strong>Suma</strong>
-                                        </td>
-                                        <td>
-                                            <strong>{{charges.from.sum | number:2 | myCurrency:'PLN'}}</strong>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
+            <div class="row" ng-show="charges.to.list && charges.to.list.length > 0">
+                <div class="col-sm-12">
+                    <table class="panel-table">
+                        <thead>
+                        <tr>
+                            <td>
+                                <strong>Użytkownik</strong>
+                            </td>
+                            <td>
+                                <strong>Wartość</strong>
+                            </td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="row in charges.to.list track by $index">
+                            <td>
+                                {{row.userFrom}}
+                            </td>
+                            <td>
+                                {{row.charge | number:2 | myCurrency:'PLN'}}
+                            </td>
+                        </tr>
+                        <tr ng-show="charges.to.list && charges.to.list.length > 1">
+                            <td>
+                                <strong>Suma</strong>
+                            </td>
+                            <td>
+                                <strong>{{charges.to.sum | number:2 | myCurrency:'PLN'}}</strong>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="row text-center">
+                <div class="col-sm-12">
+                    <h3>Komu płacę</h3>
+                </div>
+            </div>
+            <div class="row text-center" ng-show="charges.from.list && charges.from.list.length === 0">
+                <div class="col-sm-12">
+                    <em>Na szczęście brak</em>
+                </div>
+            </div>
+            <div class="row" ng-show="charges.from.list && charges.from.list.length > 0">
+                <div class="col-sm-12">
+                    <table class="panel-table">
+                        <thead>
+                        <tr>
+                            <td>
+                                <strong>Użytkownik</strong>
+                            </td>
+                            <td>
+                                <strong>Wartość</strong>
+                            </td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="row in charges.from.list track by $index">
+                            <td>
+                                {{row.userTo}}
+                            </td>
+                            <td>
+                                {{row.charge | number:2 | myCurrency:'PLN'}}
+                            </td>
+                        </tr>
+                        <tr ng-show="charges.from.list && charges.from.list.length > 1">
+                            <td>
+                                <strong>Suma</strong>
+                            </td>
+                            <td>
+                                <strong>{{charges.from.sum | number:2 | myCurrency:'PLN'}}</strong>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
-    <div class="panel-last-row">
+    <div class="row text-center">
         <div class="col-sm-12">
+            <h2>Statystyki</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
             <div class="row text-center">
                 <div class="col-sm-12">
-                    <h2>Statystyki</h2>
+                    <h3>wg. kategorii</h3>
                 </div>
             </div>
-            <div class="col-sm-6">
-                <div class="row">
-                    <div class="row text-center">
-                        <div class="col-sm-12">
-                            <h3>wg. kategorii</h3>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <div class="row text-center" ng-show="categoriesWithValue && categoriesWithValue.length === 0">
-                                <div class="col-sm-12">
-                                    <em>Brak statystyk</em>
-                                </div>
-                            </div>
-                            <div class="row" ng-show="categoriesWithValue && categoriesWithValue.length > 0">
-                                <div class="col-sm-12">
-                                    <table class="panel-table">
-                                        <thead>
-                                        <tr>
-                                            <td>
-                                                <strong>Kategoria</strong>
-                                            </td>
-                                            <td>
-                                                <strong>Suma</strong>
-                                            </td>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr ng-repeat="category in categoriesWithValue">
-                                            <td>
-                                                {{category.category.code}}
-                                            </td>
-                                            <td>
-                                                {{category.value | number:2 | myCurrency:'PLN'}}
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            <div class="row text-center" ng-show="categoriesWithValue && categoriesWithValue.length === 0">
+                <div class="col-sm-12">
+                    <em>Brak statystyk</em>
                 </div>
             </div>
-            <div class="col-sm-6">
-                <div class="row">
-                    <div class="row text-center">
-                        <div class="col-sm-12">
-                            <h3>wg. użytkowników</h3>
-                        </div>
-                    </div>
-                    <div class="col-sm-12">
-                        <div class="row text-center" ng-show="usersWithValue && usersWithValue.length === 0">
-                            <div class="col-sm-12">
-                                <em>Brak statystyk</em>
-                            </div>
-                        </div>
-                        <div class="row" ng-show="usersWithValue && usersWithValue.length > 0">
-                            <div class="col-sm-12">
-                                <table class="panel-table">
-                                    <thead>
-                                    <tr>
-                                        <td>
-                                            <strong>Użytkownik</strong>
-                                        </td>
-                                        <td>
-                                            <strong>Suma</strong>
-                                        </td>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr ng-repeat="user in usersWithValue">
-                                        <td>
-                                            {{user.user}}
-                                        </td>
-                                        <td>
-                                            {{user.value | number:2 | myCurrency:'PLN'}}
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
+            <div class="row" ng-show="categoriesWithValue && categoriesWithValue.length > 0">
+                <div class="col-sm-12">
+                    <table class="panel-table">
+                        <thead>
+                        <tr>
+                            <td>
+                                <strong>Kategoria</strong>
+                            </td>
+                            <td>
+                                <strong>Suma</strong>
+                            </td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="category in categoriesWithValue">
+                            <td>
+                                {{category.category.code}}
+                            </td>
+                            <td>
+                                {{category.value | number:2 | myCurrency:'PLN'}}
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="row text-center">
+                <div class="col-sm-12">
+                    <h3>wg. kategorii</h3>
+                </div>
+            </div>
+            <div class="row text-center" ng-show="usersWithValue && usersWithValue.length === 0">
+                <div class="col-sm-12">
+                    <em>Brak statystyk</em>
+                </div>
+            </div>
+            <div class="row" ng-show="usersWithValue && usersWithValue.length > 0">
+                <div class="col-sm-12">
+                    <table class="panel-table">
+                        <thead>
+                        <tr>
+                            <td>
+                                <strong>Użytkownik</strong>
+                            </td>
+                            <td>
+                                <strong>Suma</strong>
+                            </td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="user in usersWithValue">
+                            <td>
+                                {{user.user}}
+                            </td>
+                            <td>
+                                {{user.value | number:2 | myCurrency:'PLN'}}
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
