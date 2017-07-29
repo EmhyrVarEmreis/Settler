@@ -2,6 +2,7 @@
     angular.module('settlerApplication').controller('TransactionDetailsCtrl', function ($scope,
                                                                                         $state,
                                                                                         $stateParams,
+                                                                                        $filter,
                                                                                         $uibModal,
                                                                                         Principal,
                                                                                         NgTableParams,
@@ -90,10 +91,14 @@
 
         $scope.getValueString = function (t, r) {
             if (!r.percentage || !t.value) {
-                return parseFloat('0').toFixed(2);
+                return $scope.formatNumber(parseFloat('0'));
             } else {
-                return ($scope.parseFloatOwn(r.percentage) * $scope.parseFloatOwn(t.value) / 100).toFixed(2);
+                return $scope.formatNumber($scope.parseFloatOwn(r.percentage) * $scope.parseFloatOwn(t.value) / 100);
             }
+        };
+
+        $scope.formatNumber = function (num) {
+            return $filter('number')(num, 2);
         };
 
         $scope.openAddRedistributionModal = function (redistributionList) {

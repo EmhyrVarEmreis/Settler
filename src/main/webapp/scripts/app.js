@@ -104,7 +104,7 @@
             $httpProvider.interceptors.push('authInterceptor');
         })
 
-        .run(function($rootScope, $state, Auth, Principal) {
+        .run(function($rootScope, $state, Auth, Principal, $locale) {
             $rootScope.$on('$stateChangeStart', function(event, toState, toStateParams) {
                 $rootScope.toState = toState;
                 $rootScope.toStateParams = toStateParams;
@@ -128,6 +128,7 @@
                 }
             };
 
+            $locale.NUMBER_FORMATS.GROUP_SEP = ' ';
         });
 })();
 

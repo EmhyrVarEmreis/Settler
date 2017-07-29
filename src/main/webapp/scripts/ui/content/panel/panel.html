@@ -27,13 +27,13 @@
                             </div>
                             <div class="row" ng-show="charges.to.list && charges.to.list.length > 0">
                                 <div class="col-sm-12">
-                                    <table width="100%">
+                                    <table class="panel-table">
                                         <thead>
                                         <tr>
-                                            <td width="80%">
+                                            <td>
                                                 <strong>Użytkownik</strong>
                                             </td>
-                                            <td width="20%">
+                                            <td>
                                                 <strong>Wartość</strong>
                                             </td>
                                         </tr>
@@ -44,7 +44,7 @@
                                                 {{row.userFrom}}
                                             </td>
                                             <td>
-                                                {{row.charge | setDecimal:2 | myCurrency:'PLN'}}
+                                                {{row.charge | number:2 | myCurrency:'PLN'}}
                                             </td>
                                         </tr>
                                         <tr ng-show="charges.to.list && charges.to.list.length > 1">
@@ -52,7 +52,7 @@
                                                 <strong>Suma</strong>
                                             </td>
                                             <td>
-                                                <strong>{{charges.to.sum | setDecimal:2 | myCurrency:'PLN'}}</strong>
+                                                <strong>{{charges.to.sum | number:2 | myCurrency:'PLN'}}</strong>
                                             </td>
                                         </tr>
                                         </tbody>
@@ -78,13 +78,13 @@
                         </div>
                         <div class="row" ng-show="charges.from.list && charges.from.list.length > 0">
                             <div class="col-sm-12">
-                                <table width="100%">
+                                <table class="panel-table">
                                     <thead>
                                     <tr>
-                                        <td width="80%">
+                                        <td>
                                             <strong>Użytkownik</strong>
                                         </td>
-                                        <td width="20%">
+                                        <td>
                                             <strong>Wartość</strong>
                                         </td>
                                     </tr>
@@ -95,7 +95,7 @@
                                             {{row.userTo}}
                                         </td>
                                         <td>
-                                            {{row.charge | setDecimal:2 | myCurrency:'PLN'}}
+                                            {{row.charge | number:2 | myCurrency:'PLN'}}
                                         </td>
                                     </tr>
                                     <tr ng-show="charges.from.list && charges.from.list.length > 1">
@@ -103,7 +103,7 @@
                                             <strong>Suma</strong>
                                         </td>
                                         <td>
-                                            <strong>{{charges.from.sum | setDecimal:2 | myCurrency:'PLN'}}</strong>
+                                            <strong>{{charges.from.sum | number:2 | myCurrency:'PLN'}}</strong>
                                         </td>
                                     </tr>
                                     </tbody>
@@ -131,21 +131,20 @@
                     </div>
                     <div class="row">
                         <div class="col-sm-12">
-                            <div class="row text-center"
-                                 ng-show="categoriesWithValue && categoriesWithValue.length === 0">
+                            <div class="row text-center" ng-show="categoriesWithValue && categoriesWithValue.length === 0">
                                 <div class="col-sm-12">
                                     <em>Brak statystyk</em>
                                 </div>
                             </div>
                             <div class="row" ng-show="categoriesWithValue && categoriesWithValue.length > 0">
                                 <div class="col-sm-12">
-                                    <table width="100%">
+                                    <table class="panel-table">
                                         <thead>
                                         <tr>
-                                            <td width="80%">
+                                            <td>
                                                 <strong>Kategoria</strong>
                                             </td>
-                                            <td width="20%">
+                                            <td>
                                                 <strong>Suma</strong>
                                             </td>
                                         </tr>
@@ -156,7 +155,7 @@
                                                 {{category.category.code}}
                                             </td>
                                             <td>
-                                                {{category.value | setDecimal:2 | myCurrency:'PLN'}}
+                                                {{category.value | number:2 | myCurrency:'PLN'}}
                                             </td>
                                         </tr>
                                         </tbody>
@@ -174,38 +173,36 @@
                             <h3>wg. użytkowników</h3>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <div class="row text-center" ng-show="usersWithValue && usersWithValue.length === 0">
-                                <div class="col-sm-12">
-                                    <em>Brak statystyk</em>
-                                </div>
+                    <div class="col-sm-12">
+                        <div class="row text-center" ng-show="usersWithValue && usersWithValue.length === 0">
+                            <div class="col-sm-12">
+                                <em>Brak statystyk</em>
                             </div>
-                            <div class="row" ng-show="usersWithValue && usersWithValue.length > 0">
-                                <div class="col-sm-12">
-                                    <table width="100%">
-                                        <thead>
-                                        <tr>
-                                            <td width="80%">
-                                                <strong>Użytkownik</strong>
-                                            </td>
-                                            <td width="20%">
-                                                <strong>Suma</strong>
-                                            </td>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr ng-repeat="user in usersWithValue">
-                                            <td>
-                                                {{user.user}}
-                                            </td>
-                                            <td>
-                                                {{user.value | setDecimal:2 | myCurrency:'PLN'}}
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
+                        </div>
+                        <div class="row" ng-show="usersWithValue && usersWithValue.length > 0">
+                            <div class="col-sm-12">
+                                <table class="panel-table">
+                                    <thead>
+                                    <tr>
+                                        <td>
+                                            <strong>Użytkownik</strong>
+                                        </td>
+                                        <td>
+                                            <strong>Suma</strong>
+                                        </td>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="user in usersWithValue">
+                                        <td>
+                                            {{user.user}}
+                                        </td>
+                                        <td>
+                                            {{user.value | number:2 | myCurrency:'PLN'}}
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
