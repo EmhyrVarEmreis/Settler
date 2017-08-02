@@ -25,4 +25,8 @@ public interface PermissionManager {
 
     BooleanExpression objectFilter(PrivilegeObject source, QPrivilegeObject target, OperationType operationType);
 
+    boolean isGlobalAdmin(Long userId);
+
+    void authorizeGlobalAdmin();
+
 }

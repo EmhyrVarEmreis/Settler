@@ -5,15 +5,23 @@
                                                                           totalChargeUserToFactory,
                                                                           totalChargeUserFromFactory,
                                                                           categoryWithValueFactory,
-                                                                          userWithValueFactory) {
+                                                                          userWithValueFactory,
+                                                                          Principal) {
 
         $scope.charges = {
             to:   {},
             from: {}
         };
 
-        $scope.categoriesWithValue = categoryWithValueFactory.query();
-        $scope.usersWithValue = userWithValueFactory.query();
+        $scope.showStatistics = false;
+
+        Principal.identity().then(function(account) {
+            if(account.globalAdmin) {
+                $scope.categoriesWithValue = categoryWithValueFactory.query();
+                $scope.usersWithValue = userWithValueFactory.query();
+                $scope.showStatistics = true;
+            }
+        });
 
         totalChargeUserToFactory.query({
             id: null

@@ -6,10 +6,10 @@ import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQuery;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
-import pl.morecraft.dev.settler.domain.PrivilegeObject;
-import pl.morecraft.dev.settler.domain.QPrivilegeObject;
+import pl.morecraft.dev.settler.domain.*;
 import pl.morecraft.dev.settler.domain.dictionaries.OperationType;
 import pl.morecraft.dev.settler.security.util.Security;
+import pl.morecraft.dev.settler.web.dto.UserDTO;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -118,6 +118,35 @@ public class PermissionManagerImplementation implements PermissionManager {
                         )
                         .exists()
         );
+    }
+
+    @Override
+    public boolean isGlobalAdmin(Long userId) {
+        QRole qRole = QRole.role;
+        QPrivilege qPrivilege = QPrivilege.privilege;
+        QRoleAssignment qRoleAssignment = QRoleAssignment.roleAssignment;
+        return new JPAQuery<>(entityManager).select(qRole.id)
+                .from(qRole)
+                .leftJoin(qPrivilege).on(qPrivilege.prvOwner.id.eq(qRole.id))
+                .leftJoin(qRoleAssignment).on(qRoleAssignment.role.id.eq(qRole.id))
+                .where(
+                        qPrivilege.operationType.eq(OperationType.ADM).and(
+                                qRoleAssignment.target.isNull()
+                        ).and(
+                                qRoleAssignment.user.id.eq(userId)
+                        )
+                )
+                .fetchCount() > 0;
+    }
+
+    @Override
+    public void authorizeGlobalAdmin() {
+        final Long userId = Security.currentUser().getId();
+        if (!isGlobalAdmin(userId)) {
+            throw new AccessDeniedException(
+                    "Unable to authorize user [" + userId + "] as global admin"
+            );
+        }
     }
 
 }

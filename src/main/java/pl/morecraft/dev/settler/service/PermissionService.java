@@ -55,18 +55,7 @@ public class PermissionService {
         QRoleAssignment qRoleAssignment = QRoleAssignment.roleAssignment;
         QUser qUser = QUser.user;
         userDTO.setGlobalAdmin(
-                new JPAQuery<>(entityManager).select(qRole.id)
-                        .from(qRole)
-                        .leftJoin(qPrivilege).on(qPrivilege.prvOwner.id.eq(qRole.id))
-                        .leftJoin(qRoleAssignment).on(qRoleAssignment.role.id.eq(qRole.id))
-                        .where(
-                                qPrivilege.operationType.eq(OperationType.ADM).and(
-                                        qRoleAssignment.target.isNull()
-                                ).and(
-                                        qRoleAssignment.user.id.eq(userDTO.getId())
-                                )
-                        )
-                        .fetchCount() > 0
+                permissionManager.isGlobalAdmin(userDTO.getId())
         );
         userDTO.setUserAdmin(
                 new JPAQuery<>(entityManager).select(qRole.id)

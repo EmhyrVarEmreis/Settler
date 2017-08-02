@@ -47,17 +47,15 @@ public class UserService extends AbstractService<User, UserDTO, UserListDTO, Use
 
     private final FileObjectRepository fileObjectRepository;
     private final BasePasswordEncoder passwordEncoder;
-    private final PermissionManager permissionManager;
     private final FacebookService facebookService;
     private final UserRepository userRepository;
     private final EntityManager entityManager;
     private final FileService fileService;
 
     @Autowired
-    public UserService(FileObjectRepository fileObjectRepository, BasePasswordEncoder passwordEncoder, PermissionManager permissionManager, FacebookService facebookService, UserRepository userRepository, EntityManager entityManager, FileService fileService) {
+    public UserService(FileObjectRepository fileObjectRepository, BasePasswordEncoder passwordEncoder, FacebookService facebookService, UserRepository userRepository, EntityManager entityManager, FileService fileService) {
         this.fileObjectRepository = fileObjectRepository;
         this.passwordEncoder = passwordEncoder;
-        this.permissionManager = permissionManager;
         this.facebookService = facebookService;
         this.userRepository = userRepository;
         this.entityManager = entityManager;
@@ -97,7 +95,7 @@ public class UserService extends AbstractService<User, UserDTO, UserListDTO, Use
     protected List<BooleanExpression> getPreFilters(QUser qUser) {
         return CollectionUtils.add(
                 new ArrayList<>(),
-                permissionManager.objectFilter(
+                getPermissionManager().objectFilter(
                         Security.currentUser(),
                         qUser._super,
                         OperationType.RDM
@@ -112,12 +110,12 @@ public class UserService extends AbstractService<User, UserDTO, UserListDTO, Use
 
     @Override
     protected Predicate<UserDTO> getSaveAuthorisationPredicate() {
-        return (obj) -> permissionManager.isAuthorized(obj.getId(), OperationType.EDT);
+        return (obj) -> getPermissionManager().isAuthorized(obj.getId(), OperationType.EDT);
     }
 
     @Override
     protected Predicate<User> getGetAuthorisationPredicate() {
-        return (obj) -> permissionManager.isAuthorized(obj, OperationType.RDM);
+        return (obj) -> getPermissionManager().isAuthorized(obj, OperationType.RDM);
     }
 
     @Override
@@ -258,6 +256,8 @@ public class UserService extends AbstractService<User, UserDTO, UserListDTO, Use
     }
 
     public ResponseEntity<List<UserWithValueDTO>> getUsersWithValue(Long userId) {
+        getPermissionManager().authorizeGlobalAdmin();
+
         if (Objects.isNull(userId) || userId < 0) {
             userId = Security.currentUser().getId();
         }

@@ -103,12 +103,12 @@
             </div>
         </div>
     </div>
-    <div class="row text-center">
+    <div  ng-if="showStatistics" class="row text-center">
         <div class="col-sm-12">
             <h2>Statystyki</h2>
         </div>
     </div>
-    <div class="row">
+    <div  ng-if="showStatistics" class="row">
         <div class="col-sm-6">
             <div class="row text-center">
                 <div class="col-sm-12">
@@ -150,7 +150,7 @@
         <div class="col-sm-6">
             <div class="row text-center">
                 <div class="col-sm-12">
-                    <h3>wg. kategorii</h3>
+                    <h3>wg. użytkowników</h3>
                 </div>
             </div>
             <div class="row text-center" ng-show="usersWithValue && usersWithValue.length === 0">

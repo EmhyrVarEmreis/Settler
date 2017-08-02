@@ -85,6 +85,8 @@ public class CategoryService extends AbstractService<Category, CategoryDTO, Cate
     }
 
     public ResponseEntity<List<CategoryWithValueDTO>> getCategoriesWithValue(Long userId) {
+        getPermissionManager().authorizeGlobalAdmin();
+
         if (Objects.isNull(userId) || userId < 0) {
             userId = Security.currentUser().getId();
         }

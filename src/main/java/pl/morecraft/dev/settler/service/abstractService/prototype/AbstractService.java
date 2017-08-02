@@ -13,6 +13,7 @@ import org.springframework.data.querydsl.QPageRequest;
 import org.springframework.data.querydsl.QueryDslPredicateExecutor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import pl.morecraft.dev.settler.security.authorisation.PermissionManager;
 import pl.morecraft.dev.settler.service.converters.ListPageConverter;
 import pl.morecraft.dev.settler.web.misc.ListPage;
 
@@ -58,6 +59,10 @@ public abstract class AbstractService<
     @SuppressWarnings("SpringAutowiredFieldsWarningInspection")
     @Autowired
     private ListPageConverter listPageConverter;
+
+    @SuppressWarnings("SpringAutowiredFieldsWarningInspection")
+    @Autowired
+    private PermissionManager permissionManager;
 
     private boolean hasId;
 
@@ -235,6 +240,10 @@ public abstract class AbstractService<
 
     protected ModelMapper getModelMapper() {
         return modelMapper;
+    }
+
+    protected PermissionManager getPermissionManager() {
+        return permissionManager;
     }
 
     protected ComparableExpressionBase<?> getComparableExpressionBase(String fieldName, QEntity qObject) throws NoSuchFieldException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {

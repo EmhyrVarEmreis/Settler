@@ -39,15 +39,13 @@ public class TransactionService extends AbstractService<Transaction, Transaction
     private final EmailService emailService;
     private final EntityManager entityManager;
     private final SequenceManager sequenceManager;
-    private final PermissionManager permissionManager;
     private final TransactionRepository transactionRepository;
 
     @Autowired
-    public TransactionService(EmailService emailService, EntityManager entityManager, SequenceManager sequenceManager, PermissionManager permissionManager, TransactionRepository transactionRepository) {
+    public TransactionService(EmailService emailService, EntityManager entityManager, SequenceManager sequenceManager, TransactionRepository transactionRepository) {
         this.emailService = emailService;
         this.entityManager = entityManager;
         this.sequenceManager = sequenceManager;
-        this.permissionManager = permissionManager;
         this.transactionRepository = transactionRepository;
     }
 
@@ -84,7 +82,7 @@ public class TransactionService extends AbstractService<Transaction, Transaction
     protected List<BooleanExpression> getPreFilters(QTransaction qTransaction) {
         return CollectionUtils.add(
                 new ArrayList<>(),
-                permissionManager.objectFilter(
+                getPermissionManager().objectFilter(
                         Security.currentUser(),
                         qTransaction._super,
                         OperationType.RDM
@@ -100,12 +98,12 @@ public class TransactionService extends AbstractService<Transaction, Transaction
     @Override
     protected Predicate<TransactionDTO> getSaveAuthorisationPredicate() {
         // FIXME Workaround with Objects.isNull - Needs to be fixed
-        return (obj) -> Objects.isNull(obj.getId()) || permissionManager.isAuthorized(obj.getId(), OperationType.EDT);
+        return (obj) -> Objects.isNull(obj.getId()) || getPermissionManager().isAuthorized(obj.getId(), OperationType.EDT);
     }
 
     @Override
     protected Predicate<Transaction> getGetAuthorisationPredicate() {
-        return (obj) -> permissionManager.isAuthorized(obj, OperationType.RDM);
+        return (obj) -> getPermissionManager().isAuthorized(obj, OperationType.RDM);
     }
 
     @Override
