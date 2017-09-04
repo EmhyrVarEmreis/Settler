@@ -7,30 +7,32 @@
                     <img class="circular-avatar" width="64"
                          src="/images/transaction.png" alt="avatar"/>
                 </div>
-                <div class="col-sm-12" ng-show="avatarFile">
-                    <div class="progress" ng-click="file = false" role="button">
-                        <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0"
-                             aria-valuemax="100"
-                             ng-style="{'width': avatarFile.progress + '%'}">
-                            {{avatarFile.progress}}%
-                        </div>
-                    </div>
-                </div>
             </div>
-            <div class="col-sm-8 panel-header-avatar-margin transaction-header">
+            <div class="col-sm-6 panel-header-avatar-margin transaction-header">
                 <div>
                     <h2 class="list-group-item-heading">{{isNew() ? 'Nowa ' : ''}}Transakcja
                         <strong>{{data.reference}}</strong></h2>
-                    <h4 class="list-group-item-text">Utworzona: {{isNew() ? '---' : data.created}}
+                    <h5 class="list-group-item-text">Utworzona: {{isNew() ? '---' : data.created}}
                         <small style="display:inline-block;">przez {{data.creator.firstName}} {{data.creator.lastName}}
                             ({{data.creator.login}})
                         </small>
-                    </h4>
+                    </h5>
                 </div>
             </div>
-            <div class="col-sm-2 panel-header-avatar-margin">
+            <div class="col-sm-2 panel-header-avatar-margin" ng-show="data.reference">
                 <button type="button"
-                        class="btn btn-success btn-raised text-center"
+                        class="btn btn-warning btn-raised text-center pull-left"
+                        style="width: 100%;"
+                        ng-click="duplicate()">
+                    <span class="glyphicon glyphicon-copy hidden-lg hidden-md hidden-xs"
+                          aria-hidden="true"></span>
+                    <span class="hidden-sm">Duplikuj</span>
+                </button>
+            </div>
+            <div class="col-sm-2 panel-header-avatar-margin"
+                 ng-class="{'col-sm-2': data.reference, 'col-sm-4': !data.reference}">
+                <button type="button"
+                        class="btn btn-success btn-raised text-center pull-left"
                         style="width: 100%;"
                         ng-click="save()">
                     <span class="glyphicon glyphicon-floppy-disk hidden-lg hidden-md hidden-xs"

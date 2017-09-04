@@ -43,6 +43,27 @@
             );
         }
 
+        $scope.reloadState = function() {
+            $state.go(
+                $state.current,
+                {
+                    state: $stateParams.state
+                },
+                {
+                    location: true,
+                    inherit:  true,
+                    notify:   false
+                }
+            );
+        };
+
+        $scope.duplicate = function() {
+            $stateParams.state = 'new';
+            $scope.data.id = undefined;
+            $scope.data.reference = undefined;
+            $scope.reloadState();
+        };
+
         $scope.save = function () {
             if ($scope.isFormValid()
                 && $scope.isRedistributionListComplete($scope.data.owners)
@@ -52,17 +73,7 @@
                     function (data) {
                         $scope.data = data;
                         $stateParams.state = $scope.data.id;
-                        $state.go(
-                            $state.current,
-                            {
-                                state: $scope.data.id
-                            },
-                            {
-                                location: true,
-                                inherit:  true,
-                                notify:   false
-                            }
-                        );
+                        $scope.reloadState();
                     }, function (err) {
                         modalService.createErrorDialogFromResponse(err);
                     }
