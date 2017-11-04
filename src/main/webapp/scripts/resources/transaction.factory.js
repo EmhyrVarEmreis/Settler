@@ -5,6 +5,10 @@
         return $resource('api/transaction/list');
     });
 
+    angular.module('settlerApplication').factory('transactionViewFactory', function($resource) {
+        return $resource('api/transaction/view');
+    });
+
     angular.module('settlerApplication').factory('transactionDetailsFactory', function($resource) {
         return $resource('api/transaction/details');
     });

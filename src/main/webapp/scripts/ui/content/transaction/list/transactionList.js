@@ -13,7 +13,7 @@
             },
             resolve: {},
             data:    {
-                entity: 'transaction'
+                entity: 'transactionView'
             }
         });
     });

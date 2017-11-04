@@ -58,7 +58,7 @@
                                 var v = {};
                                 for (var key in $scope.columns) {
                                     if ($scope.columns.hasOwnProperty(key)) {
-                                        v[$scope.columns[key].field] = $scope.getField($scope.columns[key].field, data[entry]);
+                                        v[$scope.columns[key].field] = $scope.getPreTransformedData($scope.getField($scope.columns[key].field, data[entry]), $scope.columns[key]);
                                     }
                                 }
                                 $scope.data[entry] = v;
@@ -174,6 +174,14 @@
                     $scope.getTransformedEntry = function(value, column, entry) {
                         if (column.transform) {
                             return column.transform(value, entry);
+                        } else {
+                            return value;
+                        }
+                    };
+
+                    $scope.getPreTransformedData = function(value, column) {
+                        if (column.preTransformData) {
+                            return column.preTransformData(value);
                         } else {
                             return value;
                         }

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="1.0-path-012" author="settler">
+
+        <createView viewName="view_mod_transaction" replaceIfExists="true">
+            SELECT
+                mt.id                                                            AS 'id',
+                CONCAT(pu1.first_name, ' ', pu1.last_name, ' (', pu1.login, ')') AS 'creator',
+                (SELECT GROUP_CONCAT(
+                        CONCAT(
+                                mrpu.first_name, ' ',
+                                mrpu.last_name, ' (',
+                                mrpu.login, ') ',
+                                ROUND(mr.percentage, 0), '%'
+                        ) SEPARATOR
+                        ', '
+                )
+                 FROM mod_redistribution mr
+                     LEFT JOIN prv_user mrpu ON mrpu.id = mr.user
+                 WHERE mr.type = 'O'
+                       AND mr.parent = mt.id
+                 GROUP BY 'all')                                                 AS 'owners',
+                (SELECT GROUP_CONCAT(
+                        CONCAT(
+                                mrpu.first_name, ' ',
+                                mrpu.last_name, ' (',
+                                mrpu.login, ') ',
+                                ROUND(mr.percentage, 0), '%'
+                        ) SEPARATOR
+                        ', '
+                )
+                 FROM mod_redistribution mr
+                     LEFT JOIN prv_user mrpu ON mrpu.id = mr.user
+                 WHERE mr.type = 'C'
+                       AND mr.parent = mt.id
+                 GROUP BY 'all')                                                 AS 'contractors',
+                mt.reference                                                     AS 'reference',
+                mt.value                                                         AS 'value',
+                mt.description                                                   AS 'description',
+                mt.evaluated                                                     AS 'evaluated',
+                (SELECT COUNT(mc.id)
+                 FROM mod_comment mc
+                 WHERE mc.prv_object = mt.id)                                    AS 'comments',
+                (SELECT GROUP_CONCAT(mcc.code SEPARATOR ', ')
+                 FROM mod_category_object mco
+                     LEFT JOIN mod_category mcc
+                         ON mcc.id = mco.category_id
+                 WHERE mco.object_id = mt.id
+                 GROUP BY mco.object_id)                                         AS 'categories'
+            FROM mod_transaction mt
+                LEFT JOIN prv_user pu1
+                    ON pu1.id = mt.creator;
+        </createView>
+
+    </changeSet>
+
+</databaseChangeLog>

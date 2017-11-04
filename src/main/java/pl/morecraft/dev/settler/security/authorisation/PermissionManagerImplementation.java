@@ -2,12 +2,14 @@ package pl.morecraft.dev.settler.security.authorisation;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Expressions;
+import com.querydsl.core.types.dsl.NumberPath;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQuery;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import pl.morecraft.dev.settler.domain.*;
 import pl.morecraft.dev.settler.domain.dictionaries.OperationType;
+import pl.morecraft.dev.settler.domain.view.QTransactionEntry;
 import pl.morecraft.dev.settler.security.util.Security;
 import pl.morecraft.dev.settler.web.dto.UserDTO;
 
@@ -88,36 +90,44 @@ public class PermissionManagerImplementation implements PermissionManager {
 
     @Override
     public BooleanExpression objectFilter(PrivilegeObject source, QPrivilegeObject target, OperationType operationType) {
-        return target.id.in(
-                JPAExpressions.selectFrom(jTBObjectHierarchy)
-                        .where(
-                                jTBObjectHierarchy.objectFrom.id.in(
-                                        JPAExpressions.selectFrom(jTBObjectPrivilege)
-                                                .from(jTBObjectPrivilege)
-                                                .where(
-                                                        jTBObjectPrivilege.objectFrom.id.eq(source.getId()),
-                                                        jTBObjectPrivilege.operationType.eq(operationType)
-                                                ).select(jTBObjectPrivilege.objectTo.id)
-                                )
-                        ).select(jTBObjectHierarchy.objectTo.id)
-        ).or(
-                target.id.in(
+        return objectFilter(source, target.id, operationType);
+    }
+
+    @Override
+    public BooleanExpression objectFilter(PrivilegeObject source, QTransactionEntry target, OperationType operationType) {
+        return objectFilter(source, target.id, operationType);
+    }
+
+    private BooleanExpression objectFilter(PrivilegeObject source, NumberPath<Long> target, OperationType operationType) {
+        return JPAExpressions.selectFrom(jTBObjectHierarchy)
+                .where(
+                        jTBObjectHierarchy.objectFrom.id.in(
+                                JPAExpressions.selectFrom(jTBObjectPrivilege)
+                                        .from(jTBObjectPrivilege)
+                                        .where(
+                                                jTBObjectPrivilege.objectFrom.id.eq(source.getId()),
+                                                jTBObjectPrivilege.operationType.eq(operationType)
+                                        ).select(jTBObjectPrivilege.objectTo.id)
+                        )
+                ).select(jTBObjectHierarchy.objectTo.id)
+                .contains(target)
+                .or(
                         JPAExpressions.selectFrom(jTBObjectPrivilege)
                                 .where(
                                         jTBObjectPrivilege.objectFrom.id.eq(source.getId()),
                                         jTBObjectPrivilege.operationType.eq(operationType)
                                 )
                                 .select(jTBObjectPrivilege.objectTo.id)
-                )
-        ).or(
-                JPAExpressions.selectFrom(jTBObjectPrivilege)
-                        .where(
-                                jTBObjectPrivilege.objectFrom.id.eq(source.getId()),
-                                jTBObjectPrivilege.operationType.eq(operationType),
-                                jTBObjectPrivilege.objectTo.isNull()
-                        )
-                        .exists()
-        );
+                                .contains(target)
+                ).or(
+                        JPAExpressions.selectFrom(jTBObjectPrivilege)
+                                .where(
+                                        jTBObjectPrivilege.objectFrom.id.eq(source.getId()),
+                                        jTBObjectPrivilege.operationType.eq(operationType),
+                                        jTBObjectPrivilege.objectTo.isNull()
+                                )
+                                .exists()
+                );
     }
 
     @Override

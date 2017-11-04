@@ -4,6 +4,7 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import pl.morecraft.dev.settler.domain.PrivilegeObject;
 import pl.morecraft.dev.settler.domain.QPrivilegeObject;
 import pl.morecraft.dev.settler.domain.dictionaries.OperationType;
+import pl.morecraft.dev.settler.domain.view.QTransactionEntry;
 
 public interface PermissionManager {
 
@@ -24,6 +25,8 @@ public interface PermissionManager {
     boolean isAuthorized(PrivilegeObject source, PrivilegeObject target, OperationType operationType);
 
     BooleanExpression objectFilter(PrivilegeObject source, QPrivilegeObject target, OperationType operationType);
+
+    BooleanExpression objectFilter(PrivilegeObject source, QTransactionEntry target, OperationType operationType);
 
     boolean isGlobalAdmin(Long userId);
 
