@@ -6,7 +6,7 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
-    <changeSet id="1.0-path-011" author="settler">
+    <changeSet id="1.0-path-011a" author="settler">
 
         <dropAllForeignKeyConstraints baseTableName="prv_user_role"/>
 
@@ -34,6 +34,259 @@
         <addUniqueConstraint tableName="prv_user_role"
                              constraintName="UQ_PRV_USER_ROLE"
                              columnNames="prv_user, prv_role, target"/>
+
+    </changeSet>
+
+    <changeSet id="1.0-path-011b" author="settler" dbms="postgresql">
+
+        <dropAllForeignKeyConstraints baseTableName="prv_user_role"/>
+
+        <dropUniqueConstraint tableName="prv_user_role"
+                              constraintName="UQ_PRV_USER_ROLE"/>
+
+        <addForeignKeyConstraint baseTableName="prv_user_role"
+                                 baseColumnNames="prv_user"
+                                 constraintName="FK_prv_user_role_prv_user_prv_user_id"
+                                 referencedTableName="prv_user"
+                                 referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint baseTableName="prv_user_role"
+                                 baseColumnNames="prv_role"
+                                 constraintName="FK_prv_user_role_prv_role_prv_role_id"
+                                 referencedTableName="prv_role"
+                                 referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint baseTableName="prv_user_role"
+                                 baseColumnNames="target"
+                                 constraintName="FK_prv_user_role_target_id_prv_object_id"
+                                 referencedTableName="prv_object"
+                                 referencedColumnNames="id"/>
+
+        <addUniqueConstraint tableName="prv_user_role"
+                             constraintName="UQ_PRV_USER_ROLE"
+                             columnNames="prv_user, prv_role, target"/>
+
+        <sql>
+            DELETE FROM dev_settler.public.prv_user_role
+            WHERE target IN (SELECT id
+                             FROM dev_settler.public.mod_transaction);
+
+            INSERT INTO dev_settler.public.prv_user_role (prv_user, prv_role, target)
+                SELECT DISTINCT tab.*
+                FROM (
+                         SELECT
+                             mt.creator                        AS prv_user,
+                             (SELECT pr.id
+                              FROM dev_settler.public.prv_role pr
+                              WHERE pr.name = 'Administrator') AS prv_role,
+                             mt.id                             AS target
+                         FROM dev_settler.public.mod_transaction mt
+                         UNION ALL
+                         SELECT
+                             mr.user                  AS prv_user,
+                             (SELECT pr.id
+                              FROM dev_settler.public.prv_role pr
+                              WHERE pr.name = 'User') AS prv_role,
+                             mr.parent                AS target
+                         FROM dev_settler.public.mod_redistribution mr
+                     ) tab;
+        </sql>
+
+        <createProcedure>
+            CREATE OR REPLACE FUNCTION dev_settler.public.proc_prv_user_role_refresh_by_transaction(
+                transaction_id BIGINT)
+                RETURNS VOID AS $proc_prv_user_role_refresh_by_transaction$
+            BEGIN
+                DELETE FROM dev_settler.public.prv_user_role
+                WHERE target = transaction_id;
+
+                INSERT INTO dev_settler.public.prv_user_role (prv_user, prv_role, target)
+                    SELECT DISTINCT tab.*
+                    FROM (
+                             SELECT
+                                 mt.creator                        AS prv_user,
+                                 (SELECT pr.id
+                                  FROM dev_settler.public.prv_role pr
+                                  WHERE pr.name = 'Administrator') AS prv_role,
+                                 mt.id                             AS target
+                             FROM dev_settler.public.mod_transaction mt
+                             WHERE mt.id = transaction_id
+                             UNION ALL
+                             SELECT
+                                 mr.user                  AS prv_user,
+                                 (SELECT pr.id
+                                  FROM dev_settler.public.prv_role pr
+                                  WHERE pr.name = 'User') AS prv_role,
+                                 mr.parent                AS target
+                             FROM dev_settler.public.mod_redistribution mr
+                             WHERE mr.parent = transaction_id
+                         ) tab;
+            END;
+            $proc_prv_user_role_refresh_by_transaction$ LANGUAGE plpgsql;
+        </createProcedure>
+
+        <sql>
+            DROP TRIGGER IF EXISTS trg_mod_transaction_insert
+            ON dev_settler.public.mod_transaction;
+            DROP TRIGGER IF EXISTS trg_mod_transaction_delete
+            ON dev_settler.public.mod_transaction;
+            DROP TRIGGER IF EXISTS trg_mod_transaction_update
+            ON dev_settler.public.mod_transaction;
+            DROP TRIGGER IF EXISTS trg_mod_redistribution_insert
+            ON dev_settler.public.mod_redistribution;
+            DROP TRIGGER IF EXISTS trg_mod_redistribution_delete
+            ON dev_settler.public.mod_redistribution;
+            DROP TRIGGER IF EXISTS trg_mod_redistribution_update
+            ON dev_settler.public.mod_redistribution;
+        </sql>
+
+        <createProcedure>
+            CREATE OR REPLACE FUNCTION dev_settler.public.trg_mod_transaction_insert()
+                RETURNS TRIGGER AS $trg_mod_transaction_insert$
+            BEGIN
+                EXECUTE dev_settler.public.proc_prv_user_role_refresh_by_transaction(NEW.id);
+                RETURN NULL;
+            END;
+            $trg_mod_transaction_insert$ LANGUAGE plpgsql;
+        </createProcedure>
+
+        <createProcedure>
+            CREATE TRIGGER trg_mod_transaction_insert
+            AFTER INSERT ON dev_settler.public.mod_transaction
+            FOR EACH ROW EXECUTE PROCEDURE dev_settler.public.trg_mod_transaction_insert();
+        </createProcedure>
+
+        <createProcedure>
+            CREATE OR REPLACE FUNCTION dev_settler.public.trg_mod_transaction_delete()
+                RETURNS TRIGGER AS $trg_mod_transaction_delete$
+            BEGIN
+                EXECUTE dev_settler.public.proc_prv_user_role_refresh_by_transaction(OLD.id);
+                RETURN NULL;
+            END;
+            $trg_mod_transaction_delete$ LANGUAGE plpgsql;
+        </createProcedure>
+
+        <createProcedure>
+            CREATE TRIGGER trg_mod_transaction_delete
+            AFTER DELETE ON dev_settler.public.mod_transaction
+            FOR EACH ROW EXECUTE PROCEDURE dev_settler.public.trg_mod_transaction_delete();
+        </createProcedure>
+
+        <createProcedure>
+            CREATE OR REPLACE FUNCTION dev_settler.public.trg_mod_transaction_update()
+                RETURNS TRIGGER AS $trg_mod_transaction_update$
+            BEGIN
+                EXECUTE dev_settler.public.proc_prv_user_role_refresh_by_transaction(NEW.id);
+                EXECUTE dev_settler.public.proc_prv_user_role_refresh_by_transaction(OLD.id);
+                RETURN NULL;
+            END;
+            $trg_mod_transaction_update$ LANGUAGE plpgsql;
+        </createProcedure>
+
+        <createProcedure>
+            CREATE TRIGGER trg_mod_transaction_update
+            AFTER UPDATE ON dev_settler.public.mod_transaction
+            FOR EACH ROW EXECUTE PROCEDURE dev_settler.public.trg_mod_transaction_update();
+        </createProcedure>
+
+        <createProcedure>
+            CREATE OR REPLACE FUNCTION dev_settler.public.trg_mod_redistribution_insert()
+                RETURNS TRIGGER AS $trg_mod_redistribution_insert$
+            BEGIN
+                EXECUTE dev_settler.public.proc_prv_user_role_refresh_by_transaction(NEW.parent);
+                RETURN NULL;
+            END;
+            $trg_mod_redistribution_insert$ LANGUAGE plpgsql;
+        </createProcedure>
+
+        <createProcedure>
+            CREATE TRIGGER trg_mod_redistribution_insert
+            AFTER INSERT ON dev_settler.public.mod_redistribution
+            FOR EACH ROW EXECUTE PROCEDURE dev_settler.public.trg_mod_redistribution_insert();
+        </createProcedure>
+
+        <createProcedure>
+            CREATE OR REPLACE FUNCTION dev_settler.public.trg_mod_redistribution_delete()
+                RETURNS TRIGGER AS $trg_mod_redistribution_delete$
+            BEGIN
+                EXECUTE dev_settler.public.proc_prv_user_role_refresh_by_transaction(OLD.parent);
+                RETURN NULL;
+            END;
+            $trg_mod_redistribution_delete$ LANGUAGE plpgsql;
+        </createProcedure>
+
+        <createProcedure>
+            CREATE TRIGGER trg_mod_redistribution_delete
+            AFTER DELETE ON dev_settler.public.mod_redistribution
+            FOR EACH ROW EXECUTE PROCEDURE dev_settler.public.trg_mod_redistribution_delete();
+        </createProcedure>
+
+        <createProcedure>
+            CREATE OR REPLACE FUNCTION dev_settler.public.trg_mod_redistribution_update()
+                RETURNS TRIGGER AS $trg_mod_redistribution_update$
+            BEGIN
+                EXECUTE dev_settler.public.proc_prv_user_role_refresh_by_transaction(NEW.parent);
+                EXECUTE dev_settler.public.proc_prv_user_role_refresh_by_transaction(OLD.parent);
+                RETURN NULL;
+            END;
+            $trg_mod_redistribution_update$ LANGUAGE plpgsql;
+        </createProcedure>
+
+        <createProcedure>
+            CREATE TRIGGER trg_mod_redistribution_update
+            AFTER UPDATE ON dev_settler.public.mod_redistribution
+            FOR EACH ROW EXECUTE PROCEDURE dev_settler.public.trg_mod_redistribution_update();
+        </createProcedure>
+
+        <sql>
+            INSERT INTO dev_settler.public.jtb_object_hierarchy (prv_object_from, prv_object_to)
+                SELECT
+                    id,
+                    id
+                FROM dev_settler.public.prv_object;
+        </sql>
+
+        <createProcedure>
+            CREATE OR REPLACE FUNCTION dev_settler.public.trg_prv_object_insert()
+                RETURNS TRIGGER AS $trg_prv_object_insert$
+            BEGIN
+                INSERT INTO dev_settler.public.jtb_object_hierarchy (prv_object_from, prv_object_to)
+                VALUES (NEW.id, NEW.id);
+                RETURN NULL;
+            END;
+            $trg_prv_object_insert$ LANGUAGE plpgsql;
+        </createProcedure>
+
+        <createProcedure>
+            CREATE TRIGGER trg_prv_object_insert
+            AFTER INSERT ON dev_settler.public.prv_object
+            FOR EACH ROW EXECUTE PROCEDURE dev_settler.public.trg_prv_object_insert();
+        </createProcedure>
+
+        <createProcedure>
+            CREATE OR REPLACE FUNCTION dev_settler.public.trg_prv_object_delete()
+                RETURNS TRIGGER AS $trg_prv_object_delete$
+            BEGIN
+                DELETE FROM dev_settler.public.jtb_object_hierarchy
+                WHERE prv_object_from = OLD.id
+                      OR prv_object_to = OLD.id;
+                DELETE FROM dev_settler.public.jtb_object_privilege
+                WHERE prv_object_from = OLD.id
+                      OR prv_object_to = OLD.id;
+                RETURN NULL;
+            END;
+            $trg_prv_object_delete$ LANGUAGE plpgsql;
+        </createProcedure>
+
+        <createProcedure>
+            CREATE TRIGGER trg_prv_object_delete
+            AFTER DELETE ON dev_settler.public.prv_object
+            FOR EACH ROW EXECUTE PROCEDURE dev_settler.public.trg_prv_object_delete();
+        </createProcedure>
+
+    </changeSet>
+
+    <changeSet id="1.0-path-011b" author="settler" dbms="mysql">
 
         <sql>
             DELETE FROM dev_settler.prv_user_role
@@ -66,33 +319,33 @@
         </sql>
 
         <createProcedure>
-            CREATE PROCEDURE dev_settler.proc_prv_user_role_refresh_by_transaction(transaction BIGINT)
-                BEGIN
+            CREATE PROCEDURE dev_settler.proc_prv_user_role_refresh_by_transaction( transaction_id BIGINT )
+            BEGIN
             DELETE FROM dev_settler.prv_user_role
-                    WHERE target = transaction;
+            WHERE target = transaction_id;
 
             INSERT INTO dev_settler.prv_user_role (prv_user, prv_role, target)
-                        SELECT DISTINCT tab.*
-                        FROM (
-                                 SELECT
-                                     mt.creator                        AS 'prv_user',
-                                     (SELECT pr.id
-            FROM dev_settler.prv_role pr
-                                      WHERE pr.name = 'Administrator') AS 'prv_role',
-                                     mt.id                             AS 'target'
-            FROM dev_settler.mod_transaction mt
-                                 WHERE mt.id = transaction
-                                 UNION ALL
-                                 SELECT
-                                     mr.user                  AS 'prv_user',
-                                     (SELECT pr.id
-            FROM dev_settler.prv_role pr
-                                      WHERE pr.name = 'User') AS 'prv_role',
-                                     mr.parent                AS 'target'
-            FROM dev_settler.mod_redistribution mr
-                                 WHERE mr.parent = transaction
-                             ) tab;
-                END;
+                SELECT DISTINCT tab.*
+                FROM (
+                         SELECT
+                             mt.creator                        AS 'prv_user',
+                             (SELECT pr.id
+                              FROM dev_settler.prv_role pr
+                              WHERE pr.name = 'Administrator') AS 'prv_role',
+                             mt.id                             AS 'target'
+                         FROM dev_settler.mod_transaction mt
+                         WHERE mt.id = transaction_id
+                         UNION ALL
+                         SELECT
+                             mr.user                  AS 'prv_user',
+                             (SELECT pr.id
+                              FROM dev_settler.prv_role pr
+                              WHERE pr.name = 'User') AS 'prv_role',
+                             mr.parent                AS 'target'
+                         FROM dev_settler.mod_redistribution mr
+                         WHERE mr.parent = transaction_id
+                     ) tab;
+            END;
         </createProcedure>
 
         <sql>
@@ -108,56 +361,56 @@
             CREATE TRIGGER dev_settler.trg_mod_transaction_insert
             AFTER INSERT ON dev_settler.mod_transaction
             FOR EACH ROW
-                BEGIN
-                    CALL proc_prv_user_role_refresh_by_transaction(NEW.id);
-                END;
+            BEGIN
+            CALL proc_prv_user_role_refresh_by_transaction(NEW.id);
+            END;
         </createProcedure>
 
         <createProcedure>
             CREATE TRIGGER dev_settler.trg_mod_transaction_delete
             AFTER DELETE ON dev_settler.mod_transaction
             FOR EACH ROW
-                BEGIN
-                    CALL proc_prv_user_role_refresh_by_transaction(OLD.id);
-                END;
+            BEGIN
+            CALL proc_prv_user_role_refresh_by_transaction(OLD.id);
+            END;
         </createProcedure>
 
         <createProcedure>
             CREATE TRIGGER dev_settler.trg_mod_transaction_update
             AFTER UPDATE ON dev_settler.mod_transaction
             FOR EACH ROW
-                BEGIN
-                    CALL proc_prv_user_role_refresh_by_transaction(NEW.id);
-                    CALL proc_prv_user_role_refresh_by_transaction(OLD.id);
-                END;
+            BEGIN
+            CALL proc_prv_user_role_refresh_by_transaction(NEW.id);
+            CALL proc_prv_user_role_refresh_by_transaction(OLD.id);
+            END;
         </createProcedure>
 
         <createProcedure>
             CREATE TRIGGER dev_settler.trg_mod_redistribution_insert
             AFTER INSERT ON dev_settler.mod_redistribution
             FOR EACH ROW
-                BEGIN
-                    CALL proc_prv_user_role_refresh_by_transaction(NEW.parent);
-                END;
+            BEGIN
+            CALL proc_prv_user_role_refresh_by_transaction(NEW.parent);
+            END;
         </createProcedure>
 
         <createProcedure>
             CREATE TRIGGER dev_settler.trg_mod_redistribution_delete
             AFTER DELETE ON dev_settler.mod_redistribution
             FOR EACH ROW
-                BEGIN
-                    CALL proc_prv_user_role_refresh_by_transaction(OLD.parent);
-                END;
+            BEGIN
+            CALL proc_prv_user_role_refresh_by_transaction(OLD.parent);
+            END;
         </createProcedure>
 
         <createProcedure>
             CREATE TRIGGER dev_settler.trg_mod_redistribution_update
             AFTER UPDATE ON dev_settler.mod_redistribution
             FOR EACH ROW
-                BEGIN
-                    CALL proc_prv_user_role_refresh_by_transaction(NEW.parent);
-                    CALL proc_prv_user_role_refresh_by_transaction(OLD.parent);
-                END;
+            BEGIN
+            CALL proc_prv_user_role_refresh_by_transaction(NEW.parent);
+            CALL proc_prv_user_role_refresh_by_transaction(OLD.parent);
+            END;
         </createProcedure>
 
         <sql>
@@ -172,24 +425,24 @@
             CREATE TRIGGER dev_settler.trg_prv_object_insert
             AFTER INSERT ON dev_settler.prv_object
             FOR EACH ROW
-                BEGIN
-                    INSERT INTO dev_settler.jtb_object_hierarchy (prv_object_from, prv_object_to)
-                    VALUES (NEW.id, NEW.id);
-                END;
+            BEGIN
+            INSERT INTO dev_settler.jtb_object_hierarchy (prv_object_from, prv_object_to)
+            VALUES (NEW.id, NEW.id);
+            END;
         </createProcedure>
 
         <createProcedure>
             CREATE TRIGGER dev_settler.trg_prv_object_delete
             AFTER DELETE ON dev_settler.prv_object
             FOR EACH ROW
-                BEGIN
-                    DELETE FROM dev_settler.jtb_object_hierarchy
-                    WHERE prv_object_from = OLD.id
-                          OR prv_object_to = OLD.id;
-                    DELETE FROM dev_settler.jtb_object_privilege
-                    WHERE prv_object_from = OLD.id
-                          OR prv_object_to = OLD.id;
-                END;
+            BEGIN
+            DELETE FROM dev_settler.jtb_object_hierarchy
+            WHERE prv_object_from = OLD.id
+                  OR prv_object_to = OLD.id;
+            DELETE FROM dev_settler.jtb_object_privilege
+            WHERE prv_object_from = OLD.id
+                  OR prv_object_to = OLD.id;
+            END;
         </createProcedure>
 
     </changeSet>

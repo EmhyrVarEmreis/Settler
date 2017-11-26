@@ -12,7 +12,9 @@
             <column name="code"
                     type="nvarchar(5)">
                 <constraints primaryKey="true"
-                             primaryKeyName="PK_dct_language_code"/>
+                             primaryKeyName="PK_dct_language_code"
+                             unique="true"
+                             uniqueConstraintName="UQ_dct_language_code"/>
             </column>
             <column name="description"
                     type="nvarchar(32)"/>
@@ -22,7 +24,9 @@
             <column name="code"
                     type="nvarchar(32)">
                 <constraints primaryKey="true"
-                             primaryKeyName="PK_dct_language_code"/>
+                             primaryKeyName="PK_dct_email_template_type_code"
+                             unique="true"
+                             uniqueConstraintName="UQ_dct_email_template_type_code"/>
             </column>
             <column name="description"
                     type="nvarchar(32)"/>
@@ -33,7 +37,9 @@
                     type="bigint"
                     autoIncrement="true">
                 <constraints primaryKey="true"
-                             primaryKeyName="PK_mod_email_template"/>
+                             primaryKeyName="PK_mod_email_template"
+                             unique="true"
+                             uniqueConstraintName="UQ_mod_email_template"/>
             </column>
             <column name="type"
                     type="nvarchar(32)">

@@ -12,7 +12,9 @@
             <column name="sequence_name"
                     type="nvarchar(128)">
                 <constraints primaryKey="true"
-                             primaryKeyName="UQ_sys_sequence_sequence_name"/>
+                             primaryKeyName="PK_sys_sequence_sequence_name"
+                             unique="true"
+                             uniqueConstraintName="UQ_sys_sequence_sequence_name"/>
             </column>
             <column name="sequence_number"
                     defaultValue="0"

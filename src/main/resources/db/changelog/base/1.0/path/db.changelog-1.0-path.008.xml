@@ -18,11 +18,19 @@
         </addColumn>
 
         <sql>
-            UPDATE mod_redistribution mr
-            SET mr.percentage = mr.value / (SELECT mt.value
-                                            FROM mod_transaction mt
-                                            WHERE mt.id = mr.parent) * 100
+            UPDATE mod_redistribution AS mr
+            SET percentage = value / (SELECT mt.value
+                                      FROM mod_transaction mt
+                                      WHERE mt.id = mr.parent) * 100
         </sql>
+
+        <dropView viewName="view_total_charge"/>
+
+        <dropView viewName="view_mod_transaction"/>
+
+        <modifyDataType tableName="mod_transaction"
+                        columnName="value"
+                        newDataType="DECIMAL(12,2)"/>
 
         <dropColumn tableName="mod_redistribution" columnName="value"/>
 
@@ -44,12 +52,15 @@
                 LEFT JOIN prv_user puo
                     ON puo.id = mro.user
             WHERE mrc.user != mro.user
-            GROUP BY user_from_id, user_to_id, id, user_from, user_to;
+            GROUP BY user_from_id,
+                user_to_id,
+                puc.first_name,
+                puc.last_name,
+                puc.login,
+                puo.first_name,
+                puo.last_name,
+                puo.login;
         </createView>
-
-        <modifyDataType tableName="mod_transaction"
-                        columnName="value"
-                        newDataType="DECIMAL(12,2)"/>
 
     </changeSet>
 

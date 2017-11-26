@@ -4,7 +4,7 @@ server:
 
 spring:
   datasource:
-    driver-class-name: com.mysql.jdbc.Driver
+    driver-class-name: @settler.db.driver@
     url: @settler.db.url@
     username: @settler.db.user@
     password: @settler.db.password@
@@ -17,7 +17,7 @@ spring:
     password: @settler.mail.password@
 
   jpa:
-    database-platform: org.hibernate.dialect.MySQLInnoDBDialect
+    database-platform: @settler.db.dialect@
   http:
     multipart:
       max-file-size: 50Mb

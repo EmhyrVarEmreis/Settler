@@ -30,7 +30,14 @@
                     ON puc.id = mrc.user
                 LEFT JOIN prv_user puo
                     ON puo.id = mro.user
-            GROUP BY user_from_id, user_to_id;
+            GROUP BY user_from_id,
+                user_to_id,
+                puc.first_name,
+                puc.last_name,
+                puc.login,
+                puo.first_name,
+                puo.last_name,
+                puo.login;
         </createView>
 
         <rollback>
