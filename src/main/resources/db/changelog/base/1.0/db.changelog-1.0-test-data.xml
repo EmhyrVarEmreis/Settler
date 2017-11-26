@@ -10,7 +10,7 @@
 
         <!-- CREATE USERS -->
         <sql>
-            INSERT INTO dev_settler.public.prv_object VALUES (NEXTVAL('dev_settler.public.mod_category_id_seq'));
+            INSERT INTO dev_settler.public.prv_object VALUES (NEXTVAL('dev_settler.public.prv_object_id_seq'));
             INSERT INTO dev_settler.public.prv_user (
                 "id", "login", "first_name", "last_name", "password", "email", "created", "status"
             ) VALUES (
@@ -25,7 +25,7 @@
                 'ACT'
             );
 
-            INSERT INTO dev_settler.public.prv_object VALUES (NEXTVAL('dev_settler.public.mod_category_id_seq'));
+            INSERT INTO dev_settler.public.prv_object VALUES (NEXTVAL('dev_settler.public.prv_object_id_seq'));
             INSERT INTO dev_settler.public.prv_user (
                 "id", "login", "first_name", "last_name", "password", "email", "created", "status"
             ) VALUES (
@@ -40,7 +40,7 @@
                 'ACT'
             );
 
-            INSERT INTO dev_settler.public.prv_object VALUES (NEXTVAL('dev_settler.public.mod_category_id_seq'));
+            INSERT INTO dev_settler.public.prv_object VALUES (NEXTVAL('dev_settler.public.prv_object_id_seq'));
             INSERT INTO dev_settler.public.prv_user (
                 "id", "login", "first_name", "last_name", "password", "email", "created", "status"
             ) VALUES (
@@ -55,7 +55,7 @@
                 'ACT'
             );
 
-            INSERT INTO dev_settler.public.prv_object VALUES (NEXTVAL('dev_settler.public.mod_category_id_seq'));
+            INSERT INTO dev_settler.public.prv_object VALUES (NEXTVAL('dev_settler.public.prv_object_id_seq'));
             INSERT INTO dev_settler.public.prv_user (
                 "id", "login", "first_name", "last_name", "password", "email", "created", "status"
             ) VALUES (
@@ -70,7 +70,7 @@
                 'ACT'
             );
 
-            INSERT INTO dev_settler.public.prv_object VALUES (NEXTVAL('dev_settler.public.mod_category_id_seq'));
+            INSERT INTO dev_settler.public.prv_object VALUES (NEXTVAL('dev_settler.public.prv_object_id_seq'));
             INSERT INTO dev_settler.public.prv_user (
                 "id", "login", "first_name", "last_name", "password", "email", "created", "status"
             ) VALUES (
@@ -85,7 +85,7 @@
                 'HNG'
             );
 
-            INSERT INTO dev_settler.public.prv_object VALUES (NEXTVAL('dev_settler.public.mod_category_id_seq'));
+            INSERT INTO dev_settler.public.prv_object VALUES (NEXTVAL('dev_settler.public.prv_object_id_seq'));
             INSERT INTO dev_settler.public.prv_user (
                 "id", "login", "first_name", "last_name", "password", "email", "created", "status"
             ) VALUES (
@@ -100,7 +100,7 @@
                 'DSB'
             );
 
-            INSERT INTO dev_settler.public.prv_object VALUES (NEXTVAL('dev_settler.public.mod_category_id_seq'));
+            INSERT INTO dev_settler.public.prv_object VALUES (NEXTVAL('dev_settler.public.prv_object_id_seq'));
             INSERT INTO dev_settler.public.prv_user (
                 "id", "login", "first_name", "last_name", "password", "email", "created", "status"
             ) VALUES (
@@ -118,7 +118,7 @@
 
         <!-- CREATE TRANSACTIONS -->
         <sql>
-            INSERT INTO dev_settler.public.prv_object VALUES (NEXTVAL('dev_settler.public.mod_category_id_seq'));
+            INSERT INTO dev_settler.public.prv_object VALUES (NEXTVAL('dev_settler.public.prv_object_id_seq'));
             INSERT INTO dev_settler.public.mod_transaction (
                 "id", "reference", "type", "creator", "value", "created"
             ) VALUES (
@@ -133,7 +133,7 @@
                 '2015-11-12 12:12:12'
             );
 
-            INSERT INTO dev_settler.public.prv_object VALUES (NEXTVAL('dev_settler.public.mod_category_id_seq'));
+            INSERT INTO dev_settler.public.prv_object VALUES (NEXTVAL('dev_settler.public.prv_object_id_seq'));
             INSERT INTO dev_settler.public.mod_transaction (
                 "id", "reference", "type", "creator", "value", "created"
             ) VALUES (
@@ -253,7 +253,7 @@
 
         <!-- CREATE COMMENTS -->
         <sql>
-            INSERT INTO dev_settler.public.prv_object VALUES (NEXTVAL('dev_settler.public.mod_category_id_seq'));
+            INSERT INTO dev_settler.public.prv_object VALUES (NEXTVAL('dev_settler.public.prv_object_id_seq'));
             INSERT INTO dev_settler.public.mod_comment (
                 "id", "prv_object", "prv_user", "parent", "created", "value"
             ) VALUES (
@@ -319,7 +319,7 @@
 
         <!-- CREATE ROLES -->
         <sql>
-            INSERT INTO dev_settler.public.prv_object VALUES (NEXTVAL('dev_settler.public.mod_category_id_seq'));
+            INSERT INTO dev_settler.public.prv_object VALUES (NEXTVAL('dev_settler.public.prv_object_id_seq'));
             INSERT INTO dev_settler.public.prv_role (
                 "id", "name"
             ) VALUES (
@@ -328,7 +328,7 @@
                 'Administrator'
             );
 
-            INSERT INTO dev_settler.public.prv_object VALUES (NEXTVAL('dev_settler.public.mod_category_id_seq'));
+            INSERT INTO dev_settler.public.prv_object VALUES (NEXTVAL('dev_settler.public.prv_object_id_seq'));
             INSERT INTO dev_settler.public.prv_role (
                 "id", "name"
             ) VALUES (
@@ -337,7 +337,7 @@
                 'Moderator'
             );
 
-            INSERT INTO dev_settler.public.prv_object VALUES (NEXTVAL('dev_settler.public.mod_category_id_seq'));
+            INSERT INTO dev_settler.public.prv_object VALUES (NEXTVAL('dev_settler.public.prv_object_id_seq'));
             INSERT INTO dev_settler.public.prv_role (
                 "id", "name"
             ) VALUES (
