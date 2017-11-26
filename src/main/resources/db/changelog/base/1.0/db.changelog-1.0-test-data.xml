@@ -6,465 +6,478 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
-    <changeSet id="1.0-init-test-data" author="settler" context="dev">
+    <changeSet id="1.0-init-test-data" author="settler" context="dev" dbms="postgresql">
 
         <!-- CREATE USERS -->
         <sql>
-            INSERT INTO prv_object VALUES ();
-            INSERT INTO prv_user (
-                id, login, first_name, last_name, password, email, created, status
+            INSERT INTO dev_settler.public.prv_object VALUES (NEXTVAL('dev_settler.public.mod_category_id_seq'));
+            INSERT INTO dev_settler.public.prv_user (
+                "id", "login", "first_name", "last_name", "password", "email", "created", "status"
             ) VALUES (
-                LAST_INSERT_ID(),
-                'admin',
-                'Edward',
-                'Ącki',
-                '$2y$12$ngM3Q/403lEc0pTH7fi16uoFRc3FQmmIugn2AuwjEigj3DTp/np0W',
-                'test@morecraft.pl',
-                '2015-11-11 11:11:11',
-                'ACT'
-            );
+                         (SELECT MAX(id)
+                          FROM dev_settler.public.prv_object),
+                         'admin',
+                         'Edward',
+                         'Ącki',
+                         MD5('password'),
+                         'test@morecraft.pl',
+                         '2015-11-11 11:11:11',
+                         'ACT'
+                     );
 
-            INSERT INTO prv_object VALUES ();
-            INSERT INTO prv_user (
-                id, login, first_name, last_name, password, email, created, status
+            INSERT INTO dev_settler.public.prv_object VALUES (NEXTVAL('dev_settler.public.mod_category_id_seq'));
+            INSERT INTO dev_settler.public.prv_user (
+                "id", "login", "first_name", "last_name", "password", "email", "created", "status"
             ) VALUES (
-                LAST_INSERT_ID(),
-                'user',
-                'Jan',
-                'Kowalski',
-                '$2y$12$ngM3Q/403lEc0pTH7fi16uoFRc3FQmmIugn2AuwjEigj3DTp/np0W',
-                'demo@morecraft.pl',
-                '2015-11-11 11:11:11',
-                'ACT'
-            );
+                         (SELECT MAX(id)
+                          FROM dev_settler.public.prv_object),
+                         'user',
+                         'Jan',
+                         'Kowalski',
+                         MD5('password'),
+                         'demo@morecraft.pl',
+                         '2015-11-11 11:11:11',
+                         'ACT'
+                     );
 
-            INSERT INTO prv_object VALUES ();
-            INSERT INTO prv_user (
-                id, login, first_name, last_name, password, email, created, status
+            INSERT INTO dev_settler.public.prv_object VALUES (NEXTVAL('dev_settler.public.mod_category_id_seq'));
+            INSERT INTO dev_settler.public.prv_user (
+                "id", "login", "first_name", "last_name", "password", "email", "created", "status"
             ) VALUES (
-                LAST_INSERT_ID(),
-                'jan.nowak',
-                'Jan',
-                'Nowak',
-                '$2y$12$ngM3Q/403lEc0pTH7fi16uoFRc3FQmmIugn2AuwjEigj3DTp/np0W',
-                'jan.nowak@morecraft.pl',
-                '2015-12-12 12:12:12',
-                'ACT'
-            );
+                         (SELECT MAX(id)
+                          FROM dev_settler.public.prv_object),
+                         'jan.nowak',
+                         'Jan',
+                         'Nowak',
+                         MD5('password'),
+                         'jan.nowak@morecraft.pl',
+                         '2015-12-12 12:12:12',
+                         'ACT'
+                     );
 
-            INSERT INTO prv_object VALUES ();
-            INSERT INTO prv_user (
-                id, login, first_name, last_name, password, email, created, status
+            INSERT INTO dev_settler.public.prv_object VALUES (NEXTVAL('dev_settler.public.mod_category_id_seq'));
+            INSERT INTO dev_settler.public.prv_user (
+                "id", "login", "first_name", "last_name", "password", "email", "created", "status"
             ) VALUES (
-                LAST_INSERT_ID(),
-                'marian.kowalski',
-                'Marian',
-                'Kowalski',
-                '$2y$12$ngM3Q/403lEc0pTH7fi16uoFRc3FQmmIugn2AuwjEigj3DTp/np0W',
-                'marian.kowalski@morecraft.pl',
-                '2015-11-17 16:00:00',
-                'ACT'
-            );
+                         (SELECT MAX(id)
+                          FROM dev_settler.public.prv_object),
+                         'marian.kowalski',
+                         'Marian',
+                         'Kowalski',
+                         MD5('password'),
+                         'marian.kowalski@morecraft.pl',
+                         '2015-11-17 16:00:00',
+                         'ACT'
+                     );
 
-            INSERT INTO prv_object VALUES ();
-            INSERT INTO prv_user (
-                id, login, first_name, last_name, password, email, created, status
+            INSERT INTO dev_settler.public.prv_object VALUES (NEXTVAL('dev_settler.public.mod_category_id_seq'));
+            INSERT INTO dev_settler.public.prv_user (
+                "id", "login", "first_name", "last_name", "password", "email", "created", "status"
             ) VALUES (
-                LAST_INSERT_ID(),
-                'jan.kos',
-                'Jan',
-                'Kos',
-                '$2y$12$ngM3Q/403lEc0pTH7fi16uoFRc3FQmmIugn2AuwjEigj3DTp/np0W',
-                'jan.kos@morecraft.pl',
-                '2015-11-17 17:45:32',
-                'HNG'
-            );
+                         (SELECT MAX(id)
+                          FROM dev_settler.public.prv_object),
+                         'jan.kos',
+                         'Jan',
+                         'Kos',
+                         MD5('password'),
+                         'jan.kos@morecraft.pl',
+                         '2015-11-17 17:45:32',
+                         'HNG'
+                     );
 
-            INSERT INTO prv_object VALUES ();
-            INSERT INTO prv_user (
-                id, login, first_name, last_name, password, email, created, status
+            INSERT INTO dev_settler.public.prv_object VALUES (NEXTVAL('dev_settler.public.mod_category_id_seq'));
+            INSERT INTO dev_settler.public.prv_user (
+                "id", "login", "first_name", "last_name", "password", "email", "created", "status"
             ) VALUES (
-                LAST_INSERT_ID(),
-                'adam.trocki',
-                'Adam',
-                'Trocki',
-                '$2y$12$ngM3Q/403lEc0pTH7fi16uoFRc3FQmmIugn2AuwjEigj3DTp/np0W',
-                'adam.trocki@morecraft.pl',
-                '2015-11-15 16:34:19',
-                'DSB'
-            );
+                         (SELECT MAX(id)
+                          FROM dev_settler.public.prv_object),
+                         'adam.trocki',
+                         'Adam',
+                         'Trocki',
+                         MD5('password'),
+                         'adam.trocki@morecraft.pl',
+                         '2015-11-15 16:34:19',
+                         'DSB'
+                     );
 
-            INSERT INTO prv_object VALUES ();
-            INSERT INTO prv_user (
-                id, login, first_name, last_name, password, email, created, status
+            INSERT INTO dev_settler.public.prv_object VALUES (NEXTVAL('dev_settler.public.mod_category_id_seq'));
+            INSERT INTO dev_settler.public.prv_user (
+                "id", "login", "first_name", "last_name", "password", "email", "created", "status"
             ) VALUES (
-                LAST_INSERT_ID(),
-                'regular.user',
-                'Edward',
-                'Środoń',
-                '$2y$12$ngM3Q/403lEc0pTH7fi16uoFRc3FQmmIugn2AuwjEigj3DTp/np0W',
-                'regular.user@morecraft.pl',
-                '2015-11-09 23:56:48',
-                'DSB'
-            );
+                         (SELECT MAX(id)
+                          FROM dev_settler.public.prv_object),
+                         'regular.user',
+                         'Edward',
+                         'Środoń',
+                         MD5('password'),
+                         'regular.user@morecraft.pl',
+                         '2015-11-09 23:56:48',
+                         'DSB'
+                     );
         </sql>
 
         <!-- CREATE TRANSACTIONS -->
         <sql>
-            INSERT INTO prv_object VALUES ();
-            INSERT INTO mod_transaction (
-                id, reference, type, creator, value, created
+            INSERT INTO dev_settler.public.prv_object VALUES (NEXTVAL('dev_settler.public.mod_category_id_seq'));
+            INSERT INTO dev_settler.public.mod_transaction (
+                "id", "reference", "type", "creator", "value", "created"
             ) VALUES (
-                LAST_INSERT_ID(),
-                'TRA151112121212',
-                'NOR',
-                (SELECT id
-                 FROM prv_user
-                 WHERE login = 'admin'),
-                12.50,
-                '2015-11-12 12:12:12'
-            );
+                         (SELECT MAX(id)
+                          FROM dev_settler.public.prv_object),
+                         'TRA151112121212',
+                         'NOR',
+                         (SELECT id
+                          FROM dev_settler.public.prv_user
+                          WHERE login = 'admin'),
+                         12.50,
+                         '2015-11-12 12:12:12'
+                     );
 
-            INSERT INTO prv_object VALUES ();
-            INSERT INTO mod_transaction (
-                id, reference, type, creator, value, created
+            INSERT INTO dev_settler.public.prv_object VALUES (NEXTVAL('dev_settler.public.mod_category_id_seq'));
+            INSERT INTO dev_settler.public.mod_transaction (
+                "id", "reference", "type", "creator", "value", "created"
             ) VALUES (
-                LAST_INSERT_ID(),
-                'TRA151113150000',
-                'OTH',
-                (SELECT id
-                 FROM prv_user
-                 WHERE login = 'user'),
-                10.50,
-                '2015-11-13 15:00:00'
-            );
+                         (SELECT MAX(id)
+                          FROM dev_settler.public.prv_object),
+                         'TRA151113150000',
+                         'OTH',
+                         (SELECT id
+                          FROM dev_settler.public.prv_user
+                          WHERE login = 'user'),
+                         10.50,
+                         '2015-11-13 15:00:00'
+                     );
         </sql>
 
         <!-- CREATE REDISTRIBUTIONS -->
         <sql>
-            INSERT INTO mod_redistribution (
-            type, parent, user, value
+            INSERT INTO dev_settler.public.mod_redistribution (
+                "type", "parent", "user", "value"
             ) VALUES (
-                'O',
-                (SELECT id
-                 FROM mod_transaction
-                 WHERE reference = 'TRA151112121212'),
-                (SELECT id
-                 FROM prv_user
-                 WHERE login = 'admin'),
-            12.5
-            );
-            INSERT INTO mod_redistribution (
-            type, parent, user, value
+                         'O',
+                         (SELECT id
+                          FROM dev_settler.public.mod_transaction
+                          WHERE reference = 'TRA151112121212'),
+                         (SELECT id
+                          FROM dev_settler.public.prv_user
+                          WHERE login = 'admin'),
+                         12.5
+                     );
+            INSERT INTO dev_settler.public.mod_redistribution (
+                "type", "parent", "user", "value"
             ) VALUES (
-                'C',
-                (SELECT id
-                 FROM mod_transaction
-                 WHERE reference = 'TRA151112121212'),
-                (SELECT id
-                 FROM prv_user
-                 WHERE login = 'adam.trocki'),
-            2.5
-            );
-            INSERT INTO mod_redistribution (
-            type, parent, user, value
+                         'C',
+                         (SELECT id
+                          FROM dev_settler.public.mod_transaction
+                          WHERE reference = 'TRA151112121212'),
+                         (SELECT id
+                          FROM dev_settler.public.prv_user
+                          WHERE login = 'adam.trocki'),
+                         2.5
+                     );
+            INSERT INTO dev_settler.public.mod_redistribution (
+                "type", "parent", "user", "value"
             ) VALUES (
-                'C',
-                (SELECT id
-                 FROM mod_transaction
-                 WHERE reference = 'TRA151112121212'),
-                (SELECT id
-                 FROM prv_user
-                 WHERE login = 'jan.nowak'),
-            10
-            );
+                         'C',
+                         (SELECT id
+                          FROM dev_settler.public.mod_transaction
+                          WHERE reference = 'TRA151112121212'),
+                         (SELECT id
+                          FROM dev_settler.public.prv_user
+                          WHERE login = 'jan.nowak'),
+                         10
+                     );
 
 
-            INSERT INTO mod_redistribution (
-            type, parent, user, value
+            INSERT INTO dev_settler.public.mod_redistribution (
+                "type", "parent", "user", "value"
             ) VALUES (
-                'O',
-                (SELECT id
-                 FROM mod_transaction
-                 WHERE reference = 'TRA151113150000'),
-                (SELECT id
-                 FROM prv_user
-                 WHERE login = 'user'),
-            5
-            );
-            INSERT INTO mod_redistribution (
-            type, parent, user, value
+                         'O',
+                         (SELECT id
+                          FROM dev_settler.public.mod_transaction
+                          WHERE reference = 'TRA151113150000'),
+                         (SELECT id
+                          FROM dev_settler.public.prv_user
+                          WHERE login = 'user'),
+                         5
+                     );
+            INSERT INTO dev_settler.public.mod_redistribution (
+                "type", "parent", "user", "value"
             ) VALUES (
-                'O',
-                (SELECT id
-                 FROM mod_transaction
-                 WHERE reference = 'TRA151113150000'),
-                (SELECT id
-                 FROM prv_user
-                 WHERE login = 'admin'),
-            5.5
-            );
-            INSERT INTO mod_redistribution (
-            type, parent, user, value
+                         'O',
+                         (SELECT id
+                          FROM dev_settler.public.mod_transaction
+                          WHERE reference = 'TRA151113150000'),
+                         (SELECT id
+                          FROM dev_settler.public.prv_user
+                          WHERE login = 'admin'),
+                         5.5
+                     );
+            INSERT INTO dev_settler.public.mod_redistribution (
+                "type", "parent", "user", "value"
             ) VALUES (
-                'C',
-                (SELECT id
-                 FROM mod_transaction
-                 WHERE reference = 'TRA151113150000'),
-                (SELECT id
-                 FROM prv_user
-                 WHERE login = 'adam.trocki'),
-            3
-            );
-            INSERT INTO mod_redistribution (
-            type, parent, user, value
+                         'C',
+                         (SELECT id
+                          FROM dev_settler.public.mod_transaction
+                          WHERE reference = 'TRA151113150000'),
+                         (SELECT id
+                          FROM dev_settler.public.prv_user
+                          WHERE login = 'adam.trocki'),
+                         3
+                     );
+            INSERT INTO dev_settler.public.mod_redistribution (
+                "type", "parent", "user", "value"
             ) VALUES (
-                'C',
-                (SELECT id
-                 FROM mod_transaction
-                 WHERE reference = 'TRA151113150000'),
-                (SELECT id
-                 FROM prv_user
-                 WHERE login = 'jan.nowak'),
-            3
-            );
-            INSERT INTO mod_redistribution (
-            type, parent, user, value
+                         'C',
+                         (SELECT id
+                          FROM dev_settler.public.mod_transaction
+                          WHERE reference = 'TRA151113150000'),
+                         (SELECT id
+                          FROM dev_settler.public.prv_user
+                          WHERE login = 'jan.nowak'),
+                         3
+                     );
+            INSERT INTO dev_settler.public.mod_redistribution (
+                "type", "parent", "user", "value"
             ) VALUES (
-                'C',
-                (SELECT id
-                 FROM mod_transaction
-                 WHERE reference = 'TRA151113150000'),
-                (SELECT id
-                 FROM prv_user
-                 WHERE login = 'jan.kos'),
-            4.5
-            );
+                         'C',
+                         (SELECT id
+                          FROM dev_settler.public.mod_transaction
+                          WHERE reference = 'TRA151113150000'),
+                         (SELECT id
+                          FROM dev_settler.public.prv_user
+                          WHERE login = 'jan.kos'),
+                         4.5
+                     );
         </sql>
 
         <!-- CREATE COMMENTS -->
         <sql>
-            INSERT INTO prv_object VALUES ();
-            INSERT INTO mod_comment (
-                id, prv_object, prv_user, parent, created, value
+            INSERT INTO dev_settler.public.prv_object VALUES (NEXTVAL('dev_settler.public.mod_category_id_seq'));
+            INSERT INTO dev_settler.public.mod_comment (
+                "id", "prv_object", "prv_user", "parent", "created", "value"
             ) VALUES (
-                LAST_INSERT_ID(),
-                (SELECT id
-                 FROM mod_transaction
-                 WHERE reference = 'TRA151112121212'),
-                (SELECT id
-                 FROM prv_user
-                 WHERE login = 'user'),
-                NULL,
-                '2015-12-21 14:14:40',
-                'Comment by user to TRA151112121212'
-            );
+                         (SELECT MAX(id)
+                          FROM dev_settler.public.prv_object),
+                         (SELECT id
+                          FROM dev_settler.public.mod_transaction
+                          WHERE reference = 'TRA151112121212'),
+                         (SELECT id
+                          FROM dev_settler.public.prv_user
+                          WHERE login = 'user'),
+                         NULL,
+                         '2015-12-21 14:14:40',
+                         'Comment by user to TRA151112121212'
+                     );
         </sql>
 
         <!-- CREATE CATEGORIES -->
         <sql>
-            INSERT INTO mod_category (
-            code, description
+            INSERT INTO dev_settler.public.mod_category (
+                "code", "description"
             ) VALUES (
-            'FFD',
-            'Food'
-            );
-            INSERT INTO mod_category (
-            code, description
+                         'FFD',
+                         'Food'
+                     );
+            INSERT INTO dev_settler.public.mod_category (
+                "code", "description"
             ) VALUES (
-            'FNC',
-            'Finance'
-            );
-            INSERT INTO mod_category (
-            code, description
+                         'FNC',
+                         'Finance'
+                     );
+            INSERT INTO dev_settler.public.mod_category (
+                "code", "description"
             ) VALUES (
-            'TRN',
-            'Transportation'
-            );
-            INSERT INTO mod_category (
-            code, description
+                         'TRN',
+                         'Transportation'
+                     );
+            INSERT INTO dev_settler.public.mod_category (
+                "code", "description"
             ) VALUES (
-            'INF',
-            'Infrastructure'
-            );
-            INSERT INTO mod_category (
-            code, description
+                         'INF',
+                         'Infrastructure'
+                     );
+            INSERT INTO dev_settler.public.mod_category (
+                "code", "description"
             ) VALUES (
-            'BLS',
-            'Bills'
-            );
-            INSERT INTO mod_category (
-            code, description
+                         'BLS',
+                         'Bills'
+                     );
+            INSERT INTO dev_settler.public.mod_category (
+                "code", "description"
             ) VALUES (
-            'THG',
-            'Things'
-            );
-            INSERT INTO mod_category (
-            code, description
+                         'THG',
+                         'Things'
+                     );
+            INSERT INTO dev_settler.public.mod_category (
+                "code", "description"
             ) VALUES (
-            'ENT',
-            'Entertainment'
-            );
+                         'ENT',
+                         'Entertainment'
+                     );
         </sql>
 
         <!-- CREATE ROLES -->
         <sql>
-            INSERT INTO prv_object VALUES ();
-            INSERT INTO prv_role (
-                id, name
+            INSERT INTO dev_settler.public.prv_object VALUES (NEXTVAL('dev_settler.public.mod_category_id_seq'));
+            INSERT INTO dev_settler.public.prv_role (
+                "id", "name"
             ) VALUES (
-                LAST_INSERT_ID(),
-                'Administrator'
-            );
+                         (SELECT MAX(id)
+                          FROM dev_settler.public.prv_object),
+                         'Administrator'
+                     );
 
-            INSERT INTO prv_object VALUES ();
-            INSERT INTO prv_role (
-                id, name
+            INSERT INTO dev_settler.public.prv_object VALUES (NEXTVAL('dev_settler.public.mod_category_id_seq'));
+            INSERT INTO dev_settler.public.prv_role (
+                "id", "name"
             ) VALUES (
-                LAST_INSERT_ID(),
-                'Moderator'
-            );
+                         (SELECT MAX(id)
+                          FROM dev_settler.public.prv_object),
+                         'Moderator'
+                     );
 
-            INSERT INTO prv_object VALUES ();
-            INSERT INTO prv_role (
-                id, name
+            INSERT INTO dev_settler.public.prv_object VALUES (NEXTVAL('dev_settler.public.mod_category_id_seq'));
+            INSERT INTO dev_settler.public.prv_role (
+                "id", "name"
             ) VALUES (
-                LAST_INSERT_ID(),
-                'User'
-            );
+                         (SELECT MAX(id)
+                          FROM dev_settler.public.prv_object),
+                         'User'
+                     );
 
-            INSERT INTO prv_privilege (
-                prv_object, prv_owner, operation_type
+            INSERT INTO dev_settler.public.prv_privilege (
+                "prv_object", "prv_owner", "operation_type"
             ) VALUES (
-                NULL,
-                (SELECT id
-                 FROM prv_role
-                 WHERE name = 'Administrator'),
-                'ADM'
-            );
-            INSERT INTO prv_privilege (
-                prv_object, prv_owner, operation_type
+                         NULL,
+                         (SELECT id
+                          FROM prv_role
+                          WHERE name = 'Administrator'),
+                         'ADM'
+                     );
+            INSERT INTO dev_settler.public.prv_privilege (
+                "prv_object", "prv_owner", "operation_type"
             ) VALUES (
-                NULL,
-                (SELECT id
-                 FROM prv_role
-                 WHERE name = 'Administrator'),
-                'CRT'
-            );
-            INSERT INTO prv_privilege (
-                prv_object, prv_owner, operation_type
+                         NULL,
+                         (SELECT id
+                          FROM prv_role
+                          WHERE name = 'Administrator'),
+                         'CRT'
+                     );
+            INSERT INTO dev_settler.public.prv_privilege (
+                "prv_object", "prv_owner", "operation_type"
             ) VALUES (
-                NULL,
-                (SELECT id
-                 FROM prv_role
-                 WHERE name = 'Administrator'),
-                'RDM'
-            );
-            INSERT INTO prv_privilege (
-                prv_object, prv_owner, operation_type
+                         NULL,
+                         (SELECT id
+                          FROM prv_role
+                          WHERE name = 'Administrator'),
+                         'RDM'
+                     );
+            INSERT INTO dev_settler.public.prv_privilege (
+                "prv_object", "prv_owner", "operation_type"
             ) VALUES (
-                NULL,
-                (SELECT id
-                 FROM prv_role
-                 WHERE name = 'Administrator'),
-                'EDT'
-            );
+                         NULL,
+                         (SELECT id
+                          FROM prv_role
+                          WHERE name = 'Administrator'),
+                         'EDT'
+                     );
 
-            INSERT INTO prv_privilege (
-                prv_object, prv_owner, operation_type
+            INSERT INTO dev_settler.public.prv_privilege (
+                "prv_object", "prv_owner", "operation_type"
             ) VALUES (
-                NULL,
-                (SELECT id
-                 FROM prv_role
-                 WHERE name = 'Moderator'),
-                'CRT'
-            );
-            INSERT INTO prv_privilege (
-                prv_object, prv_owner, operation_type
+                         NULL,
+                         (SELECT id
+                          FROM prv_role
+                          WHERE name = 'Moderator'),
+                         'CRT'
+                     );
+            INSERT INTO dev_settler.public.prv_privilege (
+                "prv_object", "prv_owner", "operation_type"
             ) VALUES (
-                NULL,
-                (SELECT id
-                 FROM prv_role
-                 WHERE name = 'Moderator'),
-                'RDM'
-            );
-            INSERT INTO prv_privilege (
-                prv_object, prv_owner, operation_type
+                         NULL,
+                         (SELECT id
+                          FROM prv_role
+                          WHERE name = 'Moderator'),
+                         'RDM'
+                     );
+            INSERT INTO dev_settler.public.prv_privilege (
+                "prv_object", "prv_owner", "operation_type"
             ) VALUES (
-                NULL,
-                (SELECT id
-                 FROM prv_role
-                 WHERE name = 'Moderator'),
-                'EDT'
-            );
+                         NULL,
+                         (SELECT id
+                          FROM prv_role
+                          WHERE name = 'Moderator'),
+                         'EDT'
+                     );
 
-            INSERT INTO prv_privilege (
-                prv_object, prv_owner, operation_type
+            INSERT INTO dev_settler.public.prv_privilege (
+                "prv_object", "prv_owner", "operation_type"
             ) VALUES (
-                NULL,
-                (SELECT id
-                 FROM prv_role
-                 WHERE name = 'User'),
-                'RDM'
-            );
+                         NULL,
+                         (SELECT id
+                          FROM prv_role
+                          WHERE name = 'User'),
+                         'RDM'
+                     );
         </sql>
 
         <!-- ADD USER TO ROLES -->
         <sql>
             INSERT INTO prv_user_role (
-                prv_user, prv_role
+                "prv_user", "prv_role"
             ) VALUES (
-                (SELECT id
-                 FROM prv_user
-                 WHERE login = 'admin'),
-                (SELECT id
-                 FROM prv_role
-                 WHERE name = 'Administrator')
-            );
+                         (SELECT id
+                          FROM prv_user
+                          WHERE login = 'admin'),
+                         (SELECT id
+                          FROM prv_role
+                          WHERE name = 'Administrator')
+                     );
 
             INSERT INTO prv_user_role (
-                prv_user, prv_role
+                "prv_user", "prv_role"
             ) VALUES (
-                (SELECT id
-                 FROM prv_user
-                 WHERE login = 'jan.nowak'),
-                (SELECT id
-                 FROM prv_role
-                 WHERE name = 'Moderator')
-            );
+                         (SELECT id
+                          FROM prv_user
+                          WHERE login = 'jan.nowak'),
+                         (SELECT id
+                          FROM prv_role
+                          WHERE name = 'Moderator')
+                     );
 
             INSERT INTO prv_user_role (
-                prv_user, prv_role
+                "prv_user", "prv_role"
             ) VALUES (
-                (SELECT id
-                 FROM prv_user
-                 WHERE login = 'jan.kos'),
-                (SELECT id
-                 FROM prv_role
-                 WHERE name = 'Moderator')
-            );
+                         (SELECT id
+                          FROM prv_user
+                          WHERE login = 'jan.kos'),
+                         (SELECT id
+                          FROM prv_role
+                          WHERE name = 'Moderator')
+                     );
 
             INSERT INTO prv_user_role (
-                prv_user, prv_role
+                "prv_user", "prv_role"
             ) VALUES (
-                (SELECT id
-                 FROM prv_user
-                 WHERE login = 'user'),
-                (SELECT id
-                 FROM prv_role
-                 WHERE name = 'User')
-            );
+                         (SELECT id
+                          FROM prv_user
+                          WHERE login = 'user'),
+                         (SELECT id
+                          FROM prv_role
+                          WHERE name = 'User')
+                     );
 
             INSERT INTO prv_user_role (
-                prv_user, prv_role
+                "prv_user", "prv_role"
             ) VALUES (
-                (SELECT id
-                 FROM prv_user
-                 WHERE login = 'adam.trocki'),
-                (SELECT id
-                 FROM prv_role
-                 WHERE name = 'User')
-            );
+                         (SELECT id
+                          FROM prv_user
+                          WHERE login = 'adam.trocki'),
+                         (SELECT id
+                          FROM prv_role
+                          WHERE name = 'User')
+                     );
         </sql>
 
         <rollback>
@@ -474,4 +487,474 @@
         </rollback>
 
     </changeSet>
+
+    <changeSet id="1.0-init-test-data" author="settler" context="dev" dbms="mysql">
+
+        <!-- CREATE USERS -->
+        <sql>
+            INSERT INTO prv_object VALUES ();
+            INSERT INTO prv_user (
+                id, login, first_name, last_name, password, email, created, status
+            ) VALUES (
+                         LAST_INSERT_ID(),
+                         'admin',
+                         'Edward',
+                         'Ącki',
+                         '$2y$12$ngM3Q/403lEc0pTH7fi16uoFRc3FQmmIugn2AuwjEigj3DTp/np0W',
+                         'test@morecraft.pl',
+                         '2015-11-11 11:11:11',
+                         'ACT'
+                     );
+
+            INSERT INTO prv_object VALUES ();
+            INSERT INTO prv_user (
+                id, login, first_name, last_name, password, email, created, status
+            ) VALUES (
+                         LAST_INSERT_ID(),
+                         'user',
+                         'Jan',
+                         'Kowalski',
+                         '$2y$12$ngM3Q/403lEc0pTH7fi16uoFRc3FQmmIugn2AuwjEigj3DTp/np0W',
+                         'demo@morecraft.pl',
+                         '2015-11-11 11:11:11',
+                         'ACT'
+                     );
+
+            INSERT INTO prv_object VALUES ();
+            INSERT INTO prv_user (
+                id, login, first_name, last_name, password, email, created, status
+            ) VALUES (
+                         LAST_INSERT_ID(),
+                         'jan.nowak',
+                         'Jan',
+                         'Nowak',
+                         '$2y$12$ngM3Q/403lEc0pTH7fi16uoFRc3FQmmIugn2AuwjEigj3DTp/np0W',
+                         'jan.nowak@morecraft.pl',
+                         '2015-12-12 12:12:12',
+                         'ACT'
+                     );
+
+            INSERT INTO prv_object VALUES ();
+            INSERT INTO prv_user (
+                id, login, first_name, last_name, password, email, created, status
+            ) VALUES (
+                         LAST_INSERT_ID(),
+                         'marian.kowalski',
+                         'Marian',
+                         'Kowalski',
+                         '$2y$12$ngM3Q/403lEc0pTH7fi16uoFRc3FQmmIugn2AuwjEigj3DTp/np0W',
+                         'marian.kowalski@morecraft.pl',
+                         '2015-11-17 16:00:00',
+                         'ACT'
+                     );
+
+            INSERT INTO prv_object VALUES ();
+            INSERT INTO prv_user (
+                id, login, first_name, last_name, password, email, created, status
+            ) VALUES (
+                         LAST_INSERT_ID(),
+                         'jan.kos',
+                         'Jan',
+                         'Kos',
+                         '$2y$12$ngM3Q/403lEc0pTH7fi16uoFRc3FQmmIugn2AuwjEigj3DTp/np0W',
+                         'jan.kos@morecraft.pl',
+                         '2015-11-17 17:45:32',
+                         'HNG'
+                     );
+
+            INSERT INTO prv_object VALUES ();
+            INSERT INTO prv_user (
+                id, login, first_name, last_name, password, email, created, status
+            ) VALUES (
+                         LAST_INSERT_ID(),
+                         'adam.trocki',
+                         'Adam',
+                         'Trocki',
+                         '$2y$12$ngM3Q/403lEc0pTH7fi16uoFRc3FQmmIugn2AuwjEigj3DTp/np0W',
+                         'adam.trocki@morecraft.pl',
+                         '2015-11-15 16:34:19',
+                         'DSB'
+                     );
+
+            INSERT INTO prv_object VALUES ();
+            INSERT INTO prv_user (
+                id, login, first_name, last_name, password, email, created, status
+            ) VALUES (
+                         LAST_INSERT_ID(),
+                         'regular.user',
+                         'Edward',
+                         'Środoń',
+                         '$2y$12$ngM3Q/403lEc0pTH7fi16uoFRc3FQmmIugn2AuwjEigj3DTp/np0W',
+                         'regular.user@morecraft.pl',
+                         '2015-11-09 23:56:48',
+                         'DSB'
+                     );
+        </sql>
+
+        <!-- CREATE TRANSACTIONS -->
+        <sql>
+            INSERT INTO prv_object VALUES ();
+            INSERT INTO mod_transaction (
+                id, reference, type, creator, value, created
+            ) VALUES (
+                         LAST_INSERT_ID(),
+                         'TRA151112121212',
+                         'NOR',
+                         (SELECT id
+                          FROM prv_user
+                          WHERE login = 'admin'),
+                         12.50,
+                         '2015-11-12 12:12:12'
+                     );
+
+            INSERT INTO prv_object VALUES ();
+            INSERT INTO mod_transaction (
+                id, reference, type, creator, value, created
+            ) VALUES (
+                         LAST_INSERT_ID(),
+                         'TRA151113150000',
+                         'OTH',
+                         (SELECT id
+                          FROM prv_user
+                          WHERE login = 'user'),
+                         10.50,
+                         '2015-11-13 15:00:00'
+                     );
+        </sql>
+
+        <!-- CREATE REDISTRIBUTIONS -->
+        <sql>
+            INSERT INTO mod_redistribution (
+                type, parent, user, value
+            ) VALUES (
+                         'O',
+                         (SELECT id
+                          FROM mod_transaction
+                          WHERE reference = 'TRA151112121212'),
+                         (SELECT id
+                          FROM prv_user
+                          WHERE login = 'admin'),
+                         12.5
+                     );
+            INSERT INTO mod_redistribution (
+                type, parent, user, value
+            ) VALUES (
+                         'C',
+                         (SELECT id
+                          FROM mod_transaction
+                          WHERE reference = 'TRA151112121212'),
+                         (SELECT id
+                          FROM prv_user
+                          WHERE login = 'adam.trocki'),
+                         2.5
+                     );
+            INSERT INTO mod_redistribution (
+                type, parent, user, value
+            ) VALUES (
+                         'C',
+                         (SELECT id
+                          FROM mod_transaction
+                          WHERE reference = 'TRA151112121212'),
+                         (SELECT id
+                          FROM prv_user
+                          WHERE login = 'jan.nowak'),
+                         10
+                     );
+
+
+            INSERT INTO mod_redistribution (
+                type, parent, user, value
+            ) VALUES (
+                         'O',
+                         (SELECT id
+                          FROM mod_transaction
+                          WHERE reference = 'TRA151113150000'),
+                         (SELECT id
+                          FROM prv_user
+                          WHERE login = 'user'),
+                         5
+                     );
+            INSERT INTO mod_redistribution (
+                type, parent, user, value
+            ) VALUES (
+                         'O',
+                         (SELECT id
+                          FROM mod_transaction
+                          WHERE reference = 'TRA151113150000'),
+                         (SELECT id
+                          FROM prv_user
+                          WHERE login = 'admin'),
+                         5.5
+                     );
+            INSERT INTO mod_redistribution (
+                type, parent, user, value
+            ) VALUES (
+                         'C',
+                         (SELECT id
+                          FROM mod_transaction
+                          WHERE reference = 'TRA151113150000'),
+                         (SELECT id
+                          FROM prv_user
+                          WHERE login = 'adam.trocki'),
+                         3
+                     );
+            INSERT INTO mod_redistribution (
+                type, parent, user, value
+            ) VALUES (
+                         'C',
+                         (SELECT id
+                          FROM mod_transaction
+                          WHERE reference = 'TRA151113150000'),
+                         (SELECT id
+                          FROM prv_user
+                          WHERE login = 'jan.nowak'),
+                         3
+                     );
+            INSERT INTO mod_redistribution (
+                type, parent, user, value
+            ) VALUES (
+                         'C',
+                         (SELECT id
+                          FROM mod_transaction
+                          WHERE reference = 'TRA151113150000'),
+                         (SELECT id
+                          FROM prv_user
+                          WHERE login = 'jan.kos'),
+                         4.5
+                     );
+        </sql>
+
+        <!-- CREATE COMMENTS -->
+        <sql>
+            INSERT INTO prv_object VALUES ();
+            INSERT INTO mod_comment (
+                id, prv_object, prv_user, parent, created, value
+            ) VALUES (
+                         LAST_INSERT_ID(),
+                         (SELECT id
+                          FROM mod_transaction
+                          WHERE reference = 'TRA151112121212'),
+                         (SELECT id
+                          FROM prv_user
+                          WHERE login = 'user'),
+                         NULL,
+                         '2015-12-21 14:14:40',
+                         'Comment by user to TRA151112121212'
+                     );
+        </sql>
+
+        <!-- CREATE CATEGORIES -->
+        <sql>
+            INSERT INTO mod_category (
+                code, description
+            ) VALUES (
+                         'FFD',
+                         'Food'
+                     );
+            INSERT INTO mod_category (
+                code, description
+            ) VALUES (
+                         'FNC',
+                         'Finance'
+                     );
+            INSERT INTO mod_category (
+                code, description
+            ) VALUES (
+                         'TRN',
+                         'Transportation'
+                     );
+            INSERT INTO mod_category (
+                code, description
+            ) VALUES (
+                         'INF',
+                         'Infrastructure'
+                     );
+            INSERT INTO mod_category (
+                code, description
+            ) VALUES (
+                         'BLS',
+                         'Bills'
+                     );
+            INSERT INTO mod_category (
+                code, description
+            ) VALUES (
+                         'THG',
+                         'Things'
+                     );
+            INSERT INTO mod_category (
+                code, description
+            ) VALUES (
+                         'ENT',
+                         'Entertainment'
+                     );
+        </sql>
+
+        <!-- CREATE ROLES -->
+        <sql>
+            INSERT INTO prv_object VALUES ();
+            INSERT INTO prv_role (
+                id, name
+            ) VALUES (
+                         LAST_INSERT_ID(),
+                         'Administrator'
+                     );
+
+            INSERT INTO prv_object VALUES ();
+            INSERT INTO prv_role (
+                id, name
+            ) VALUES (
+                         LAST_INSERT_ID(),
+                         'Moderator'
+                     );
+
+            INSERT INTO prv_object VALUES ();
+            INSERT INTO prv_role (
+                id, name
+            ) VALUES (
+                         LAST_INSERT_ID(),
+                         'User'
+                     );
+
+            INSERT INTO prv_privilege (
+                prv_object, prv_owner, operation_type
+            ) VALUES (
+                         NULL,
+                         (SELECT id
+                          FROM prv_role
+                          WHERE name = 'Administrator'),
+                         'ADM'
+                     );
+            INSERT INTO prv_privilege (
+                prv_object, prv_owner, operation_type
+            ) VALUES (
+                         NULL,
+                         (SELECT id
+                          FROM prv_role
+                          WHERE name = 'Administrator'),
+                         'CRT'
+                     );
+            INSERT INTO prv_privilege (
+                prv_object, prv_owner, operation_type
+            ) VALUES (
+                         NULL,
+                         (SELECT id
+                          FROM prv_role
+                          WHERE name = 'Administrator'),
+                         'RDM'
+                     );
+            INSERT INTO prv_privilege (
+                prv_object, prv_owner, operation_type
+            ) VALUES (
+                         NULL,
+                         (SELECT id
+                          FROM prv_role
+                          WHERE name = 'Administrator'),
+                         'EDT'
+                     );
+
+            INSERT INTO prv_privilege (
+                prv_object, prv_owner, operation_type
+            ) VALUES (
+                         NULL,
+                         (SELECT id
+                          FROM prv_role
+                          WHERE name = 'Moderator'),
+                         'CRT'
+                     );
+            INSERT INTO prv_privilege (
+                prv_object, prv_owner, operation_type
+            ) VALUES (
+                         NULL,
+                         (SELECT id
+                          FROM prv_role
+                          WHERE name = 'Moderator'),
+                         'RDM'
+                     );
+            INSERT INTO prv_privilege (
+                prv_object, prv_owner, operation_type
+            ) VALUES (
+                         NULL,
+                         (SELECT id
+                          FROM prv_role
+                          WHERE name = 'Moderator'),
+                         'EDT'
+                     );
+
+            INSERT INTO prv_privilege (
+                prv_object, prv_owner, operation_type
+            ) VALUES (
+                         NULL,
+                         (SELECT id
+                          FROM prv_role
+                          WHERE name = 'User'),
+                         'RDM'
+                     );
+        </sql>
+
+        <!-- ADD USER TO ROLES -->
+        <sql>
+            INSERT INTO prv_user_role (
+                prv_user, prv_role
+            ) VALUES (
+                         (SELECT id
+                          FROM prv_user
+                          WHERE login = 'admin'),
+                         (SELECT id
+                          FROM prv_role
+                          WHERE name = 'Administrator')
+                     );
+
+            INSERT INTO prv_user_role (
+                prv_user, prv_role
+            ) VALUES (
+                         (SELECT id
+                          FROM prv_user
+                          WHERE login = 'jan.nowak'),
+                         (SELECT id
+                          FROM prv_role
+                          WHERE name = 'Moderator')
+                     );
+
+            INSERT INTO prv_user_role (
+                prv_user, prv_role
+            ) VALUES (
+                         (SELECT id
+                          FROM prv_user
+                          WHERE login = 'jan.kos'),
+                         (SELECT id
+                          FROM prv_role
+                          WHERE name = 'Moderator')
+                     );
+
+            INSERT INTO prv_user_role (
+                prv_user, prv_role
+            ) VALUES (
+                         (SELECT id
+                          FROM prv_user
+                          WHERE login = 'user'),
+                         (SELECT id
+                          FROM prv_role
+                          WHERE name = 'User')
+                     );
+
+            INSERT INTO prv_user_role (
+                prv_user, prv_role
+            ) VALUES (
+                         (SELECT id
+                          FROM prv_user
+                          WHERE login = 'adam.trocki'),
+                         (SELECT id
+                          FROM prv_role
+                          WHERE name = 'User')
+                     );
+        </sql>
+
+        <rollback>
+            <delete tableName="mod_comment"/>
+            <delete tableName="mod_transaction"/>
+            <delete tableName="prv_user"/>
+        </rollback>
+
+    </changeSet>
+
 </databaseChangeLog>

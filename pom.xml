@@ -19,6 +19,8 @@
 
     <properties>
         <java.version>11</java.version>
+        <settler.db.driver>com.mysql.jdbc.Driver</settler.db.driver>
+        <settler.db.dialect>org.hibernate.dialect.MySQLInnoDBDialect</settler.db.dialect>
         <settler.db.context>prod</settler.db.context>
         <start-class>pl.morecraft.dev.settler.Application</start-class>
         <settler.db.contexts>dev</settler.db.contexts>
@@ -117,6 +119,11 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
         </dependency>
 
         <dependency>
@@ -353,7 +360,7 @@
                 <version>3.5.1</version>
                 <configuration>
                     <changeLogFile>db/changelog/db.changelog-master.xml</changeLogFile>
-                    <driver>com.mysql.jdbc.Driver</driver>
+                    <driver>${settler.db.driver}</driver>
                     <url>${settler.db.url}</url>
                     <username>${settler.db.user}</username>
                     <password>${settler.db.password}</password>

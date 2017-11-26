@@ -11,7 +11,7 @@ spring:
     user: @settler.db.user@
     password: @settler.db.password@
   datasource:
-    driver-class-name: com.mysql.jdbc.Driver
+    driver-class-name: @settler.db.driver@
     url: @settler.db.url@
     username: @settler.db.user@
     password: @settler.db.password@
@@ -20,7 +20,7 @@ spring:
     username: @settler.mail.username@
     password: @settler.mail.password@
   jpa:
-    database-platform: org.hibernate.dialect.MySQLInnoDBDialect
+    database-platform: @settler.db.dialect@
   servlet:
     multipart:
       max-request-size: 50MB

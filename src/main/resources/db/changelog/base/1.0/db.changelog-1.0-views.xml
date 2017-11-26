@@ -6,14 +6,58 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
-    <changeSet id="1.0-views" author="settler">
+    <changeSet id="1.0-views" author="settler" dbms="postgresql">
 
         <createView viewName="view_mod_transaction">
             SELECT
                 s.id,
                 s.type,
-                CONCAT(IF(ISNULL(c.first_name), '', CONCAT(c.first_name, ' ')),
-                       IF(ISNULL(c.last_name), '', c.last_name))                      AS creator,
+                CONCAT(COALESCE(CONCAT(c.first_name, ' ', '')),
+                       COALESCE(C.last_name, ''))                          AS creator,
+                STRING_AGG(CONCAT(ow.first_name, ' ', ow.last_name), ', ') AS owners,
+                STRING_AGG(CONCAT(cn.first_name, ' ', cn.last_name), ', ') AS contractors,
+                s.reference,
+                s.value,
+                s.created,
+                s.evaluated,
+                (SELECT COUNT(*)
+                 FROM mod_comment mc
+                 WHERE mc.prv_object = s.id)                               AS comment_count
+            FROM dev_settler.public.mod_transaction s
+                LEFT JOIN prv_user c
+                    ON s.creator = c.id
+                LEFT JOIN mod_redistribution r
+                    ON s.id = r.parent
+                LEFT JOIN prv_user ow
+                    ON r.user = ow.id
+                       AND r.type = 'O'
+                LEFT JOIN prv_user cn
+                    ON r.user = cn.id
+                       AND r.type = 'C'
+            GROUP BY s.id,
+                s.type,
+                c.first_name,
+                c.last_name,
+                ow.first_name,
+                ow.last_name,
+                cn.first_name,
+                cn.last_name,
+                s.reference,
+                s.value,
+                s.created,
+                s.evaluated;
+        </createView>
+
+    </changeSet>
+
+    <changeSet id="1.0-views" author="settler" dbms="mysql">
+
+        <createView viewName="view_mod_transaction">
+            SELECT
+                s.id,
+                s.type,
+                CONCAT(IF(ISNULL( C.first_name), '', CONCAT(c.first_name, ' ')),
+                       IF(ISNULL( C.last_name), '', c.last_name))                     AS creator,
                 GROUP_CONCAT(CONCAT(ow.first_name, ' ', ow.last_name) SEPARATOR ', ') AS owners,
                 GROUP_CONCAT(CONCAT(cn.first_name, ' ', cn.last_name) SEPARATOR ', ') AS contractors,
                 s.reference,

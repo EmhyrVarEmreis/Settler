@@ -6,7 +6,122 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
-    <changeSet id="1.0-procedures" author="settler">
+    <changeSet id="1.0-procedures" author="settler" dbms="postgresql">
+
+        <sql>
+            DROP FUNCTION IF EXISTS dev_settler.public.proc_jtb_object_privilege_refresh_by_owner( BIGINT );
+            DROP FUNCTION IF EXISTS dev_settler.public.proc_jtb_object_hierarchy_insert( BIGINT, BIGINT );
+            DROP FUNCTION IF EXISTS dev_settler.public.proc_jtb_object_hierarchy_delete( BIGINT, BIGINT );
+        </sql>
+
+        <createProcedure>
+            CREATE OR REPLACE FUNCTION dev_settler.public.proc_jtb_object_privilege_refresh_by_owner(owner BIGINT)
+                          RETURNS VOID AS $proc_jtb_object_privilege_refresh_by_owner$
+            BEGIN
+            DELETE FROM jtb_object_privilege
+            WHERE prv_object_from = owner;
+
+            INSERT INTO jtb_object_privilege (prv_object_from, prv_object_to, operation_type)
+            SELECT DISTINCT *
+            FROM (
+                     SELECT
+                         pp.prv_owner,
+                         pp.prv_object,
+                         pp.operation_type
+                     FROM prv_privilege pp
+                     WHERE pp.prv_owner = owner
+                     UNION ALL
+                     SELECT DISTINCT
+                         pur.prv_user,
+                         pp.prv_object,
+                         pp.operation_type
+                     FROM prv_user_role pur
+                              INNER JOIN prv_role pr
+                                         ON pr.id = pur.prv_role
+                              INNER JOIN prv_privilege pp
+                                         ON pp.prv_owner = pur.prv_role
+                     WHERE pur.prv_user = owner
+                       AND
+                         pp.prv_object IS NOT NULL
+                     UNION ALL
+                     SELECT DISTINCT
+                         pur.prv_user,
+                         pur.target,
+                         pp.operation_type
+                     FROM prv_user_role pur
+                              INNER JOIN prv_role pr
+                                         ON pr.id = pur.prv_role
+                              INNER JOIN prv_privilege pp
+                                         ON pp.prv_owner = pur.prv_role
+                     WHERE pur.prv_user = owner)
+                     AS sub;
+            END;
+            $proc_jtb_object_privilege_refresh_by_owner$ LANGUAGE plpgsql;
+        </createProcedure>
+
+        <createProcedure>
+            CREATE OR REPLACE FUNCTION dev_settler.public.proc_jtb_object_hierarchy_insert(parent BIGINT, child BIGINT)
+                          RETURNS VOID AS $proc_jtb_object_hierarchy_insert$
+            BEGIN
+            INSERT INTO jtb_object_hierarchy (
+                prv_object_from,
+                prv_object_to
+            ) VALUES (
+                         parent,
+                         child
+                     );
+
+            INSERT INTO jtb_object_hierarchy (
+                prv_object_from,
+                prv_object_to
+            ) SELECT
+                  parent,
+                  h.prv_object_to
+            FROM jtb_object_hierarchy h
+            WHERE h.prv_object_from = child;
+
+            INSERT INTO jtb_object_hierarchy (
+                prv_object_from,
+                prv_object_to
+            ) SELECT
+                  h.prv_object_from,
+                  child
+            FROM jtb_object_hierarchy h
+            WHERE h.prv_object_to = parent;
+            END;
+            $proc_jtb_object_hierarchy_insert$ LANGUAGE plpgsql;
+        </createProcedure>
+
+        <createProcedure>
+            CREATE OR REPLACE FUNCTION dev_settler.public.proc_jtb_object_hierarchy_delete(parent BIGINT, child BIGINT)
+                          RETURNS VOID AS $proc_jtb_object_hierarchy_delete$
+            BEGIN
+            DELETE FROM jtb_object_hierarchy
+            WHERE prv_object_to IN (SELECT id
+                                    FROM (SELECT prv_object_to AS id
+                                          FROM jtb_object_hierarchy hj
+                                          WHERE hj.prv_object_from = 5
+                                          UNION
+                                          (SELECT 5)) AS sub)
+              AND prv_object_from IN (SELECT id
+                                      FROM (SELECT prv_object_from AS id
+                                            FROM jtb_object_hierarchy hj
+                                            WHERE hj.prv_object_to = 7
+                                            UNION
+                                            (SELECT 7)) AS sub);
+            END;
+            $proc_jtb_object_hierarchy_delete$ LANGUAGE plpgsql;
+        </createProcedure>
+
+        <rollback>
+            DROP FUNCTION IF EXISTS dev_settler.public.proc_jtb_object_privilege_refresh_by_owner;
+            DROP FUNCTION IF EXISTS dev_settler.public.proc_jtb_object_hierarchy_insert;
+            DROP FUNCTION IF EXISTS dev_settler.public.proc_jtb_object_hierarchy_delete;
+        </rollback>
+
+    </changeSet>
+
+    <changeSet id="1.0-procedures" author="settler" dbms="mysql">
 
         <sql>
             DROP PROCEDURE IF EXISTS proc_jtb_object_privilege_refresh_by_owner;
@@ -16,95 +131,95 @@
 
         <createProcedure>
             CREATE PROCEDURE proc_jtb_object_privilege_refresh_by_owner(owner BIGINT)
-                BEGIN
-                    DELETE FROM jtb_object_privilege
-                    WHERE prv_object_from = owner;
+            BEGIN
+                DELETE FROM jtb_object_privilege
+                WHERE prv_object_from = owner;
 
-                    INSERT INTO jtb_object_privilege (prv_object_from, prv_object_to, operation_type)
-                        SELECT DISTINCT *
-                        FROM (
-                                 SELECT
-                                     pp.prv_owner,
-                                     pp.prv_object,
-                                     pp.operation_type
-                                 FROM prv_privilege pp
-                                 WHERE pp.prv_owner = owner
-                                 UNION ALL
-                                 SELECT DISTINCT
-                                     pur.prv_user,
-                                     pp.prv_object,
-                                     pp.operation_type
-                                 FROM prv_user_role pur
-                                     INNER JOIN prv_role pr
-                                         ON pr.id = pur.prv_role
-                                     INNER JOIN prv_privilege pp
-                                         ON pp.prv_owner = pur.prv_role
-            WHERE pur.prv_user = owner
-            AND
-            pp.prv_object IS NOT NULL
-            UNION ALL
-            SELECT DISTINCT
-            pur.prv_user,
-            pur.target,
-            pp.operation_type
-            FROM prv_user_role pur
-            INNER JOIN prv_role pr
-            ON pr.id = pur.prv_role
-            INNER JOIN prv_privilege pp
-            ON pp.prv_owner = pur.prv_role
-                                 WHERE pur.prv_user = owner)
-                            AS sub;
-                END;
+                INSERT INTO jtb_object_privilege (prv_object_from, prv_object_to, operation_type)
+                SELECT DISTINCT *
+                FROM (
+                         SELECT
+                             pp.prv_owner,
+                             pp.prv_object,
+                             pp.operation_type
+                         FROM prv_privilege pp
+                         WHERE pp.prv_owner = owner
+                         UNION ALL
+                         SELECT DISTINCT
+                             pur.prv_user,
+                             pp.prv_object,
+                             pp.operation_type
+                         FROM prv_user_role pur
+                                  INNER JOIN prv_role pr
+                                             ON pr.id = pur.prv_role
+                                  INNER JOIN prv_privilege pp
+                                             ON pp.prv_owner = pur.prv_role
+                         WHERE pur.prv_user = owner
+                           AND
+                             pp.prv_object IS NOT NULL
+                         UNION ALL
+                         SELECT DISTINCT
+                             pur.prv_user,
+                             pur.target,
+                             pp.operation_type
+                         FROM prv_user_role pur
+                                  INNER JOIN prv_role pr
+                                             ON pr.id = pur.prv_role
+                                  INNER JOIN prv_privilege pp
+                                             ON pp.prv_owner = pur.prv_role
+                         WHERE pur.prv_user = owner)
+                         AS sub;
+            END;
         </createProcedure>
 
         <createProcedure>
             CREATE PROCEDURE proc_jtb_object_hierarchy_insert(parent BIGINT, child BIGINT)
-                BEGIN
-                    INSERT INTO jtb_object_hierarchy (
-                        prv_object_from,
-                        prv_object_to
-                    ) VALUES (
-                        parent,
-                        child
-                    );
+            BEGIN
+                INSERT INTO jtb_object_hierarchy (
+                    prv_object_from,
+                    prv_object_to
+                ) VALUES (
+                             parent,
+                             child
+                         );
 
-                    INSERT INTO jtb_object_hierarchy (
-                        prv_object_from,
-                        prv_object_to
-                    ) SELECT
-                          parent,
-                          h.prv_object_to
-                      FROM jtb_object_hierarchy h
-                      WHERE h.prv_object_from = child;
+                INSERT INTO jtb_object_hierarchy (
+                    prv_object_from,
+                    prv_object_to
+                ) SELECT
+                      parent,
+                      h.prv_object_to
+                FROM jtb_object_hierarchy h
+                WHERE h.prv_object_from = child;
 
-                    INSERT INTO jtb_object_hierarchy (
-                        prv_object_from,
-                        prv_object_to
-                    ) SELECT
-                          h.prv_object_from,
-                          child
-                      FROM jtb_object_hierarchy h
-                      WHERE h.prv_object_to = parent;
-                END;
+                INSERT INTO jtb_object_hierarchy (
+                    prv_object_from,
+                    prv_object_to
+                ) SELECT
+                      h.prv_object_from,
+                      child
+                FROM jtb_object_hierarchy h
+                WHERE h.prv_object_to = parent;
+            END;
         </createProcedure>
 
         <createProcedure>
             CREATE PROCEDURE proc_jtb_object_hierarchy_delete(parent BIGINT, child BIGINT)
-                BEGIN
-                    DELETE FROM jtb_object_hierarchy
-                    WHERE prv_object_to IN (SELECT id
-                                            FROM (SELECT prv_object_to AS id
-                                                  FROM jtb_object_hierarchy hj
-                                                  WHERE hj.prv_object_from = 5
-                                                  UNION
-                                                  (SELECT 5)) AS sub)
-                          AND prv_object_from IN (SELECT id
-                                                  FROM (SELECT prv_object_from AS id
-                                                        FROM jtb_object_hierarchy hj
-                                                        WHERE hj.prv_object_to = 7
-                                                        UNION
-                                                        (SELECT 7)) AS sub);
-                END;
+            BEGIN
+                DELETE FROM jtb_object_hierarchy
+                WHERE prv_object_to IN (SELECT id
+                                        FROM (SELECT prv_object_to AS id
+                                              FROM jtb_object_hierarchy hj
+                                              WHERE hj.prv_object_from = 5
+                                              UNION
+                                              (SELECT 5)) AS sub)
+                  AND prv_object_from IN (SELECT id
+                                          FROM (SELECT prv_object_from AS id
+                                                FROM jtb_object_hierarchy hj
+                                                WHERE hj.prv_object_to = 7
+                                                UNION
+                                                (SELECT 7)) AS sub);
+            END;
         </createProcedure>
 
         <rollback>
@@ -114,6 +229,5 @@
         </rollback>
 
     </changeSet>
-
 
 </databaseChangeLog>

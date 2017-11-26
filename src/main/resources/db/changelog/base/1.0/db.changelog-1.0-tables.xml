@@ -13,8 +13,9 @@
                     type="bigint"
                     autoIncrement="true">
                 <constraints primaryKey="true"
+                             primaryKeyName="PK_prv_object_id"
                              unique="true"
-                             primaryKeyName="PK_prv_object_id"/>
+                             uniqueConstraintName="UQ_prv_object_id"/>
             </column>
         </createTable>
 
@@ -22,7 +23,9 @@
             <column name="code"
                     type="nvarchar(3)">
                 <constraints primaryKey="true"
-                             primaryKeyName="PK_dct_transaction_type_code"/>
+                             primaryKeyName="PK_dct_transaction_type_code"
+                             unique="true"
+                             uniqueConstraintName="UQ_dct_transaction_type_code"/>
             </column>
             <column name="description"
                     type="nvarchar(32)"/>
@@ -32,7 +35,9 @@
             <column name="code"
                     type="nvarchar(3)">
                 <constraints primaryKey="true"
-                             primaryKeyName="PK_dct_user_status_code"/>
+                             primaryKeyName="PK_dct_user_status_code"
+                             unique="true"
+                             uniqueConstraintName="UQ_dct_user_status_code"/>
             </column>
             <column name="description"
                     type="nvarchar(32)"/>
@@ -53,7 +58,9 @@
                     type="bigint"
                     autoIncrement="true">
                 <constraints primaryKey="true"
-                             primaryKeyName="PK_mod_category_id"/>
+                             primaryKeyName="PK_mod_category_id"
+                             unique="true"
+                             uniqueConstraintName="UQ_mod_category_id"/>
             </column>
             <column name="code"
                     type="nvarchar(3)">
@@ -83,7 +90,9 @@
                 <constraints primaryKey="true"
                              primaryKeyName="PK_prv_user_id"
                              references="prv_object(id)"
-                             foreignKeyName="FK_prv_user_id_prv_object_id"/>
+                             foreignKeyName="FK_prv_user_id_prv_object_id"
+                             unique="true"
+                             uniqueConstraintName="UQ_prv_user_id"/>
             </column>
             <column name="login"
                     type="nvarchar(32)">
@@ -154,7 +163,9 @@
                 <constraints primaryKey="true"
                              primaryKeyName="PK_mod_transaction_id"
                              references="prv_object(id)"
-                             foreignKeyName="FK_mod_transaction_id_prv_object_id"/>
+                             foreignKeyName="FK_mod_transaction_id_prv_object_id"
+                             unique="true"
+                             uniqueConstraintName="UQ_mod_transaction_id"/>
             </column>
             <column name="reference" type="varchar(64)">
                 <constraints nullable="false"
@@ -195,7 +206,9 @@
                 <constraints primaryKey="true"
                              primaryKeyName="PK_mod_comment_id"
                              references="prv_object(id)"
-                             foreignKeyName="FK_mod_comment_id_prv_object_id"/>
+                             foreignKeyName="FK_mod_comment_id_prv_object_id"
+                             unique="true"
+                             uniqueConstraintName="UQ_mod_comment_id"/>
             </column>
             <column name="prv_object"
                     type="bigint">
@@ -248,8 +261,11 @@
             <column name="id"
                     type="bigint">
                 <constraints primaryKey="true"
+                             primaryKeyName="PK_prv_role_id"
                              references="prv_object(id)"
-                             foreignKeyName="FK_prv_role_prv_object"/>
+                             foreignKeyName="FK_prv_role_prv_object"
+                             unique="true"
+                             uniqueConstraintName="UQ_prv_role_id"/>
             </column>
             <column name="name"
                     type="nvarchar(50)"/>
@@ -339,6 +355,5 @@
         </createTable>
 
     </changeSet>
-
 
 </databaseChangeLog>

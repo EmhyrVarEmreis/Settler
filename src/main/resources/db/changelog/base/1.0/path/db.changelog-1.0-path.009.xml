@@ -11,11 +11,13 @@
         <createTable tableName="mod_file">
             <column name="id"
                     type="bigint">
-                <constraints primaryKey="true"
+                <constraints nullable="false"
+                             primaryKey="true"
                              primaryKeyName="PK_mod_file_id"
                              references="prv_object(id)"
-                             nullable="false"
-                             foreignKeyName="FK_mod_file_id_prv_object_id"/>
+                             foreignKeyName="FK_mod_file_id_prv_object_id"
+                             unique="true"
+                             uniqueConstraintName="UQ_mod_file_id"/>
             </column>
             <column name="name"
                     type="nvarchar(32)">
