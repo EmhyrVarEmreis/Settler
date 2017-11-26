@@ -97,7 +97,7 @@ public class CategoryService extends AbstractService<Category, CategoryDTO, Cate
                 .select(category, transaction.value.sum())
                 .where(transaction.creator.id.eq(userId))
                 .where(transaction.categories.contains(category))
-                .groupBy(category.code, category.description)
+                .groupBy(category.code, category.description, category.id)
                 .orderBy(transaction.value.sum().desc())
                 .fetch();
         ModelMapper preparedModelMapper = getModelMapper();

@@ -74,7 +74,7 @@ public class Redistribution {
         private PrivilegeObject parent;
 
         @ManyToOne(optional = false)
-        @JoinColumn(name = "user")
+        @JoinColumn(name = "\"user\"")
         private User user;
 
         public RedistributionId() {
