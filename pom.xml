@@ -366,7 +366,7 @@
                     <password>${settler.db.password}</password>
                     <verbose>false</verbose>
                     <logging>info</logging>
-                    <contexts>${settler.db.context}</contexts>
+                    <contexts>${settler.db.contexts}</contexts>
                     <promptOnNonLocalDatabase>false</promptOnNonLocalDatabase>
                 </configuration>
             </plugin>
