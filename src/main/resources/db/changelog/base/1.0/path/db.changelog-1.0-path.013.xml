@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="1.0-path-013" author="settler" dbms="postgresql">
+
+        <createProcedure>
+            CREATE OR REPLACE FUNCTION dev_settler.public.get_next_custom_sequence(seq_name VARCHAR)
+                RETURNS BIGINT AS $get_next_custom_sequence$
+            DECLARE
+                curr_seq BIGINT;
+            BEGIN
+                curr_seq := (SELECT ss.sequence_number
+                             FROM sys_sequence ss
+                             WHERE ss.sequence_name = seq_name);
+                IF curr_seq IS NULL
+                THEN
+                    curr_seq = 1;
+                    INSERT INTO sys_sequence (sequence_name, sequence_number) VALUES (seq_name, curr_seq);
+                ELSE
+                    curr_seq = curr_seq + 1;
+                    UPDATE sys_sequence ss
+                    SET sequence_number = curr_seq
+                    WHERE ss.sequence_name = seq_name;
+                END IF;
+                RETURN curr_seq;
+            END;
+            $get_next_custom_sequence$ LANGUAGE plpgsql;
+        </createProcedure>
+
+    </changeSet>
+
+    <changeSet id="1.0-path-013" author="settler" dbms="mysql">
+
+        <sql>
+            DROP FUNCTION IF EXISTS dev_settler.get_next_custom_sequence;
+        </sql>
+
+        <createProcedure>
+            CREATE FUNCTION dev_settler.get_next_custom_sequence(seq_name VARCHAR(128))
+                RETURNS BIGINT
+            BEGIN
+            DECLARE curr_seq BIGINT;
+            SET curr_seq = (SELECT ss.sequence_number
+                            FROM sys_sequence ss
+                            WHERE ss.sequence_name = seq_name);
+            IF curr_seq IS NULL
+            THEN
+            SET curr_seq = 1;
+            INSERT INTO sys_sequence (sequence_name, sequence_number) VALUES (seq_name, curr_seq);
+            ELSE
+            SET curr_seq = curr_seq + 1;
+            UPDATE sys_sequence ss
+            SET sequence_number = curr_seq
+            WHERE ss.sequence_name = seq_name;
+            END IF;
+            RETURN curr_seq;
+            END;
+        </createProcedure>
+
+    </changeSet>
+
+</databaseChangeLog>
