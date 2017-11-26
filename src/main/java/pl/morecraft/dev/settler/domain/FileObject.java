@@ -29,7 +29,7 @@ public class FileObject extends PrivilegeObject {
     @Column(nullable = false)
     private LocalDateTime updated;
 
-    @Lob
+    @Column
     private byte[] content;
 
     public FileObject() {
