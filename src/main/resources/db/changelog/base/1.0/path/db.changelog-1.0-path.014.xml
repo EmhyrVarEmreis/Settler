@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="1.0-path-014" author="settler">
+
+        <createView viewName="view_stat_general" replaceIfExists="true">
+            SELECT
+                (SELECT COUNT(mt.id)
+                 FROM mod_transaction mt) AS trancations_count,
+                (SELECT SUM(mt.value)
+                 FROM mod_transaction mt) AS transactions_value,
+                (SELECT COUNT(pv.id)
+                 FROM prv_user pv)        AS users_count;
+        </createView>
+
+    </changeSet>
+
+</databaseChangeLog>
