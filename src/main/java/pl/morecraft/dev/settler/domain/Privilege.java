@@ -1,9 +1,13 @@
 package pl.morecraft.dev.settler.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import pl.morecraft.dev.settler.domain.dictionaries.OperationType;
 
 import javax.persistence.*;
 
+@Builder
+@AllArgsConstructor
 @Entity
 @Table(name = "prv_privilege")
 public class Privilege {

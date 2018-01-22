@@ -7,7 +7,8 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
-import pl.morecraft.dev.settler.service.GraphService;
+import pl.morecraft.dev.settler.service.ExampleDataService;
+import pl.morecraft.dev.settler.service.GraphSynchronizationService;
 
 @SpringBootApplication
 @EnableConfigurationProperties
@@ -21,8 +22,10 @@ public class ApplicationTest extends SpringBootServletInitializer {
                 .headless(false)
                 .run(args);
 
-        GraphService testService = context.getBean(GraphService.class);
+//        ExampleDataService exampleDataService = context.getBean(ExampleDataService.class);
+//        exampleDataService.createExampleData();
 
-        testService.doThings();
+        GraphSynchronizationService graphSynchronizationService = context.getBean(GraphSynchronizationService.class);
+        graphSynchronizationService.doThings();
     }
 }

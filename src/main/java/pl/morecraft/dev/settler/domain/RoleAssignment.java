@@ -1,8 +1,15 @@
 package pl.morecraft.dev.settler.domain;
 
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
+@Getter
+@Setter
+@Builder
 @Entity
 @Table(name = "prv_user_role")
 @IdClass(RoleAssignment.RoleAssignmentPK.class)
@@ -35,22 +42,6 @@ public class RoleAssignment {
         this.user = user;
         this.role = role;
         this.target = target;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
     }
 
     @SuppressWarnings("SimplifiableIfStatement")

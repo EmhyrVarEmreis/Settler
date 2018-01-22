@@ -1,11 +1,13 @@
 package pl.morecraft.dev.settler.domain;
 
+import lombok.Builder;
 import pl.morecraft.dev.settler.domain.dictionaries.RedistributionType;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
+@Builder
 @Table(name = "mod_redistribution")
 public class Redistribution {
 
@@ -63,6 +65,7 @@ public class Redistribution {
         return id != null ? id.hashCode() : 0;
     }
 
+    @Builder
     @Embeddable
     public static class RedistributionId implements Serializable {
 

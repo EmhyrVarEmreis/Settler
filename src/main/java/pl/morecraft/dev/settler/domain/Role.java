@@ -1,5 +1,7 @@
 package pl.morecraft.dev.settler.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import org.hibernate.envers.NotAudited;
 
 import javax.persistence.Entity;
@@ -8,6 +10,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.List;
 
+@Builder
+@AllArgsConstructor
 @Entity
 @Table(name = "prv_role")
 public class Role extends PrivilegeObject {

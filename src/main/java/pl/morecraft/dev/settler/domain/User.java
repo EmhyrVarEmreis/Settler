@@ -1,19 +1,19 @@
 package pl.morecraft.dev.settler.domain;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import pl.morecraft.dev.settler.domain.dictionaries.UserStatus;
 
 import javax.persistence.*;
 
-@Entity
-@Table(name = "prv_user")
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name = "prv_user")
 public class User extends PrivilegeObject {
 
     @Column(unique = true, nullable = false)

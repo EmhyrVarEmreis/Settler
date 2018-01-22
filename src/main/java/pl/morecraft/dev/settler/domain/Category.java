@@ -1,5 +1,7 @@
 package pl.morecraft.dev.settler.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import pl.morecraft.dev.settler.domain.dictionaries.proto.DefaultDictionary;
 
 import javax.persistence.*;
@@ -7,6 +9,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+@Builder
+@AllArgsConstructor
 @Entity
 @Table(name = "mod_category")
 public class Category implements DefaultDictionary {
