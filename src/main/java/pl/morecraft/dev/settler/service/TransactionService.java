@@ -36,13 +36,15 @@ import java.util.function.UnaryOperator;
 @Transactional
 public class TransactionService extends AbstractService<Transaction, TransactionDTO, TransactionListDTO, TransactionListFilters, QTransaction, Long, TransactionRepository> {
 
+    private final GraphService graphService;
     private final EmailService emailService;
     private final EntityManager entityManager;
     private final SequenceManager sequenceManager;
     private final TransactionRepository transactionRepository;
 
     @Autowired
-    public TransactionService(EmailService emailService, EntityManager entityManager, SequenceManager sequenceManager, TransactionRepository transactionRepository) {
+    public TransactionService(GraphService graphService, EmailService emailService, EntityManager entityManager, SequenceManager sequenceManager, TransactionRepository transactionRepository) {
+        this.graphService = graphService;
         this.emailService = emailService;
         this.entityManager = entityManager;
         this.sequenceManager = sequenceManager;
@@ -133,6 +135,7 @@ public class TransactionService extends AbstractService<Transaction, Transaction
             if (transaction.getCreator() == null) {
                 transaction.setCreator(Security.currentUser());
             }
+            graphService.processTransaction(this.getUserRepository().findOne(transaction.getId()), transaction);
             return super.getSaveSavePreProcessingFunction().apply(transaction);
         };
     }
