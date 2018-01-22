@@ -31,7 +31,6 @@ public class GraphService {
     }
 
     public boolean isAuthorized(Long sourceId, Long targetId, OperationType operationType) {
-
         final Object result = session.query("" +
                         "RETURN EXISTS(" +
                         " (:PrivilegeObjectNode {privilegeObjectId: {fromId}})-[:{relation}]->(:PrivilegeObjectNode {privilegeObjectId: {toId}})" +
@@ -80,14 +79,14 @@ public class GraphService {
         return aa.size() != bb.size() || !aa.containsAll(bb);
     }
 
-    private void addRelation(PrivilegeObject privilegeObjectFrom, PrivilegeObject privilegeObjectTo, OperationType operationType) {
+    private void removeRelation(PrivilegeObject privilegeObjectFrom, PrivilegeObject privilegeObjectTo, OperationType operationType) {
         session.query(
                 "MATCH (:PrivilegeObjectNode {privilegeObjectId: {fromId}})-[r:{relation}]-(:PrivilegeObjectNode {privilegeObjectId: {toId}}) DELETE r",
                 prepareHashMap(privilegeObjectFrom.getId(), Objects.isNull(privilegeObjectTo) ? null : privilegeObjectTo.getId(), operationType)
         );
     }
 
-    private void removeRelation(PrivilegeObject privilegeObjectFrom, PrivilegeObject privilegeObjectTo, OperationType operationType) {
+    private void addRelation(PrivilegeObject privilegeObjectFrom, PrivilegeObject privilegeObjectTo, OperationType operationType) {
         session.query(
                 "MATCH (a:PrivilegeObjectNode {privilegeObjectId: {fromId}}), (b:PrivilegeObjectNode {privilegeObjectId: {toId}}) CREATE (a)-[:{relation}]->(b)",
                 prepareHashMap(privilegeObjectFrom.getId(), Objects.isNull(privilegeObjectTo) ? null : privilegeObjectTo.getId(), operationType)
