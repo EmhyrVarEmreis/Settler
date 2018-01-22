@@ -13,6 +13,8 @@ public class GraphService {
 
     @SuppressWarnings("WeakerAccess")
     public static final long ETERNAL_PRV_NODE_ID = -1;
+    @SuppressWarnings("WeakerAccess")
+    public static final long MAX_DEPTH = 5;
 
     private Session session;
 
@@ -25,11 +27,16 @@ public class GraphService {
 
     public boolean isAuthorized(Long sourceId, Long targetId, OperationType operationType) {
         final HashMap<String, Object> parameters = new HashMap<>();
+        parameters.put("maxDepth", MAX_DEPTH);
         parameters.put("aId", sourceId);
         parameters.put("bId", Objects.isNull(targetId) ? ETERNAL_PRV_NODE_ID : targetId);
         parameters.put("relation", operationType.getCode());
-        final Object result = session.query(
-                "RETURN EXISTS( (:PrivilegeObjectNode {privilegeObjectId: {aId}})-[:{relation}]- (:PrivilegeObjectNode {privilegeObjectId: {bId}})) AS result",
+        final Object result = session.query("" +
+                        "RETURN EXISTS(" +
+                        " (:PrivilegeObjectNode {privilegeObjectId: {aId}})-[:{relation}]->(:PrivilegeObjectNode {privilegeObjectId: {bId}})" +
+                        ") OR EXISTS(" +
+                        " (:PrivilegeObjectNode {privilegeObjectId: {aId}})-[:{relation}]->(:PrivilegeObjectNode)-[*..{maxDepth}]->(:PrivilegeObjectNode {privilegeObjectId: {bId}})" +
+                        ") AS result",
                 parameters
         ).iterator().next().get("result");
         return result instanceof Boolean && (boolean) result;
