@@ -27,7 +27,7 @@ public class SchedulerConfiguration {
         log.debug("Creating SchedulerFactoryBean");
         SchedulerFactoryBean factoryBean = new SchedulerFactoryBean();
         factoryBean.setSchedulerName("defaultScheduler");
-        factoryBean.setStartupDelay(15);
+        factoryBean.setStartupDelay(900);
         factoryBean.setWaitForJobsToCompleteOnShutdown(true);
         factoryBean.setConfigLocation(new ClassPathResource("quartz.properties"));
 

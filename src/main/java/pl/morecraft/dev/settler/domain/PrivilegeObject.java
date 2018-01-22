@@ -12,6 +12,7 @@ public class PrivilegeObject implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, nullable = false)
+    @org.springframework.data.annotation.Id
     protected Long id;
 
     public Long getId() {

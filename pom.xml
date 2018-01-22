@@ -14,7 +14,7 @@
     <parent>
         <groupId>io.spring.platform</groupId>
         <artifactId>platform-bom</artifactId>
-        <version>Athens-SR6</version>
+        <version>Brussels-SR6</version>
     </parent>
 
     <properties>
@@ -159,6 +159,24 @@
         <dependency>
             <groupId>org.springframework.social</groupId>
             <artifactId>spring-social-facebook</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-neo4j</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.neo4j</groupId>
+            <artifactId>neo4j-ogm-core</artifactId>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.neo4j</groupId>
+            <artifactId>neo4j-ogm-bolt-driver</artifactId>
+            <version>2.1.5</version>
+            <scope>runtime</scope>
         </dependency>
 
         <dependency>

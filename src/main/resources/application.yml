@@ -15,13 +15,17 @@ spring:
     host: @settler.mail.host@
     username: @settler.mail.username@
     password: @settler.mail.password@
-
   jpa:
     database-platform: @settler.db.dialect@
   http:
     multipart:
       max-file-size: 50Mb
       max-request-size: 50Mb
+  data:
+    neo4j:
+      uri: @settler.neo4j.url@
+      username: @settler.neo4j.username@
+      password: @settler.neo4j.password@
 
 quartz:
   enabled: false

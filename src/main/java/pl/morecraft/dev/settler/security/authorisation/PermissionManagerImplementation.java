@@ -11,7 +11,6 @@ import pl.morecraft.dev.settler.domain.*;
 import pl.morecraft.dev.settler.domain.dictionaries.OperationType;
 import pl.morecraft.dev.settler.domain.view.QTransactionEntry;
 import pl.morecraft.dev.settler.security.util.Security;
-import pl.morecraft.dev.settler.web.dto.UserDTO;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
