@@ -10,12 +10,12 @@
 
         <createView viewName="view_stat_general" replaceIfExists="true">
             SELECT
-                (SELECT COUNT(mt.id)
-                 FROM mod_transaction mt) AS trancations_count,
-                (SELECT SUM(mt.value)
-                 FROM mod_transaction mt) AS transactions_value,
-                (SELECT COUNT(pv.id)
-                 FROM prv_user pv)        AS users_count;
+            (SELECT COUNT(mt.id)
+            FROM mod_transaction mt) AS trancations_count,
+            (SELECT SUM(mt.value)
+            FROM mod_transaction mt) AS transactions_value,
+            (SELECT COUNT(pv.id)
+            FROM prv_user pv) AS users_count;
         </createView>
 
     </changeSet>

@@ -9,38 +9,33 @@
     <changeSet id="1.0-path-011-test-data" author="settler" context="dev" dbms="postgresql">
 
         <sql>
-            INSERT INTO dev_settler.public.mod_category_object (
-                category_id,
-                object_id
-            ) SELECT
-                  (SELECT id
-                   FROM dev_settler.public.mod_category
-                   WHERE code = 'FNC')                  AS category_id,
-                  (SELECT id
-                   FROM dev_settler.public.mod_transaction
-                   WHERE reference = 'TRA151113150000') AS object_ud;
-            INSERT INTO dev_settler.public.mod_category_object (
-                category_id,
-                object_id
-            ) SELECT
-                  (SELECT id
-                   FROM dev_settler.public.mod_category
-                   WHERE code = 'FNC')                  AS category_id,
-                  (SELECT id
-                   FROM dev_settler.public.mod_transaction
-                   WHERE reference = 'TRA151112121212') AS object_ud;
-            INSERT INTO dev_settler.public.mod_category_object (
-                category_id,
-                object_id
-            ) SELECT
-                  (SELECT id
-                   FROM dev_settler.public.mod_category
-                   WHERE code = 'BLS')                  AS category_id,
-                  (SELECT id
-                   FROM dev_settler.public.mod_transaction
-                   WHERE reference = 'TRA151112121212') AS object_ud;
-            UPDATE dev_settler.public.mod_transaction
-            SET description = CONCAT('Description ', reference), evaluated = NOW();
+            INSERT INTO public.mod_category_object (category_id,
+                                                                object_id)
+            SELECT (SELECT id
+                    FROM public.mod_category
+                    WHERE code = 'FNC')                  AS category_id,
+                   (SELECT id
+                    FROM public.mod_transaction
+                    WHERE reference = 'TRA151113150000') AS object_ud;
+            INSERT INTO public.mod_category_object (category_id,
+                                                                object_id)
+            SELECT (SELECT id
+                    FROM public.mod_category
+                    WHERE code = 'FNC')                  AS category_id,
+                   (SELECT id
+                    FROM public.mod_transaction
+                    WHERE reference = 'TRA151112121212') AS object_ud;
+            INSERT INTO public.mod_category_object (category_id,
+                                                                object_id)
+            SELECT (SELECT id
+                    FROM public.mod_category
+                    WHERE code = 'BLS')                  AS category_id,
+                   (SELECT id
+                    FROM public.mod_transaction
+                    WHERE reference = 'TRA151112121212') AS object_ud;
+            UPDATE public.mod_transaction
+            SET description = CONCAT('Description ', reference),
+                evaluated   = NOW();
         </sql>
 
     </changeSet>
@@ -48,38 +43,33 @@
     <changeSet id="1.0-path-011-test-data" author="settler" context="dev" dbms="mysql">
 
         <sql>
-            INSERT INTO mod_category_object (
-                category_id,
-                object_id
-            ) SELECT
-                  (SELECT id
-                   FROM mod_category
-                   WHERE code = 'FNC')                  AS category_id,
-                  (SELECT id
-                   FROM mod_transaction
-                   WHERE reference = 'TRA151113150000') AS object_ud;
-            INSERT INTO mod_category_object (
-                category_id,
-                object_id
-            ) SELECT
-                  (SELECT id
-                   FROM mod_category
-                   WHERE code = 'FNC')                  AS category_id,
-                  (SELECT id
-                   FROM mod_transaction
-                   WHERE reference = 'TRA151112121212') AS object_ud;
-            INSERT INTO mod_category_object (
-                category_id,
-                object_id
-            ) SELECT
-                  (SELECT id
-                   FROM mod_category
-                   WHERE code = 'BLS')                  AS category_id,
-                  (SELECT id
-                   FROM mod_transaction
-                   WHERE reference = 'TRA151112121212') AS object_ud;
+            INSERT INTO mod_category_object (category_id,
+                                             object_id)
+            SELECT (SELECT id
+                    FROM mod_category
+                    WHERE code = 'FNC')                  AS category_id,
+                   (SELECT id
+                    FROM mod_transaction
+                    WHERE reference = 'TRA151113150000') AS object_ud;
+            INSERT INTO mod_category_object (category_id,
+                                             object_id)
+            SELECT (SELECT id
+                    FROM mod_category
+                    WHERE code = 'FNC')                  AS category_id,
+                   (SELECT id
+                    FROM mod_transaction
+                    WHERE reference = 'TRA151112121212') AS object_ud;
+            INSERT INTO mod_category_object (category_id,
+                                             object_id)
+            SELECT (SELECT id
+                    FROM mod_category
+                    WHERE code = 'BLS')                  AS category_id,
+                   (SELECT id
+                    FROM mod_transaction
+                    WHERE reference = 'TRA151112121212') AS object_ud;
             UPDATE mod_transaction t
-            SET t.description = CONCAT('Description ', t.reference), t.evaluated = NOW();
+            SET t.description = CONCAT('Description ', t.reference),
+                t.evaluated   = NOW();
         </sql>
 
     </changeSet>

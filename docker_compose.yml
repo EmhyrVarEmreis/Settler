@@ -1,6 +1,16 @@
 version: '3'
 services:
   db:
+    image: postgres:13
+    environment:
+      - POSTGRES_DB=settler
+      - POSTGRES_USER=settler
+      - POSTGRES_PASSWORD=settler
+    ports:
+      - '8789:5432'
+    volumes:
+      - db_data:/var/lib/postgresql/data
+  db_mysql:
     image: mysql:8
     environment:
       - MYSQL_ROOT_PASSWORD=settler
@@ -10,8 +20,10 @@ services:
     ports:
       - '8788:3306'
     volumes:
-      - db_data:/var/lib/mysql
+      - db_mysql_data:/var/lib/mysql
       - ./db/init.sql:/docker-entrypoint-initdb.d/1.sql
 volumes:
   db_data:
+    driver: local
+  db_mysql_data:
     driver: local

@@ -12,31 +12,30 @@
 
         <createView viewName="view_stat_sum_by_user" replaceIfExists="true">
             WITH x AS (
-                    SELECT
-                        mr.user       AS user_id,
-                        mr.percentage AS percentage,
-                        mr.type       AS type,
-                        mt.value      AS value
-                    FROM mod_redistribution mr
-                        LEFT JOIN mod_transaction mt
-                            ON mt.id = mr.parent
-            ) SELECT
-                  xx.user_id                          AS user_id,
-                  CONCAT(
-                          COALESCE(CONCAT(pu.first_name, ' ', '')),
-                          COALESCE(CONCAT(pu.last_name, ' ', '')),
-                          '(', pu.login, ')'
-                  )                                   AS user_name,
-                  SUM(xx.percentage * xx.value / 100) AS sum
-              FROM x xx
-                  LEFT JOIN prv_user pu
-                      ON pu.id = xx.user_id
-              WHERE xx.type = 'O'
-                    OR NOT EXISTS(SELECT *
-                                  FROM x xxx
-                                  WHERE xxx.type = 'O'
-                                        AND xxx.user_id = xx.user_id)
-              GROUP BY xx.user_id, pu.first_name, pu.last_name, pu.login;
+                SELECT mr.user       AS user_id,
+                       mr.percentage AS percentage,
+                       mr.type       AS type,
+                       mt.value      AS value
+                FROM mod_redistribution mr
+                         LEFT JOIN mod_transaction mt
+                                   ON mt.id = mr.parent
+            )
+            SELECT xx.user_id                          AS user_id,
+                   CONCAT(
+                           COALESCE(CONCAT(pu.first_name, ' ', '')),
+                           COALESCE(CONCAT(pu.last_name, ' ', '')),
+                           '(', pu.login, ')'
+                       )                               AS user_name,
+                   SUM(xx.percentage * xx.value / 100) AS sum
+            FROM x xx
+                     LEFT JOIN prv_user pu
+                               ON pu.id = xx.user_id
+            WHERE xx.type = 'O'
+               OR NOT EXISTS(SELECT *
+                             FROM x xxx
+                             WHERE xxx.type = 'O'
+                               AND xxx.user_id = xx.user_id)
+            GROUP BY xx.user_id, pu.first_name, pu.last_name, pu.login;
         </createView>
 
     </changeSet>

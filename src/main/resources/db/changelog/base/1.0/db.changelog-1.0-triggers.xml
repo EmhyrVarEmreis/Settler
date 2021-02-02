@@ -10,191 +10,220 @@
 
         <sql>
             DROP TRIGGER IF EXISTS trg_prv_object_hierarchy_insert
-                ON dev_settler.public.prv_object_hierarchy;
+                ON public.prv_object_hierarchy;
             DROP TRIGGER IF EXISTS trg_prv_object_hierarchy_delete
-                ON dev_settler.public.prv_object_hierarchy;
+                ON public.prv_object_hierarchy;
             DROP TRIGGER IF EXISTS trg_prv_object_hierarchy_update
-                ON dev_settler.public.prv_object_hierarchy;
+                ON public.prv_object_hierarchy;
             DROP TRIGGER IF EXISTS trg_prv_privilege_insert
-                ON dev_settler.public.prv_privilege;
+                ON public.prv_privilege;
             DROP TRIGGER IF EXISTS trg_prv_privilege_delete
-                ON dev_settler.public.prv_privilege;
+                ON public.prv_privilege;
             DROP TRIGGER IF EXISTS trg_prv_privilege_update
-                ON dev_settler.public.prv_privilege;
+                ON public.prv_privilege;
             DROP TRIGGER IF EXISTS trg_prv_user_role_insert
-                ON dev_settler.public.prv_user;
+                ON public.prv_user;
             DROP TRIGGER IF EXISTS trg_prv_user_role_delete
-                ON dev_settler.public.prv_user;
+                ON public.prv_user;
             DROP TRIGGER IF EXISTS trg_prv_user_role_update
-                ON dev_settler.public.prv_user;
+                ON public.prv_user;
         </sql>
 
         <createProcedure>
-            CREATE OR REPLACE FUNCTION dev_settler.public.trg_prv_object_hierarchy_insert()
-                          RETURNS TRIGGER AS $trg_prv_object_hierarchy_insert$
+            CREATE OR REPLACE FUNCTION public.trg_prv_object_hierarchy_insert()
+                RETURNS TRIGGER AS
+            $trg_prv_object_hierarchy_insert$
             BEGIN
-            EXECUTE dev_settler.public.proc_jtb_object_hierarchy_insert(NEW.prv_object_from, NEW.prv_object_to);
-            RETURN NULL;
+                EXECUTE public.proc_jtb_object_hierarchy_insert(NEW.prv_object_from, NEW.prv_object_to);
+                RETURN NULL;
             END;
             $trg_prv_object_hierarchy_insert$ LANGUAGE plpgsql;
         </createProcedure>
 
         <createProcedure>
             CREATE TRIGGER trg_prv_object_hierarchy_insert
-                AFTER INSERT ON dev_settler.public.prv_object_hierarchy
-                FOR EACH ROW EXECUTE PROCEDURE dev_settler.public.trg_prv_object_hierarchy_insert();
+                AFTER INSERT
+                ON public.prv_object_hierarchy
+                FOR EACH ROW
+            EXECUTE PROCEDURE public.trg_prv_object_hierarchy_insert();
         </createProcedure>
 
         <createProcedure>
-            CREATE OR REPLACE FUNCTION dev_settler.public.trg_prv_object_hierarchy_delete()
-                          RETURNS TRIGGER AS $trg_prv_object_hierarchy_delete$
+            CREATE OR REPLACE FUNCTION public.trg_prv_object_hierarchy_delete()
+                RETURNS TRIGGER AS
+            $trg_prv_object_hierarchy_delete$
             BEGIN
-            EXECUTE dev_settler.public.proc_jtb_object_hierarchy_delete(OLD.prv_object_from, OLD.prv_object_to);
-            RETURN NULL;
+                EXECUTE public.proc_jtb_object_hierarchy_delete(OLD.prv_object_from, OLD.prv_object_to);
+                RETURN NULL;
             END;
             $trg_prv_object_hierarchy_delete$ LANGUAGE plpgsql;
         </createProcedure>
 
         <createProcedure>
             CREATE TRIGGER trg_prv_object_hierarchy_delete
-                AFTER DELETE ON dev_settler.public.prv_object_hierarchy
-                FOR EACH ROW EXECUTE PROCEDURE dev_settler.public.trg_prv_object_hierarchy_delete();
+                AFTER DELETE
+                ON public.prv_object_hierarchy
+                FOR EACH ROW
+            EXECUTE PROCEDURE public.trg_prv_object_hierarchy_delete();
         </createProcedure>
 
         <createProcedure>
-            CREATE OR REPLACE FUNCTION dev_settler.public.trg_prv_object_hierarchy_update()
-                          RETURNS TRIGGER AS $trg_prv_object_hierarchy_update$
+            CREATE OR REPLACE FUNCTION public.trg_prv_object_hierarchy_update()
+                RETURNS TRIGGER AS
+            $trg_prv_object_hierarchy_update$
             BEGIN
-            EXECUTE dev_settler.public.proc_jtb_object_hierarchy_delete(OLD.prv_object_from, OLD.prv_object_to);
-            EXECUTE dev_settler.public.proc_jtb_object_hierarchy_insert(NEW.prv_object_from, NEW.prv_object_to);
-            RETURN NULL;
+                EXECUTE public.proc_jtb_object_hierarchy_delete(OLD.prv_object_from, OLD.prv_object_to);
+                EXECUTE public.proc_jtb_object_hierarchy_insert(NEW.prv_object_from, NEW.prv_object_to);
+                RETURN NULL;
             END;
             $trg_prv_object_hierarchy_update$ LANGUAGE plpgsql;
         </createProcedure>
 
         <createProcedure>
             CREATE TRIGGER trg_prv_object_hierarchy_update
-                AFTER UPDATE ON dev_settler.public.prv_object_hierarchy
-                FOR EACH ROW EXECUTE PROCEDURE dev_settler.public.trg_prv_object_hierarchy_update();
+                AFTER UPDATE
+                ON public.prv_object_hierarchy
+                FOR EACH ROW
+            EXECUTE PROCEDURE public.trg_prv_object_hierarchy_update();
         </createProcedure>
 
         <createProcedure>
-            CREATE OR REPLACE FUNCTION dev_settler.public.trg_prv_privilege_insert()
-                          RETURNS TRIGGER AS $trg_prv_privilege_insert$
+            CREATE OR REPLACE FUNCTION public.trg_prv_privilege_insert()
+                RETURNS TRIGGER AS
+            $trg_prv_privilege_insert$
             BEGIN
-            EXECUTE dev_settler.public.proc_jtb_object_privilege_refresh_by_owner(NEW.prv_owner);
-            RETURN NULL;
+                EXECUTE public.proc_jtb_object_privilege_refresh_by_owner(NEW.prv_owner);
+                RETURN NULL;
             END;
             $trg_prv_privilege_insert$ LANGUAGE plpgsql;
         </createProcedure>
 
         <createProcedure>
             CREATE TRIGGER trg_prv_privilege_insert
-                AFTER INSERT ON dev_settler.public.prv_privilege
-                FOR EACH ROW EXECUTE PROCEDURE dev_settler.public.trg_prv_privilege_insert();
+                AFTER INSERT
+                ON public.prv_privilege
+                FOR EACH ROW
+            EXECUTE PROCEDURE public.trg_prv_privilege_insert();
         </createProcedure>
 
         <createProcedure>
-            CREATE OR REPLACE FUNCTION dev_settler.public.trg_prv_privilege_delete()
-                          RETURNS TRIGGER AS $trg_prv_privilege_deletete$
+            CREATE OR REPLACE FUNCTION public.trg_prv_privilege_delete()
+                RETURNS TRIGGER AS
+            $trg_prv_privilege_deletete$
             BEGIN
-            EXECUTE dev_settler.public.proc_jtb_object_privilege_refresh_by_owner(OLD.prv_owner);
-            RETURN NULL;
+                EXECUTE public.proc_jtb_object_privilege_refresh_by_owner(OLD.prv_owner);
+                RETURN NULL;
             END;
             $trg_prv_privilege_deletete$ LANGUAGE plpgsql;
         </createProcedure>
 
         <createProcedure>
             CREATE TRIGGER trg_prv_privilege_delete
-                AFTER DELETE ON dev_settler.public.prv_privilege
-                FOR EACH ROW EXECUTE PROCEDURE dev_settler.public.trg_prv_privilege_delete();
+                AFTER DELETE
+                ON public.prv_privilege
+                FOR EACH ROW
+            EXECUTE PROCEDURE public.trg_prv_privilege_delete();
         </createProcedure>
 
         <createProcedure>
-            CREATE OR REPLACE FUNCTION dev_settler.public.trg_prv_privilege_update()
-                          RETURNS TRIGGER AS $trg_prv_privilege_update$
+            CREATE OR REPLACE FUNCTION public.trg_prv_privilege_update()
+                RETURNS TRIGGER AS
+            $trg_prv_privilege_update$
             BEGIN
-            EXECUTE dev_settler.public.proc_jtb_object_privilege_refresh_by_owner(OLD.prv_owner);
-            EXECUTE dev_settler.public.proc_jtb_object_privilege_refresh_by_owner(NEW.prv_owner);
-            RETURN NULL;
+                EXECUTE public.proc_jtb_object_privilege_refresh_by_owner(OLD.prv_owner);
+                EXECUTE public.proc_jtb_object_privilege_refresh_by_owner(NEW.prv_owner);
+                RETURN NULL;
             END;
             $trg_prv_privilege_update$ LANGUAGE plpgsql;
         </createProcedure>
 
         <createProcedure>
             CREATE TRIGGER trg_prv_privilege_update
-                AFTER UPDATE ON dev_settler.public.prv_privilege
-                FOR EACH ROW EXECUTE PROCEDURE dev_settler.public.trg_prv_privilege_update();
+                AFTER UPDATE
+                ON public.prv_privilege
+                FOR EACH ROW
+            EXECUTE PROCEDURE public.trg_prv_privilege_update();
         </createProcedure>
 
         <createProcedure>
-            CREATE OR REPLACE FUNCTION dev_settler.public.trg_prv_user_role_insert()
-                          RETURNS TRIGGER AS $trg_prv_user_role_insert$
+            CREATE OR REPLACE FUNCTION public.trg_prv_user_role_insert()
+                RETURNS TRIGGER AS
+            $trg_prv_user_role_insert$
             BEGIN
-            EXECUTE dev_settler.public.proc_jtb_object_privilege_refresh_by_owner(NEW.prv_user);
-            RETURN NULL;
+                EXECUTE public.proc_jtb_object_privilege_refresh_by_owner(NEW.prv_user);
+                RETURN NULL;
             END;
             $trg_prv_user_role_insert$ LANGUAGE plpgsql;
         </createProcedure>
 
         <createProcedure>
             CREATE TRIGGER trg_prv_user_role_insert
-                AFTER INSERT ON dev_settler.public.prv_user_role
-                FOR EACH ROW EXECUTE PROCEDURE dev_settler.public.trg_prv_user_role_insert();
+                AFTER INSERT
+                ON public.prv_user_role
+                FOR EACH ROW
+            EXECUTE PROCEDURE public.trg_prv_user_role_insert();
         </createProcedure>
 
         <createProcedure>
-            CREATE OR REPLACE FUNCTION dev_settler.public.trg_prv_user_role_delete()
-                          RETURNS TRIGGER AS $trg_prv_user_role_delete$
+            CREATE OR REPLACE FUNCTION public.trg_prv_user_role_delete()
+                RETURNS TRIGGER AS
+            $trg_prv_user_role_delete$
             BEGIN
-            EXECUTE dev_settler.public.proc_jtb_object_privilege_refresh_by_owner(OLD.prv_user);
-            RETURN NULL;
+                EXECUTE public.proc_jtb_object_privilege_refresh_by_owner(OLD.prv_user);
+                RETURN NULL;
             END;
             $trg_prv_user_role_delete$ LANGUAGE plpgsql;
         </createProcedure>
 
         <createProcedure>
             CREATE TRIGGER trg_prv_user_role_delete
-                AFTER DELETE ON dev_settler.public.prv_user_role
-                FOR EACH ROW EXECUTE PROCEDURE dev_settler.public.trg_prv_user_role_delete();
+                AFTER DELETE
+                ON public.prv_user_role
+                FOR EACH ROW
+            EXECUTE PROCEDURE public.trg_prv_user_role_delete();
         </createProcedure>
 
         <createProcedure>
-            CREATE OR REPLACE FUNCTION dev_settler.public.trg_prv_user_role_update()
-                          RETURNS TRIGGER AS $trg_prv_user_role_update$
+            CREATE OR REPLACE FUNCTION public.trg_prv_user_role_update()
+                RETURNS TRIGGER AS
+            $trg_prv_user_role_update$
             BEGIN
-            EXECUTE dev_settler.public.proc_jtb_object_privilege_refresh_by_owner(OLD.prv_user);
-            EXECUTE dev_settler.public.proc_jtb_object_privilege_refresh_by_owner(NEW.prv_user);
-            RETURN NULL;
+                EXECUTE public.proc_jtb_object_privilege_refresh_by_owner(OLD.prv_user);
+                EXECUTE public.proc_jtb_object_privilege_refresh_by_owner(NEW.prv_user);
+                RETURN NULL;
             END;
             $trg_prv_user_role_update$ LANGUAGE plpgsql;
         </createProcedure>
 
         <createProcedure>
             CREATE TRIGGER trg_prv_user_role_update
-                AFTER UPDATE ON dev_settler.public.prv_user_role
-                FOR EACH ROW EXECUTE PROCEDURE dev_settler.public.trg_prv_user_role_update();
+                AFTER UPDATE
+                ON public.prv_user_role
+                FOR EACH ROW
+            EXECUTE PROCEDURE public.trg_prv_user_role_update();
         </createProcedure>
 
         <rollback>
-            DROP TRIGGER IF EXISTS trg_prv_object_hierarchy_insert
-                ON dev_settler.public.prv_object_hierarchy;
-            DROP TRIGGER IF EXISTS trg_prv_object_hierarchy_delete
-                ON dev_settler.public.prv_object_hierarchy;
-            DROP TRIGGER IF EXISTS trg_prv_object_hierarchy_update
-                ON dev_settler.public.prv_object_hierarchy;
-            DROP TRIGGER IF EXISTS trg_prv_privilege_insert
-                ON dev_settler.public.prv_privilege;
-            DROP TRIGGER IF EXISTS trg_prv_privilege_delete
-                ON dev_settler.public.prv_privilege;
-            DROP TRIGGER IF EXISTS trg_prv_privilege_update
-                ON dev_settler.public.prv_privilege;
-            DROP TRIGGER IF EXISTS trg_prv_user_role_insert
-                ON dev_settler.public.prv_user;
-            DROP TRIGGER IF EXISTS trg_prv_user_role_delete
-                ON dev_settler.public.prv_user;
-            DROP TRIGGER IF EXISTS trg_prv_user_role_update
-                ON dev_settler.public.prv_user;
+            <sql>
+                DROP TRIGGER IF EXISTS trg_prv_object_hierarchy_insert
+                    ON public.prv_object_hierarchy;
+                DROP TRIGGER IF EXISTS trg_prv_object_hierarchy_delete
+                    ON public.prv_object_hierarchy;
+                DROP TRIGGER IF EXISTS trg_prv_object_hierarchy_update
+                    ON public.prv_object_hierarchy;
+                DROP TRIGGER IF EXISTS trg_prv_privilege_insert
+                    ON public.prv_privilege;
+                DROP TRIGGER IF EXISTS trg_prv_privilege_delete
+                    ON public.prv_privilege;
+                DROP TRIGGER IF EXISTS trg_prv_privilege_update
+                    ON public.prv_privilege;
+                DROP TRIGGER IF EXISTS trg_prv_user_role_insert
+                    ON public.prv_user;
+                DROP TRIGGER IF EXISTS trg_prv_user_role_delete
+                    ON public.prv_user;
+                DROP TRIGGER IF EXISTS trg_prv_user_role_update
+                    ON public.prv_user;
+            </sql>
         </rollback>
 
     </changeSet>
@@ -215,7 +244,8 @@
 
         <createProcedure>
             CREATE TRIGGER trg_prv_object_hierarchy_insert
-                AFTER INSERT ON prv_object_hierarchy
+                AFTER INSERT
+                ON prv_object_hierarchy
                 FOR EACH ROW
             BEGIN
                 CALL proc_jtb_object_hierarchy_insert(NEW.prv_object_from, NEW.prv_object_to);
@@ -224,7 +254,8 @@
 
         <createProcedure>
             CREATE TRIGGER trg_prv_object_hierarchy_delete
-                AFTER DELETE ON prv_object_hierarchy
+                AFTER DELETE
+                ON prv_object_hierarchy
                 FOR EACH ROW
             BEGIN
                 CALL proc_jtb_object_hierarchy_delete(OLD.prv_object_from, OLD.prv_object_to);
@@ -233,7 +264,8 @@
 
         <createProcedure>
             CREATE TRIGGER trg_prv_object_hierarchy_update
-                AFTER UPDATE ON prv_object_hierarchy
+                AFTER UPDATE
+                ON prv_object_hierarchy
                 FOR EACH ROW
             BEGIN
                 CALL proc_jtb_object_hierarchy_delete(OLD.prv_object_from, OLD.prv_object_to);
@@ -243,7 +275,8 @@
 
         <createProcedure>
             CREATE TRIGGER trg_prv_privilege_insert
-                AFTER INSERT ON prv_privilege
+                AFTER INSERT
+                ON prv_privilege
                 FOR EACH ROW
             BEGIN
                 CALL proc_jtb_object_privilege_refresh_by_owner(NEW.prv_owner);
@@ -252,7 +285,8 @@
 
         <createProcedure>
             CREATE TRIGGER trg_prv_privilege_delete
-                AFTER DELETE ON prv_privilege
+                AFTER DELETE
+                ON prv_privilege
                 FOR EACH ROW
             BEGIN
                 CALL proc_jtb_object_privilege_refresh_by_owner(OLD.prv_owner);
@@ -261,7 +295,8 @@
 
         <createProcedure>
             CREATE TRIGGER trg_prv_privilege_update
-                AFTER UPDATE ON prv_privilege
+                AFTER UPDATE
+                ON prv_privilege
                 FOR EACH ROW
             BEGIN
                 CALL proc_jtb_object_privilege_refresh_by_owner(OLD.prv_owner);
@@ -271,7 +306,8 @@
 
         <createProcedure>
             CREATE TRIGGER trg_prv_user_role_insert
-                AFTER INSERT ON prv_user_role
+                AFTER INSERT
+                ON prv_user_role
                 FOR EACH ROW
             BEGIN
                 CALL proc_jtb_object_privilege_refresh_by_owner(NEW.prv_user);
@@ -280,7 +316,8 @@
 
         <createProcedure>
             CREATE TRIGGER trg_prv_user_role_delete
-                AFTER DELETE ON prv_user_role
+                AFTER DELETE
+                ON prv_user_role
                 FOR EACH ROW
             BEGIN
                 CALL proc_jtb_object_privilege_refresh_by_owner(OLD.prv_user);
@@ -289,7 +326,8 @@
 
         <createProcedure>
             CREATE TRIGGER trg_prv_user_role_update
-                AFTER UPDATE ON prv_user_role
+                AFTER UPDATE
+                ON prv_user_role
                 FOR EACH ROW
             BEGIN
                 CALL proc_jtb_object_privilege_refresh_by_owner(OLD.prv_user);
@@ -298,12 +336,14 @@
         </createProcedure>
 
         <rollback>
-            DROP TRIGGER IF EXISTS trg_prv_object_hierarchy_insert;
-            DROP TRIGGER IF EXISTS trg_prv_object_hierarchy_delete;
-            DROP TRIGGER IF EXISTS trg_prv_object_hierarchy_update;
-            DROP TRIGGER IF EXISTS trg_prv_privilege_insert;
-            DROP TRIGGER IF EXISTS trg_prv_privilege_delete;
-            DROP TRIGGER IF EXISTS trg_prv_privilege_update;
+            <sql>
+                DROP TRIGGER IF EXISTS trg_prv_object_hierarchy_insert;
+                DROP TRIGGER IF EXISTS trg_prv_object_hierarchy_delete;
+                DROP TRIGGER IF EXISTS trg_prv_object_hierarchy_update;
+                DROP TRIGGER IF EXISTS trg_prv_privilege_insert;
+                DROP TRIGGER IF EXISTS trg_prv_privilege_delete;
+                DROP TRIGGER IF EXISTS trg_prv_privilege_update;
+            </sql>
         </rollback>
 
     </changeSet>

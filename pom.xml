@@ -19,12 +19,9 @@
 
     <properties>
         <java.version>11</java.version>
-        <settler.db.driver>com.mysql.jdbc.Driver</settler.db.driver>
-        <settler.db.dialect>org.hibernate.dialect.MySQLInnoDBDialect</settler.db.dialect>
         <settler.db.context>prod</settler.db.context>
         <start-class>pl.morecraft.dev.settler.Application</start-class>
         <settler.db.contexts>dev</settler.db.contexts>
-        <!--        <hibernate.version>5.2.5.Final</hibernate.version>-->
     </properties>
 
     <dependencies>
@@ -214,13 +211,25 @@
     <profiles>
         <profile>
             <id>settler-dev-loc</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
             <properties>
                 <settler.db.url>
                     jdbc:mysql://localhost:8788/settler?useUnicode=true&amp;characterEncoding=utf8&amp;useSSL=false
                 </settler.db.url>
+                <settler.db.driver>com.mysql.jdbc.Driver</settler.db.driver>
+                <settler.db.dialect>org.hibernate.dialect.MySQLInnoDBDialect</settler.db.dialect>
+                <settler.db.user>settler</settler.db.user>
+                <settler.db.password>settler</settler.db.password>
+                <settler.db.context>dev</settler.db.context>
+            </properties>
+        </profile>
+        <profile>
+            <id>settler-dev-loc-postgres</id>
+            <properties>
+                <settler.db.url>
+                    jdbc:postgresql://localhost:8789/settler
+                </settler.db.url>
+                <settler.db.driver>org.postgresql.Driver</settler.db.driver>
+                <settler.db.dialect>org.hibernate.dialect.PostgresPlusDialect</settler.db.dialect>
                 <settler.db.user>settler</settler.db.user>
                 <settler.db.password>settler</settler.db.password>
                 <settler.db.context>dev</settler.db.context>
