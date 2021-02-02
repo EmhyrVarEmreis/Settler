@@ -1,8 +1,5 @@
 # Settler
 
-##### JenkinsCI
-[![Build Status](https://ci.morecraft.pl/buildStatus/icon?job=Settler)](https://ci.morecraft.pl/job/Settler/)
-
 ## What is it?
 Small transactions manager.
 
@@ -11,7 +8,7 @@ Small transactions manager.
 ### Tools
 
 * Docker
-* MySQL/MariaDB
+* MySQL/MariaDB or PgSQL
 * Maven
 
 ### Front-End
@@ -25,8 +22,8 @@ Small transactions manager.
 ### Back-End
 
 * Liquibase
-* Java 8
-* Spring IO Platform
+* Java 11
+* Spring Platform
   * Spring Core
   * Spring Boot
   * Spring Mail
