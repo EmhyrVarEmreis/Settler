@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "App for settlements management",
   "private": true,
+  "scripts": {
+    "serve": "gulp serve"
+  },
   "dependencies": {
     "gulp-natural-sort": "^0.1.1",
     "vinyl-fs": "^2.4.4"
@@ -35,6 +38,6 @@
     "wiredep": "4.0.0"
   },
   "engines": {
-    "node": "^4.3"
+    "node": "4.3"
   }
 }

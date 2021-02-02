@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.querydsl.QPageRequest;
-import org.springframework.data.querydsl.QueryDslPredicateExecutor;
+import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import pl.morecraft.dev.settler.security.authorisation.PermissionManager;
@@ -45,7 +45,7 @@ public abstract class AbstractService<
         ListFilters,
         QEntity extends EntityPathBase<Entity>,
         EntityID extends Serializable,
-        EntityRepository extends JpaRepository<Entity, EntityID> & QueryDslPredicateExecutor<Entity>
+        EntityRepository extends JpaRepository<Entity, EntityID> & QuerydslPredicateExecutor<Entity>
         > {
 
     @SuppressWarnings("SpringAutowiredFieldsWarningInspection")
@@ -67,7 +67,7 @@ public abstract class AbstractService<
     private boolean hasId;
 
     public ResponseEntity<EntityDTO> get(EntityID id) {
-        Entity entity = getUserRepository().findOne(id);
+        Entity entity = getUserRepository().findById(id).orElse(null);
 
         if (entity == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

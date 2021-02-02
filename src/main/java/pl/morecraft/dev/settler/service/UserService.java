@@ -8,7 +8,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.encoding.BasePasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.morecraft.dev.settler.dao.repository.FileObjectRepository;
@@ -19,7 +19,6 @@ import pl.morecraft.dev.settler.domain.QUser;
 import pl.morecraft.dev.settler.domain.User;
 import pl.morecraft.dev.settler.domain.dictionaries.OperationType;
 import pl.morecraft.dev.settler.domain.dictionaries.internal.SocialEnum;
-import pl.morecraft.dev.settler.security.authorisation.PermissionManager;
 import pl.morecraft.dev.settler.security.exception.AuthorizationMethodNotImplemented;
 import pl.morecraft.dev.settler.security.exception.FacebookLoginException;
 import pl.morecraft.dev.settler.security.util.Security;
@@ -46,17 +45,17 @@ import java.util.function.UnaryOperator;
 public class UserService extends AbstractService<User, UserDTO, UserListDTO, UserListFilters, QUser, Long, UserRepository> {
 
     private final FileObjectRepository fileObjectRepository;
-    private final BasePasswordEncoder passwordEncoder;
     private final FacebookService facebookService;
+    private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
     private final EntityManager entityManager;
     private final FileService fileService;
 
     @Autowired
-    public UserService(FileObjectRepository fileObjectRepository, BasePasswordEncoder passwordEncoder, FacebookService facebookService, UserRepository userRepository, EntityManager entityManager, FileService fileService) {
+    public UserService(FileObjectRepository fileObjectRepository, FacebookService facebookService, PasswordEncoder passwordEncoder, UserRepository userRepository, EntityManager entityManager, FileService fileService) {
         this.fileObjectRepository = fileObjectRepository;
-        this.passwordEncoder = passwordEncoder;
         this.facebookService = facebookService;
+        this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
         this.entityManager = entityManager;
         this.fileService = fileService;
@@ -134,18 +133,18 @@ public class UserService extends AbstractService<User, UserDTO, UserListDTO, Use
                     throw new DuplicatedEntityException("User with this login already exists: " + user.getLogin());
                 }
             } else {
-                User originUser = userRepository.findOne(user.getId());
-                if (originUser == null) {
-                    throw new EntityNotFoundException("User with this ID was not found: " + user.getId());
+                User originUser = userRepository.findById(
+                        user.getId()
+                ).orElseThrow(
+                        () -> new EntityNotFoundException("User with this ID was not found: " + user.getId())
+                );
+                if (user.getPassword() == null) {
+                    user.setPassword(originUser.getPassword());
                 } else {
-                    if (user.getPassword() == null) {
-                        user.setPassword(originUser.getPassword());
-                    } else {
-                        user.setPassword(passwordEncoder.encodePassword(user.getPassword(), null));
-                    }
-                    if (user.getAccountExpireDate() == null) {
-                        user.setAccountExpireDate(originUser.getAccountExpireDate());
-                    }
+                    user.setPassword(passwordEncoder.encode(user.getPassword()));
+                }
+                if (user.getAccountExpireDate() == null) {
+                    user.setAccountExpireDate(originUser.getAccountExpireDate());
                 }
             }
             return user;
@@ -156,7 +155,7 @@ public class UserService extends AbstractService<User, UserDTO, UserListDTO, Use
         User user;
 
         if (id > 0) {
-            user = userRepository.findOne(id);
+            user = userRepository.getOne(id);
         } else if (!login.isEmpty()) {
             user = userRepository.findOneByLogin(login);
         } else {
@@ -215,7 +214,7 @@ public class UserService extends AbstractService<User, UserDTO, UserListDTO, Use
 
         ResponseEntity<FileObjectDTO> fileObjectDTOResponseEntity = fileService.save(fileObjectDTO);
 
-        user.setAvatar(fileObjectRepository.findOne(fileObjectDTOResponseEntity.getBody().getId()));
+        user.setAvatar(fileObjectRepository.getOne(fileObjectDTOResponseEntity.getBody().getId()));
         userRepository.save(user);
 
         return fileObjectDTOResponseEntity;
@@ -309,7 +308,7 @@ public class UserService extends AbstractService<User, UserDTO, UserListDTO, Use
         if (Objects.isNull(userId) || userId < 0) {
             user = Security.currentUser();
         } else {
-            user = userRepository.findOne(userId);
+            user = userRepository.findById(userId).orElse(null);
         }
         return getUserSocial(user);
     }
@@ -370,7 +369,7 @@ public class UserService extends AbstractService<User, UserDTO, UserListDTO, Use
                 return userRepository.findOneByLogin(userId.getLogin());
             }
         } else {
-            return userRepository.findOne(userId.getId());
+            return userRepository.findById(userId.getId()).orElse(null);
         }
     }
 

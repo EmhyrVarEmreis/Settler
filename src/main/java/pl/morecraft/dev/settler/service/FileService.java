@@ -89,7 +89,7 @@ public class FileService extends AbstractService<FileObject, FileObjectDTO, File
             }
             if (fileObject.getName() == null) {
                 fileObject.setName(
-                        fileObjectRepository.findOne(fileObject.getId()).getName()
+                        fileObjectRepository.getOne(fileObject.getId()).getName()
                 );
             }
             return super.getSaveSavePreProcessingFunction().apply(fileObject);

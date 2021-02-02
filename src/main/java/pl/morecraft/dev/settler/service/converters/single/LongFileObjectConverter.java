@@ -20,7 +20,7 @@ public class LongFileObjectConverter extends AbstractConverter<Long, FileObject>
 
     @Override
     protected FileObject convert(Long id) {
-        return fileObjectRepository.findOne(id);
+        return fileObjectRepository.findById(id).orElse(null);
     }
 
 }

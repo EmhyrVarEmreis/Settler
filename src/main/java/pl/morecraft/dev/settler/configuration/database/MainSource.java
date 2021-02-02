@@ -6,7 +6,7 @@ import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,11 +22,17 @@ import javax.sql.DataSource;
 @EnableJpaRepositories("pl.morecraft.dev.settler.dao.repository")
 public class MainSource {
 
-    @Bean(name = "dataSource-settler")
-    @ConfigurationProperties(prefix = "spring.datasource")
+    @Bean(name = "dataSource-settler-properties")
     @Primary
-    public DataSource getDataSource() {
-        return DataSourceBuilder.create().build();
+    @ConfigurationProperties(prefix = "spring.datasource")
+    public DataSourceProperties getDataSourceProperties() {
+        return new DataSourceProperties();
+    }
+
+    @Bean(name = "dataSource-settler")
+    @Primary
+    public DataSource getDataSource(@Qualifier("dataSource-settler-properties") DataSourceProperties properties) {
+        return properties.initializeDataSourceBuilder().build();
     }
 
     @Bean(name = "sqlSession-settler")

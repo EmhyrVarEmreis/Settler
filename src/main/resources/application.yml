@@ -1,35 +1,33 @@
 server:
   port: 8080
-  display-name: 'Settler'
-
+  servlet:
+    application-display-name: 'Settler'
 spring:
+  liquibase:
+    change-log: classpath:/db/changelog/db.changelog-master.xml
+    enabled: true
+    contexts: @settler.db.contexts@
+    url: @settler.db.url@
+    user: @settler.db.user@
+    password: @settler.db.password@
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     url: @settler.db.url@
     username: @settler.db.user@
     password: @settler.db.password@
-    test-on-borrow: true
-    validation-query: SELECT 1
-    validation-interval: 5000
   mail:
     host: @settler.mail.host@
     username: @settler.mail.username@
     password: @settler.mail.password@
-
   jpa:
     database-platform: org.hibernate.dialect.MySQLInnoDBDialect
-  http:
+  servlet:
     multipart:
-      max-file-size: 50Mb
-      max-request-size: 50Mb
+      max-request-size: 50MB
+      max-file-size: 50MB
 
 quartz:
   enabled: false
-
-liquibase:
-  change-log: classpath:/db/changelog/db.changelog-master.xml
-  enabled: true
-  contexts: @settler.db.contexts@
 
 settler:
   mail:
@@ -38,3 +36,7 @@ settler:
   fb:
     app-id: @settler.fb.id@
     app-secret: @settler.fb.secret@
+
+token:
+  secret: d926d7bb9ccf46fc04a61bd65d87b9b3
+  validityInSeconds: 3600

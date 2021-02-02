@@ -9,13 +9,13 @@
     <changeSet id="1.0-procedures" author="settler">
 
         <sql>
-            DROP PROCEDURE IF EXISTS dev_settler.proc_jtb_object_privilege_refresh_by_owner;
-            DROP PROCEDURE IF EXISTS dev_settler.proc_jtb_object_hierarchy_insert;
-            DROP PROCEDURE IF EXISTS dev_settler.proc_jtb_object_hierarchy_delete;
+            DROP PROCEDURE IF EXISTS proc_jtb_object_privilege_refresh_by_owner;
+            DROP PROCEDURE IF EXISTS proc_jtb_object_hierarchy_insert;
+            DROP PROCEDURE IF EXISTS proc_jtb_object_hierarchy_delete;
         </sql>
 
         <createProcedure>
-            CREATE PROCEDURE dev_settler.proc_jtb_object_privilege_refresh_by_owner(owner BIGINT)
+            CREATE PROCEDURE proc_jtb_object_privilege_refresh_by_owner(owner BIGINT)
                 BEGIN
                     DELETE FROM jtb_object_privilege
                     WHERE prv_object_from = owner;
@@ -58,7 +58,7 @@
         </createProcedure>
 
         <createProcedure>
-            CREATE PROCEDURE dev_settler.proc_jtb_object_hierarchy_insert(parent BIGINT, child BIGINT)
+            CREATE PROCEDURE proc_jtb_object_hierarchy_insert(parent BIGINT, child BIGINT)
                 BEGIN
                     INSERT INTO jtb_object_hierarchy (
                         prv_object_from,
@@ -89,7 +89,7 @@
         </createProcedure>
 
         <createProcedure>
-            CREATE PROCEDURE dev_settler.proc_jtb_object_hierarchy_delete(parent BIGINT, child BIGINT)
+            CREATE PROCEDURE proc_jtb_object_hierarchy_delete(parent BIGINT, child BIGINT)
                 BEGIN
                     DELETE FROM jtb_object_hierarchy
                     WHERE prv_object_to IN (SELECT id
@@ -108,9 +108,9 @@
         </createProcedure>
 
         <rollback>
-            DROP PROCEDURE IF EXISTS dev_settler.proc_jtb_object_privilege_refresh_by_owner;
-            DROP PROCEDURE IF EXISTS dev_settler.proc_jtb_object_hierarchy_insert;
-            DROP PROCEDURE IF EXISTS dev_settler.proc_jtb_object_hierarchy_delete;
+            DROP PROCEDURE IF EXISTS proc_jtb_object_privilege_refresh_by_owner;
+            DROP PROCEDURE IF EXISTS proc_jtb_object_hierarchy_insert;
+            DROP PROCEDURE IF EXISTS proc_jtb_object_hierarchy_delete;
         </rollback>
 
     </changeSet>

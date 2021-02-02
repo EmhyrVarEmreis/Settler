@@ -10,99 +10,99 @@
 
         <!-- CREATE USERS -->
         <sql>
-            INSERT INTO dev_settler.prv_object VALUES ();
-            INSERT INTO dev_settler.prv_user (
+            INSERT INTO prv_object VALUES ();
+            INSERT INTO prv_user (
                 id, login, first_name, last_name, password, email, created, status
             ) VALUES (
                 LAST_INSERT_ID(),
                 'admin',
                 'Edward',
                 'Ącki',
-                MD5('password'),
+                '$2y$12$ngM3Q/403lEc0pTH7fi16uoFRc3FQmmIugn2AuwjEigj3DTp/np0W',
                 'test@morecraft.pl',
                 '2015-11-11 11:11:11',
                 'ACT'
             );
 
-            INSERT INTO dev_settler.prv_object VALUES ();
-            INSERT INTO dev_settler.prv_user (
+            INSERT INTO prv_object VALUES ();
+            INSERT INTO prv_user (
                 id, login, first_name, last_name, password, email, created, status
             ) VALUES (
                 LAST_INSERT_ID(),
                 'user',
                 'Jan',
                 'Kowalski',
-                MD5('password'),
+                '$2y$12$ngM3Q/403lEc0pTH7fi16uoFRc3FQmmIugn2AuwjEigj3DTp/np0W',
                 'demo@morecraft.pl',
                 '2015-11-11 11:11:11',
                 'ACT'
             );
 
-            INSERT INTO dev_settler.prv_object VALUES ();
-            INSERT INTO dev_settler.prv_user (
+            INSERT INTO prv_object VALUES ();
+            INSERT INTO prv_user (
                 id, login, first_name, last_name, password, email, created, status
             ) VALUES (
                 LAST_INSERT_ID(),
                 'jan.nowak',
                 'Jan',
                 'Nowak',
-                MD5('password'),
+                '$2y$12$ngM3Q/403lEc0pTH7fi16uoFRc3FQmmIugn2AuwjEigj3DTp/np0W',
                 'jan.nowak@morecraft.pl',
                 '2015-12-12 12:12:12',
                 'ACT'
             );
 
-            INSERT INTO dev_settler.prv_object VALUES ();
-            INSERT INTO dev_settler.prv_user (
+            INSERT INTO prv_object VALUES ();
+            INSERT INTO prv_user (
                 id, login, first_name, last_name, password, email, created, status
             ) VALUES (
                 LAST_INSERT_ID(),
                 'marian.kowalski',
                 'Marian',
                 'Kowalski',
-                MD5('password'),
+                '$2y$12$ngM3Q/403lEc0pTH7fi16uoFRc3FQmmIugn2AuwjEigj3DTp/np0W',
                 'marian.kowalski@morecraft.pl',
                 '2015-11-17 16:00:00',
                 'ACT'
             );
 
-            INSERT INTO dev_settler.prv_object VALUES ();
-            INSERT INTO dev_settler.prv_user (
+            INSERT INTO prv_object VALUES ();
+            INSERT INTO prv_user (
                 id, login, first_name, last_name, password, email, created, status
             ) VALUES (
                 LAST_INSERT_ID(),
                 'jan.kos',
                 'Jan',
                 'Kos',
-                MD5('password'),
+                '$2y$12$ngM3Q/403lEc0pTH7fi16uoFRc3FQmmIugn2AuwjEigj3DTp/np0W',
                 'jan.kos@morecraft.pl',
                 '2015-11-17 17:45:32',
                 'HNG'
             );
 
-            INSERT INTO dev_settler.prv_object VALUES ();
-            INSERT INTO dev_settler.prv_user (
+            INSERT INTO prv_object VALUES ();
+            INSERT INTO prv_user (
                 id, login, first_name, last_name, password, email, created, status
             ) VALUES (
                 LAST_INSERT_ID(),
                 'adam.trocki',
                 'Adam',
                 'Trocki',
-                MD5('password'),
+                '$2y$12$ngM3Q/403lEc0pTH7fi16uoFRc3FQmmIugn2AuwjEigj3DTp/np0W',
                 'adam.trocki@morecraft.pl',
                 '2015-11-15 16:34:19',
                 'DSB'
             );
 
-            INSERT INTO dev_settler.prv_object VALUES ();
-            INSERT INTO dev_settler.prv_user (
+            INSERT INTO prv_object VALUES ();
+            INSERT INTO prv_user (
                 id, login, first_name, last_name, password, email, created, status
             ) VALUES (
                 LAST_INSERT_ID(),
                 'regular.user',
                 'Edward',
                 'Środoń',
-                MD5('password'),
+                '$2y$12$ngM3Q/403lEc0pTH7fi16uoFRc3FQmmIugn2AuwjEigj3DTp/np0W',
                 'regular.user@morecraft.pl',
                 '2015-11-09 23:56:48',
                 'DSB'
@@ -111,29 +111,29 @@
 
         <!-- CREATE TRANSACTIONS -->
         <sql>
-            INSERT INTO dev_settler.prv_object VALUES ();
-            INSERT INTO dev_settler.mod_transaction (
+            INSERT INTO prv_object VALUES ();
+            INSERT INTO mod_transaction (
                 id, reference, type, creator, value, created
             ) VALUES (
                 LAST_INSERT_ID(),
                 'TRA151112121212',
                 'NOR',
                 (SELECT id
-                 FROM dev_settler.prv_user
+                 FROM prv_user
                  WHERE login = 'admin'),
                 12.50,
                 '2015-11-12 12:12:12'
             );
 
-            INSERT INTO dev_settler.prv_object VALUES ();
-            INSERT INTO dev_settler.mod_transaction (
+            INSERT INTO prv_object VALUES ();
+            INSERT INTO mod_transaction (
                 id, reference, type, creator, value, created
             ) VALUES (
                 LAST_INSERT_ID(),
                 'TRA151113150000',
                 'OTH',
                 (SELECT id
-                 FROM dev_settler.prv_user
+                 FROM prv_user
                  WHERE login = 'user'),
                 10.50,
                 '2015-11-13 15:00:00'
@@ -142,101 +142,101 @@
 
         <!-- CREATE REDISTRIBUTIONS -->
         <sql>
-            INSERT INTO dev_settler.mod_redistribution (
+            INSERT INTO mod_redistribution (
             type, parent, user, value
             ) VALUES (
                 'O',
                 (SELECT id
-                 FROM dev_settler.mod_transaction
+                 FROM mod_transaction
                  WHERE reference = 'TRA151112121212'),
                 (SELECT id
-                 FROM dev_settler.prv_user
+                 FROM prv_user
                  WHERE login = 'admin'),
             12.5
             );
-            INSERT INTO dev_settler.mod_redistribution (
+            INSERT INTO mod_redistribution (
             type, parent, user, value
             ) VALUES (
                 'C',
                 (SELECT id
-                 FROM dev_settler.mod_transaction
+                 FROM mod_transaction
                  WHERE reference = 'TRA151112121212'),
                 (SELECT id
-                 FROM dev_settler.prv_user
+                 FROM prv_user
                  WHERE login = 'adam.trocki'),
             2.5
             );
-            INSERT INTO dev_settler.mod_redistribution (
+            INSERT INTO mod_redistribution (
             type, parent, user, value
             ) VALUES (
                 'C',
                 (SELECT id
-                 FROM dev_settler.mod_transaction
+                 FROM mod_transaction
                  WHERE reference = 'TRA151112121212'),
                 (SELECT id
-                 FROM dev_settler.prv_user
+                 FROM prv_user
                  WHERE login = 'jan.nowak'),
             10
             );
 
 
-            INSERT INTO dev_settler.mod_redistribution (
+            INSERT INTO mod_redistribution (
             type, parent, user, value
             ) VALUES (
                 'O',
                 (SELECT id
-                 FROM dev_settler.mod_transaction
+                 FROM mod_transaction
                  WHERE reference = 'TRA151113150000'),
                 (SELECT id
-                 FROM dev_settler.prv_user
+                 FROM prv_user
                  WHERE login = 'user'),
             5
             );
-            INSERT INTO dev_settler.mod_redistribution (
+            INSERT INTO mod_redistribution (
             type, parent, user, value
             ) VALUES (
                 'O',
                 (SELECT id
-                 FROM dev_settler.mod_transaction
+                 FROM mod_transaction
                  WHERE reference = 'TRA151113150000'),
                 (SELECT id
-                 FROM dev_settler.prv_user
+                 FROM prv_user
                  WHERE login = 'admin'),
             5.5
             );
-            INSERT INTO dev_settler.mod_redistribution (
+            INSERT INTO mod_redistribution (
             type, parent, user, value
             ) VALUES (
                 'C',
                 (SELECT id
-                 FROM dev_settler.mod_transaction
+                 FROM mod_transaction
                  WHERE reference = 'TRA151113150000'),
                 (SELECT id
-                 FROM dev_settler.prv_user
+                 FROM prv_user
                  WHERE login = 'adam.trocki'),
             3
             );
-            INSERT INTO dev_settler.mod_redistribution (
+            INSERT INTO mod_redistribution (
             type, parent, user, value
             ) VALUES (
                 'C',
                 (SELECT id
-                 FROM dev_settler.mod_transaction
+                 FROM mod_transaction
                  WHERE reference = 'TRA151113150000'),
                 (SELECT id
-                 FROM dev_settler.prv_user
+                 FROM prv_user
                  WHERE login = 'jan.nowak'),
             3
             );
-            INSERT INTO dev_settler.mod_redistribution (
+            INSERT INTO mod_redistribution (
             type, parent, user, value
             ) VALUES (
                 'C',
                 (SELECT id
-                 FROM dev_settler.mod_transaction
+                 FROM mod_transaction
                  WHERE reference = 'TRA151113150000'),
                 (SELECT id
-                 FROM dev_settler.prv_user
+                 FROM prv_user
                  WHERE login = 'jan.kos'),
             4.5
             );
@@ -244,16 +244,16 @@
 
         <!-- CREATE COMMENTS -->
         <sql>
-            INSERT INTO dev_settler.prv_object VALUES ();
-            INSERT INTO dev_settler.mod_comment (
+            INSERT INTO prv_object VALUES ();
+            INSERT INTO mod_comment (
                 id, prv_object, prv_user, parent, created, value
             ) VALUES (
                 LAST_INSERT_ID(),
                 (SELECT id
-                 FROM dev_settler.mod_transaction
+                 FROM mod_transaction
                  WHERE reference = 'TRA151112121212'),
                 (SELECT id
-                 FROM dev_settler.prv_user
+                 FROM prv_user
                  WHERE login = 'user'),
                 NULL,
                 '2015-12-21 14:14:40',
@@ -263,43 +263,43 @@
 
         <!-- CREATE CATEGORIES -->
         <sql>
-            INSERT INTO dev_settler.mod_category (
+            INSERT INTO mod_category (
             code, description
             ) VALUES (
             'FFD',
             'Food'
             );
-            INSERT INTO dev_settler.mod_category (
+            INSERT INTO mod_category (
             code, description
             ) VALUES (
             'FNC',
             'Finance'
             );
-            INSERT INTO dev_settler.mod_category (
+            INSERT INTO mod_category (
             code, description
             ) VALUES (
             'TRN',
             'Transportation'
             );
-            INSERT INTO dev_settler.mod_category (
+            INSERT INTO mod_category (
             code, description
             ) VALUES (
             'INF',
             'Infrastructure'
             );
-            INSERT INTO dev_settler.mod_category (
+            INSERT INTO mod_category (
             code, description
             ) VALUES (
             'BLS',
             'Bills'
             );
-            INSERT INTO dev_settler.mod_category (
+            INSERT INTO mod_category (
             code, description
             ) VALUES (
             'THG',
             'Things'
             );
-            INSERT INTO dev_settler.mod_category (
+            INSERT INTO mod_category (
             code, description
             ) VALUES (
             'ENT',
@@ -309,31 +309,31 @@
 
         <!-- CREATE ROLES -->
         <sql>
-            INSERT INTO dev_settler.prv_object VALUES ();
-            INSERT INTO dev_settler.prv_role (
+            INSERT INTO prv_object VALUES ();
+            INSERT INTO prv_role (
                 id, name
             ) VALUES (
                 LAST_INSERT_ID(),
                 'Administrator'
             );
 
-            INSERT INTO dev_settler.prv_object VALUES ();
-            INSERT INTO dev_settler.prv_role (
+            INSERT INTO prv_object VALUES ();
+            INSERT INTO prv_role (
                 id, name
             ) VALUES (
                 LAST_INSERT_ID(),
                 'Moderator'
             );
 
-            INSERT INTO dev_settler.prv_object VALUES ();
-            INSERT INTO dev_settler.prv_role (
+            INSERT INTO prv_object VALUES ();
+            INSERT INTO prv_role (
                 id, name
             ) VALUES (
                 LAST_INSERT_ID(),
                 'User'
             );
 
-            INSERT INTO dev_settler.prv_privilege (
+            INSERT INTO prv_privilege (
                 prv_object, prv_owner, operation_type
             ) VALUES (
                 NULL,
@@ -342,7 +342,7 @@
                  WHERE name = 'Administrator'),
                 'ADM'
             );
-            INSERT INTO dev_settler.prv_privilege (
+            INSERT INTO prv_privilege (
                 prv_object, prv_owner, operation_type
             ) VALUES (
                 NULL,
@@ -351,7 +351,7 @@
                  WHERE name = 'Administrator'),
                 'CRT'
             );
-            INSERT INTO dev_settler.prv_privilege (
+            INSERT INTO prv_privilege (
                 prv_object, prv_owner, operation_type
             ) VALUES (
                 NULL,
@@ -360,7 +360,7 @@
                  WHERE name = 'Administrator'),
                 'RDM'
             );
-            INSERT INTO dev_settler.prv_privilege (
+            INSERT INTO prv_privilege (
                 prv_object, prv_owner, operation_type
             ) VALUES (
                 NULL,
@@ -370,7 +370,7 @@
                 'EDT'
             );
 
-            INSERT INTO dev_settler.prv_privilege (
+            INSERT INTO prv_privilege (
                 prv_object, prv_owner, operation_type
             ) VALUES (
                 NULL,
@@ -379,7 +379,7 @@
                  WHERE name = 'Moderator'),
                 'CRT'
             );
-            INSERT INTO dev_settler.prv_privilege (
+            INSERT INTO prv_privilege (
                 prv_object, prv_owner, operation_type
             ) VALUES (
                 NULL,
@@ -388,7 +388,7 @@
                  WHERE name = 'Moderator'),
                 'RDM'
             );
-            INSERT INTO dev_settler.prv_privilege (
+            INSERT INTO prv_privilege (
                 prv_object, prv_owner, operation_type
             ) VALUES (
                 NULL,
@@ -398,7 +398,7 @@
                 'EDT'
             );
 
-            INSERT INTO dev_settler.prv_privilege (
+            INSERT INTO prv_privilege (
                 prv_object, prv_owner, operation_type
             ) VALUES (
                 NULL,

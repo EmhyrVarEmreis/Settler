@@ -10,7 +10,7 @@
     "angular-sanitize": "1.5.5",
     "bootstrap": "3.3.4",
     "bootstrap-sass": "3.3.4",
-    "bootstrap-material-design": "0.5.10",
+    "bootstrap-material-design": "https://github.com/mdbootstrap/bootstrap-material-design.git#0.5.10",
     "ng-table": "1.0.0",
     "angular-loading-bar": "0.9.0",
     "angular-bootstrap": "2.3.1",

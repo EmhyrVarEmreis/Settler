@@ -10,7 +10,7 @@ Small transactions manager.
 
 ### Tools
 
-* Vagrant
+* Docker
 * MySQL/MariaDB
 * Maven
 

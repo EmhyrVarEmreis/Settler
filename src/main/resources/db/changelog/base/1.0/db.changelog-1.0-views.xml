@@ -24,7 +24,7 @@
                 (SELECT COUNT(*)
                  FROM mod_comment mc
                  WHERE mc.prv_object = s.id)                                          AS comment_count
-            FROM dev_settler.mod_transaction s
+            FROM mod_transaction s
                 LEFT JOIN prv_user c
                     ON s.creator = c.id
                 LEFT JOIN mod_redistribution r
